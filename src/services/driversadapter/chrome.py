@@ -40,7 +40,7 @@ manifest_json = """
 class ChromeDriverAdapter:
     def __init__(self, console: Console) -> None:
         self.console = console
-        self.service = Service((os.path.dirname(__file__) or '.') + ('/bin/%s/chromedriver' % system()) )
+        #self.service = Service((os.path.dirname(__file__) or '.') + ('/bin/%s/chromedriver' % system()) )
         #self.service = Service()
         self.drivers = []
         self.tempfolder = []
@@ -122,8 +122,8 @@ class ChromeDriverAdapter:
 
 
             #Instantiate the driver
-            #driver = WebDriver('bin/chromedriver',options=options, desired_capabilities=desired_capabilities)
-            driver = webdriver.Remote(self.service.service_url, desired_capabilities=desired_capabilities, options=options)
+            driver = WebDriver(options=options, desired_capabilities=desired_capabilities)
+            #driver = webdriver.Remote(self.service.service_url, desired_capabilities=desired_capabilities, options=options)
 
             #Make webdriver = undefined
             script = '''

@@ -1,5 +1,6 @@
 # https://pythonspeed.com/articles/python-multiprocessing/ !!!top
 from multiprocessing import set_start_method, current_process, Process
+import traceback
 from src.services.console import Console
 from src.services.drivers import DriverManager
 from src.services.users import UserManager
@@ -51,32 +52,46 @@ def runner():
             )
 
 
+def shutdown(processes):
+    print('Shutdown, please wait...')
+    for p in processes:
+        if p.is_alive():
+            p.join()
+    driverManager.purge()
+
+
 if __name__ == '__main__':
 
     config = Config()
     processes = []
     
     while True:
-        sleep(1)
-        if len(processes) < config.MAX_REGISTER_PROCESS:
-            freeProcess = config.MAX_PROCESS - len(processes)
-            response = client.receive_message(
-                QueueUrl=config.SQS_URL,
-                MaxNumberOfMessages=freeProcess,
-                VisibilityTimeout=600,
-                WaitTimeSeconds=2,
-            )
-            if len(response.Messages):
-                for message in response.Messages:
-                    p = Process(target=runner, args=(message))
-                    processes.append(p)
-                    p.start()
+        try:
+            sleep(1)
+            if len(processes) < config.MAX_REGISTER_PROCESS:
+                freeProcess = config.MAX_PROCESS - len(processes)
+                response = client.receive_message(
+                    QueueUrl=config.SQS_URL,
+                    MaxNumberOfMessages=freeProcess,
+                    VisibilityTimeout=600,
+                    WaitTimeSeconds=2,
+                )
+                if len(response.Messages):
+                    for message in response.Messages:
+                        p = Process(target=runner, args=(message))
+                        processes.append(p)
+                        p.start()
 
-        leftProcesses = []
-        for p in processes:
-            if p.is_alive():
-                leftProcesses.append(p)
-        processes = leftProcesses
+            leftProcesses = []
+            for p in processes:
+                if p.is_alive():
+                    leftProcesses.append(p)
+            processes = leftProcesses
+        except KeyboardInterrupt:
+            shutdown(processes)
+            break
+        except:
+            print(traceback.format_exc())
 
 
 
