@@ -1,0 +1,5 @@
+{
+    "SQS_URL": "https://sqs.eu-west-3.amazonaws.com/891263387851/ZSPQ",
+    "MAX_REGISTER_PROCESS": 20,
+    "MAX_LISTENER_PROCESS": 20
+}
