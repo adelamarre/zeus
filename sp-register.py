@@ -22,14 +22,10 @@ userAgentManager = UserAgentManager()
 proxyManagerListener = ProxyManager(proxyFile=PROXY_FILE_LISTENER)
 proxyManagerRegister = ProxyManager(proxyFile=PROXY_FILE_REGISTER)
 
-def runner():
+def runner(user, playlist):
 
     
-    user = userManager.createRandomUser(
-        proxy=proxyManagerRegister.getRandomProxy(),
-        userAgent=userAgentManager.getRandomUserAgent(),
-        application='SP'
-    )
+    
     try: 
         driver = driverManager.getDriver(
             type='chrome',
@@ -43,7 +39,7 @@ def runner():
         if spotify.register(user):
             message = {
                 'user': user,
-                'playlist': config.PLAY_LIST
+                'playlist': playlist
             }
             client.send_message(
                 QueueUrl=config.SQS_URL,
@@ -65,22 +61,18 @@ if __name__ == '__main__':
     config = Config()
     processes = []
     
-    while True:
+    for index in range(config.REGISTER_BATCH_COUNT):
         try:
             sleep(1)
             if len(processes) < config.MAX_REGISTER_PROCESS:
-                freeProcess = config.MAX_PROCESS - len(processes)
-                response = client.receive_message(
-                    QueueUrl=config.SQS_URL,
-                    MaxNumberOfMessages=freeProcess,
-                    VisibilityTimeout=600,
-                    WaitTimeSeconds=2,
+                user = userManager.createRandomUser(
+                    proxy=proxyManagerRegister.getRandomProxy(),
+                    userAgent=userAgentManager.getRandomUserAgent(),
+                    application='SP'
                 )
-                if len(response.Messages):
-                    for message in response.Messages:
-                        p = Process(target=runner, args=(message))
-                        processes.append(p)
-                        p.start()
+                p = Process(target=runner, args=(user, config.PLAYLIST))
+                processes.append(p)
+                p.start()
 
             leftProcesses = []
             for p in processes:
