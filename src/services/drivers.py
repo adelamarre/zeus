@@ -1,19 +1,4 @@
-from selenium.webdriver.chrome.webdriver import WebDriver
-from selenium.webdriver.common import desired_capabilities
-from seleniumwire import webdriver
 from .console import Console
-import requests
-import sys
-from zipfile import ZipFile
-import os
-import platform
-from selenium.webdriver import Proxy
-from threading import Lock
-import shutil
-import phantomjs
-import base64
-import codecs
-
 from time import sleep
 from random import randint
 from .driversadapter.chrome import ChromeDriverAdapter
