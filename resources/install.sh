@@ -69,4 +69,23 @@ sudo chmod +x chromedriver
 sudo mv -f chromedriver /usr/local/bin
 cd ..
 
+
+sudo tee -a /etc/systemd/system.conf > /dev/null <<EOT
+DefaultTasksMax=infinity
+DefaultLimitNOFILE=10000000
+EOT
+
+sudo tee -a /etc/systemd/logind.conf > /dev/null <<EOT
+UserTasksMax=infinity
+EOT
+
+sudo tee -a /etc/security/limits.conf > /dev/null <<EOT
+* soft     nproc          unlimited
+* hard     nproc          unlimited
+* soft     nofile         unlimited
+* hard     nofile         unlimited
+root soft     nofile         unlimited
+root hard     nofile         unlimited
+EOT
+
 echo '################## Done !'

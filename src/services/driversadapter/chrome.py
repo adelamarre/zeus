@@ -44,7 +44,7 @@ class ChromeDriverAdapter:
         #self.service = Service()
         self.drivers = []
         self.tempfolder = []
-        self.service.start()
+        #self.service.start()
         sleep(1)
 
     def purge(self) -> None:

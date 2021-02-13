@@ -1,0 +1,5 @@
+02-12-2021-23-51-31[ss][ERROR]: Unavailale webdriver: Traceback (most recent call last):
+  File "sp-register.py", line 26, in runner
+    user=context.user
+AttributeError: 'dict' object has no attribute 'user'
+
