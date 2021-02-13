@@ -1,3 +1,4 @@
+from multiprocessing import Event
 import time
 from selenium.common.exceptions import NoSuchElementException
 from selenium.webdriver.support.ui import WebDriverWait
@@ -17,9 +18,10 @@ LOGIN_URL = 'https://accounts.spotify.com/en/login'
 SIGNUP_URL = 'https://www.spotify.com/fr/signup'
 
 class Adapter:
-    def __init__(self, driver, console):
+    def __init__(self, driver, console, shutdownEvent: Event):
         self.driver = driver
         self.console = console
+        self.shutdownEvent = shutdownEvent
     
     
     def getClientInfo(self, mirrorServerUrl):
@@ -106,6 +108,8 @@ class Adapter:
         while True:
             time.sleep(1)
             since = (time.time()-startListen)
+            if self.shutdownEvent.is_set():
+                return False
             if since > listenTime:
                 break
             
@@ -190,6 +194,8 @@ class Adapter:
         #        svg = self.getElementByTagName('svg', dataTestId)
         #        if svg:
         while True:
+            if self.shutdownEvent.is_set():
+                return False
             sleep(1)
             bnext = self.driver.find_element_by_xpath('//*[@class="player-controls__buttons"]')
             bnext.find_element_by_xpath('//button[@aria-label="Next"]').click() # aria-label="Previous"
@@ -239,9 +245,12 @@ class Adapter:
     def register(self, user, day_value = randint(1, 28), month_value = randint(1, 12), year_value = randint(1970, 2005), gender = choice(['male', 'female'])):
         #print("\r" + "Task : {}".format(str(os.getpid()))) 
         try:
+            if self.shutdownEvent.is_set():
+                return False
             self.driver.get( SIGNUP_URL )
             self.driver.maximize_window()
-            
+            if self.shutdownEvent.is_set():
+                return False
             email_field = self.driver.find_element_by_id( "email" )
             email_field.send_keys(user['email'])
             
@@ -267,7 +276,8 @@ class Adapter:
             html = self.driver.find_element_by_tag_name('html')
             html.send_keys(Keys.END)
             sleep(2)
-            
+            if self.shutdownEvent.is_set():
+                return False
             gender_list = ["Male", "Femal", "Non-binary"]
             gender_field = self.driver.find_element_by_name("gender")
             gender_field = self.driver.find_element_by_xpath('//*[@id="__next"]/main/div[2]/form/div[6]/div[2]/label[1]')
@@ -276,16 +286,20 @@ class Adapter:
             
             third_party = self.driver.find_elements_by_xpath('//span[@class="LinkContainer-sc-1t58wcv-0 iqOoUm"]')[0].click()
             sleep(1)
+            if self.shutdownEvent.is_set():
+                return False
             # Bypass captcha
             cp = self.driver.find_element_by_xpath('//input[@data-testid="recaptcha-input-test"]')
             self.driver.execute_script("arguments[0].hidden = arguments[1]", cp, "")
             cp.send_keys(1)
-            
+            if self.shutdownEvent.is_set():
+                return False
             # scroll
             html = self.driver.find_element_by_tag_name('html')
             html.send_keys(Keys.END)
             sleep(2)
-            
+            if self.shutdownEvent.is_set():
+                return False
             # Cookie banner
             try:
                 #third_party = self.driver.find_elements_by_xpath('//button[@class="onetrust-close-btn-handler onetrust-close-btn-ui banner-close-button onetrust-lg ot-close-icon"]')[0].click()
@@ -293,7 +307,8 @@ class Adapter:
             except:
                 pass
             sleep(2)
-
+            if self.shutdownEvent.is_set():
+                return False
             # submit
             submit = self.driver.find_element_by_xpath('//button[@class="Button-oyfj48-0 fivrVz SignupButton___StyledButtonPrimary-cjcq5h-1 gzFCtx"]').click()
             sleep(10)

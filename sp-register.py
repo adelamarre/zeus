@@ -15,7 +15,7 @@ from src.services.config import Config
 import os
 import json
 from time import sleep
-import shutil
+from shutil import rmtree
 
 
 def runner(context):
@@ -26,6 +26,7 @@ def runner(context):
     playlist = context['playlist']
     queueUrl = context['queueUrl']
     proxy = context['proxy']
+    shutdownEvent = context['shutdownEvent']
 
     pid = current_process().pid
     try: 
@@ -47,18 +48,19 @@ def runner(context):
         console.error('Unavailale webdriver: %s' % format_exc())
     else:
         try:
-            spotify = Spotify.Adapter(driver, console)
-            if spotify.register(user):
-                message = {
-                    'user': user,
-                    'playlist': playlist
-                }
-                client = boto3.client('sqs')
-                client.send_message(
-                    QueueUrl=queueUrl,
-                    MessageBody=json.dumps(message),
-                    DelaySeconds=1,
-                )
+            spotify = Spotify.Adapter(driver, console, shutdownEvent)
+            if not shutdownEvent.is_set():
+                if spotify.register(user):
+                    message = {
+                        'user': user,
+                        'playlist': playlist
+                    }
+                    client = boto3.client('sqs')
+                    client.send_message(
+                        QueueUrl=queueUrl,
+                        MessageBody=json.dumps(message),
+                        DelaySeconds=1,
+                    )
         except:
             console.exception()
     
@@ -69,11 +71,11 @@ def runner(context):
             pass
     if userDataDir:
         try:
-            shutil.rmtree(path=userDataDir, ignore_errors=True)
+            rmtree(path=userDataDir, ignore_errors=True)
         except:
             pass
 
-def shutdown(processes):
+def shutdown():
     print('Shutdown, please wait...')
     for p in processes:
         if p.is_alive():
@@ -132,7 +134,7 @@ if __name__ == '__main__':
                     leftProcesses.append(p2)
             processes = leftProcesses
         except KeyboardInterrupt:
-            shutdown(processes)
+            shutdown()
             break
         except:
             print(traceback.format_exc())

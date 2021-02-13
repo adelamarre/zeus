@@ -121,7 +121,13 @@ class ChromeDriverAdapter:
                 pluginfile = self.buildChromeExtension(proxy)
                 options.add_extension(pluginfile)
 
-
+            #prefs: {
+            #    protocol_handler: {
+            #        excluded_schemes: {
+            #            sms: false,
+            #        },
+            #    },
+            #},
 
             #Instantiate the driver
             driver = WebDriver(options=options, desired_capabilities=desired_capabilities)
