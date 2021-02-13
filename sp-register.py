@@ -22,7 +22,7 @@ userAgentManager = UserAgentManager()
 proxyManagerListener = ProxyManager(proxyFile=PROXY_FILE_LISTENER)
 proxyManagerRegister = ProxyManager(proxyFile=PROXY_FILE_REGISTER)
 
-def runner(user, playlist):
+def runner(user, playlist, proxyListener):
 
     
     
@@ -37,6 +37,7 @@ def runner(user, playlist):
     else:
         spotify = Spotify.Adapter(driver, console)
         if spotify.register(user):
+            user['proxy'] = proxyListener
             message = {
                 'user': user,
                 'playlist': playlist
@@ -66,11 +67,11 @@ if __name__ == '__main__':
             sleep(1)
             if len(processes) < config.MAX_REGISTER_PROCESS:
                 user = userManager.createRandomUser(
-                    proxy=proxyManagerRegister.getRandomProxy(),
+                    proxies=proxyManagerRegister.getRandomProxy(),
                     userAgent=userAgentManager.getRandomUserAgent(),
                     application='SP'
                 )
-                p = Process(target=runner, args=(user, config.PLAYLIST))
+                p = Process(target=runner, args=(user, config.PLAYLIST, proxyManagerListener.getRandomProxy()))
                 processes.append(p)
                 p.start()
 
