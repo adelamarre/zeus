@@ -1,0 +1,14 @@
+02-13-2021-16-18-12[ss][EXCEPTION]: Traceback (most recent call last):
+  File "/home/ubuntu/projects/zeus/src/application/spotify/Spotify.py", line 243, in register
+    self.driver.maximize_window()
+  File "/home/ubuntu/.local/lib/python3.9/site-packages/selenium/webdriver/remote/webdriver.py", line 737, in maximize_window
+    self.execute(command, params)
+  File "/home/ubuntu/.local/lib/python3.9/site-packages/selenium/webdriver/remote/webdriver.py", line 321, in execute
+    self.error_handler.check_response(response)
+  File "/home/ubuntu/.local/lib/python3.9/site-packages/selenium/webdriver/remote/errorhandler.py", line 242, in check_response
+    raise exception_class(message, screen, stacktrace)
+selenium.common.exceptions.NoSuchWindowException: Message: no such window: target window already closed
+from unknown error: web view not found
+  (Session info: chrome=88.0.4324.150)
+
+

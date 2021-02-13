@@ -1,7 +1,6 @@
 {
     "SQS_URL": "https://sqs.eu-west-3.amazonaws.com/891263387851/ZSPQ",
-    "MAX_REGISTER_PROCESS": 20,
+    "MAX_REGISTER_PROCESS": 30,
     "MAX_LISTENER_PROCESS": 20,
-    "REGISTER_BATCH_COUNT": 10,
     "PLAYLIST": "https://open.spotify.com/playlist/43Wt3MEvCqsiRdRQrQkcQy?si=HNVNSHRdTzqYEZKtE8peUw"
 }

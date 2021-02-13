@@ -40,11 +40,10 @@ manifest_json = """
 class ChromeDriverAdapter:
     def __init__(self, console: Console) -> None:
         self.console = console
-        #self.service = Service((os.path.dirname(__file__) or '.') + ('/bin/%s/chromedriver' % system()) )
-        #self.service = Service()
+        #self.service = Service(executable_path='/usr/local/bin/chromedriver')
         self.drivers = []
-        self.tempfolder = []
-        self.service.start()
+        self.userDataDir = []
+        #self.service.start()
         sleep(1)
 
     def purge(self) -> None:
@@ -53,10 +52,13 @@ class ChromeDriverAdapter:
                 driver.quit()
             except:
                 pass
-        for folder in self.tempfolder:
-            shutil.rmtree(path=folder, ignore_errors=True)
-        
-        self.service.stop()
+        for userdatadir in self.userDataDir:
+            try:
+                shutil.rmtree(path=userdatadir, ignore_errors=True)
+            except:
+                pass
+
+        #self.service.stop()
 
     def getNewInstance(self, uid, user, proxy=None, headless=False) -> WebDriver:
         pluginfile = None
@@ -93,7 +95,7 @@ class ChromeDriverAdapter:
             
             
             userDataDir = mkdtemp()
-            self.tempfolder.append(userDataDir)
+            self.userDataDir.append(userDataDir)
             options.add_argument('--user-data-dir=%s' % userDataDir)
 
             if 'windowSize' in user:
@@ -137,7 +139,10 @@ class ChromeDriverAdapter:
                 os.remove(pluginfile)
                 pluginfile = None
 
-            return driver
+            return {
+                'driver': driver,
+                'userDataDir': userDataDir,
+            }
         except:
             self.console.exception()
             if pluginfile:

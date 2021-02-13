@@ -21,7 +21,10 @@ class DriverManager:
                     pass
                 else:
                     driver = self.chrome.getNewInstance(uid, user, proxy, headless)
-                break;
+                if driver:
+                    break
+                else:
+                    raise Exception("getDriver return None")    
             except:
                 if tryCount:
                     tryCount -= 1
@@ -29,7 +32,7 @@ class DriverManager:
                 else:
                     sleep(randint(3,6))
                     self.console.exception()
-                    break;
+                    break
         return driver    
 
     def purge(self):

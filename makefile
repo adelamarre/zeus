@@ -20,4 +20,8 @@ tunel-start:
 tunel-stop:
 	@kill $$(ps aux | grep '[b]astion' | awk '{print $$2}')
 
-	
+kill-register:
+	@kill $$(ps aux | grep '[r]egister' | awk '{print $$2}')
+
+kill-listener:
+	@kill $$(ps aux | grep '[l]istener' | awk '{print $$2}')
