@@ -49,7 +49,7 @@ class Console:
         self.verbose = verbose
         self.logToFile = logToFIle
         try:
-            self.logfile= (os.path.dirname(__file__) or '.') + '/../../temp/log/_' + datetime.now().strftime("%m-%d-%Y-%H-%M-%S")+ '.log'
+            self.logfile= (os.path.dirname(__file__) or '.') + '/../../temp/' + datetime.now().strftime("%m-%d-%Y-%H-%M-%S")+ '.log'
             
         except:
             traceback.print_exc()

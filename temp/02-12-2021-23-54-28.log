@@ -1,0 +1,23 @@
+02-12-2021-23-54-39[ss][EXCEPTION]: Traceback (most recent call last):
+  File "/home/ubuntu/projects/zeus/src/services/driversadapter/chrome.py", line 125, in getNewInstance
+    driver = WebDriver(options=options, desired_capabilities=desired_capabilities)
+  File "/home/ubuntu/.local/lib/python3.9/site-packages/selenium/webdriver/chrome/webdriver.py", line 76, in __init__
+    RemoteWebDriver.__init__(
+  File "/home/ubuntu/.local/lib/python3.9/site-packages/selenium/webdriver/remote/webdriver.py", line 157, in __init__
+    self.start_session(capabilities, browser_profile)
+  File "/home/ubuntu/.local/lib/python3.9/site-packages/selenium/webdriver/remote/webdriver.py", line 252, in start_session
+    response = self.execute(Command.NEW_SESSION, parameters)
+  File "/home/ubuntu/.local/lib/python3.9/site-packages/selenium/webdriver/remote/webdriver.py", line 321, in execute
+    self.error_handler.check_response(response)
+  File "/home/ubuntu/.local/lib/python3.9/site-packages/selenium/webdriver/remote/errorhandler.py", line 242, in check_response
+    raise exception_class(message, screen, stacktrace)
+selenium.common.exceptions.WebDriverException: Message: unknown error: Chrome failed to start: exited abnormally.
+  (unknown error: DevToolsActivePort file doesn't exist)
+  (The process started from chrome location /usr/bin/google-chrome is no longer running, so ChromeDriver is assuming that Chrome has crashed.)
+
+
+02-12-2021-23-54-47[ss][EXCEPTION]: Traceback (most recent call last):
+  File "/home/ubuntu/projects/zeus/src/application/spotify/Spotify.py", line 242, in register
+    self.driver.get( SIGNUP_URL )
+AttributeError: 'NoneType' object has no attribute 'get'
+
