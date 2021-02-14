@@ -116,7 +116,7 @@ if __name__ == '__main__':
     totalMessageReceived = 0
     while True:
         try:
-            sleep(2)
+            sleep(0.5)
             if len(processes) < config.MAX_LISTENER_PROCESS:
                 freeProcess = config.MAX_LISTENER_PROCESS - len(processes)
                 if freeProcess > 10:
@@ -154,7 +154,7 @@ if __name__ == '__main__':
                             'totalProcess': len(processes),
                             'totalMessageReceived': totalMessageReceived
                         }, config.SQS_URL)
-                        sleep(2)
+                        sleep(0.5)
 
             leftProcesses = []
             for p in processes:

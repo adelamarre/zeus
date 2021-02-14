@@ -143,9 +143,10 @@ if __name__ == '__main__':
         ))
     shutdownEvent = Event()
     client = boto3.client('sqs')
+    lastQueuePolling = 0.0
     while len(users) or len(processes):
         try:
-            sleep(2)
+            sleep(0.5)
             if len(users) and (len(processes) < config.MAX_REGISTER_PROCESS):
                 user = users.pop()
                 context = {
@@ -167,11 +168,12 @@ if __name__ == '__main__':
                 if p2.is_alive():
                     leftProcesses.append(p2)
             processes = leftProcesses
+            if (not lastQueuePolling or ((time() - lastQueuePolling) > 2.0)): 
+                response = client.get_queue_attributes(
+                    QueueUrl= config.SQS_ENDPOINT,
+                    AttributeNames=['ApproximateNumberOfMessages', 'ApproximateNumberOfMessagesNotVisible']
+                )
 
-            response = client.get_queue_attributes(
-                QueueUrl= config.SQS_ENDPOINT,
-                AttributeNames=['ApproximateNumberOfMessages', 'ApproximateNumberOfMessagesNotVisible']
-            )
             showStats({
                     'totalProcess': len(processes),
                     'queueAttributes': response['Attributes'],
