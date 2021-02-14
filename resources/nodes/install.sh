@@ -90,5 +90,21 @@ root soft     nofile         unlimited
 root hard     nofile         unlimited
 EOT
 
+#@see https://www.digitalocean.com/community/tutorials/how-to-use-systemctl-to-manage-systemd-services-and-units
+echo 'Install Zeus service'
+sudo tee -a /etc/systemd/system/zeus.service > /dev/null <<EOT
+[Unit]
+Description=x11vnc remote desktop server
+After=multi-user.target
+
+[Service]
+Type=simple
+ExecStart=/usr/local/bin/python3 /home/ubuntu/projects/zeus/sp-listener.py
+
+Restart=always
+
+[Install]
+WantedBy=multi-user.target
+EOT
 
 echo '################## Done !'

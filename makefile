@@ -20,6 +20,12 @@ tunel-start:
 tunel-stop:
 	@kill $$(ps aux | grep '[b]astion' | awk '{print $$2}')
 
+nodeR1:
+	cd resources/ssh && ssh -F config nodeR1
+
+nodeL1:
+	cd resources/ssh && ssh -F config nodeL1
+
 kill-register:
 	@kill $$(ps aux | grep '[r]egister' | awk '{print $$2}')
 
