@@ -23,8 +23,17 @@ tunel-stop:
 nodeR1:
 	cd resources/ssh && ssh -F config nodeR1
 
+nodeLami:
+	cd resources/ssh && ssh -F config nodeLami
+
 nodeL1:
 	cd resources/ssh && ssh -F config nodeL1
+
+nodeL2:
+	cd resources/ssh && ssh -F config nodeL2
+
+spotify:
+	cd resources/ssh && ssh -F config spotify
 
 kill-register:
 	@kill $$(ps aux | grep '[r]egister' | awk '{print $$2}')

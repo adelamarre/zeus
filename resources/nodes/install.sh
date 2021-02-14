@@ -3,7 +3,7 @@ echo '################## Prepare'
 mkdir -p ~/tmp && cd tmp
 sudo apt-get update
 sudo apt-get install -y software-properties-common
-sudo apt-get install -y build-essential checkinstall zlib1g-dev libncurses5-dev libgdbm-dev libnss3-dev libssl-dev libreadline-dev libffi-dev libsqlite3-dev wget libbz2-dev unzip
+sudo apt install -y build-essential checkinstall zlib1g-dev libncurses5-dev libgdbm-dev libnss3-dev libssl-dev libreadline-dev libffi-dev libsqlite3-dev wget libbz2-dev unzip
 
 echo '################## Install python 3.9.1'
 wget https://www.python.org/ftp/python/3.9.1/Python-3.9.1.tgz
@@ -12,6 +12,8 @@ cd Python-3.9.1
 ./configure --enable-optimizations
 make -j 12
 sudo make install
+sudo update-alternatives --install /usr/bin/python python /usr/local/bin/python3.9 1
+sudo update-alternatives --install /usr/bin/python3 python3 /usr/local/bin/python3.9 1
 cd ..
 
 echo '################## Install Xvfb & x11vnc services'
@@ -57,13 +59,18 @@ sudo systemctl start x11vnc
 echo '################## Install Chromium'
 
 sudo apt-get install -y fonts-liberation libatk-bridge2.0-0 libatk1.0-0 libatspi2.0-0
-wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
-sudo dpkg -i google-chrome-stable_current_amd64.deb
+#wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
+wget http://dl.google.com/linux/chrome/deb/pool/main/g/google-chrome-stable/google-chrome-stable_85.0.4183.83-1_amd64.deb
+sudo dpkg -i google-chrome-stable_85.0.4183.83-1_amd64.deb
 sudo apt-get install -f -y
 
 #install chromedriver
 # https://chromedriver.storage.googleapis.com/LATEST_RELEASE_88.0.4324
-sudo wget https://chromedriver.storage.googleapis.com/88.0.4324.96/chromedriver_linux64.zip
+# https://chromedriver.storage.googleapis.com/LATEST_RELEASE_85.0.4183
+# http://dl.google.com/linux/chrome/deb/pool/main/g/google-chrome-stable/google-chrome-stable_78.0.3904.87-1_amd64.deb
+# http://dl.google.com/linux/chrome/deb/pool/main/g/google-chrome-stable/google-chrome-stable_85.0.4183.83-1_amd64.deb
+#sudo wget https://chromedriver.storage.googleapis.com/88.0.4324.96/chromedriver_linux64.zip
+sudo wget https://chromedriver.storage.googleapis.com/85.0.4183.87/chromedriver_linux64.zip
 sudo apt-get -y install unzip
 sudo unzip chromedriver_linux64.zip
 #rm chromedriver_linux64.zip
@@ -106,5 +113,9 @@ Restart=always
 [Install]
 WantedBy=multi-user.target
 EOT
+
+# secret key : ++uEKu+uniIUEbu8MvbjHoTixsH98dWzm5ZhfOjp
+# access key id : AKIA47A3QBDFRWN4ODMK
+
 
 echo '################## Done !'
