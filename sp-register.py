@@ -1,5 +1,5 @@
 # https://pythonspeed.com/articles/python-multiprocessing/ !!!top
-from multiprocessing import Lock, set_start_method, current_process, Process, Event
+from multiprocessing import Lock, current_process, Process, Event
 import multiprocessing
 from platform import win32_edition
 import traceback
@@ -120,7 +120,7 @@ if __name__ == '__main__':
                     'user': user,
                     'playlist': config.PLAYLIST,
                     'lock': lock,
-                    'queueUrl': config.SQS_URL,
+                    'queueUrl': config.SQS_ENDPOINT,
                     'proxy': proxyManagerRegister.getRandomProxy(),
                     'shutdownEvent': shutdownEvent
                 }
