@@ -1,9 +1,10 @@
 from boto3 import client
 from time import sleep
 from src.services.console import Console
-from sys import stdout
+from sys import stdout, stdin
 from colorama import Fore, Back, Style
 from os import get_terminal_size
+from traceback import format_exc
 
 console = Console(3, False)
 
@@ -32,9 +33,14 @@ def showStats(data, queueUrl):
 client = client('sqs')
 queueUrl = 'https://eu-west-3.queue.amazonaws.com/891263387851/ZSPQ'
 while True:
-    response = client.get_queue_attributes(
-        QueueUrl=queueUrl,
-        AttributeNames=['ApproximateNumberOfMessages', 'ApproximateNumberOfMessagesNotVisible']
-    )
-    showStats(response['Attributes'], queueUrl)
-    sleep(1)
+    try:
+        response = client.get_queue_attributes(
+            QueueUrl=queueUrl,
+            AttributeNames=['ApproximateNumberOfMessages', 'ApproximateNumberOfMessagesNotVisible']
+        )
+        showStats(response['Attributes'], queueUrl)
+        sleep(1)
+    except KeyboardInterrupt:
+        break;
+    except:
+        format_exc()
