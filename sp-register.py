@@ -1,7 +1,5 @@
 # https://pythonspeed.com/articles/python-multiprocessing/ !!!top
 from multiprocessing import Lock, current_process, Process, Event
-import multiprocessing
-from platform import win32_edition
 import traceback
 from src.services.console import Console
 from src.services.drivers import DriverManager
