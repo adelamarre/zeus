@@ -110,4 +110,4 @@ class Console:
         print('\u001b[2J', flush=False)
         
     def printAt(self, x,y, message):
-        print( "%s%s%s" % ('\u001b[%d;%df' % (y,x), Back.BLACK + Fore.WHITE, message), end='', flush=False)
+        print( "%s%s" % ('\u001b[%d;%df' % (y,x), message), end='', flush=False)
