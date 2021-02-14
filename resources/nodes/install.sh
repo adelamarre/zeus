@@ -27,7 +27,7 @@ After=multi-user.target
 
 [Service]
 Type=simple
-ExecStart=/usr/bin/Xvfb :0 -screen 0 1280x720x24
+ExecStart=/usr/bin/Xvfb :0 -screen 0 1280x720x24 -noreset
 
 Restart=always
 

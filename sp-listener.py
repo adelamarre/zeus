@@ -8,14 +8,17 @@ from traceback import format_exc
 from src.services.config import Config
 from json import loads
 from time import sleep
-from os import environ
+from os import environ, get_terminal_size
 from traceback import format_exc
 from shutil import rmtree
+from colorama import Fore, Back, Style
+from sys import stdout
+from xvfbwrapper import Xvfb
 
 def runner(context):
 
     
-    environ["DISPLAY"] = ":0"
+    #environ["DISPLAY"] = ":0"
     driverManager = context['driverManager']
     user = context['user']
     console = context['console']
@@ -27,6 +30,8 @@ def runner(context):
     pid = current_process().pid
     
     try: 
+        vdisplay = Xvfb(width=1280, height=1024)
+        vdisplay.start()
         driverData = driverManager.getDriver(
             type='chrome',
             uid=pid,
@@ -62,6 +67,11 @@ def runner(context):
             rmtree(path=userDataDir, ignore_errors=True)
         except:
             pass
+    if vdisplay:
+        try:
+            vdisplay.stop()
+        except:
+            pass
 
 def shutdown():
     print('Shutdown, please wait...')
@@ -73,6 +83,26 @@ def shutdown():
                 pass
     driverManager.purge()
 
+def showStats(data, queueUrl):
+    width, height = get_terminal_size()
+    console.clearScreen()
+    separator = '_' * width
+    lines = []
+    lines.append(Fore.YELLOW + 'ZEUS LISTENER SERVICE STATS')
+    lines.append('\n')
+    lines.append(Fore.CYAN + 'Queue: %s:' % queueUrl)
+    lines.append(Fore.BLUE + separator)
+    lines.append(Fore.WHITE + 'Total process : %6d' % int(data['totalProcess']))
+    lines.append(Fore.WHITE + 'Message read  : %6d' % int(data['totalMessageReceived']))
+    lines.append(Fore.BLUE + separator)
+    index = 1
+    for line in lines:
+        console.printAt(1, index, line)
+        index += 1
+
+    stdout.write('\n')
+    stdout.flush()  
+
 
 if __name__ == '__main__':
 
@@ -83,6 +113,7 @@ if __name__ == '__main__':
     client = boto3.client('sqs')
     shutdownEvent = Event()
     lock = Event()
+    totalMessageReceived = 0
     while True:
         try:
             sleep(2)
@@ -99,6 +130,7 @@ if __name__ == '__main__':
                 messages = []
                 if 'Messages' in response:
                     messages = response['Messages']
+                totalMessageReceived += len(messages)
                 if len(messages):
                     for message in messages:
                         body = loads(message['Body'])
@@ -118,6 +150,10 @@ if __name__ == '__main__':
                         p = Process(target=runner, args=(context,))
                         processes.append(p)
                         p.start()
+                        showStats({
+                            'totalProcess': len(processes),
+                            'totalMessageReceived': totalMessageReceived
+                        }, config.SQS_URL)
                         sleep(2)
 
             leftProcesses = []
@@ -125,6 +161,10 @@ if __name__ == '__main__':
                 if p.is_alive():
                     leftProcesses.append(p)
             processes = leftProcesses
+            showStats({
+                'totalProcess': len(processes),
+                'totalMessageReceived': totalMessageReceived
+            }, config.SQS_URL)
         except KeyboardInterrupt:
             shutdown()
             break
