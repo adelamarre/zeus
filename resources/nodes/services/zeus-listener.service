@@ -1,5 +1,5 @@
 [Unit]
-Description=x11vnc remote desktop server
+Description=Zeus listener service
 After=multi-user.target
 User=ubuntu
 

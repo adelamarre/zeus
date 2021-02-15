@@ -97,25 +97,32 @@ root soft     nofile         unlimited
 root hard     nofile         unlimited
 EOT
 
+
+echo 'Configure ssh'
+cd ~/
+cp ssh/config .ssh/config
+cp ssh/id_rsa .ssh/id_rsa
+cp ssh/id_rsa.pub .ssh/id_rsa.pub
+chmod 600 .ssh/id_*
+eval $(ssh-agent -s)
+
+echo "Configure aws"
+cd ~/
+mkdir .aws
+cp aws/config .aws/config
+
+echo "Configure git"
+git config --global user.name "John Doe"
+git config --global user.email johndoe@example.com
+
 #@see https://www.digitalocean.com/community/tutorials/how-to-use-systemctl-to-manage-systemd-services-and-units
-echo 'Install Zeus service'
-sudo tee -a /etc/systemd/system/zeus.service > /dev/null <<EOT
-[Unit]
-Description=x11vnc remote desktop server
-After=multi-user.target
+echo 'Install Zeus Listener service'
+sudo cp services/zeus-listener.service /etc/systemd/system/zeus-listener.service
+sudo systemctl daemon-reload
 
-[Service]
-Type=simple
-ExecStart=/usr/local/bin/python3 /home/ubuntu/projects/zeus/sp-listener.py
-
-Restart=always
-
-[Install]
-WantedBy=multi-user.target
-EOT
-
-# secret key : ++uEKu+uniIUEbu8MvbjHoTixsH98dWzm5ZhfOjp
-# access key id : AKIA47A3QBDFRWN4ODMK
-
+mkdir -p ~/projects
 
 echo '################## Done !'
+echo 'to download zeus: cd ~/projects && git clone git@github.com:adelamarre/zeus.git'
+echo 'to activate the listener service : sudo systemctl enabled zeus-listener && sudo systemctl start zeus-listener'
+echo 'Enjoy !'
