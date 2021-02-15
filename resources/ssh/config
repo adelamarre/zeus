@@ -16,7 +16,7 @@ Host nodeL1
 
 Host nodeLami
   ProxyJump bastion
-  Hostname ip-172-31-6-70.eu-west-3.compute.internal
+  Hostname ip-172-31-8-88.eu-west-3.compute.internal
   IdentityFile ~/.ssh/interstellar.pem
   User ubuntu
 
