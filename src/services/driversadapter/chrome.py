@@ -5,12 +5,13 @@ from selenium.webdriver.common.desired_capabilities import DesiredCapabilities
 from selenium import webdriver
 from zipfile import ZipFile
 from selenium.webdriver.chrome.service import Service
+from selenium import webdriver
 from random import randint
 import os
 import shutil
 from tempfile import mkdtemp
 from time import sleep
-
+from src.services.bash import version
 from traceback import format_exc
 from platform import system
 
@@ -44,6 +45,10 @@ class ChromeDriverAdapter:
         self.drivers = []
         self.userDataDir = []
         #self.service.start()
+        bv = version('google-chrome')
+        dv = version('chromedriver')
+        self.driverVersion  = '%s %s' % (dv[0], dv[1])
+        self.browserVersion = '%s%s %s' %  (bv[0], bv[1], bv[2])
         sleep(1)
 
     def purge(self) -> None:
@@ -70,23 +75,33 @@ class ChromeDriverAdapter:
             options = Options()
             options.add_argument('--no-sandbox')  
             options.add_argument("--disable-dev-shm-usage")
-
-            #options.add_argument("--log-level=3")
-
-            #options.add_argument("--single-process")
-            
             options.add_argument('media.eme.enabled')
             options.add_argument("--disable-gpu")
             options.add_argument('--disable-popup-blocking')
-            #options.add_argument("--window-position=-32000,-32000");
             options.add_argument("--disable-blink-features")
             options.add_argument("--disable-blink-features=AutomationControlled")
-            
-            #options.add_argument("--log-path=" + (os.path.dirname(__file__) or '.') + "/../chrome.log")
-
             options.add_argument('--ignore-certificate-errors-spki-list')
             options.add_argument('--ignore-certificate-errors')
             options.add_argument('--ignore-ssl-errors')
+
+            options.add_argument("--enable-features=NetworkServiceInProcess")
+            options.add_argument("--disable-features=NetworkService") 
+            options.add_argument("--disable-browser-side-navigation") 
+            options.add_argument("--aggressive-cache-discard")
+            options.add_argument("--disable-cache")
+            options.add_argument("--disable-application-cache"); 
+            options.add_argument("--disable-offline-load-stale-cache")
+            options.add_argument("--disk-cache-size=0")
+            options.add_argument("--disable-features=VizDisplayCompositor")
+            options.page_load_strategy = 'normal'
+            #options.add_argument("--window-position=-32000,-32000");
+            #options.add_argument("--log-path=" + (os.path.dirname(__file__) or '.') + "/../chrome.log")
+            #options.add_argument("--log-level=3")
+            #options.add_argument("--single-process")
+            
+            
+
+            
             
             
             
@@ -102,7 +117,6 @@ class ChromeDriverAdapter:
                 options.add_argument("--window-size=%s" % user['windowSize'])
 
             if headless:
-                #options.add_argument("--disable-gpu")
                 options.add_argument("--headless")
             
             # Set user agent if available
@@ -128,7 +142,8 @@ class ChromeDriverAdapter:
             #        },
             #    },
             #},
-
+            
+            
             #Instantiate the driver
             driver = WebDriver(options=options, desired_capabilities=desired_capabilities)
             #driver = webdriver.Remote(self.service.service_url, desired_capabilities=desired_capabilities, options=options)

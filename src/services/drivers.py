@@ -8,6 +8,15 @@ class DriverManager:
         self.chrome = ChromeDriverAdapter(console)
         self.console = console
     
+    def getDriverVersion(self, type):
+        if type == 'chrome':
+            return self.chrome.driverVersion
+        return 'Unknown'
+
+    def getBrowserVersion(self, type):
+        if type == 'chrome':
+            return self.chrome.browserVersion
+        return 'Unknown'
 
     def getDriver(self, type, uid, user, proxy=None, headless=False):
         driver = None

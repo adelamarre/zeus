@@ -1,5 +1,6 @@
 # https://pythonspeed.com/articles/python-multiprocessing/ !!!top
 from multiprocessing import Lock, current_process, Process, Event
+from src.services.stats import Stats
 import traceback
 from src.services.console import Console
 from src.services.drivers import DriverManager
@@ -20,13 +21,16 @@ from sys import stdout
 from time import time
 from datetime import timedelta
 
-def showStats(data):
+def showStats(data, stats: Stats):
     width, height = get_terminal_size()
     console.clearScreen()
     separator = '_' * width
     lines = []
     lines.append(Fore.YELLOW + 'ZEUS LISTENER SERVICE STATS')
-    lines.append('\n')
+    lines.append(Fore.WHITE + 'Browser: ' + Fore.GREEN + data['browser'])
+    lines.append(Fore.WHITE + 'Driver : ' + Fore.GREEN + data['driver'])
+    lines.append('')
+    lines += stats.getConsoleLines(width)
     lines.append(Fore.CYAN + 'Queue: %s:' % data['queueUrl'])
     lines.append(Fore.BLUE + separator)
     lines.append(Fore.WHITE + 'Elapsed time     : %s' % (Fore.GREEN + data['elapsedTime']))
@@ -47,18 +51,16 @@ def showStats(data):
 def runner(context):  
     driverManager = context['driverManager']
     user = context['user']
-    console = context['console']
+    console: Console= context['console']
     playlist = context['playlist']
     queueUrl = context['queueUrl']
     proxy = context['proxy']
     shutdownEvent = context['shutdownEvent']
-    totalMessageReceived = 0
     pid = current_process().pid
     
     try:
-        vdisplay = Xvfb(width=1280, height=1024)
+        vdisplay = Xvfb(width=1280, height=1024, colordepth=24, tempdir=None, noreset='+render')
         vdisplay.start() 
-        print('Start runner %s' % pid)
         driverData = driverManager.getDriver(
             type='chrome',
             uid=pid,
@@ -123,15 +125,17 @@ if __name__ == '__main__':
     startTime = time()
     config = Config()
     processes = []
-    
     console = Console()
     driverManager = DriverManager(console)
+    driverVersion = driverManager.getDriverVersion('chrome')
+    browserVersion = driverManager.getBrowserVersion('chrome')
     client = boto3.client('sqs')
     userManager = UserManager(console)
     userAgentManager = UserAgentManager()
     proxyManagerListener = ProxyManager(proxyFile=PROXY_FILE_LISTENER)
     proxyManagerRegister = ProxyManager(proxyFile=PROXY_FILE_REGISTER)
     lock = Lock()
+    stats = Stats()
 
     users = []
 
@@ -147,7 +151,7 @@ if __name__ == '__main__':
     while len(users) or len(processes):
         try:
             sleep(0.5)
-            if len(users) and (len(processes) < config.MAX_REGISTER_PROCESS):
+            if len(users) and (len(processes) < config.REGISTER_MAX_PROCESS):
                 user = users.pop()
                 context = {
                     'driverManager': driverManager,
@@ -179,14 +183,16 @@ if __name__ == '__main__':
                     'queueAttributes': response['Attributes'],
                     'queueUrl': config.SQS_ENDPOINT,
                     'startTime': startTime,
-                    'elapsedTime': str(timedelta(seconds=round(time() - startTime)))
-                })
+                    'elapsedTime': str(timedelta(seconds=round(time() - startTime))),
+                    'browser': browserVersion,
+                    'driver': driverVersion,
+                }, stats)
     
         except KeyboardInterrupt:
             shutdown()
             break
         except:
-            print(traceback.format_exc())
+            console.exception()
             break
 
 

@@ -4,3 +4,4 @@ selenium
 PyInquirer
 requests
 xvfbwrapper
+psutil
