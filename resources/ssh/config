@@ -3,10 +3,10 @@ Host bastion
   IdentityFile ~/.ssh/interstellar.pem
   User ubuntu
   #ForwardAgent yes
-  LocalForward 5901 ip-172-31-17-207.eu-west-3.compute.internal:5900
-  LocalForward 5902 ip-172-31-7-229.eu-west-3.compute.internal:5900
-  LocalForward 5903 ip-172-31-6-70.eu-west-3.compute.internal:5900
-  LocalForward 5911 ip-172-31-18-176.eu-west-3.compute.internal:5900
+  #LocalForward 5901 ip-172-31-17-207.eu-west-3.compute.internal:5900
+  #LocalForward 5902 ip-172-31-7-229.eu-west-3.compute.internal:5900
+  #LocalForward 5903 ip-172-31-6-70.eu-west-3.compute.internal:5900
+  #LocalForward 5911 ip-172-31-18-176.eu-west-3.compute.internal:5900
 
 Host nodeL1
   ProxyJump bastion
