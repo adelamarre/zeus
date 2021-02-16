@@ -77,7 +77,7 @@ class Adapter:
         self.driver.get('https://www.spotify.com/logout')
         time.sleep(5)
 
-    def playPlaylist(self, playlist_url, min_listening_time = 70, max_listening_time = 110):
+    def playPlaylist(self, playlist_url, shutDownEvent: Event, min_listening_time = 70, max_listening_time = 110):
         self.driver.get(playlist_url)
         
         # play it!!!
@@ -91,7 +91,8 @@ class Adapter:
             self.driver.execute_script( js_script )
         except:
             pass
-        
+        if shutDownEvent.is_set():
+            return False
         sleep(3)
         
         #Press Play button
@@ -105,7 +106,7 @@ class Adapter:
         
 
         #Listen music
-        while True:
+        while not shutDownEvent.is_set():
             time.sleep(1)
             since = (time.time()-startListen)
             if self.shutdownEvent.is_set():
@@ -113,11 +114,14 @@ class Adapter:
             if since > listenTime:
                 break
             
-        
+        if shutDownEvent.is_set():
+            return False
 
         if not self.pressNextButton():
             return False
 
+        if shutDownEvent.is_set():
+            return False
         sleep(randint(5, 8))
         return True
 

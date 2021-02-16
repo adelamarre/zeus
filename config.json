@@ -3,9 +3,8 @@
     "SQS_ENDPOINT": "https://eu-west-3.queue.amazonaws.com/891263387851/ZSPQ",
     "REGISTER_MAX_PROCESS": 100,
     "LISTENER_MAX_PROCESS": -1,
-    "LISTENER_MIN_PROCESS": 100,
-    "LISTENER_SPAWN_PROCESS_INTERVAL": 1,
-    "LISTENER_LOAD_THRESHOLD": 5,
+    "LISTENER_MAX_THREAD": 100,
+    "LISTENER_SPAWN_INTERVAL": 1,
     "REGISTER_BATCH_COUNT": 1000,
     "PLAYLIST": "https://open.spotify.com/playlist/1LvzxA8TzGHIgJoDc7tTo9",
     "LISTENER_OVERIDE_PLAYLIST": "https://open.spotify.com/playlist/1LvzxA8TzGHIgJoDc7tTo9"

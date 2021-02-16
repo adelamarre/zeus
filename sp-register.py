@@ -1,25 +1,22 @@
 # https://pythonspeed.com/articles/python-multiprocessing/ !!!top
 from multiprocessing import Lock, current_process, Process, Event
 from src.services.stats import Stats
-import traceback
 from src.services.console import Console
 from src.services.drivers import DriverManager
 from src.services.users import UserManager
 from src.services.userAgents import UserAgentManager
 from src.services.proxies import PROXY_FILE_LISTENER, PROXY_FILE_REGISTER, ProxyManager
-from src.application.spotify import Spotify
+from src.application.spotify.register import runner
 import boto3
-from traceback import format_exc
 from src.services.config import Config
 from os import get_terminal_size
-import json
 from time import sleep
-from shutil import rmtree
 from xvfbwrapper import Xvfb
 from colorama import Fore, Back, Style
 from sys import stdout
 from time import time
 from datetime import timedelta
+from gc import collect
 
 def showStats(data, stats: Stats):
     width, height = get_terminal_size()
@@ -47,68 +44,7 @@ def showStats(data, stats: Stats):
 
     stdout.write('\n')
     stdout.flush()
-
-def runner(context):  
-    driverManager = context['driverManager']
-    user = context['user']
-    console: Console= context['console']
-    playlist = context['playlist']
-    queueUrl = context['queueUrl']
-    proxy = context['proxy']
-    shutdownEvent = context['shutdownEvent']
-    pid = current_process().pid
     
-    try:
-        vdisplay = Xvfb(width=1280, height=1024, colordepth=24, tempdir=None, noreset='+render')
-        vdisplay.start() 
-        driverData = driverManager.getDriver(
-            type='chrome',
-            uid=pid,
-            user=user,
-            proxy=proxy
-        )
-        if not driverData:
-            return
-
-        driver = driverData['driver']
-        userDataDir = driverData['userDataDir']
-        if not driver:
-            return
-    except:
-        console.error('Unavailale webdriver: %s' % format_exc())
-    else:
-        try:
-            spotify = Spotify.Adapter(driver, console, shutdownEvent)
-            if not shutdownEvent.is_set():
-                if spotify.register(user):
-                    message = {
-                        'user': user,
-                        'playlist': playlist
-                    }
-                    client = boto3.client('sqs')
-                    client.send_message(
-                        QueueUrl=queueUrl,
-                        MessageBody=json.dumps(message),
-                        DelaySeconds=1,
-                    )
-        except:
-            console.exception()
-    
-    if driver:
-        try:
-            driver.quit()
-        except:
-            pass
-    if userDataDir:
-        try:
-            rmtree(path=userDataDir, ignore_errors=True)
-        except:
-            pass
-    if vdisplay:
-        try:
-            vdisplay.stop()
-        except:
-            pass
 
 def shutdown():
     print('Shutdown, please wait...')
@@ -171,7 +107,12 @@ if __name__ == '__main__':
             for p2 in processes:
                 if p2.is_alive():
                     leftProcesses.append(p2)
+                else:
+                    del p2
+                    
             processes = leftProcesses
+            del leftProcesses
+
             if (not lastQueuePolling or ((time() - lastQueuePolling) > 2.0)): 
                 response = client.get_queue_attributes(
                     QueueUrl= config.SQS_ENDPOINT,
@@ -187,13 +128,14 @@ if __name__ == '__main__':
                     'browser': browserVersion,
                     'driver': driverVersion,
                 }, stats)
-    
+            collect()
         except KeyboardInterrupt:
             shutdown()
             break
         except:
             console.exception()
             break
+    driverManager.purge()
 
 
 

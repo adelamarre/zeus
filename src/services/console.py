@@ -44,13 +44,12 @@ class Console:
         'NOTICE': Fore.YELLOW,
         'LOG': Fore.WHITE
     }
-    def __init__(self, verbose=2, logToFIle=True):
+    def __init__(self, verbose=2, logToFIle=None):
         self.lock = Lock()
         self.verbose = verbose
         self.logToFile = logToFIle
         try:
             self.logfile= (os.path.dirname(__file__) or '.') + '/../../temp/' + datetime.now().strftime("%m-%d-%Y-%H-%M-%S")+ '.log'
-            
         except:
             traceback.print_exc()
 

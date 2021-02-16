@@ -43,6 +43,10 @@ class DriverManager:
                     self.console.exception()
                     break
         return driver    
+    
+    def getServiceUrl(self, type):
+        if type == 'chrome':
+            return self.chrome.getServiceUrl()
 
     def purge(self):
         self.chrome.purge()

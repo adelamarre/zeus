@@ -1,81 +1,28 @@
 # https://pythonspeed.com/articles/python-multiprocessing/ !!!top
-from multiprocessing import current_process, Process, Event
+from multiprocessing import Process, Event
+import sys
+
+import psutil
 from src.services.console import Console
 from src.services.drivers import DriverManager
-from src.application.spotify import Spotify
+from src.application.spotify.listener import ListenerContext, runner
 import boto3
-from traceback import format_exc
 from src.services.config import Config
 from json import loads
 from time import sleep
 from os import environ, get_terminal_size, stat, terminal_size
 from traceback import format_exc
-from shutil import rmtree
+
 from colorama import Fore, Back, Style
 from sys import stdout, argv
-from xvfbwrapper import Xvfb
+
 from src.services.stats import Stats
-from queue import LifoQueue
 from time import time
 from psutil import virtual_memory, cpu_count, getloadavg
 from datetime import timedelta
 
 
-def runner(context):
-    #environ["DISPLAY"] = ":0"
-    driverManager = context['driverManager']
-    user = context['user']
-    console = context['console']
-    playlist = context['playlist']
-    queueUrl = context['queueUrl']
-    receiptHandle = context['receiptHandle']
-    shutdownEvent = context['shutdownEvent']
-    
-    pid = current_process().pid
-    
-    try: 
-        vdisplay = Xvfb(width=1280, height=1024, colordepth=24, tempdir=None, noreset='+render')
-        vdisplay.start()
-        driverData = driverManager.getDriver(
-            type='chrome',
-            uid=pid,
-            user=user,
-        )
-        if not driverData:
-            return
 
-        driver = driverData['driver']
-        userDataDir = driverData['userDataDir']
-        if not driver:
-            return
-    except:
-        console.error('Unavailale webdriver: %s' % format_exc())
-    else:
-        spotify = Spotify.Adapter(driver, console, shutdownEvent)
-        if spotify.login(user['email'], user['password']):
-            if not shutdownEvent.is_set():
-                spotify.playPlaylist(playlist, 90, 110)
-        
-        client = boto3.client('sqs')
-        client.delete_message(
-            QueueUrl=queueUrl,
-            ReceiptHandle=receiptHandle
-        )           
-    if driver:
-        try:
-            driver.quit()
-        except:
-            pass
-    if userDataDir:
-        try:
-            rmtree(path=userDataDir, ignore_errors=True)
-        except:
-            pass
-    if vdisplay:
-        try:
-            vdisplay.stop()
-        except:
-            pass
 
 def shutdown():
     print('Shutdown, please wait...')
@@ -143,52 +90,26 @@ if __name__ == '__main__':
     stats = Stats()
     messages = []
     lastProcessStart = 0
+    
+    
+
+    maxProcess = config.LISTENER_MAX_PROCESS
+    if maxProcess < 0:
+        maxProcess = psutil.cpu_count(logical=True)
+    threadPerProcess = round(config.LISTENER_MAX_THREAD / maxProcess)
+
+    for x in range(maxProcess):
+        p_context = ListenerContext(
+            config = config,
+        
+
+        )
+
+
     while True:
+        sleep(1)
         try:
-            sleep(config.LISTENER_SPAWN_PROCESS_INTERVAL)
-            if couldSpawnProcess(
-                len(processes),
-                config.LISTENER_MIN_PROCESS,
-                config.LISTENER_MAX_PROCESS,
-                config.LISTENER_SPAWN_PROCESS_INTERVAL,
-                config.LISTENER_LOAD_THRESHOLD,
-                lastProcessStart
-            ):
-
-            #if (((config.LISTENER_MAX_PROCESS == -1) or (len(processes) < config.MAX_LISTENER_PROCESS)) and stats.couldStartProcess()):)
-                if len(messages) < 1:
-                    response = client.receive_message(
-                        QueueUrl=config.SQS_URL,
-                        MaxNumberOfMessages=10,
-                        VisibilityTimeout=600,
-                        WaitTimeSeconds=2,
-                    )
-                    if 'Messages' in response:
-                        newMessages = response['Messages']
-                        messages =  newMessages + messages
-                        totalMessageReceived += len(messages)
-
-                if len(messages):
-                    message = messages.pop()
-                    body = loads(message['Body'])
-                    if config.LISTENER_OVERIDE_PLAYLIST:
-                        body['playlist'] = config.LISTENER_OVERIDE_PLAYLIST
-
-                    context = {
-                        'driverManager': driverManager,
-                        'console': console,
-                        'user': body['user'],
-                        'playlist': body['playlist'],
-                        'lock': lock,
-                        'queueUrl': config.SQS_URL,
-                        'receiptHandle': message['ReceiptHandle'],
-                        'shutdownEvent': shutdownEvent
-                    }
-                    lastProcessStart = time()
-                    p = Process(target=runner, args=(context,))
-                    processes.append(p)
-                    p.start()
-
+            if len(processes) < maxProcess:
             leftProcesses = []
             for p in processes:
                 if p.is_alive():
