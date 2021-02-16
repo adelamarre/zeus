@@ -1,0 +1,1104 @@
+02-16-2021-23-49-12[ss][EXCEPTION]: Traceback (most recent call last):
+  File "/home/ubuntu/projects/zeus/src/services/driversadapter/chrome.py", line 165, in getNewInstance
+    driver.execute_script(script)
+  File "/home/ubuntu/.local/lib/python3.9/site-packages/selenium/webdriver/remote/webdriver.py", line 634, in execute_script
+    return self.execute(command, {
+  File "/home/ubuntu/.local/lib/python3.9/site-packages/selenium/webdriver/remote/webdriver.py", line 321, in execute
+    self.error_handler.check_response(response)
+  File "/home/ubuntu/.local/lib/python3.9/site-packages/selenium/webdriver/remote/errorhandler.py", line 242, in check_response
+    raise exception_class(message, screen, stacktrace)
+selenium.common.exceptions.TimeoutException: Message: timeout: Timed out receiving message from renderer: 300.000
+  (Session info: chrome=85.0.4183.83)
+
+
+02-16-2021-23-49-14[ss][EXCEPTION]: Traceback (most recent call last):
+  File "/home/ubuntu/projects/zeus/src/services/driversadapter/chrome.py", line 165, in getNewInstance
+    driver.execute_script(script)
+  File "/home/ubuntu/.local/lib/python3.9/site-packages/selenium/webdriver/remote/webdriver.py", line 634, in execute_script
+    return self.execute(command, {
+  File "/home/ubuntu/.local/lib/python3.9/site-packages/selenium/webdriver/remote/webdriver.py", line 321, in execute
+    self.error_handler.check_response(response)
+  File "/home/ubuntu/.local/lib/python3.9/site-packages/selenium/webdriver/remote/errorhandler.py", line 242, in check_response
+    raise exception_class(message, screen, stacktrace)
+selenium.common.exceptions.TimeoutException: Message: timeout: Timed out receiving message from renderer: 300.000
+  (Session info: chrome=85.0.4183.83)
+
+
+02-16-2021-23-49-16[ss][EXCEPTION]: Traceback (most recent call last):
+  File "/home/ubuntu/projects/zeus/src/services/driversadapter/chrome.py", line 165, in getNewInstance
+    driver.execute_script(script)
+  File "/home/ubuntu/.local/lib/python3.9/site-packages/selenium/webdriver/remote/webdriver.py", line 634, in execute_script
+    return self.execute(command, {
+  File "/home/ubuntu/.local/lib/python3.9/site-packages/selenium/webdriver/remote/webdriver.py", line 321, in execute
+    self.error_handler.check_response(response)
+  File "/home/ubuntu/.local/lib/python3.9/site-packages/selenium/webdriver/remote/errorhandler.py", line 242, in check_response
+    raise exception_class(message, screen, stacktrace)
+selenium.common.exceptions.TimeoutException: Message: timeout: Timed out receiving message from renderer: 300.000
+  (Session info: chrome=85.0.4183.83)
+
+
+02-16-2021-23-49-18[ss][EXCEPTION]: Traceback (most recent call last):
+  File "/home/ubuntu/projects/zeus/src/services/driversadapter/chrome.py", line 165, in getNewInstance
+    driver.execute_script(script)
+  File "/home/ubuntu/.local/lib/python3.9/site-packages/selenium/webdriver/remote/webdriver.py", line 634, in execute_script
+    return self.execute(command, {
+  File "/home/ubuntu/.local/lib/python3.9/site-packages/selenium/webdriver/remote/webdriver.py", line 321, in execute
+    self.error_handler.check_response(response)
+  File "/home/ubuntu/.local/lib/python3.9/site-packages/selenium/webdriver/remote/errorhandler.py", line 242, in check_response
+    raise exception_class(message, screen, stacktrace)
+selenium.common.exceptions.TimeoutException: Message: timeout: Timed out receiving message from renderer: 300.000
+  (Session info: chrome=85.0.4183.83)
+
+
+02-16-2021-23-49-20[ss][EXCEPTION]: Traceback (most recent call last):
+  File "/home/ubuntu/projects/zeus/src/services/driversadapter/chrome.py", line 165, in getNewInstance
+    driver.execute_script(script)
+  File "/home/ubuntu/.local/lib/python3.9/site-packages/selenium/webdriver/remote/webdriver.py", line 634, in execute_script
+    return self.execute(command, {
+  File "/home/ubuntu/.local/lib/python3.9/site-packages/selenium/webdriver/remote/webdriver.py", line 321, in execute
+    self.error_handler.check_response(response)
+  File "/home/ubuntu/.local/lib/python3.9/site-packages/selenium/webdriver/remote/errorhandler.py", line 242, in check_response
+    raise exception_class(message, screen, stacktrace)
+selenium.common.exceptions.TimeoutException: Message: timeout: Timed out receiving message from renderer: 300.000
+  (Session info: chrome=85.0.4183.83)
+
+
+02-16-2021-23-49-22[ss][EXCEPTION]: Traceback (most recent call last):
+  File "/home/ubuntu/projects/zeus/src/services/driversadapter/chrome.py", line 165, in getNewInstance
+    driver.execute_script(script)
+  File "/home/ubuntu/.local/lib/python3.9/site-packages/selenium/webdriver/remote/webdriver.py", line 634, in execute_script
+    return self.execute(command, {
+  File "/home/ubuntu/.local/lib/python3.9/site-packages/selenium/webdriver/remote/webdriver.py", line 321, in execute
+    self.error_handler.check_response(response)
+  File "/home/ubuntu/.local/lib/python3.9/site-packages/selenium/webdriver/remote/errorhandler.py", line 242, in check_response
+    raise exception_class(message, screen, stacktrace)
+selenium.common.exceptions.TimeoutException: Message: timeout: Timed out receiving message from renderer: 300.000
+  (Session info: chrome=85.0.4183.83)
+
+
+02-16-2021-23-49-25[ss][EXCEPTION]: Traceback (most recent call last):
+  File "/home/ubuntu/projects/zeus/src/services/driversadapter/chrome.py", line 165, in getNewInstance
+    driver.execute_script(script)
+  File "/home/ubuntu/.local/lib/python3.9/site-packages/selenium/webdriver/remote/webdriver.py", line 634, in execute_script
+    return self.execute(command, {
+  File "/home/ubuntu/.local/lib/python3.9/site-packages/selenium/webdriver/remote/webdriver.py", line 321, in execute
+    self.error_handler.check_response(response)
+  File "/home/ubuntu/.local/lib/python3.9/site-packages/selenium/webdriver/remote/errorhandler.py", line 242, in check_response
+    raise exception_class(message, screen, stacktrace)
+selenium.common.exceptions.TimeoutException: Message: timeout: Timed out receiving message from renderer: 300.000
+  (Session info: chrome=85.0.4183.83)
+
+
+02-16-2021-23-49-26[ss][EXCEPTION]: Traceback (most recent call last):
+  File "/home/ubuntu/projects/zeus/src/services/driversadapter/chrome.py", line 165, in getNewInstance
+    driver.execute_script(script)
+  File "/home/ubuntu/.local/lib/python3.9/site-packages/selenium/webdriver/remote/webdriver.py", line 634, in execute_script
+    return self.execute(command, {
+  File "/home/ubuntu/.local/lib/python3.9/site-packages/selenium/webdriver/remote/webdriver.py", line 321, in execute
+    self.error_handler.check_response(response)
+  File "/home/ubuntu/.local/lib/python3.9/site-packages/selenium/webdriver/remote/errorhandler.py", line 242, in check_response
+    raise exception_class(message, screen, stacktrace)
+selenium.common.exceptions.TimeoutException: Message: timeout: Timed out receiving message from renderer: 300.000
+  (Session info: chrome=85.0.4183.83)
+
+
+02-16-2021-23-49-29[ss][EXCEPTION]: Traceback (most recent call last):
+  File "/home/ubuntu/projects/zeus/src/services/driversadapter/chrome.py", line 165, in getNewInstance
+    driver.execute_script(script)
+  File "/home/ubuntu/.local/lib/python3.9/site-packages/selenium/webdriver/remote/webdriver.py", line 634, in execute_script
+    return self.execute(command, {
+  File "/home/ubuntu/.local/lib/python3.9/site-packages/selenium/webdriver/remote/webdriver.py", line 321, in execute
+    self.error_handler.check_response(response)
+  File "/home/ubuntu/.local/lib/python3.9/site-packages/selenium/webdriver/remote/errorhandler.py", line 242, in check_response
+    raise exception_class(message, screen, stacktrace)
+selenium.common.exceptions.TimeoutException: Message: timeout: Timed out receiving message from renderer: 300.000
+  (Session info: chrome=85.0.4183.83)
+
+
+02-16-2021-23-49-31[ss][EXCEPTION]: Traceback (most recent call last):
+  File "/home/ubuntu/projects/zeus/src/services/driversadapter/chrome.py", line 165, in getNewInstance
+    driver.execute_script(script)
+  File "/home/ubuntu/.local/lib/python3.9/site-packages/selenium/webdriver/remote/webdriver.py", line 634, in execute_script
+    return self.execute(command, {
+  File "/home/ubuntu/.local/lib/python3.9/site-packages/selenium/webdriver/remote/webdriver.py", line 321, in execute
+    self.error_handler.check_response(response)
+  File "/home/ubuntu/.local/lib/python3.9/site-packages/selenium/webdriver/remote/errorhandler.py", line 242, in check_response
+    raise exception_class(message, screen, stacktrace)
+selenium.common.exceptions.TimeoutException: Message: timeout: Timed out receiving message from renderer: 300.000
+  (Session info: chrome=85.0.4183.83)
+
+
+02-16-2021-23-49-33[ss][EXCEPTION]: Traceback (most recent call last):
+  File "/home/ubuntu/projects/zeus/src/services/driversadapter/chrome.py", line 165, in getNewInstance
+    driver.execute_script(script)
+  File "/home/ubuntu/.local/lib/python3.9/site-packages/selenium/webdriver/remote/webdriver.py", line 634, in execute_script
+    return self.execute(command, {
+  File "/home/ubuntu/.local/lib/python3.9/site-packages/selenium/webdriver/remote/webdriver.py", line 321, in execute
+    self.error_handler.check_response(response)
+  File "/home/ubuntu/.local/lib/python3.9/site-packages/selenium/webdriver/remote/errorhandler.py", line 242, in check_response
+    raise exception_class(message, screen, stacktrace)
+selenium.common.exceptions.TimeoutException: Message: timeout: Timed out receiving message from renderer: 300.000
+  (Session info: chrome=85.0.4183.83)
+
+
+02-16-2021-23-49-35[ss][EXCEPTION]: Traceback (most recent call last):
+  File "/home/ubuntu/projects/zeus/src/services/driversadapter/chrome.py", line 165, in getNewInstance
+    driver.execute_script(script)
+  File "/home/ubuntu/.local/lib/python3.9/site-packages/selenium/webdriver/remote/webdriver.py", line 634, in execute_script
+    return self.execute(command, {
+  File "/home/ubuntu/.local/lib/python3.9/site-packages/selenium/webdriver/remote/webdriver.py", line 321, in execute
+    self.error_handler.check_response(response)
+  File "/home/ubuntu/.local/lib/python3.9/site-packages/selenium/webdriver/remote/errorhandler.py", line 242, in check_response
+    raise exception_class(message, screen, stacktrace)
+selenium.common.exceptions.TimeoutException: Message: timeout: Timed out receiving message from renderer: 300.000
+  (Session info: chrome=85.0.4183.83)
+
+
+02-16-2021-23-49-37[ss][EXCEPTION]: Traceback (most recent call last):
+  File "/home/ubuntu/projects/zeus/src/services/driversadapter/chrome.py", line 165, in getNewInstance
+    driver.execute_script(script)
+  File "/home/ubuntu/.local/lib/python3.9/site-packages/selenium/webdriver/remote/webdriver.py", line 634, in execute_script
+    return self.execute(command, {
+  File "/home/ubuntu/.local/lib/python3.9/site-packages/selenium/webdriver/remote/webdriver.py", line 321, in execute
+    self.error_handler.check_response(response)
+  File "/home/ubuntu/.local/lib/python3.9/site-packages/selenium/webdriver/remote/errorhandler.py", line 242, in check_response
+    raise exception_class(message, screen, stacktrace)
+selenium.common.exceptions.TimeoutException: Message: timeout: Timed out receiving message from renderer: 300.000
+  (Session info: chrome=85.0.4183.83)
+
+
+02-16-2021-23-49-39[ss][EXCEPTION]: Traceback (most recent call last):
+  File "/home/ubuntu/projects/zeus/src/services/driversadapter/chrome.py", line 165, in getNewInstance
+    driver.execute_script(script)
+  File "/home/ubuntu/.local/lib/python3.9/site-packages/selenium/webdriver/remote/webdriver.py", line 634, in execute_script
+    return self.execute(command, {
+  File "/home/ubuntu/.local/lib/python3.9/site-packages/selenium/webdriver/remote/webdriver.py", line 321, in execute
+    self.error_handler.check_response(response)
+  File "/home/ubuntu/.local/lib/python3.9/site-packages/selenium/webdriver/remote/errorhandler.py", line 242, in check_response
+    raise exception_class(message, screen, stacktrace)
+selenium.common.exceptions.TimeoutException: Message: timeout: Timed out receiving message from renderer: 300.000
+  (Session info: chrome=85.0.4183.83)
+
+
+02-16-2021-23-49-41[ss][EXCEPTION]: Traceback (most recent call last):
+  File "/home/ubuntu/projects/zeus/src/services/driversadapter/chrome.py", line 165, in getNewInstance
+    driver.execute_script(script)
+  File "/home/ubuntu/.local/lib/python3.9/site-packages/selenium/webdriver/remote/webdriver.py", line 634, in execute_script
+    return self.execute(command, {
+  File "/home/ubuntu/.local/lib/python3.9/site-packages/selenium/webdriver/remote/webdriver.py", line 321, in execute
+    self.error_handler.check_response(response)
+  File "/home/ubuntu/.local/lib/python3.9/site-packages/selenium/webdriver/remote/errorhandler.py", line 242, in check_response
+    raise exception_class(message, screen, stacktrace)
+selenium.common.exceptions.TimeoutException: Message: timeout: Timed out receiving message from renderer: 300.000
+  (Session info: chrome=85.0.4183.83)
+
+
+02-16-2021-23-49-43[ss][EXCEPTION]: Traceback (most recent call last):
+  File "/home/ubuntu/projects/zeus/src/services/driversadapter/chrome.py", line 165, in getNewInstance
+    driver.execute_script(script)
+  File "/home/ubuntu/.local/lib/python3.9/site-packages/selenium/webdriver/remote/webdriver.py", line 634, in execute_script
+    return self.execute(command, {
+  File "/home/ubuntu/.local/lib/python3.9/site-packages/selenium/webdriver/remote/webdriver.py", line 321, in execute
+    self.error_handler.check_response(response)
+  File "/home/ubuntu/.local/lib/python3.9/site-packages/selenium/webdriver/remote/errorhandler.py", line 242, in check_response
+    raise exception_class(message, screen, stacktrace)
+selenium.common.exceptions.TimeoutException: Message: timeout: Timed out receiving message from renderer: 300.000
+  (Session info: chrome=85.0.4183.83)
+
+
+02-16-2021-23-50-17[ss][EXCEPTION]: Traceback (most recent call last):
+  File "/home/ubuntu/.local/lib/python3.9/site-packages/urllib3/connectionpool.py", line 699, in urlopen
+    httplib_response = self._make_request(
+  File "/home/ubuntu/.local/lib/python3.9/site-packages/urllib3/connectionpool.py", line 445, in _make_request
+    six.raise_from(e, None)
+  File "<string>", line 3, in raise_from
+  File "/home/ubuntu/.local/lib/python3.9/site-packages/urllib3/connectionpool.py", line 440, in _make_request
+    httplib_response = conn.getresponse()
+  File "/usr/local/lib/python3.9/http/client.py", line 1347, in getresponse
+    response.begin()
+  File "/usr/local/lib/python3.9/http/client.py", line 307, in begin
+    version, status, reason = self._read_status()
+  File "/usr/local/lib/python3.9/http/client.py", line 276, in _read_status
+    raise RemoteDisconnected("Remote end closed connection without"
+http.client.RemoteDisconnected: Remote end closed connection without response
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/ubuntu/projects/zeus/src/services/driversadapter/chrome.py", line 165, in getNewInstance
+    driver.execute_script(script)
+  File "/home/ubuntu/.local/lib/python3.9/site-packages/selenium/webdriver/remote/webdriver.py", line 634, in execute_script
+    return self.execute(command, {
+  File "/home/ubuntu/.local/lib/python3.9/site-packages/selenium/webdriver/remote/webdriver.py", line 319, in execute
+    response = self.command_executor.execute(driver_command, params)
+  File "/home/ubuntu/.local/lib/python3.9/site-packages/selenium/webdriver/remote/remote_connection.py", line 374, in execute
+    return self._request(command_info[0], url, body=data)
+  File "/home/ubuntu/.local/lib/python3.9/site-packages/selenium/webdriver/remote/remote_connection.py", line 397, in _request
+    resp = self._conn.request(method, url, body=body, headers=headers)
+  File "/home/ubuntu/.local/lib/python3.9/site-packages/urllib3/request.py", line 78, in request
+    return self.request_encode_body(
+  File "/home/ubuntu/.local/lib/python3.9/site-packages/urllib3/request.py", line 170, in request_encode_body
+    return self.urlopen(method, url, **extra_kw)
+  File "/home/ubuntu/.local/lib/python3.9/site-packages/urllib3/poolmanager.py", line 375, in urlopen
+    response = conn.urlopen(method, u.request_uri, **kw)
+  File "/home/ubuntu/.local/lib/python3.9/site-packages/urllib3/connectionpool.py", line 755, in urlopen
+    retries = retries.increment(
+  File "/home/ubuntu/.local/lib/python3.9/site-packages/urllib3/util/retry.py", line 531, in increment
+    raise six.reraise(type(error), error, _stacktrace)
+  File "/home/ubuntu/.local/lib/python3.9/site-packages/urllib3/packages/six.py", line 734, in reraise
+    raise value.with_traceback(tb)
+  File "/home/ubuntu/.local/lib/python3.9/site-packages/urllib3/connectionpool.py", line 699, in urlopen
+    httplib_response = self._make_request(
+  File "/home/ubuntu/.local/lib/python3.9/site-packages/urllib3/connectionpool.py", line 445, in _make_request
+    six.raise_from(e, None)
+  File "<string>", line 3, in raise_from
+  File "/home/ubuntu/.local/lib/python3.9/site-packages/urllib3/connectionpool.py", line 440, in _make_request
+    httplib_response = conn.getresponse()
+  File "/usr/local/lib/python3.9/http/client.py", line 1347, in getresponse
+    response.begin()
+  File "/usr/local/lib/python3.9/http/client.py", line 307, in begin
+    version, status, reason = self._read_status()
+  File "/usr/local/lib/python3.9/http/client.py", line 276, in _read_status
+    raise RemoteDisconnected("Remote end closed connection without"
+urllib3.exceptions.ProtocolError: ('Connection aborted.', RemoteDisconnected('Remote end closed connection without response'))
+
+02-16-2021-23-50-17[ss][EXCEPTION]: Traceback (most recent call last):
+  File "/home/ubuntu/.local/lib/python3.9/site-packages/urllib3/connectionpool.py", line 699, in urlopen
+    httplib_response = self._make_request(
+  File "/home/ubuntu/.local/lib/python3.9/site-packages/urllib3/connectionpool.py", line 445, in _make_request
+    six.raise_from(e, None)
+  File "<string>", line 3, in raise_from
+  File "/home/ubuntu/.local/lib/python3.9/site-packages/urllib3/connectionpool.py", line 440, in _make_request
+    httplib_response = conn.getresponse()
+  File "/usr/local/lib/python3.9/http/client.py", line 1347, in getresponse
+    response.begin()
+  File "/usr/local/lib/python3.9/http/client.py", line 307, in begin
+    version, status, reason = self._read_status()
+  File "/usr/local/lib/python3.9/http/client.py", line 276, in _read_status
+    raise RemoteDisconnected("Remote end closed connection without"
+http.client.RemoteDisconnected: Remote end closed connection without response
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/ubuntu/projects/zeus/src/services/driversadapter/chrome.py", line 165, in getNewInstance
+    driver.execute_script(script)
+  File "/home/ubuntu/.local/lib/python3.9/site-packages/selenium/webdriver/remote/webdriver.py", line 634, in execute_script
+    return self.execute(command, {
+  File "/home/ubuntu/.local/lib/python3.9/site-packages/selenium/webdriver/remote/webdriver.py", line 319, in execute
+    response = self.command_executor.execute(driver_command, params)
+  File "/home/ubuntu/.local/lib/python3.9/site-packages/selenium/webdriver/remote/remote_connection.py", line 374, in execute
+    return self._request(command_info[0], url, body=data)
+  File "/home/ubuntu/.local/lib/python3.9/site-packages/selenium/webdriver/remote/remote_connection.py", line 397, in _request
+    resp = self._conn.request(method, url, body=body, headers=headers)
+  File "/home/ubuntu/.local/lib/python3.9/site-packages/urllib3/request.py", line 78, in request
+    return self.request_encode_body(
+  File "/home/ubuntu/.local/lib/python3.9/site-packages/urllib3/request.py", line 170, in request_encode_body
+    return self.urlopen(method, url, **extra_kw)
+  File "/home/ubuntu/.local/lib/python3.9/site-packages/urllib3/poolmanager.py", line 375, in urlopen
+    response = conn.urlopen(method, u.request_uri, **kw)
+  File "/home/ubuntu/.local/lib/python3.9/site-packages/urllib3/connectionpool.py", line 755, in urlopen
+    retries = retries.increment(
+  File "/home/ubuntu/.local/lib/python3.9/site-packages/urllib3/util/retry.py", line 531, in increment
+    raise six.reraise(type(error), error, _stacktrace)
+  File "/home/ubuntu/.local/lib/python3.9/site-packages/urllib3/packages/six.py", line 734, in reraise
+    raise value.with_traceback(tb)
+  File "/home/ubuntu/.local/lib/python3.9/site-packages/urllib3/connectionpool.py", line 699, in urlopen
+    httplib_response = self._make_request(
+  File "/home/ubuntu/.local/lib/python3.9/site-packages/urllib3/connectionpool.py", line 445, in _make_request
+    six.raise_from(e, None)
+  File "<string>", line 3, in raise_from
+  File "/home/ubuntu/.local/lib/python3.9/site-packages/urllib3/connectionpool.py", line 440, in _make_request
+    httplib_response = conn.getresponse()
+  File "/usr/local/lib/python3.9/http/client.py", line 1347, in getresponse
+    response.begin()
+  File "/usr/local/lib/python3.9/http/client.py", line 307, in begin
+    version, status, reason = self._read_status()
+  File "/usr/local/lib/python3.9/http/client.py", line 276, in _read_status
+    raise RemoteDisconnected("Remote end closed connection without"
+urllib3.exceptions.ProtocolError: ('Connection aborted.', RemoteDisconnected('Remote end closed connection without response'))
+
+02-16-2021-23-50-17[ss][EXCEPTION]: Traceback (most recent call last):
+  File "/home/ubuntu/.local/lib/python3.9/site-packages/urllib3/connectionpool.py", line 699, in urlopen
+    httplib_response = self._make_request(
+  File "/home/ubuntu/.local/lib/python3.9/site-packages/urllib3/connectionpool.py", line 445, in _make_request
+    six.raise_from(e, None)
+  File "<string>", line 3, in raise_from
+  File "/home/ubuntu/.local/lib/python3.9/site-packages/urllib3/connectionpool.py", line 440, in _make_request
+    httplib_response = conn.getresponse()
+  File "/usr/local/lib/python3.9/http/client.py", line 1347, in getresponse
+    response.begin()
+  File "/usr/local/lib/python3.9/http/client.py", line 307, in begin
+    version, status, reason = self._read_status()
+  File "/usr/local/lib/python3.9/http/client.py", line 276, in _read_status
+    raise RemoteDisconnected("Remote end closed connection without"
+http.client.RemoteDisconnected: Remote end closed connection without response
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/ubuntu/projects/zeus/src/services/driversadapter/chrome.py", line 165, in getNewInstance
+    driver.execute_script(script)
+  File "/home/ubuntu/.local/lib/python3.9/site-packages/selenium/webdriver/remote/webdriver.py", line 634, in execute_script
+    return self.execute(command, {
+  File "/home/ubuntu/.local/lib/python3.9/site-packages/selenium/webdriver/remote/webdriver.py", line 319, in execute
+    response = self.command_executor.execute(driver_command, params)
+  File "/home/ubuntu/.local/lib/python3.9/site-packages/selenium/webdriver/remote/remote_connection.py", line 374, in execute
+    return self._request(command_info[0], url, body=data)
+  File "/home/ubuntu/.local/lib/python3.9/site-packages/selenium/webdriver/remote/remote_connection.py", line 397, in _request
+    resp = self._conn.request(method, url, body=body, headers=headers)
+  File "/home/ubuntu/.local/lib/python3.9/site-packages/urllib3/request.py", line 78, in request
+    return self.request_encode_body(
+  File "/home/ubuntu/.local/lib/python3.9/site-packages/urllib3/request.py", line 170, in request_encode_body
+    return self.urlopen(method, url, **extra_kw)
+  File "/home/ubuntu/.local/lib/python3.9/site-packages/urllib3/poolmanager.py", line 375, in urlopen
+    response = conn.urlopen(method, u.request_uri, **kw)
+  File "/home/ubuntu/.local/lib/python3.9/site-packages/urllib3/connectionpool.py", line 755, in urlopen
+    retries = retries.increment(
+  File "/home/ubuntu/.local/lib/python3.9/site-packages/urllib3/util/retry.py", line 531, in increment
+    raise six.reraise(type(error), error, _stacktrace)
+  File "/home/ubuntu/.local/lib/python3.9/site-packages/urllib3/packages/six.py", line 734, in reraise
+    raise value.with_traceback(tb)
+  File "/home/ubuntu/.local/lib/python3.9/site-packages/urllib3/connectionpool.py", line 699, in urlopen
+    httplib_response = self._make_request(
+  File "/home/ubuntu/.local/lib/python3.9/site-packages/urllib3/connectionpool.py", line 445, in _make_request
+    six.raise_from(e, None)
+  File "<string>", line 3, in raise_from
+  File "/home/ubuntu/.local/lib/python3.9/site-packages/urllib3/connectionpool.py", line 440, in _make_request
+    httplib_response = conn.getresponse()
+  File "/usr/local/lib/python3.9/http/client.py", line 1347, in getresponse
+    response.begin()
+  File "/usr/local/lib/python3.9/http/client.py", line 307, in begin
+    version, status, reason = self._read_status()
+  File "/usr/local/lib/python3.9/http/client.py", line 276, in _read_status
+    raise RemoteDisconnected("Remote end closed connection without"
+urllib3.exceptions.ProtocolError: ('Connection aborted.', RemoteDisconnected('Remote end closed connection without response'))
+
+02-16-2021-23-50-17[ss][EXCEPTION]: Traceback (most recent call last):
+  File "/home/ubuntu/.local/lib/python3.9/site-packages/urllib3/connectionpool.py", line 699, in urlopen
+    httplib_response = self._make_request(
+  File "/home/ubuntu/.local/lib/python3.9/site-packages/urllib3/connectionpool.py", line 445, in _make_request
+    six.raise_from(e, None)
+  File "<string>", line 3, in raise_from
+  File "/home/ubuntu/.local/lib/python3.9/site-packages/urllib3/connectionpool.py", line 440, in _make_request
+    httplib_response = conn.getresponse()
+  File "/usr/local/lib/python3.9/http/client.py", line 1347, in getresponse
+    response.begin()
+  File "/usr/local/lib/python3.9/http/client.py", line 307, in begin
+    version, status, reason = self._read_status()
+  File "/usr/local/lib/python3.9/http/client.py", line 276, in _read_status
+    raise RemoteDisconnected("Remote end closed connection without"
+http.client.RemoteDisconnected: Remote end closed connection without response
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/ubuntu/projects/zeus/src/services/driversadapter/chrome.py", line 165, in getNewInstance
+    driver.execute_script(script)
+  File "/home/ubuntu/.local/lib/python3.9/site-packages/selenium/webdriver/remote/webdriver.py", line 634, in execute_script
+    return self.execute(command, {
+  File "/home/ubuntu/.local/lib/python3.9/site-packages/selenium/webdriver/remote/webdriver.py", line 319, in execute
+    response = self.command_executor.execute(driver_command, params)
+  File "/home/ubuntu/.local/lib/python3.9/site-packages/selenium/webdriver/remote/remote_connection.py", line 374, in execute
+    return self._request(command_info[0], url, body=data)
+  File "/home/ubuntu/.local/lib/python3.9/site-packages/selenium/webdriver/remote/remote_connection.py", line 397, in _request
+    resp = self._conn.request(method, url, body=body, headers=headers)
+  File "/home/ubuntu/.local/lib/python3.9/site-packages/urllib3/request.py", line 78, in request
+    return self.request_encode_body(
+  File "/home/ubuntu/.local/lib/python3.9/site-packages/urllib3/request.py", line 170, in request_encode_body
+    return self.urlopen(method, url, **extra_kw)
+  File "/home/ubuntu/.local/lib/python3.9/site-packages/urllib3/poolmanager.py", line 375, in urlopen
+    response = conn.urlopen(method, u.request_uri, **kw)
+  File "/home/ubuntu/.local/lib/python3.9/site-packages/urllib3/connectionpool.py", line 755, in urlopen
+    retries = retries.increment(
+  File "/home/ubuntu/.local/lib/python3.9/site-packages/urllib3/util/retry.py", line 531, in increment
+    raise six.reraise(type(error), error, _stacktrace)
+  File "/home/ubuntu/.local/lib/python3.9/site-packages/urllib3/packages/six.py", line 734, in reraise
+    raise value.with_traceback(tb)
+  File "/home/ubuntu/.local/lib/python3.9/site-packages/urllib3/connectionpool.py", line 699, in urlopen
+    httplib_response = self._make_request(
+  File "/home/ubuntu/.local/lib/python3.9/site-packages/urllib3/connectionpool.py", line 445, in _make_request
+    six.raise_from(e, None)
+  File "<string>", line 3, in raise_from
+  File "/home/ubuntu/.local/lib/python3.9/site-packages/urllib3/connectionpool.py", line 440, in _make_request
+    httplib_response = conn.getresponse()
+  File "/usr/local/lib/python3.9/http/client.py", line 1347, in getresponse
+    response.begin()
+  File "/usr/local/lib/python3.9/http/client.py", line 307, in begin
+    version, status, reason = self._read_status()
+  File "/usr/local/lib/python3.9/http/client.py", line 276, in _read_status
+    raise RemoteDisconnected("Remote end closed connection without"
+urllib3.exceptions.ProtocolError: ('Connection aborted.', RemoteDisconnected('Remote end closed connection without response'))
+
+02-16-2021-23-50-17[ss][EXCEPTION]: Traceback (most recent call last):
+  File "/home/ubuntu/.local/lib/python3.9/site-packages/urllib3/connectionpool.py", line 699, in urlopen
+    httplib_response = self._make_request(
+  File "/home/ubuntu/.local/lib/python3.9/site-packages/urllib3/connectionpool.py", line 445, in _make_request
+    six.raise_from(e, None)
+  File "<string>", line 3, in raise_from
+  File "/home/ubuntu/.local/lib/python3.9/site-packages/urllib3/connectionpool.py", line 440, in _make_request
+    httplib_response = conn.getresponse()
+  File "/usr/local/lib/python3.9/http/client.py", line 1347, in getresponse
+    response.begin()
+  File "/usr/local/lib/python3.9/http/client.py", line 307, in begin
+    version, status, reason = self._read_status()
+  File "/usr/local/lib/python3.9/http/client.py", line 276, in _read_status
+    raise RemoteDisconnected("Remote end closed connection without"
+http.client.RemoteDisconnected: Remote end closed connection without response
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/ubuntu/projects/zeus/src/services/driversadapter/chrome.py", line 165, in getNewInstance
+    driver.execute_script(script)
+  File "/home/ubuntu/.local/lib/python3.9/site-packages/selenium/webdriver/remote/webdriver.py", line 634, in execute_script
+    return self.execute(command, {
+  File "/home/ubuntu/.local/lib/python3.9/site-packages/selenium/webdriver/remote/webdriver.py", line 319, in execute
+    response = self.command_executor.execute(driver_command, params)
+  File "/home/ubuntu/.local/lib/python3.9/site-packages/selenium/webdriver/remote/remote_connection.py", line 374, in execute
+    return self._request(command_info[0], url, body=data)
+  File "/home/ubuntu/.local/lib/python3.9/site-packages/selenium/webdriver/remote/remote_connection.py", line 397, in _request
+    resp = self._conn.request(method, url, body=body, headers=headers)
+  File "/home/ubuntu/.local/lib/python3.9/site-packages/urllib3/request.py", line 78, in request
+    return self.request_encode_body(
+  File "/home/ubuntu/.local/lib/python3.9/site-packages/urllib3/request.py", line 170, in request_encode_body
+    return self.urlopen(method, url, **extra_kw)
+  File "/home/ubuntu/.local/lib/python3.9/site-packages/urllib3/poolmanager.py", line 375, in urlopen
+    response = conn.urlopen(method, u.request_uri, **kw)
+  File "/home/ubuntu/.local/lib/python3.9/site-packages/urllib3/connectionpool.py", line 755, in urlopen
+    retries = retries.increment(
+  File "/home/ubuntu/.local/lib/python3.9/site-packages/urllib3/util/retry.py", line 531, in increment
+    raise six.reraise(type(error), error, _stacktrace)
+  File "/home/ubuntu/.local/lib/python3.9/site-packages/urllib3/packages/six.py", line 734, in reraise
+    raise value.with_traceback(tb)
+  File "/home/ubuntu/.local/lib/python3.9/site-packages/urllib3/connectionpool.py", line 699, in urlopen
+    httplib_response = self._make_request(
+  File "/home/ubuntu/.local/lib/python3.9/site-packages/urllib3/connectionpool.py", line 445, in _make_request
+    six.raise_from(e, None)
+  File "<string>", line 3, in raise_from
+  File "/home/ubuntu/.local/lib/python3.9/site-packages/urllib3/connectionpool.py", line 440, in _make_request
+    httplib_response = conn.getresponse()
+  File "/usr/local/lib/python3.9/http/client.py", line 1347, in getresponse
+    response.begin()
+  File "/usr/local/lib/python3.9/http/client.py", line 307, in begin
+    version, status, reason = self._read_status()
+  File "/usr/local/lib/python3.9/http/client.py", line 276, in _read_status
+    raise RemoteDisconnected("Remote end closed connection without"
+urllib3.exceptions.ProtocolError: ('Connection aborted.', RemoteDisconnected('Remote end closed connection without response'))
+
+02-16-2021-23-50-17[ss][EXCEPTION]: Traceback (most recent call last):
+  File "/home/ubuntu/.local/lib/python3.9/site-packages/urllib3/connectionpool.py", line 699, in urlopen
+    httplib_response = self._make_request(
+  File "/home/ubuntu/.local/lib/python3.9/site-packages/urllib3/connectionpool.py", line 445, in _make_request
+    six.raise_from(e, None)
+  File "<string>", line 3, in raise_from
+  File "/home/ubuntu/.local/lib/python3.9/site-packages/urllib3/connectionpool.py", line 440, in _make_request
+    httplib_response = conn.getresponse()
+  File "/usr/local/lib/python3.9/http/client.py", line 1347, in getresponse
+    response.begin()
+  File "/usr/local/lib/python3.9/http/client.py", line 307, in begin
+    version, status, reason = self._read_status()
+  File "/usr/local/lib/python3.9/http/client.py", line 276, in _read_status
+    raise RemoteDisconnected("Remote end closed connection without"
+http.client.RemoteDisconnected: Remote end closed connection without response
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/ubuntu/projects/zeus/src/services/driversadapter/chrome.py", line 165, in getNewInstance
+    driver.execute_script(script)
+  File "/home/ubuntu/.local/lib/python3.9/site-packages/selenium/webdriver/remote/webdriver.py", line 634, in execute_script
+    return self.execute(command, {
+  File "/home/ubuntu/.local/lib/python3.9/site-packages/selenium/webdriver/remote/webdriver.py", line 319, in execute
+    response = self.command_executor.execute(driver_command, params)
+  File "/home/ubuntu/.local/lib/python3.9/site-packages/selenium/webdriver/remote/remote_connection.py", line 374, in execute
+    return self._request(command_info[0], url, body=data)
+  File "/home/ubuntu/.local/lib/python3.9/site-packages/selenium/webdriver/remote/remote_connection.py", line 397, in _request
+    resp = self._conn.request(method, url, body=body, headers=headers)
+  File "/home/ubuntu/.local/lib/python3.9/site-packages/urllib3/request.py", line 78, in request
+    return self.request_encode_body(
+  File "/home/ubuntu/.local/lib/python3.9/site-packages/urllib3/request.py", line 170, in request_encode_body
+    return self.urlopen(method, url, **extra_kw)
+  File "/home/ubuntu/.local/lib/python3.9/site-packages/urllib3/poolmanager.py", line 375, in urlopen
+    response = conn.urlopen(method, u.request_uri, **kw)
+  File "/home/ubuntu/.local/lib/python3.9/site-packages/urllib3/connectionpool.py", line 755, in urlopen
+    retries = retries.increment(
+  File "/home/ubuntu/.local/lib/python3.9/site-packages/urllib3/util/retry.py", line 531, in increment
+    raise six.reraise(type(error), error, _stacktrace)
+  File "/home/ubuntu/.local/lib/python3.9/site-packages/urllib3/packages/six.py", line 734, in reraise
+    raise value.with_traceback(tb)
+  File "/home/ubuntu/.local/lib/python3.9/site-packages/urllib3/connectionpool.py", line 699, in urlopen
+    httplib_response = self._make_request(
+  File "/home/ubuntu/.local/lib/python3.9/site-packages/urllib3/connectionpool.py", line 445, in _make_request
+    six.raise_from(e, None)
+  File "<string>", line 3, in raise_from
+  File "/home/ubuntu/.local/lib/python3.9/site-packages/urllib3/connectionpool.py", line 440, in _make_request
+    httplib_response = conn.getresponse()
+  File "/usr/local/lib/python3.9/http/client.py", line 1347, in getresponse
+    response.begin()
+  File "/usr/local/lib/python3.9/http/client.py", line 307, in begin
+    version, status, reason = self._read_status()
+  File "/usr/local/lib/python3.9/http/client.py", line 276, in _read_status
+    raise RemoteDisconnected("Remote end closed connection without"
+urllib3.exceptions.ProtocolError: ('Connection aborted.', RemoteDisconnected('Remote end closed connection without response'))
+
+02-16-2021-23-50-17[ss][EXCEPTION]: Traceback (most recent call last):
+  File "/home/ubuntu/.local/lib/python3.9/site-packages/urllib3/connectionpool.py", line 699, in urlopen
+    httplib_response = self._make_request(
+  File "/home/ubuntu/.local/lib/python3.9/site-packages/urllib3/connectionpool.py", line 445, in _make_request
+    six.raise_from(e, None)
+  File "<string>", line 3, in raise_from
+  File "/home/ubuntu/.local/lib/python3.9/site-packages/urllib3/connectionpool.py", line 440, in _make_request
+    httplib_response = conn.getresponse()
+  File "/usr/local/lib/python3.9/http/client.py", line 1347, in getresponse
+    response.begin()
+  File "/usr/local/lib/python3.9/http/client.py", line 307, in begin
+    version, status, reason = self._read_status()
+  File "/usr/local/lib/python3.9/http/client.py", line 276, in _read_status
+    raise RemoteDisconnected("Remote end closed connection without"
+http.client.RemoteDisconnected: Remote end closed connection without response
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/ubuntu/projects/zeus/src/services/driversadapter/chrome.py", line 165, in getNewInstance
+    driver.execute_script(script)
+  File "/home/ubuntu/.local/lib/python3.9/site-packages/selenium/webdriver/remote/webdriver.py", line 634, in execute_script
+    return self.execute(command, {
+  File "/home/ubuntu/.local/lib/python3.9/site-packages/selenium/webdriver/remote/webdriver.py", line 319, in execute
+    response = self.command_executor.execute(driver_command, params)
+  File "/home/ubuntu/.local/lib/python3.9/site-packages/selenium/webdriver/remote/remote_connection.py", line 374, in execute
+    return self._request(command_info[0], url, body=data)
+  File "/home/ubuntu/.local/lib/python3.9/site-packages/selenium/webdriver/remote/remote_connection.py", line 397, in _request
+    resp = self._conn.request(method, url, body=body, headers=headers)
+  File "/home/ubuntu/.local/lib/python3.9/site-packages/urllib3/request.py", line 78, in request
+    return self.request_encode_body(
+  File "/home/ubuntu/.local/lib/python3.9/site-packages/urllib3/request.py", line 170, in request_encode_body
+    return self.urlopen(method, url, **extra_kw)
+  File "/home/ubuntu/.local/lib/python3.9/site-packages/urllib3/poolmanager.py", line 375, in urlopen
+    response = conn.urlopen(method, u.request_uri, **kw)
+  File "/home/ubuntu/.local/lib/python3.9/site-packages/urllib3/connectionpool.py", line 755, in urlopen
+    retries = retries.increment(
+  File "/home/ubuntu/.local/lib/python3.9/site-packages/urllib3/util/retry.py", line 531, in increment
+    raise six.reraise(type(error), error, _stacktrace)
+  File "/home/ubuntu/.local/lib/python3.9/site-packages/urllib3/packages/six.py", line 734, in reraise
+    raise value.with_traceback(tb)
+  File "/home/ubuntu/.local/lib/python3.9/site-packages/urllib3/connectionpool.py", line 699, in urlopen
+    httplib_response = self._make_request(
+  File "/home/ubuntu/.local/lib/python3.9/site-packages/urllib3/connectionpool.py", line 445, in _make_request
+    six.raise_from(e, None)
+  File "<string>", line 3, in raise_from
+  File "/home/ubuntu/.local/lib/python3.9/site-packages/urllib3/connectionpool.py", line 440, in _make_request
+    httplib_response = conn.getresponse()
+  File "/usr/local/lib/python3.9/http/client.py", line 1347, in getresponse
+    response.begin()
+  File "/usr/local/lib/python3.9/http/client.py", line 307, in begin
+    version, status, reason = self._read_status()
+  File "/usr/local/lib/python3.9/http/client.py", line 276, in _read_status
+    raise RemoteDisconnected("Remote end closed connection without"
+urllib3.exceptions.ProtocolError: ('Connection aborted.', RemoteDisconnected('Remote end closed connection without response'))
+
+02-16-2021-23-50-17[ss][EXCEPTION]: Traceback (most recent call last):
+  File "/home/ubuntu/.local/lib/python3.9/site-packages/urllib3/connectionpool.py", line 699, in urlopen
+    httplib_response = self._make_request(
+  File "/home/ubuntu/.local/lib/python3.9/site-packages/urllib3/connectionpool.py", line 445, in _make_request
+    six.raise_from(e, None)
+  File "<string>", line 3, in raise_from
+  File "/home/ubuntu/.local/lib/python3.9/site-packages/urllib3/connectionpool.py", line 440, in _make_request
+    httplib_response = conn.getresponse()
+  File "/usr/local/lib/python3.9/http/client.py", line 1347, in getresponse
+    response.begin()
+  File "/usr/local/lib/python3.9/http/client.py", line 307, in begin
+    version, status, reason = self._read_status()
+  File "/usr/local/lib/python3.9/http/client.py", line 276, in _read_status
+    raise RemoteDisconnected("Remote end closed connection without"
+http.client.RemoteDisconnected: Remote end closed connection without response
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/ubuntu/projects/zeus/src/services/driversadapter/chrome.py", line 165, in getNewInstance
+    driver.execute_script(script)
+  File "/home/ubuntu/.local/lib/python3.9/site-packages/selenium/webdriver/remote/webdriver.py", line 634, in execute_script
+    return self.execute(command, {
+  File "/home/ubuntu/.local/lib/python3.9/site-packages/selenium/webdriver/remote/webdriver.py", line 319, in execute
+    response = self.command_executor.execute(driver_command, params)
+  File "/home/ubuntu/.local/lib/python3.9/site-packages/selenium/webdriver/remote/remote_connection.py", line 374, in execute
+    return self._request(command_info[0], url, body=data)
+  File "/home/ubuntu/.local/lib/python3.9/site-packages/selenium/webdriver/remote/remote_connection.py", line 397, in _request
+    resp = self._conn.request(method, url, body=body, headers=headers)
+  File "/home/ubuntu/.local/lib/python3.9/site-packages/urllib3/request.py", line 78, in request
+    return self.request_encode_body(
+  File "/home/ubuntu/.local/lib/python3.9/site-packages/urllib3/request.py", line 170, in request_encode_body
+    return self.urlopen(method, url, **extra_kw)
+  File "/home/ubuntu/.local/lib/python3.9/site-packages/urllib3/poolmanager.py", line 375, in urlopen
+    response = conn.urlopen(method, u.request_uri, **kw)
+  File "/home/ubuntu/.local/lib/python3.9/site-packages/urllib3/connectionpool.py", line 755, in urlopen
+    retries = retries.increment(
+  File "/home/ubuntu/.local/lib/python3.9/site-packages/urllib3/util/retry.py", line 531, in increment
+    raise six.reraise(type(error), error, _stacktrace)
+  File "/home/ubuntu/.local/lib/python3.9/site-packages/urllib3/packages/six.py", line 734, in reraise
+    raise value.with_traceback(tb)
+  File "/home/ubuntu/.local/lib/python3.9/site-packages/urllib3/connectionpool.py", line 699, in urlopen
+    httplib_response = self._make_request(
+  File "/home/ubuntu/.local/lib/python3.9/site-packages/urllib3/connectionpool.py", line 445, in _make_request
+    six.raise_from(e, None)
+  File "<string>", line 3, in raise_from
+  File "/home/ubuntu/.local/lib/python3.9/site-packages/urllib3/connectionpool.py", line 440, in _make_request
+    httplib_response = conn.getresponse()
+  File "/usr/local/lib/python3.9/http/client.py", line 1347, in getresponse
+    response.begin()
+  File "/usr/local/lib/python3.9/http/client.py", line 307, in begin
+    version, status, reason = self._read_status()
+  File "/usr/local/lib/python3.9/http/client.py", line 276, in _read_status
+    raise RemoteDisconnected("Remote end closed connection without"
+urllib3.exceptions.ProtocolError: ('Connection aborted.', RemoteDisconnected('Remote end closed connection without response'))
+
+02-16-2021-23-50-17[ss][EXCEPTION]: Traceback (most recent call last):
+  File "/home/ubuntu/.local/lib/python3.9/site-packages/urllib3/connectionpool.py", line 699, in urlopen
+    httplib_response = self._make_request(
+  File "/home/ubuntu/.local/lib/python3.9/site-packages/urllib3/connectionpool.py", line 445, in _make_request
+    six.raise_from(e, None)
+  File "<string>", line 3, in raise_from
+  File "/home/ubuntu/.local/lib/python3.9/site-packages/urllib3/connectionpool.py", line 440, in _make_request
+    httplib_response = conn.getresponse()
+  File "/usr/local/lib/python3.9/http/client.py", line 1347, in getresponse
+    response.begin()
+  File "/usr/local/lib/python3.9/http/client.py", line 307, in begin
+    version, status, reason = self._read_status()
+  File "/usr/local/lib/python3.9/http/client.py", line 276, in _read_status
+    raise RemoteDisconnected("Remote end closed connection without"
+http.client.RemoteDisconnected: Remote end closed connection without response
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/ubuntu/projects/zeus/src/services/driversadapter/chrome.py", line 165, in getNewInstance
+    driver.execute_script(script)
+  File "/home/ubuntu/.local/lib/python3.9/site-packages/selenium/webdriver/remote/webdriver.py", line 634, in execute_script
+    return self.execute(command, {
+  File "/home/ubuntu/.local/lib/python3.9/site-packages/selenium/webdriver/remote/webdriver.py", line 319, in execute
+    response = self.command_executor.execute(driver_command, params)
+  File "/home/ubuntu/.local/lib/python3.9/site-packages/selenium/webdriver/remote/remote_connection.py", line 374, in execute
+    return self._request(command_info[0], url, body=data)
+  File "/home/ubuntu/.local/lib/python3.9/site-packages/selenium/webdriver/remote/remote_connection.py", line 397, in _request
+    resp = self._conn.request(method, url, body=body, headers=headers)
+  File "/home/ubuntu/.local/lib/python3.9/site-packages/urllib3/request.py", line 78, in request
+    return self.request_encode_body(
+  File "/home/ubuntu/.local/lib/python3.9/site-packages/urllib3/request.py", line 170, in request_encode_body
+    return self.urlopen(method, url, **extra_kw)
+  File "/home/ubuntu/.local/lib/python3.9/site-packages/urllib3/poolmanager.py", line 375, in urlopen
+    response = conn.urlopen(method, u.request_uri, **kw)
+  File "/home/ubuntu/.local/lib/python3.9/site-packages/urllib3/connectionpool.py", line 755, in urlopen
+    retries = retries.increment(
+  File "/home/ubuntu/.local/lib/python3.9/site-packages/urllib3/util/retry.py", line 531, in increment
+    raise six.reraise(type(error), error, _stacktrace)
+  File "/home/ubuntu/.local/lib/python3.9/site-packages/urllib3/packages/six.py", line 734, in reraise
+    raise value.with_traceback(tb)
+  File "/home/ubuntu/.local/lib/python3.9/site-packages/urllib3/connectionpool.py", line 699, in urlopen
+    httplib_response = self._make_request(
+  File "/home/ubuntu/.local/lib/python3.9/site-packages/urllib3/connectionpool.py", line 445, in _make_request
+    six.raise_from(e, None)
+  File "<string>", line 3, in raise_from
+  File "/home/ubuntu/.local/lib/python3.9/site-packages/urllib3/connectionpool.py", line 440, in _make_request
+    httplib_response = conn.getresponse()
+  File "/usr/local/lib/python3.9/http/client.py", line 1347, in getresponse
+    response.begin()
+  File "/usr/local/lib/python3.9/http/client.py", line 307, in begin
+    version, status, reason = self._read_status()
+  File "/usr/local/lib/python3.9/http/client.py", line 276, in _read_status
+    raise RemoteDisconnected("Remote end closed connection without"
+urllib3.exceptions.ProtocolError: ('Connection aborted.', RemoteDisconnected('Remote end closed connection without response'))
+
+02-16-2021-23-50-17[ss][EXCEPTION]: Traceback (most recent call last):
+  File "/home/ubuntu/.local/lib/python3.9/site-packages/urllib3/connectionpool.py", line 699, in urlopen
+    httplib_response = self._make_request(
+  File "/home/ubuntu/.local/lib/python3.9/site-packages/urllib3/connectionpool.py", line 445, in _make_request
+    six.raise_from(e, None)
+  File "<string>", line 3, in raise_from
+  File "/home/ubuntu/.local/lib/python3.9/site-packages/urllib3/connectionpool.py", line 440, in _make_request
+    httplib_response = conn.getresponse()
+  File "/usr/local/lib/python3.9/http/client.py", line 1347, in getresponse
+    response.begin()
+  File "/usr/local/lib/python3.9/http/client.py", line 307, in begin
+    version, status, reason = self._read_status()
+  File "/usr/local/lib/python3.9/http/client.py", line 276, in _read_status
+    raise RemoteDisconnected("Remote end closed connection without"
+http.client.RemoteDisconnected: Remote end closed connection without response
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/ubuntu/projects/zeus/src/services/driversadapter/chrome.py", line 165, in getNewInstance
+    driver.execute_script(script)
+  File "/home/ubuntu/.local/lib/python3.9/site-packages/selenium/webdriver/remote/webdriver.py", line 634, in execute_script
+    return self.execute(command, {
+  File "/home/ubuntu/.local/lib/python3.9/site-packages/selenium/webdriver/remote/webdriver.py", line 319, in execute
+    response = self.command_executor.execute(driver_command, params)
+  File "/home/ubuntu/.local/lib/python3.9/site-packages/selenium/webdriver/remote/remote_connection.py", line 374, in execute
+    return self._request(command_info[0], url, body=data)
+  File "/home/ubuntu/.local/lib/python3.9/site-packages/selenium/webdriver/remote/remote_connection.py", line 397, in _request
+    resp = self._conn.request(method, url, body=body, headers=headers)
+  File "/home/ubuntu/.local/lib/python3.9/site-packages/urllib3/request.py", line 78, in request
+    return self.request_encode_body(
+  File "/home/ubuntu/.local/lib/python3.9/site-packages/urllib3/request.py", line 170, in request_encode_body
+    return self.urlopen(method, url, **extra_kw)
+  File "/home/ubuntu/.local/lib/python3.9/site-packages/urllib3/poolmanager.py", line 375, in urlopen
+    response = conn.urlopen(method, u.request_uri, **kw)
+  File "/home/ubuntu/.local/lib/python3.9/site-packages/urllib3/connectionpool.py", line 755, in urlopen
+    retries = retries.increment(
+  File "/home/ubuntu/.local/lib/python3.9/site-packages/urllib3/util/retry.py", line 531, in increment
+    raise six.reraise(type(error), error, _stacktrace)
+  File "/home/ubuntu/.local/lib/python3.9/site-packages/urllib3/packages/six.py", line 734, in reraise
+    raise value.with_traceback(tb)
+  File "/home/ubuntu/.local/lib/python3.9/site-packages/urllib3/connectionpool.py", line 699, in urlopen
+    httplib_response = self._make_request(
+  File "/home/ubuntu/.local/lib/python3.9/site-packages/urllib3/connectionpool.py", line 445, in _make_request
+    six.raise_from(e, None)
+  File "<string>", line 3, in raise_from
+  File "/home/ubuntu/.local/lib/python3.9/site-packages/urllib3/connectionpool.py", line 440, in _make_request
+    httplib_response = conn.getresponse()
+  File "/usr/local/lib/python3.9/http/client.py", line 1347, in getresponse
+    response.begin()
+  File "/usr/local/lib/python3.9/http/client.py", line 307, in begin
+    version, status, reason = self._read_status()
+  File "/usr/local/lib/python3.9/http/client.py", line 276, in _read_status
+    raise RemoteDisconnected("Remote end closed connection without"
+urllib3.exceptions.ProtocolError: ('Connection aborted.', RemoteDisconnected('Remote end closed connection without response'))
+
+02-16-2021-23-50-17[ss][EXCEPTION]: Traceback (most recent call last):
+  File "/home/ubuntu/.local/lib/python3.9/site-packages/urllib3/connectionpool.py", line 699, in urlopen
+    httplib_response = self._make_request(
+  File "/home/ubuntu/.local/lib/python3.9/site-packages/urllib3/connectionpool.py", line 445, in _make_request
+    six.raise_from(e, None)
+  File "<string>", line 3, in raise_from
+  File "/home/ubuntu/.local/lib/python3.9/site-packages/urllib3/connectionpool.py", line 440, in _make_request
+    httplib_response = conn.getresponse()
+  File "/usr/local/lib/python3.9/http/client.py", line 1347, in getresponse
+    response.begin()
+  File "/usr/local/lib/python3.9/http/client.py", line 307, in begin
+    version, status, reason = self._read_status()
+  File "/usr/local/lib/python3.9/http/client.py", line 276, in _read_status
+    raise RemoteDisconnected("Remote end closed connection without"
+http.client.RemoteDisconnected: Remote end closed connection without response
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/ubuntu/projects/zeus/src/services/driversadapter/chrome.py", line 165, in getNewInstance
+    driver.execute_script(script)
+  File "/home/ubuntu/.local/lib/python3.9/site-packages/selenium/webdriver/remote/webdriver.py", line 634, in execute_script
+    return self.execute(command, {
+  File "/home/ubuntu/.local/lib/python3.9/site-packages/selenium/webdriver/remote/webdriver.py", line 319, in execute
+    response = self.command_executor.execute(driver_command, params)
+  File "/home/ubuntu/.local/lib/python3.9/site-packages/selenium/webdriver/remote/remote_connection.py", line 374, in execute
+    return self._request(command_info[0], url, body=data)
+  File "/home/ubuntu/.local/lib/python3.9/site-packages/selenium/webdriver/remote/remote_connection.py", line 397, in _request
+    resp = self._conn.request(method, url, body=body, headers=headers)
+  File "/home/ubuntu/.local/lib/python3.9/site-packages/urllib3/request.py", line 78, in request
+    return self.request_encode_body(
+  File "/home/ubuntu/.local/lib/python3.9/site-packages/urllib3/request.py", line 170, in request_encode_body
+    return self.urlopen(method, url, **extra_kw)
+  File "/home/ubuntu/.local/lib/python3.9/site-packages/urllib3/poolmanager.py", line 375, in urlopen
+    response = conn.urlopen(method, u.request_uri, **kw)
+  File "/home/ubuntu/.local/lib/python3.9/site-packages/urllib3/connectionpool.py", line 755, in urlopen
+    retries = retries.increment(
+  File "/home/ubuntu/.local/lib/python3.9/site-packages/urllib3/util/retry.py", line 531, in increment
+    raise six.reraise(type(error), error, _stacktrace)
+  File "/home/ubuntu/.local/lib/python3.9/site-packages/urllib3/packages/six.py", line 734, in reraise
+    raise value.with_traceback(tb)
+  File "/home/ubuntu/.local/lib/python3.9/site-packages/urllib3/connectionpool.py", line 699, in urlopen
+    httplib_response = self._make_request(
+  File "/home/ubuntu/.local/lib/python3.9/site-packages/urllib3/connectionpool.py", line 445, in _make_request
+    six.raise_from(e, None)
+  File "<string>", line 3, in raise_from
+  File "/home/ubuntu/.local/lib/python3.9/site-packages/urllib3/connectionpool.py", line 440, in _make_request
+    httplib_response = conn.getresponse()
+  File "/usr/local/lib/python3.9/http/client.py", line 1347, in getresponse
+    response.begin()
+  File "/usr/local/lib/python3.9/http/client.py", line 307, in begin
+    version, status, reason = self._read_status()
+  File "/usr/local/lib/python3.9/http/client.py", line 276, in _read_status
+    raise RemoteDisconnected("Remote end closed connection without"
+urllib3.exceptions.ProtocolError: ('Connection aborted.', RemoteDisconnected('Remote end closed connection without response'))
+
+02-16-2021-23-50-17[ss][EXCEPTION]: Traceback (most recent call last):
+  File "/home/ubuntu/.local/lib/python3.9/site-packages/urllib3/connectionpool.py", line 699, in urlopen
+    httplib_response = self._make_request(
+  File "/home/ubuntu/.local/lib/python3.9/site-packages/urllib3/connectionpool.py", line 445, in _make_request
+    six.raise_from(e, None)
+  File "<string>", line 3, in raise_from
+  File "/home/ubuntu/.local/lib/python3.9/site-packages/urllib3/connectionpool.py", line 440, in _make_request
+    httplib_response = conn.getresponse()
+  File "/usr/local/lib/python3.9/http/client.py", line 1347, in getresponse
+    response.begin()
+  File "/usr/local/lib/python3.9/http/client.py", line 307, in begin
+    version, status, reason = self._read_status()
+  File "/usr/local/lib/python3.9/http/client.py", line 276, in _read_status
+    raise RemoteDisconnected("Remote end closed connection without"
+http.client.RemoteDisconnected: Remote end closed connection without response
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/ubuntu/projects/zeus/src/services/driversadapter/chrome.py", line 165, in getNewInstance
+    driver.execute_script(script)
+  File "/home/ubuntu/.local/lib/python3.9/site-packages/selenium/webdriver/remote/webdriver.py", line 634, in execute_script
+    return self.execute(command, {
+  File "/home/ubuntu/.local/lib/python3.9/site-packages/selenium/webdriver/remote/webdriver.py", line 319, in execute
+    response = self.command_executor.execute(driver_command, params)
+  File "/home/ubuntu/.local/lib/python3.9/site-packages/selenium/webdriver/remote/remote_connection.py", line 374, in execute
+    return self._request(command_info[0], url, body=data)
+  File "/home/ubuntu/.local/lib/python3.9/site-packages/selenium/webdriver/remote/remote_connection.py", line 397, in _request
+    resp = self._conn.request(method, url, body=body, headers=headers)
+  File "/home/ubuntu/.local/lib/python3.9/site-packages/urllib3/request.py", line 78, in request
+    return self.request_encode_body(
+  File "/home/ubuntu/.local/lib/python3.9/site-packages/urllib3/request.py", line 170, in request_encode_body
+    return self.urlopen(method, url, **extra_kw)
+  File "/home/ubuntu/.local/lib/python3.9/site-packages/urllib3/poolmanager.py", line 375, in urlopen
+    response = conn.urlopen(method, u.request_uri, **kw)
+  File "/home/ubuntu/.local/lib/python3.9/site-packages/urllib3/connectionpool.py", line 755, in urlopen
+    retries = retries.increment(
+  File "/home/ubuntu/.local/lib/python3.9/site-packages/urllib3/util/retry.py", line 531, in increment
+    raise six.reraise(type(error), error, _stacktrace)
+  File "/home/ubuntu/.local/lib/python3.9/site-packages/urllib3/packages/six.py", line 734, in reraise
+    raise value.with_traceback(tb)
+  File "/home/ubuntu/.local/lib/python3.9/site-packages/urllib3/connectionpool.py", line 699, in urlopen
+    httplib_response = self._make_request(
+  File "/home/ubuntu/.local/lib/python3.9/site-packages/urllib3/connectionpool.py", line 445, in _make_request
+    six.raise_from(e, None)
+  File "<string>", line 3, in raise_from
+  File "/home/ubuntu/.local/lib/python3.9/site-packages/urllib3/connectionpool.py", line 440, in _make_request
+    httplib_response = conn.getresponse()
+  File "/usr/local/lib/python3.9/http/client.py", line 1347, in getresponse
+    response.begin()
+  File "/usr/local/lib/python3.9/http/client.py", line 307, in begin
+    version, status, reason = self._read_status()
+  File "/usr/local/lib/python3.9/http/client.py", line 276, in _read_status
+    raise RemoteDisconnected("Remote end closed connection without"
+urllib3.exceptions.ProtocolError: ('Connection aborted.', RemoteDisconnected('Remote end closed connection without response'))
+
+02-16-2021-23-50-17[ss][EXCEPTION]: Traceback (most recent call last):
+  File "/home/ubuntu/.local/lib/python3.9/site-packages/urllib3/connectionpool.py", line 699, in urlopen
+    httplib_response = self._make_request(
+  File "/home/ubuntu/.local/lib/python3.9/site-packages/urllib3/connectionpool.py", line 445, in _make_request
+    six.raise_from(e, None)
+  File "<string>", line 3, in raise_from
+  File "/home/ubuntu/.local/lib/python3.9/site-packages/urllib3/connectionpool.py", line 440, in _make_request
+    httplib_response = conn.getresponse()
+  File "/usr/local/lib/python3.9/http/client.py", line 1347, in getresponse
+    response.begin()
+  File "/usr/local/lib/python3.9/http/client.py", line 307, in begin
+    version, status, reason = self._read_status()
+  File "/usr/local/lib/python3.9/http/client.py", line 276, in _read_status
+    raise RemoteDisconnected("Remote end closed connection without"
+http.client.RemoteDisconnected: Remote end closed connection without response
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/ubuntu/projects/zeus/src/services/driversadapter/chrome.py", line 165, in getNewInstance
+    driver.execute_script(script)
+  File "/home/ubuntu/.local/lib/python3.9/site-packages/selenium/webdriver/remote/webdriver.py", line 634, in execute_script
+    return self.execute(command, {
+  File "/home/ubuntu/.local/lib/python3.9/site-packages/selenium/webdriver/remote/webdriver.py", line 319, in execute
+    response = self.command_executor.execute(driver_command, params)
+  File "/home/ubuntu/.local/lib/python3.9/site-packages/selenium/webdriver/remote/remote_connection.py", line 374, in execute
+    return self._request(command_info[0], url, body=data)
+  File "/home/ubuntu/.local/lib/python3.9/site-packages/selenium/webdriver/remote/remote_connection.py", line 397, in _request
+    resp = self._conn.request(method, url, body=body, headers=headers)
+  File "/home/ubuntu/.local/lib/python3.9/site-packages/urllib3/request.py", line 78, in request
+    return self.request_encode_body(
+  File "/home/ubuntu/.local/lib/python3.9/site-packages/urllib3/request.py", line 170, in request_encode_body
+    return self.urlopen(method, url, **extra_kw)
+  File "/home/ubuntu/.local/lib/python3.9/site-packages/urllib3/poolmanager.py", line 375, in urlopen
+    response = conn.urlopen(method, u.request_uri, **kw)
+  File "/home/ubuntu/.local/lib/python3.9/site-packages/urllib3/connectionpool.py", line 755, in urlopen
+    retries = retries.increment(
+  File "/home/ubuntu/.local/lib/python3.9/site-packages/urllib3/util/retry.py", line 531, in increment
+    raise six.reraise(type(error), error, _stacktrace)
+  File "/home/ubuntu/.local/lib/python3.9/site-packages/urllib3/packages/six.py", line 734, in reraise
+    raise value.with_traceback(tb)
+  File "/home/ubuntu/.local/lib/python3.9/site-packages/urllib3/connectionpool.py", line 699, in urlopen
+    httplib_response = self._make_request(
+  File "/home/ubuntu/.local/lib/python3.9/site-packages/urllib3/connectionpool.py", line 445, in _make_request
+    six.raise_from(e, None)
+  File "<string>", line 3, in raise_from
+  File "/home/ubuntu/.local/lib/python3.9/site-packages/urllib3/connectionpool.py", line 440, in _make_request
+    httplib_response = conn.getresponse()
+  File "/usr/local/lib/python3.9/http/client.py", line 1347, in getresponse
+    response.begin()
+  File "/usr/local/lib/python3.9/http/client.py", line 307, in begin
+    version, status, reason = self._read_status()
+  File "/usr/local/lib/python3.9/http/client.py", line 276, in _read_status
+    raise RemoteDisconnected("Remote end closed connection without"
+urllib3.exceptions.ProtocolError: ('Connection aborted.', RemoteDisconnected('Remote end closed connection without response'))
+
+02-16-2021-23-50-17[ss][EXCEPTION]: Traceback (most recent call last):
+  File "/home/ubuntu/.local/lib/python3.9/site-packages/urllib3/connectionpool.py", line 699, in urlopen
+    httplib_response = self._make_request(
+  File "/home/ubuntu/.local/lib/python3.9/site-packages/urllib3/connectionpool.py", line 445, in _make_request
+    six.raise_from(e, None)
+  File "<string>", line 3, in raise_from
+  File "/home/ubuntu/.local/lib/python3.9/site-packages/urllib3/connectionpool.py", line 440, in _make_request
+    httplib_response = conn.getresponse()
+  File "/usr/local/lib/python3.9/http/client.py", line 1347, in getresponse
+    response.begin()
+  File "/usr/local/lib/python3.9/http/client.py", line 307, in begin
+    version, status, reason = self._read_status()
+  File "/usr/local/lib/python3.9/http/client.py", line 276, in _read_status
+    raise RemoteDisconnected("Remote end closed connection without"
+http.client.RemoteDisconnected: Remote end closed connection without response
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/ubuntu/projects/zeus/src/services/driversadapter/chrome.py", line 165, in getNewInstance
+    driver.execute_script(script)
+  File "/home/ubuntu/.local/lib/python3.9/site-packages/selenium/webdriver/remote/webdriver.py", line 634, in execute_script
+    return self.execute(command, {
+  File "/home/ubuntu/.local/lib/python3.9/site-packages/selenium/webdriver/remote/webdriver.py", line 319, in execute
+    response = self.command_executor.execute(driver_command, params)
+  File "/home/ubuntu/.local/lib/python3.9/site-packages/selenium/webdriver/remote/remote_connection.py", line 374, in execute
+    return self._request(command_info[0], url, body=data)
+  File "/home/ubuntu/.local/lib/python3.9/site-packages/selenium/webdriver/remote/remote_connection.py", line 397, in _request
+    resp = self._conn.request(method, url, body=body, headers=headers)
+  File "/home/ubuntu/.local/lib/python3.9/site-packages/urllib3/request.py", line 78, in request
+    return self.request_encode_body(
+  File "/home/ubuntu/.local/lib/python3.9/site-packages/urllib3/request.py", line 170, in request_encode_body
+    return self.urlopen(method, url, **extra_kw)
+  File "/home/ubuntu/.local/lib/python3.9/site-packages/urllib3/poolmanager.py", line 375, in urlopen
+    response = conn.urlopen(method, u.request_uri, **kw)
+  File "/home/ubuntu/.local/lib/python3.9/site-packages/urllib3/connectionpool.py", line 755, in urlopen
+    retries = retries.increment(
+  File "/home/ubuntu/.local/lib/python3.9/site-packages/urllib3/util/retry.py", line 531, in increment
+    raise six.reraise(type(error), error, _stacktrace)
+  File "/home/ubuntu/.local/lib/python3.9/site-packages/urllib3/packages/six.py", line 734, in reraise
+    raise value.with_traceback(tb)
+  File "/home/ubuntu/.local/lib/python3.9/site-packages/urllib3/connectionpool.py", line 699, in urlopen
+    httplib_response = self._make_request(
+  File "/home/ubuntu/.local/lib/python3.9/site-packages/urllib3/connectionpool.py", line 445, in _make_request
+    six.raise_from(e, None)
+  File "<string>", line 3, in raise_from
+  File "/home/ubuntu/.local/lib/python3.9/site-packages/urllib3/connectionpool.py", line 440, in _make_request
+    httplib_response = conn.getresponse()
+  File "/usr/local/lib/python3.9/http/client.py", line 1347, in getresponse
+    response.begin()
+  File "/usr/local/lib/python3.9/http/client.py", line 307, in begin
+    version, status, reason = self._read_status()
+  File "/usr/local/lib/python3.9/http/client.py", line 276, in _read_status
+    raise RemoteDisconnected("Remote end closed connection without"
+urllib3.exceptions.ProtocolError: ('Connection aborted.', RemoteDisconnected('Remote end closed connection without response'))
+
+02-16-2021-23-50-17[ss][EXCEPTION]: Traceback (most recent call last):
+  File "/home/ubuntu/.local/lib/python3.9/site-packages/urllib3/connectionpool.py", line 699, in urlopen
+    httplib_response = self._make_request(
+  File "/home/ubuntu/.local/lib/python3.9/site-packages/urllib3/connectionpool.py", line 445, in _make_request
+    six.raise_from(e, None)
+  File "<string>", line 3, in raise_from
+  File "/home/ubuntu/.local/lib/python3.9/site-packages/urllib3/connectionpool.py", line 440, in _make_request
+    httplib_response = conn.getresponse()
+  File "/usr/local/lib/python3.9/http/client.py", line 1347, in getresponse
+    response.begin()
+  File "/usr/local/lib/python3.9/http/client.py", line 307, in begin
+    version, status, reason = self._read_status()
+  File "/usr/local/lib/python3.9/http/client.py", line 276, in _read_status
+    raise RemoteDisconnected("Remote end closed connection without"
+http.client.RemoteDisconnected: Remote end closed connection without response
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/ubuntu/projects/zeus/src/services/driversadapter/chrome.py", line 165, in getNewInstance
+    driver.execute_script(script)
+  File "/home/ubuntu/.local/lib/python3.9/site-packages/selenium/webdriver/remote/webdriver.py", line 634, in execute_script
+    return self.execute(command, {
+  File "/home/ubuntu/.local/lib/python3.9/site-packages/selenium/webdriver/remote/webdriver.py", line 319, in execute
+    response = self.command_executor.execute(driver_command, params)
+  File "/home/ubuntu/.local/lib/python3.9/site-packages/selenium/webdriver/remote/remote_connection.py", line 374, in execute
+    return self._request(command_info[0], url, body=data)
+  File "/home/ubuntu/.local/lib/python3.9/site-packages/selenium/webdriver/remote/remote_connection.py", line 397, in _request
+    resp = self._conn.request(method, url, body=body, headers=headers)
+  File "/home/ubuntu/.local/lib/python3.9/site-packages/urllib3/request.py", line 78, in request
+    return self.request_encode_body(
+  File "/home/ubuntu/.local/lib/python3.9/site-packages/urllib3/request.py", line 170, in request_encode_body
+    return self.urlopen(method, url, **extra_kw)
+  File "/home/ubuntu/.local/lib/python3.9/site-packages/urllib3/poolmanager.py", line 375, in urlopen
+    response = conn.urlopen(method, u.request_uri, **kw)
+  File "/home/ubuntu/.local/lib/python3.9/site-packages/urllib3/connectionpool.py", line 755, in urlopen
+    retries = retries.increment(
+  File "/home/ubuntu/.local/lib/python3.9/site-packages/urllib3/util/retry.py", line 531, in increment
+    raise six.reraise(type(error), error, _stacktrace)
+  File "/home/ubuntu/.local/lib/python3.9/site-packages/urllib3/packages/six.py", line 734, in reraise
+    raise value.with_traceback(tb)
+  File "/home/ubuntu/.local/lib/python3.9/site-packages/urllib3/connectionpool.py", line 699, in urlopen
+    httplib_response = self._make_request(
+  File "/home/ubuntu/.local/lib/python3.9/site-packages/urllib3/connectionpool.py", line 445, in _make_request
+    six.raise_from(e, None)
+  File "<string>", line 3, in raise_from
+  File "/home/ubuntu/.local/lib/python3.9/site-packages/urllib3/connectionpool.py", line 440, in _make_request
+    httplib_response = conn.getresponse()
+  File "/usr/local/lib/python3.9/http/client.py", line 1347, in getresponse
+    response.begin()
+  File "/usr/local/lib/python3.9/http/client.py", line 307, in begin
+    version, status, reason = self._read_status()
+  File "/usr/local/lib/python3.9/http/client.py", line 276, in _read_status
+    raise RemoteDisconnected("Remote end closed connection without"
+urllib3.exceptions.ProtocolError: ('Connection aborted.', RemoteDisconnected('Remote end closed connection without response'))
+
+02-16-2021-23-50-17[ss][EXCEPTION]: Traceback (most recent call last):
+  File "/home/ubuntu/.local/lib/python3.9/site-packages/urllib3/connectionpool.py", line 699, in urlopen
+    httplib_response = self._make_request(
+  File "/home/ubuntu/.local/lib/python3.9/site-packages/urllib3/connectionpool.py", line 445, in _make_request
+    six.raise_from(e, None)
+  File "<string>", line 3, in raise_from
+  File "/home/ubuntu/.local/lib/python3.9/site-packages/urllib3/connectionpool.py", line 440, in _make_request
+    httplib_response = conn.getresponse()
+  File "/usr/local/lib/python3.9/http/client.py", line 1347, in getresponse
+    response.begin()
+  File "/usr/local/lib/python3.9/http/client.py", line 307, in begin
+    version, status, reason = self._read_status()
+  File "/usr/local/lib/python3.9/http/client.py", line 276, in _read_status
+    raise RemoteDisconnected("Remote end closed connection without"
+http.client.RemoteDisconnected: Remote end closed connection without response
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/ubuntu/projects/zeus/src/services/driversadapter/chrome.py", line 165, in getNewInstance
+    driver.execute_script(script)
+  File "/home/ubuntu/.local/lib/python3.9/site-packages/selenium/webdriver/remote/webdriver.py", line 634, in execute_script
+    return self.execute(command, {
+  File "/home/ubuntu/.local/lib/python3.9/site-packages/selenium/webdriver/remote/webdriver.py", line 319, in execute
+    response = self.command_executor.execute(driver_command, params)
+  File "/home/ubuntu/.local/lib/python3.9/site-packages/selenium/webdriver/remote/remote_connection.py", line 374, in execute
+    return self._request(command_info[0], url, body=data)
+  File "/home/ubuntu/.local/lib/python3.9/site-packages/selenium/webdriver/remote/remote_connection.py", line 397, in _request
+    resp = self._conn.request(method, url, body=body, headers=headers)
+  File "/home/ubuntu/.local/lib/python3.9/site-packages/urllib3/request.py", line 78, in request
+    return self.request_encode_body(
+  File "/home/ubuntu/.local/lib/python3.9/site-packages/urllib3/request.py", line 170, in request_encode_body
+    return self.urlopen(method, url, **extra_kw)
+  File "/home/ubuntu/.local/lib/python3.9/site-packages/urllib3/poolmanager.py", line 375, in urlopen
+    response = conn.urlopen(method, u.request_uri, **kw)
+  File "/home/ubuntu/.local/lib/python3.9/site-packages/urllib3/connectionpool.py", line 755, in urlopen
+    retries = retries.increment(
+  File "/home/ubuntu/.local/lib/python3.9/site-packages/urllib3/util/retry.py", line 531, in increment
+    raise six.reraise(type(error), error, _stacktrace)
+  File "/home/ubuntu/.local/lib/python3.9/site-packages/urllib3/packages/six.py", line 734, in reraise
+    raise value.with_traceback(tb)
+  File "/home/ubuntu/.local/lib/python3.9/site-packages/urllib3/connectionpool.py", line 699, in urlopen
+    httplib_response = self._make_request(
+  File "/home/ubuntu/.local/lib/python3.9/site-packages/urllib3/connectionpool.py", line 445, in _make_request
+    six.raise_from(e, None)
+  File "<string>", line 3, in raise_from
+  File "/home/ubuntu/.local/lib/python3.9/site-packages/urllib3/connectionpool.py", line 440, in _make_request
+    httplib_response = conn.getresponse()
+  File "/usr/local/lib/python3.9/http/client.py", line 1347, in getresponse
+    response.begin()
+  File "/usr/local/lib/python3.9/http/client.py", line 307, in begin
+    version, status, reason = self._read_status()
+  File "/usr/local/lib/python3.9/http/client.py", line 276, in _read_status
+    raise RemoteDisconnected("Remote end closed connection without"
+urllib3.exceptions.ProtocolError: ('Connection aborted.', RemoteDisconnected('Remote end closed connection without response'))
+

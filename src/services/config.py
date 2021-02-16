@@ -5,6 +5,7 @@ import os
 class Config(object):
     def __init__(self, configFilePath = (os.path.dirname(__file__) or '.') + '/../../config.json'):
         self.SQS_URL = '',
+        self.SQS_ENDPOINT = '',
         self.LISTENER_OVERIDE_PLAYLIST = None
         self.LISTENER_OVERIDE_PROXY = False
         self.LISTENER_MAX_PROCESS = -1

@@ -98,7 +98,7 @@ class ChromeDriverAdapter:
             options.add_argument("--disable-offline-load-stale-cache")
             options.add_argument("--disk-cache-size=0")
             options.add_argument("--disable-features=VizDisplayCompositor")
-            options.page_load_strategy = 'normal'
+            #options.page_load_strategy = 'normal'
             #options.add_argument("--window-position=-32000,-32000");
             #options.add_argument("--log-path=" + (os.path.dirname(__file__) or '.') + "/../chrome.log")
             #options.add_argument("--log-level=3")

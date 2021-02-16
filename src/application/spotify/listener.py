@@ -1,7 +1,8 @@
 
 from gc import collect
+from random import randint
 from shutil import rmtree
-from multiprocessing import Lock, Process, Event
+from multiprocessing import Array, Lock, Process, Event
 from threading import Thread, current_thread
 from traceback import format_exc
 from src.services.config import Config
@@ -15,12 +16,15 @@ from json import loads
 from src.services.proxies import ProxyManager, PROXY_FILE_LISTENER
 
 class ListenerContext:
-    def __init__(self, config: Config, maxThread: int, lock: Lock, shutdownEvent: Event, console: Console):
+    def __init__(self, messagesCount: Array, threadsCount: Array, channel: int, config: Config, maxThread: int, lock: Lock, shutdownEvent: Event, console: Console):
         self.maxThread = maxThread
         self.lock = lock
         self.shutdownEvent = shutdownEvent
         self.console = console
         self.config = config
+        self.channel = channel
+        self.threadsCount = threadsCount
+        self.messagesCount = messagesCount
 
 class TaskContext:
     def __init__(self, user: dict, playlist: str, receiptHandle: str, proxy: dict = None):
@@ -32,12 +36,14 @@ class TaskContext:
 
 class Listener(Process):
     def __init__(self, pcontext: ListenerContext):
-        super(self)
+        super().__init__()
         self.p_context = pcontext
-        self.driverManager = DriverManager(pcontext.console)
+        self.driverManager = DriverManager(pcontext.console, startService=False)
         self.client = client('sqs')
         self.totalMessageReceived = 0
         self.proxyManager = ProxyManager(proxyFile=PROXY_FILE_LISTENER)
+        self.lockClient = Lock()
+        self.lockDriver = Lock()
 
     def run(self):
         threads = []
@@ -45,20 +51,23 @@ class Listener(Process):
 
         while not self.p_context.shutdownEvent.is_set():
             sleep(self.p_context.config.LISTENER_SPAWN_INTERVAL)
-            freeSlot = len(threads) - self.p_context.maxThread
-            if len(messages) < 1:
-                response = client.receive_message(
-                    QueueUrl=self.p_context.config.SQS_URL,
-                    MaxNumberOfMessages=freeSlot,
-                    VisibilityTimeout=600,
-                    WaitTimeSeconds=2,
-                )
-                if 'Messages' in response:
-                    newMessages = response['Messages']
-                    messages =  newMessages + messages
-                    self.totalMessageReceived += len(messages)
-
-            
+            freeSlot = self.p_context.maxThread - len(threads) 
+            if len(messages) < 1 and freeSlot:
+                try:
+                    with self.lockClient:
+                        response = self.client.receive_message(
+                            QueueUrl=self.p_context.config.SQS_ENDPOINT,
+                            MaxNumberOfMessages=freeSlot,
+                            VisibilityTimeout=600,
+                            WaitTimeSeconds=2,
+                        )
+                    if 'Messages' in response:
+                        newMessages = response['Messages']
+                        messages =  newMessages + messages
+                        self.totalMessageReceived += len(newMessages)
+                        self.p_context.messagesCount[self.p_context.channel] = self.totalMessageReceived
+                except:
+                    self.p_context.console.exception()
             if freeSlot and len(messages):
                 message = messages.pop()
                 body = loads(message['Body'])
@@ -75,9 +84,9 @@ class Listener(Process):
                     receiptHandle=message['ReceiptHandle']
                 )
                 t = Thread(target=self.runner, args=(t_context,))
-                threads.append(t)
                 t.start()
-            
+                threads.append(t)
+
             leftThread = []
             for thread in threads:
                 if thread.is_alive():
@@ -86,6 +95,7 @@ class Listener(Process):
                     del thread
                     collect()
             threads = leftThread
+            self.p_context.threadsCount[self.p_context.channel] = len(threads)
             if len(threads) == 0:
                 break
         
@@ -96,14 +106,19 @@ class Listener(Process):
 
     def runner(self, t_context: TaskContext):
         tid = current_thread().native_id
-        try: 
+        self.p_context.console.log('#%d Start' % tid)
+        try:
+            if self.p_context.shutdownEvent.is_set():
+                return 
             vdisplay = Xvfb(width=1280, height=1024, colordepth=24, tempdir=None, noreset='+render')
             vdisplay.start()
-            driverData = self.driverManager.getDriver(
-                type='chrome',
-                uid=tid,
-                user=t_context.user,
-            )
+            with self.lockDriver:
+                driverData = self.driverManager.getDriver(
+                    type='chrome',
+                    uid=tid,
+                    user=t_context.user,
+                    proxy=t_context.proxy
+                )
             if not driverData:
                 return
 
@@ -116,13 +131,16 @@ class Listener(Process):
         else:
             spotify = Spotify.Adapter(driver, self.p_context.console, self.p_context.shutdownEvent)
             if spotify.login(t_context.user['email'], t_context.user['password']):
+                self.p_context.console.log('#%d Logged In' % tid)
                 if not self.p_context.shutdownEvent.is_set():
                     spotify.playPlaylist(t_context.playlist, self.p_context.shutdownEvent, 90, 110)
-            
-            self.client.delete_message(
-                QueueUrl=self.p_context.config.SQS_URL,
-                ReceiptHandle=t_context.receiptHandle
-            )
+                    self.p_context.console.log('#%d Played' % tid)
+            with self.lockClient:
+                self.client.delete_message(
+                    QueueUrl=self.p_context.config.SQS_ENDPOINT,
+                    ReceiptHandle=t_context.receiptHandle
+                )
+                self.p_context.console.log('#%d Message deleted' % tid)
                        
         if driver:
             try:

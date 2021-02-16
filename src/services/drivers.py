@@ -4,8 +4,8 @@ from random import randint
 from .driversadapter.chrome import ChromeDriverAdapter
 
 class DriverManager:
-    def __init__(self, console: Console):
-        self.chrome = ChromeDriverAdapter(console)
+    def __init__(self, console: Console, startService=False):
+        self.chrome = ChromeDriverAdapter(console, startService=startService)
         self.console = console
     
     def getDriverVersion(self, type):

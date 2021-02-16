@@ -44,10 +44,10 @@ class Console:
         'NOTICE': Fore.YELLOW,
         'LOG': Fore.WHITE
     }
-    def __init__(self, verbose=2, logToFIle=None):
+    def __init__(self, verbose=2, logToFile=True):
         self.lock = Lock()
         self.verbose = verbose
-        self.logToFile = logToFIle
+        self.logToFile = logToFile
         try:
             self.logfile= (os.path.dirname(__file__) or '.') + '/../../temp/' + datetime.now().strftime("%m-%d-%Y-%H-%M-%S")+ '.log'
         except:
@@ -67,7 +67,7 @@ class Console:
                 print(traceback.format_exc())
         else:
             color = Console.STYLES.get(type, Fore.WHITE)
-            msg = "%s%s%s%s%s%s" % (
+            msg = "%s%s%s%s%s" % (
                 Fore.WHITE + prefix,
                 ("", Style.DIM)[bold],
                 (color, Style.BRIGHT + color)[bright],
