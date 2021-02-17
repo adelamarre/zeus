@@ -14,9 +14,20 @@ from src.services.console import Console
 from time import sleep
 from json import loads
 from src.services.proxies import ProxyManager, PROXY_FILE_LISTENER
+from src.services.x11vncwrapper import X11vnc
 
 class ListenerContext:
-    def __init__(self, messagesCount: Array, threadsCount: Array, channel: int, config: Config, maxThread: int, lock: Lock, shutdownEvent: Event, console: Console):
+    def __init__(self, 
+        messagesCount: Array, 
+        threadsCount: Array, 
+        channel: int, 
+        config: Config, 
+        maxThread: int, 
+        lock: Lock, 
+        shutdownEvent: Event, 
+        console: Console,
+        vnc: bool = False
+    ):
         self.maxThread = maxThread
         self.lock = lock
         self.shutdownEvent = shutdownEvent
@@ -25,13 +36,15 @@ class ListenerContext:
         self.channel = channel
         self.threadsCount = threadsCount
         self.messagesCount = messagesCount
+        self.vnc = vnc
 
 class TaskContext:
-    def __init__(self, user: dict, playlist: str, receiptHandle: str, proxy: dict = None):
+    def __init__(self, user: dict, playlist: str, receiptHandle: str, proxy: dict = None, vnc: bool = False):
         self.user = user
         self.playlist = playlist
         self.proxy = proxy
         self.receiptHandle = receiptHandle
+        self.vnc = vnc
         
 
 class Listener(Process):
@@ -81,7 +94,8 @@ class Listener(Process):
                     playlist=body['playlist'],
                     proxy=proxy,
                     user=body['user'],
-                    receiptHandle=message['ReceiptHandle']
+                    receiptHandle=message['ReceiptHandle'],
+                    vnc = self.p_context.vnc
                 )
                 t = Thread(target=self.runner, args=(t_context,))
                 t.start()
@@ -110,14 +124,21 @@ class Listener(Process):
         try:
             if self.p_context.shutdownEvent.is_set():
                 return 
-            vdisplay = Xvfb(width=1280, height=1024, colordepth=24, tempdir=None, noreset='+render')
-            vdisplay.start()
+            vdisplay = None
+            x11vnc = None
+            if t_context.vnc:
+                vdisplay = Xvfb(width=1280, height=1024, colordepth=24, tempdir=None, noreset='+render')
+                vdisplay.start()
+                x11vnc = X11vnc(vdisplay)
+                x11vnc.start()
+
             with self.lockDriver:
                 driverData = self.driverManager.getDriver(
                     type='chrome',
                     uid=tid,
                     user=t_context.user,
-                    proxy=t_context.proxy
+                    proxy=t_context.proxy,
+                    headless= not t_context.vnc
                 )
             if not driverData:
                 return
@@ -129,19 +150,22 @@ class Listener(Process):
         except:
             self.p_context.console.error('Unavailale webdriver: %s' % format_exc())
         else:
-            spotify = Spotify.Adapter(driver, self.p_context.console, self.p_context.shutdownEvent)
-            if spotify.login(t_context.user['email'], t_context.user['password']):
-                self.p_context.console.log('#%d Logged In' % tid)
-                if not self.p_context.shutdownEvent.is_set():
-                    spotify.playPlaylist(t_context.playlist, self.p_context.shutdownEvent, 90, 110)
-                    self.p_context.console.log('#%d Played' % tid)
-            with self.lockClient:
-                self.client.delete_message(
-                    QueueUrl=self.p_context.config.SQS_ENDPOINT,
-                    ReceiptHandle=t_context.receiptHandle
-                )
-                self.p_context.console.log('#%d Message deleted' % tid)
-                       
+            try:
+                spotify = Spotify.Adapter(driver, self.p_context.console, self.p_context.shutdownEvent)
+                if spotify.login(t_context.user['email'], t_context.user['password']):
+                    self.p_context.console.log('#%d Logged In' % tid)
+                    if not self.p_context.shutdownEvent.is_set():
+                        spotify.playPlaylist(t_context.playlist, self.p_context.shutdownEvent, 90, 110)
+                        self.p_context.console.log('#%d Played' % tid)
+                with self.lockClient:
+                    self.client.delete_message(
+                        QueueUrl=self.p_context.config.SQS_ENDPOINT,
+                        ReceiptHandle=t_context.receiptHandle
+                    )
+                    self.p_context.console.log('#%d Message deleted' % tid)
+            except:
+                self.p_context.console.exception()
+                        
         if driver:
             try:
                 driver.quit()
@@ -151,6 +175,12 @@ class Listener(Process):
         if userDataDir:
             try:
                 rmtree(path=userDataDir, ignore_errors=True)
+            except:
+                pass
+        if x11vnc: #Terminate vnc server if any
+            try:
+                x11vnc.stop()
+                del x11vnc
             except:
                 pass
         if vdisplay:

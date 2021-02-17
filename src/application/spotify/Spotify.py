@@ -81,7 +81,6 @@ class Adapter:
         self.driver.get(playlist_url)
         
         # play it!!!
-        
         # Cookie banner
         try:
             element = WebDriverWait(self.driver, 30).until(
@@ -100,10 +99,7 @@ class Adapter:
             return False
         
         listenTime = randint(min_listening_time, max_listening_time)
-        
         startListen = time.time()
-
-        
 
         #Listen music
         while not shutDownEvent.is_set():
@@ -113,7 +109,7 @@ class Adapter:
                 return False
             if since > listenTime:
                 break
-            
+
         if shutDownEvent.is_set():
             return False
 

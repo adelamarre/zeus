@@ -1,7 +1,9 @@
 boto3
 colorama
 selenium
+selenium-wire
 PyInquirer
 requests
 xvfbwrapper
 psutil
+proxy.py

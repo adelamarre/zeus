@@ -44,10 +44,11 @@ class Console:
         'NOTICE': Fore.YELLOW,
         'LOG': Fore.WHITE
     }
-    def __init__(self, verbose=2, logToFile=True):
+    def __init__(self, verbose=2, logToFile=True, ouput=True):
         self.lock = Lock()
         self.verbose = verbose
         self.logToFile = logToFile
+        self.output = ouput
         try:
             self.logfile= (os.path.dirname(__file__) or '.') + '/../../temp/' + datetime.now().strftime("%m-%d-%Y-%H-%M-%S")+ '.log'
         except:
@@ -65,7 +66,7 @@ class Console:
                     f.write('%s%s\n' % (prefix, message))
             except:
                 print(traceback.format_exc())
-        else:
+        if self.output:
             color = Console.STYLES.get(type, Fore.WHITE)
             msg = "%s%s%s%s%s" % (
                 Fore.WHITE + prefix,
@@ -80,7 +81,7 @@ class Console:
             self.lock.release()
 
     def getPrefix(self, type):
-        return '%s[ss][%s]: ' % (datetime.now().strftime("%m-%d-%Y-%H-%M-%S"), type)
+        return '[%s][%s]: ' % (datetime.now().strftime("%m-%d-%Y-%H-%M-%S"), type)
 
     def error(self, message, bright=False, bold=False):
         if self.verbose > 0:
@@ -101,9 +102,12 @@ class Console:
     def log(self, message, bright=False, bold=False):
         if self.verbose > 1:
             self._print('LOG', message, bright, bold)
-    def exception(self):
+    def exception(self, reason=None):
         if self.verbose > 0:
-            self._print('EXCEPTION', traceback.format_exc(), True, False)
+            if reason:
+                self._print('EXCEPTION', '%s\n%s' % (reason, traceback.format_exc()), True, False)
+            else:
+                self._print('EXCEPTION', traceback.format_exc(), True, False)
 
     def clearScreen(self):
         print('\u001b[2J', flush=False)

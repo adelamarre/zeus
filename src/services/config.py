@@ -12,7 +12,9 @@ class Config(object):
         self.LISTENER_MAX_THREAD = 100
         self.LISTENER_SPAWN_INTERVAL = 1
         self.REGISTER_BATCH_COUNT = 1000
-        self.REGISTER_MAX_PROCESS = 100
+        self.REGISTER_MAX_PROCESS = -1
+        self.REGISTER_MAX_THREAD = 16 * 10
+        
         print('Config file: %s' % configFilePath)
         with open(configFilePath, 'r') as f:
             self.__dict__ = json.load(f)

@@ -1,11 +1,12 @@
 from src.services.console import Console
 from selenium.webdriver.chrome.options import Options
-from selenium.webdriver.chrome.webdriver import WebDriver
+#from selenium.webdriver.chrome.webdriver import WebDriver
 from selenium.webdriver.common.desired_capabilities import DesiredCapabilities
-from selenium import webdriver
+#from selenium import webdriver
 from zipfile import ZipFile
 from selenium.webdriver.chrome.service import Service
-from selenium import webdriver
+from seleniumwire import webdriver 
+#from selenium import webdriver
 from random import randint
 import os
 import shutil
@@ -70,7 +71,7 @@ class ChromeDriverAdapter:
 
         #self.service.stop()
 
-    def getNewInstance(self, uid, user, proxy=None, headless=False) -> WebDriver:
+    def getNewInstance(self, uid, user, proxy=None, headless=False) -> webdriver:
         pluginfile = None
         try:
             if proxy is None:
@@ -98,7 +99,7 @@ class ChromeDriverAdapter:
             options.add_argument("--disable-offline-load-stale-cache")
             options.add_argument("--disk-cache-size=0")
             options.add_argument("--disable-features=VizDisplayCompositor")
-            #options.page_load_strategy = 'normal'
+            options.page_load_strategy = 'normal'
             #options.add_argument("--window-position=-32000,-32000");
             #options.add_argument("--log-path=" + (os.path.dirname(__file__) or '.') + "/../chrome.log")
             #options.add_argument("--log-level=3")
@@ -128,6 +129,17 @@ class ChromeDriverAdapter:
             if 'userAgent' in user:
                 options.add_argument('user-agent=%s' % user['userAgent'])
 
+            soptions = {}
+            if proxy:
+                proxyStr = '%s:%s@%s:%s' % (proxy['username'], proxy['password'], proxy['host'], proxy['port'])
+                soptions = {
+                    'proxy': {
+                        'https': 'https://%s' % proxyStr,
+                        'http': 'https://%s' % proxyStr,
+                    }
+                }
+
+            
             #incognito argument disable the use of the proxy, DO NOT SET ! 
             #options.add_argument("--incognito")
             
@@ -136,9 +148,9 @@ class ChromeDriverAdapter:
             
             
             # add a proxy if available
-            if proxy:
-                pluginfile = self.buildChromeExtension(proxy)
-                options.add_extension(pluginfile)
+            #if proxy:
+            #    pluginfile = self.buildChromeExtension(proxy)
+            #    options.add_extension(pluginfile)
 
             #prefs: {
             #    protocol_handler: {
@@ -151,11 +163,11 @@ class ChromeDriverAdapter:
             
             #Instantiate the driver
             if self.service:
-                driver = webdriver.Remote(self.service.service_url, desired_capabilities=desired_capabilities, options=options)
+                driver = webdriver.Remote(self.service.service_url, desired_capabilities=desired_capabilities, options=options, seleniumwire_options=soptions)
             else:
-                driver = WebDriver(options=options, desired_capabilities=desired_capabilities)
+                driver = webdriver.Chrome(options=options, desired_capabilities=desired_capabilities, seleniumwire_options=soptions)
             #driver = webdriver.Remote(self.service.service_url, desired_capabilities=desired_capabilities, options=options)
-
+            
             #Make webdriver = undefined
             script = '''
             Object.defineProperty(navigator, 'webdriver', {
@@ -164,9 +176,14 @@ class ChromeDriverAdapter:
             '''
             driver.execute_script(script)
             
-            if pluginfile:
-                os.remove(pluginfile)
-                pluginfile = None
+            #if proxy:
+            #    def requestInterceptor(request):
+            #        request.headers['Zeus-proxy': '%s:%s:%s:%s' % (proxy['host', proxy['port'], proxy['username'], proxy['password']])]
+            #    driver.request_interceptor = requestInterceptor
+
+            #if pluginfile:
+            #    os.remove(pluginfile)
+            #    pluginfile = None
 
             return {
                 'driver': driver,
