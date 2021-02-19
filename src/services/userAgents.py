@@ -16,7 +16,7 @@ class UserAgentManager:
                     line += 1    
                 else:
                     print('Malformed user agent data at line #%d : %s' % (line, userAgent.replace('\n', '')))    
-            print('Found %d user agents' % len(self.userAgents))
+            #print('Found %d user agents' % len(self.userAgents))
 
     def getRandomUserAgent(self):
         if len(self.userAgents):

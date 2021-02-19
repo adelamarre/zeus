@@ -1,5 +1,5 @@
 from multiprocessing import Event
-from src.services.proxies import ProxyManager, PROXY_FILE_LISTENER
+from src.services.proxies import ProxyManager, PROXY_FILE_LISTENER, Proxy
 from src.services.proxyplugin.auth import ProxyRedirect
 from selenium.webdriver.chrome.options import Options
 from seleniumwire import webdriver
@@ -49,11 +49,12 @@ if __name__ == '__main__':
     options.add_argument('--proxy-server=localhost:8899')
     options.add_argument("--headless")
 
-    proxyStr = '%s:%s@%s:%s' % (proxy['username'], proxy['password'], proxy['host'], proxy['port'])
+    proxyStr = Proxy.getUrl(proxy)
     soptions = {
         'proxy': {
-            'https': 'https://%s' % proxyStr,
-            'http': 'https://%s' % proxyStr,
+            'https': '%s' % proxyStr,
+            'http': '%s' % proxyStr,
+            'no_proxy': 'localhost,127.0.0.1',
         }
     }
 
@@ -83,11 +84,15 @@ if __name__ == '__main__':
     
     spotify = Spotify.Adapter(driver, console, Event())
 
-    info = spotify.getClientInfo('http://35.180.119.212')
-    if 'server' in info:        
-        console.success('Browser identity: %s, %s' % (info['server']['REMOTE_ADDR'], info['server']['HTTP_USER_AGENT']))
-    else:
-        console.error('Check proxy error: getClientInfo return :\n%s' % info['raw'])
+    #info = spotify.getClientInfo('http://ec2-35-180-119-212.eu-west-3.compute.amazonaws.com')
+    #info = spotify.getClientInfo('http://35.180.119.212')
+    #if 'server' in info:        
+    #    console.success('Browser identity: %s, %s' % (info['server']['REMOTE_ADDR'], info['server']['HTTP_USER_AGENT']))
+    #else:
+    #    console.error('Check proxy error: getClientInfo return :\n%s' % info['raw'])
+
+    ip = spotify.getMyIp()
+    console.success('My ip is : %s' % ip)
 
     while True:
         try:

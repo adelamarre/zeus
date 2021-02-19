@@ -51,7 +51,7 @@ def showStats(data, queueUrl, stats: Stats):
     lines.append(Fore.BLUE + separator)
     lines.append(Fore.WHITE + 'Elapsed time  : %s' % (Fore.GREEN + data['elapsedTime']))
     lines.append(Fore.WHITE + 'Total process : %7d, threads: %7d' % (int(data['totalProcess']), totalThreads))
-    lines.append(Fore.WHITE + 'Message read  : %7d' % int(data['totalMessageReceived']))
+    lines.append(Fore.WHITE + 'Message read  : %7d' % totalMessages)
     lines.append(Fore.BLUE + separator)
 
     
@@ -92,12 +92,18 @@ def couldSpawnProcess(count, min, max, interval, load_threshold, lastProcessStar
 
 if __name__ == '__main__':
     startTime = time()
+    showInfo = False
+    noOutput = False
     for arg in argv:
-        showInfo = (arg == '--info')
+        if arg == '--info':
+            showInfo = True
+        if arg == '--nooutput':
+            noOutput = True
+    
     
     config = Config()
     processes = []
-    console = Console()
+    console = Console(ouput= not noOutput)
     driverManager = DriverManager(console)
     driverVersion = driverManager.getDriverVersion('chrome')
     browserVersion = driverManager.getBrowserVersion('chrome')

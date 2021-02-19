@@ -1,6 +1,7 @@
-from multiprocessing import Event
+from multiprocessing import Event, set_start_method
+from os import stat
 import time
-from selenium.common.exceptions import NoSuchElementException
+from selenium.common.exceptions import JavascriptException, NoSuchElementException
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from random import randint, choice
@@ -12,18 +13,32 @@ import json
 from requests import post
 from ...services.tasks import TaskContext
 import traceback
+from src.services.console import Console
 
 WEBPLAYER_URL = 'https://open.spotify.com/'
 LOGIN_URL = 'https://accounts.spotify.com/en/login'
 SIGNUP_URL = 'https://www.spotify.com/fr/signup'
 
 class Adapter:
-    def __init__(self, driver, console, shutdownEvent: Event):
+    def __init__(self, driver, console: Console, shutdownEvent: Event):
         self.driver = driver
         self.console = console
         self.shutdownEvent = shutdownEvent
     
-    
+    def getMyIp(self):
+        self.driver.get('https://api.myip.com/')
+        try:
+            json_str = self.driver.execute_script("return document.body.outerHTML;").replace('<body>', '').replace('</body>', '').replace('</address>', '')
+            self.console.log(json_str)
+            result = json.loads(json_str)
+            if 'ip' in result:
+                return result['ip']
+            else:
+                return 'unknown'
+        except:
+            self.console.exception()
+        
+
     def getClientInfo(self, mirrorServerUrl):
         self.driver.get(mirrorServerUrl)
         result = {}
@@ -33,11 +48,30 @@ class Adapter:
         except:
             return {'raw': json_str}
         return result
-         
+    
+    def navigate(self, url):
+        try:
+            self.driver.get(url)
+            for request in self.driver.requests:
+                if request.url == url:
+                    if request.response:
+                        statusCode = int(request.response.response_status_code)
+                        if statusCode > 399:
+                            self.console.error('Response status code : %d' %  statusCode)
+                            return False
+                    else:
+                       self.console.error('Empty response from : %s' %  url)
+                       return False
+            return True
+        except:
+            self.console.exception()
+            return False
+
 
     # returns the status of the account's login
     def login(self, email, password):
-        self.driver.get(LOGIN_URL)
+        if not self.navigate(LOGIN_URL):
+            return False
         self.wait_increment = 5
         time.sleep(self.wait_increment)
 
@@ -78,7 +112,8 @@ class Adapter:
         time.sleep(5)
 
     def playPlaylist(self, playlist_url, shutDownEvent: Event, min_listening_time = 70, max_listening_time = 110):
-        self.driver.get(playlist_url)
+        if not self.navigate(playlist_url):
+            return False
         
         # play it!!!
         # Cookie banner

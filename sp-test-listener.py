@@ -35,6 +35,7 @@ if __name__ == '__main__':
 
     lp = Listener(lpc)
     lp.start()
+    
     while lp.is_alive():
         try:
             sleep(1)

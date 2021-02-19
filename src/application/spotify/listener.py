@@ -63,55 +63,58 @@ class Listener(Process):
         messages = []
 
         while not self.p_context.shutdownEvent.is_set():
-            sleep(self.p_context.config.LISTENER_SPAWN_INTERVAL)
-            freeSlot = self.p_context.maxThread - len(threads) 
-            if len(messages) < 1 and freeSlot:
-                try:
-                    with self.lockClient:
-                        response = self.client.receive_message(
-                            QueueUrl=self.p_context.config.SQS_ENDPOINT,
-                            MaxNumberOfMessages=freeSlot,
-                            VisibilityTimeout=600,
-                            WaitTimeSeconds=2,
-                        )
-                    if 'Messages' in response:
-                        newMessages = response['Messages']
-                        messages =  newMessages + messages
-                        self.totalMessageReceived += len(newMessages)
-                        self.p_context.messagesCount[self.p_context.channel] = self.totalMessageReceived
-                except:
-                    self.p_context.console.exception()
-            if freeSlot and len(messages):
-                message = messages.pop()
-                body = loads(message['Body'])
-                proxy = None
-                if self.p_context.config.LISTENER_OVERIDE_PLAYLIST:
-                    body['playlist'] = self.p_context.config.LISTENER_OVERIDE_PLAYLIST
-                if self.p_context.config.LISTENER_OVERIDE_PROXY:
-                    proxy = self.proxyManager.getRandomProxy()
-                
-                t_context = TaskContext(
-                    playlist=body['playlist'],
-                    proxy=proxy,
-                    user=body['user'],
-                    receiptHandle=message['ReceiptHandle'],
-                    vnc = self.p_context.vnc
-                )
-                t = Thread(target=self.runner, args=(t_context,))
-                t.start()
-                threads.append(t)
+            try:
+                sleep(self.p_context.config.LISTENER_SPAWN_INTERVAL)
+                freeSlot = self.p_context.maxThread - len(threads) 
+                if len(messages) < 1 and freeSlot:
+                    try:
+                        with self.lockClient:
+                            response = self.client.receive_message(
+                                QueueUrl=self.p_context.config.SQS_ENDPOINT,
+                                MaxNumberOfMessages=freeSlot,
+                                VisibilityTimeout=600,
+                                WaitTimeSeconds=2,
+                            )
+                        if 'Messages' in response:
+                            newMessages = response['Messages']
+                            messages =  newMessages + messages
+                            self.totalMessageReceived += len(newMessages)
+                            self.p_context.messagesCount[self.p_context.channel] = self.totalMessageReceived
+                    except:
+                        self.p_context.console.exception()
+                if freeSlot and len(messages):
+                    message = messages.pop()
+                    body = loads(message['Body'])
+                    proxy = None
+                    if self.p_context.config.LISTENER_OVERIDE_PLAYLIST:
+                        body['playlist'] = self.p_context.config.LISTENER_OVERIDE_PLAYLIST
+                    if self.p_context.config.LISTENER_OVERIDE_PROXY:
+                        proxy = self.proxyManager.getRandomProxy()
+                    
+                    t_context = TaskContext(
+                        playlist=body['playlist'],
+                        proxy=proxy,
+                        user=body['user'],
+                        receiptHandle=message['ReceiptHandle'],
+                        vnc = self.p_context.vnc
+                    )
+                    t = Thread(target=self.runner, args=(t_context,))
+                    t.start()
+                    threads.append(t)
 
-            leftThread = []
-            for thread in threads:
-                if thread.is_alive():
-                    leftThread.append(thread)
-                else:
-                    del thread
-                    collect()
-            threads = leftThread
-            self.p_context.threadsCount[self.p_context.channel] = len(threads)
-            if len(threads) == 0:
-                break
+                leftThread = []
+                for thread in threads:
+                    if thread.is_alive():
+                        leftThread.append(thread)
+                    else:
+                        del thread
+                        collect()
+                threads = leftThread
+                self.p_context.threadsCount[self.p_context.channel] = len(threads)
+                if len(threads) == 0:
+                    break
+            except:
+                self.p_context.console.exception()
         
         del self.driverManager
         del self.p_context
@@ -147,6 +150,7 @@ class Listener(Process):
             userDataDir = driverData['userDataDir']
             if not driver:
                 return
+            
         except:
             self.p_context.console.error('Unavailale webdriver: %s' % format_exc())
         else:

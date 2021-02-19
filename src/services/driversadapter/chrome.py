@@ -1,11 +1,13 @@
+
+import seleniumwire
 from src.services.console import Console
 from selenium.webdriver.chrome.options import Options
 #from selenium.webdriver.chrome.webdriver import WebDriver
 from selenium.webdriver.common.desired_capabilities import DesiredCapabilities
-#from selenium import webdriver
+
 from zipfile import ZipFile
 from selenium.webdriver.chrome.service import Service
-from seleniumwire import webdriver 
+
 #from selenium import webdriver
 from random import randint
 import os
@@ -15,6 +17,13 @@ from time import sleep
 from src.services.bash import version
 from traceback import format_exc
 from platform import system
+from src.services.proxies import Proxy
+
+seleniumWire = False
+if not seleniumwire:
+    from selenium import webdriver
+else:
+    from seleniumwire import webdriver 
 
 manifest_json = """
 {
@@ -129,23 +138,40 @@ class ChromeDriverAdapter:
             if 'userAgent' in user:
                 options.add_argument('user-agent=%s' % user['userAgent'])
 
+            desired_capabilities = DesiredCapabilities.CHROME.copy()
             soptions = {}
-            if proxy:
-                proxyStr = '%s:%s@%s:%s' % (proxy['username'], proxy['password'], proxy['host'], proxy['port'])
+            if seleniumWire:
                 soptions = {
-                    'proxy': {
-                        'https': 'https://%s' % proxyStr,
-                        'http': 'https://%s' % proxyStr,
-                    }
+                    'ignore_http_methods': [],
+                    'connection_timeout': None, 
+                    'verify_ssl': False,
                 }
+                if proxy:
+                    proxyUrl = Proxy.getUrl(proxy)
+                    soptions['proxy'] = {
+                        'https': '%s' % proxyUrl,
+                        'http': '%s' % proxyUrl,
+                        'no_proxy': 'localhost,127.0.0.1',
+                    }
+            else:
+                if proxy:
+                    proxyUrl = Proxy.getUrl(proxy)
+                    desired_capabilities['proxy'] = {
+                        'proxyType': 'manual',
+                        'httpProxy': '%s' % proxyUrl,
+                        'sslProxy': '%s' % proxyUrl,
+                        'no_proxy': 'localhost,127.0.0.1',
+                    }
 
             
             #incognito argument disable the use of the proxy, DO NOT SET ! 
             #options.add_argument("--incognito")
             
 
-            desired_capabilities = DesiredCapabilities.CHROME.copy()
             
+            
+            
+
             
             # add a proxy if available
             #if proxy:

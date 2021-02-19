@@ -85,7 +85,7 @@ class Register(Process):
             )
         while not self.p_context.shutdownEvent.is_set():
             try:
-                sleep(self.p_context.config.LISTENER_SPAWN_INTERVAL)
+                sleep(self.p_context.config.REGISTER_SPAWN_INTERVAL)
                 freeSlot = self.p_context.maxThread - len(threads) 
                 
                 if freeSlot and len(messages):

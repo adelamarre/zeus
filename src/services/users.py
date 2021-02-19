@@ -49,7 +49,7 @@ class UserManager:
         except:
             self.console.warning('Could not find %s in /data folder !' % userFile)
 
-        print('Found %d users' % len(self.users))
+        #print('Found %d users' % len(self.users))
         return self.users
 
     def createRandomUser(self, proxy, userAgent, application):

@@ -1,0 +1,6 @@
+[02-19-2021-10-24-07][ERROR]: Check proxy error: getClientInfo return :
+
+            <h1>502 Bad Gateway</h1>
+            <p>ProtocolException('Server connection to (\'35.180.119.212\', 80) failed: Error connecting to "35.180.119.212": Socket error: 0x05: Connection refused')</p>
+            
+        

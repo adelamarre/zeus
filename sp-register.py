@@ -80,12 +80,17 @@ def showStats():
 
 if __name__ == '__main__':
     startTime = time()
+    showInfo = False
+    noOutput = False
     for arg in argv:
-        showInfo = (arg == '--info')
+        if arg == '--info':
+            showInfo = True
+        if arg == '--nooutput':
+            noOutput = True
     
     config = Config()
     processes = []
-    console = Console()
+    console = Console(ouput= not noOutput)
     driverManager = DriverManager(console)
     driverVersion = driverManager.getDriverVersion('chrome')
     browserVersion = driverManager.getBrowserVersion('chrome')
@@ -100,7 +105,7 @@ if __name__ == '__main__':
     
     
 
-    maxProcess = config.LISTENER_MAX_PROCESS
+    maxProcess = config.REGISTER_MAX_PROCESS
     if maxProcess < 0:
         maxProcess = psutil.cpu_count(logical=True)
     
@@ -124,7 +129,7 @@ if __name__ == '__main__':
 
     chanel = 0
     for x in range(maxProcess):
-        sleep(config.LISTENER_SPAWN_INTERVAL)
+        sleep(config.REGISTER_SPAWN_INTERVAL)
         threadsCount[chanel] = 0
         p_context = RegisterContext(
             config = config,
