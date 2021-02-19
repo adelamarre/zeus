@@ -19,7 +19,7 @@ from traceback import format_exc
 from platform import system
 from src.services.proxies import Proxy
 
-seleniumWire = False
+seleniumWire = True
 if not seleniumwire:
     from selenium import webdriver
 else:

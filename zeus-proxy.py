@@ -62,10 +62,10 @@ if __name__ == '__main__':
 
 
 
-    #vdisplay = Xvfb(width=1280, height=1024, colordepth=24, tempdir=None, noreset='+render')
-    #vdisplay.start()
-    #x11vnc = X11vnc(vdisplay)
-    #x11vnc.start()
+    vdisplay = Xvfb(width=1280, height=1024, colordepth=24, tempdir=None, noreset='+render')
+    vdisplay.start()
+    x11vnc = X11vnc(vdisplay)
+    x11vnc.start()
 
     driver = webdriver.Chrome(options=options, desired_capabilities=desired_capabilities, seleniumwire_options=soptions)
     
@@ -103,5 +103,5 @@ if __name__ == '__main__':
             break
 
     driver.quit()
-    #vdisplay.stop()
-    # x11vnc.stop()
+    x11vnc.stop()
+    vdisplay.stop()

@@ -1,7 +1,9 @@
 from multiprocessing import Event, set_start_method
-from os import stat
+
 import time
 from selenium.common.exceptions import JavascriptException, NoSuchElementException
+from selenium.webdriver.remote.webdriver import WebDriver
+from selenium.webdriver.remote.webelement import WebElement
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from random import randint, choice
@@ -14,27 +16,33 @@ from requests import post
 from ...services.tasks import TaskContext
 import traceback
 from src.services.console import Console
-
+from seleniumwire import webdriver
 WEBPLAYER_URL = 'https://open.spotify.com/'
 LOGIN_URL = 'https://accounts.spotify.com/en/login'
 SIGNUP_URL = 'https://www.spotify.com/fr/signup'
 
 class Adapter:
     def __init__(self, driver, console: Console, shutdownEvent: Event):
-        self.driver = driver
+        self.driver: WebDriver = driver
         self.console = console
         self.shutdownEvent = shutdownEvent
     
     def getMyIp(self):
-        self.driver.get('https://api.myip.com/')
+        #self.driver.get('https://api.myip.com/')
+        #self.driver.get('https://ipapi.co/json/')
+        self.driver.get('https://ip.lafibre.info/')
         try:
-            json_str = self.driver.execute_script("return document.body.outerHTML;").replace('<body>', '').replace('</body>', '').replace('</address>', '')
-            self.console.log(json_str)
-            result = json.loads(json_str)
-            if 'ip' in result:
-                return result['ip']
-            else:
-                return 'unknown'
+            #json_str = self.driver.execute_script("return document.body.outerText")
+            
+            ip_v4 = self.driver.find_element_by_xpath('/html/body/ul[1]/li[1]/span/strong[2]').text
+            ip_v6 =  self.driver.find_element_by_xpath('/html/body/ul[1]/li[3]/span/strong[2]').text
+            return 'ip v4: %s, ip v6: %s' % (ip_v4, ip_v6)
+            #self.console.log(json_str)
+            #result = json.loads(json_str)
+            #if 'ip' in result:
+            #    return result['ip']
+            #else:
+            #    return 'unknown'
         except:
             self.console.exception()
         
