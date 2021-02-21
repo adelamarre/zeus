@@ -14,7 +14,7 @@ if __name__ == '__main__':
     messagesCount = Array('i', 1)
     console = Console()
     config = Config()
-    dm = DriverManager(console=console)
+    dm = DriverManager(console, Event())
     lock = Lock()
     config.LISTENER_MAX_PROCESS = 1
     config.LISTENER_MAX_THREAD = 1
@@ -30,7 +30,9 @@ if __name__ == '__main__':
         shutdownEvent=shutdownEvent,
         console=console,
         lock=lock,
-        vnc=True
+        vnc=True,
+        headless=False,
+        batchId= 1
     )
 
     lp = Listener(lpc)

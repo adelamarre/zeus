@@ -53,6 +53,27 @@ class Console:
             self.logfile= (os.path.dirname(__file__) or '.') + '/../../temp/' + datetime.now().strftime("%m-%d-%Y-%H-%M-%S")+ '.log'
         except:
             traceback.print_exc()
+        
+        try:
+            import termios
+        except ImportError:
+            # Non-POSIX. Return msvcrt's (Windows') getch.
+            import msvcrt
+            self.getch = msvcrt.getch
+        else:
+        # POSIX system. Create and return a getch that manipulates the tty.
+            import sys, tty
+            def _getch():
+                fd = sys.stdin.fileno()
+                old_settings = termios.tcgetattr(fd)
+                try:
+                    tty.setraw(fd)
+                    ch = sys.stdin.read(1)
+                finally:
+                    termios.tcsetattr(fd, termios.TCSADRAIN, old_settings)
+                return ch
+
+            self.getch = _getch
 
     def _print(self, type, message, bold=False, bright=False):
 

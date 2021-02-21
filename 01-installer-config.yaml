@@ -1,8 +1,0 @@
-# This is the network config written by 'subiquity'
-network:
-  ethernets:
-    enp69s0:
-      dhcp4: true
-    enp72s0:
-      dhcp4: true
-  version: 2

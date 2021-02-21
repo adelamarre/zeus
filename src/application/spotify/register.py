@@ -1,5 +1,6 @@
 
 from gc import collect
+from multiprocessing.process import current_process
 from random import randint
 from shutil import rmtree
 from multiprocessing import Array, Lock, Process, Event
@@ -20,7 +21,8 @@ from src.services.users import UserManager
 from src.services.userAgents import UserAgentManager
 
 class RegisterContext:
-    def __init__(self, 
+    def __init__(self,
+        batchId: int,
         accountsCount: Array, 
         threadsCount: Array, 
         channel: int, 
@@ -31,7 +33,10 @@ class RegisterContext:
         console: Console,
         accountToCreate: int,
         playlist: str,
-        vnc: bool = False
+        vnc: bool = False,
+        headless = True
+         
+        
     ):
         self.maxThread = maxThread
         self.lock = lock
@@ -44,20 +49,24 @@ class RegisterContext:
         self.accountToCreate = accountToCreate
         self.playlist = playlist
         self.vnc = vnc
+        self.headless = headless
+        self.batchId = batchId
 
 class TaskContext:
-    def __init__(self, user: dict, playlist: str, proxy: dict = None, vnc: bool = False):
+    def __init__(self, batchId: int, user: dict, playlist: str, proxy: dict = None, vnc: bool = False, headless: bool = True):
+        self.batchId = batchId
         self.user = user
         self.playlist = playlist
         self.proxy = proxy
         self.vnc = vnc
+        self.headless = headless
         
 
 class Register(Process):
     def __init__(self, pcontext: RegisterContext):
         super().__init__()
         self.p_context = pcontext
-        self.driverManager = DriverManager(pcontext.console, startService=False)
+        self.driverManager = DriverManager(pcontext.console, pcontext.shutdownEvent, startService=False)
         self.client = client('sqs')
         self.totalAccountCreated = 0
         self.proxyRegisterManager = ProxyManager(proxyFile=PROXY_FILE_REGISTER)
@@ -67,8 +76,9 @@ class Register(Process):
         self.lockClient = Lock()
         self.lockDriver = Lock()
         self.lockAccountCount = Lock()
-
+        
     def run(self):
+        self.p_context.console.log('Start process %d' % current_process().pid)
         threads = []
         messages = []
         for x in range(self.p_context.accountToCreate):
@@ -83,18 +93,20 @@ class Register(Process):
                     })
                 }
             )
-        while not self.p_context.shutdownEvent.is_set():
+        while True:
             try:
                 sleep(self.p_context.config.REGISTER_SPAWN_INTERVAL)
                 freeSlot = self.p_context.maxThread - len(threads) 
                 
-                if freeSlot and len(messages):
+                if freeSlot and len(messages) and (not self.p_context.shutdownEvent.is_set()):
                     message = messages.pop()
                     body = loads(message['Body'])
                     t_context = TaskContext(
+                        batchId=self.p_context.batchId,
                         playlist=body['playlist'],
                         proxy=self.proxyRegisterManager.getRandomProxy(),
                         user=body['user'],
+                        headless=self.p_context.headless,
                         vnc = self.p_context.vnc
                     )
                     t = Thread(target=self.runner, args=(t_context,))
@@ -108,14 +120,16 @@ class Register(Process):
                     else:
                         del thread
                         collect()
+                        pass
                 threads = leftThread
                 self.p_context.threadsCount[self.p_context.channel] = len(threads)
-                if len(threads) == 0:
+                if len(threads) == 0 and len(messages) == 0:
                     break
             except:
                 self.p_context.console.exception('Register process #%d exception' % self.p_context.channel)
         
         self.driverManager.purge()
+        self.p_context.console.log('Stop process %d' % current_process().pid)
         del self.driverManager
         del self.p_context
         del self.userAgentManager
@@ -123,21 +137,23 @@ class Register(Process):
         del self.proxyListenerManager
         del self.proxyRegisterManager
         collect()
+        
 
 
     def runner(self, t_context: TaskContext):
         tid = current_thread().native_id
-        self.p_context.console.log('#%d Start' % tid)
+        self.p_context.console.log('Start thread %d' % tid)
         try:
             if self.p_context.shutdownEvent.is_set():
                 return 
             vdisplay = None
             x11vnc = None
-            if t_context.vnc:
+            if t_context.headless == False:
                 vdisplay = Xvfb(width=1280, height=1024, colordepth=24, tempdir=None, noreset='+render')
                 vdisplay.start()
-                x11vnc = X11vnc(vdisplay)
-                x11vnc.start()
+                if t_context.vnc:
+                    x11vnc = X11vnc(vdisplay)
+                    x11vnc.start()
 
             with self.lockDriver:
                 driverData = self.driverManager.getDriver(
@@ -157,7 +173,11 @@ class Register(Process):
         except:
             self.p_context.console.error('Unavailale webdriver: %s' % format_exc())
         else:
-            spotify = Spotify.Adapter(driver, self.p_context.console, self.p_context.shutdownEvent)
+            spotify = Spotify.Adapter(driver, 
+                self.p_context.console,
+                self.p_context.shutdownEvent,
+                t_context.batchId
+            )
             self.p_context.console.log('#%d Start create account for %s' % (tid, t_context.user['email']))
             if spotify.register(t_context.user):
                 self.p_context.console.log('#%d Account created for %s' % (tid, t_context.user['email']))
@@ -180,7 +200,8 @@ class Register(Process):
                             self.totalAccountCreated += 1
                             self.p_context.accountsCount[self.p_context.channel] = self.totalAccountCreated
             else:
-                self.p_context.console.error('#%d Failed to create account for %s' % (tid, t_context.user['email']))  
+                if not self.p_context.shutdownEvent.is_set():
+                    self.p_context.console.error('#%d Failed to create account for %s' % (tid, t_context.user['email']))
 
         if driver:
             try:
@@ -205,4 +226,6 @@ class Register(Process):
                 del vdisplay
             except:
                 pass
+        self.p_context.console.log('Stop thread %d' % tid)
         collect()
+        

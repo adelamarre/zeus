@@ -2,11 +2,13 @@ from .console import Console
 from time import sleep
 from random import randint
 from .driversadapter.chrome import ChromeDriverAdapter
+from multiprocessing import Event
 
 class DriverManager:
-    def __init__(self, console: Console, startService=False):
+    def __init__(self, console: Console, shutdownEvent: Event, startService=False):
         self.chrome = ChromeDriverAdapter(console, startService=startService)
         self.console = console
+        self.shutdownEvent = shutdownEvent
     
     def getDriverVersion(self, type):
         if type == 'chrome':
@@ -21,7 +23,7 @@ class DriverManager:
     def getDriver(self, type, uid, user, proxy=None, headless=False):
         driver = None
         tryCount = 3
-        while True:
+        while not self.shutdownEvent.is_set() :
             try:
                 if type == 'chrome':
                     #driver = self.getChromeDriver(uid, user, proxy, headless)
@@ -35,11 +37,10 @@ class DriverManager:
                 else:
                     raise Exception("getDriver return None")    
             except:
+                sleep(1)
                 if tryCount:
                     tryCount -= 1
-                    sleep(5)
                 else:
-                    sleep(randint(3,6))
                     self.console.exception()
                     break
         return driver    

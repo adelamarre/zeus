@@ -1,4 +1,7 @@
-from multiprocessing import Event, set_start_method
+from multiprocessing import Event
+from threading import current_thread
+
+import os
 
 import time
 from selenium.common.exceptions import JavascriptException, NoSuchElementException
@@ -17,16 +20,18 @@ from ...services.tasks import TaskContext
 import traceback
 from src.services.console import Console
 from seleniumwire import webdriver
+from os import path
 WEBPLAYER_URL = 'https://open.spotify.com/'
 LOGIN_URL = 'https://accounts.spotify.com/en/login'
 SIGNUP_URL = 'https://www.spotify.com/fr/signup'
 
 class Adapter:
-    def __init__(self, driver, console: Console, shutdownEvent: Event):
+    def __init__(self, driver, console: Console, shutdownEvent: Event, batchId: int  = 0):
         self.driver: WebDriver = driver
         self.console = console
         self.shutdownEvent = shutdownEvent
-    
+        self.screenshotDir = (path.dirname(__file__) or '.') + ('/../../../temp/%d/' % batchId)
+        
     def getMyIp(self):
         #self.driver.get('https://api.myip.com/')
         #self.driver.get('https://ipapi.co/json/')
@@ -60,7 +65,7 @@ class Adapter:
     def navigate(self, url):
         try:
             self.driver.get(url)
-            for request in self.driver.requests:
+            ''' for request in self.driver.requests:
                 if request.url == url:
                     if request.response:
                         statusCode = int(request.response.response_status_code)
@@ -69,7 +74,7 @@ class Adapter:
                             return False
                     else:
                        self.console.error('Empty response from : %s' %  url)
-                       return False
+                       return False '''
             return True
         except:
             self.console.exception()
@@ -120,49 +125,55 @@ class Adapter:
         time.sleep(5)
 
     def playPlaylist(self, playlist_url, shutDownEvent: Event, min_listening_time = 70, max_listening_time = 110):
-        if not self.navigate(playlist_url):
-            return False
-        
-        # play it!!!
-        # Cookie banner
         try:
-            element = WebDriverWait(self.driver, 30).until(
-                EC.presence_of_element_located((By.ID, "onetrust-accept-btn-handler"))
-            )
-            js_script = "document.getElementById( 'onetrust-accept-btn-handler' ).click();"
-            self.driver.execute_script( js_script )
-        except:
-            pass
-        if shutDownEvent.is_set():
-            return False
-        sleep(3)
-        
-        #Press Play button
-        if not self.pressPlayButton():
-            return False
-        
-        listenTime = randint(min_listening_time, max_listening_time)
-        startListen = time.time()
-
-        #Listen music
-        while not shutDownEvent.is_set():
-            time.sleep(1)
-            since = (time.time()-startListen)
-            if self.shutdownEvent.is_set():
+            if not self.navigate(playlist_url):
                 return False
-            if since > listenTime:
-                break
+            
+            # play it!!!
+            # Cookie banner
+            try:
+                element = WebDriverWait(self.driver, 30).until(
+                    EC.presence_of_element_located((By.ID, "onetrust-accept-btn-handler"))
+                )
+                sleep(2)
+                js_script = "document.getElementById( 'onetrust-accept-btn-handler' ).click();"
+                self.driver.execute_script( js_script )
+            except:
+                pass
+            if shutDownEvent.is_set():
+                return False
+            sleep(3)
+            
+            #Press Play button
+            if not self.pressPlayButton():
+                return False
+            
+            listenTime = randint(min_listening_time, max_listening_time)
+            startListen = time.time()
 
-        if shutDownEvent.is_set():
-            return False
+            #Listen music
+            while not shutDownEvent.is_set():
+                time.sleep(1)
+                since = (time.time()-startListen)
+                if self.shutdownEvent.is_set():
+                    return False
+                if since > listenTime:
+                    break
 
-        if not self.pressNextButton():
-            return False
+            if shutDownEvent.is_set():
+                return False
 
-        if shutDownEvent.is_set():
-            return False
-        sleep(randint(5, 8))
-        return True
+            if not self.pressNextButton():
+                return False
+
+            if shutDownEvent.is_set():
+                return False
+            sleep(randint(5, 8))
+            return True
+        except Exception as e:
+            self.saveScreenshot(str(e))
+            self.console.exception()
+        return False
 
 
     def clickByXpath(self, path, maxTry=30, waitPerTry=1):
@@ -294,6 +305,7 @@ class Adapter:
             self.driver.maximize_window()
             if self.shutdownEvent.is_set():
                 return False
+            sleep(3)
             email_field = self.driver.find_element_by_id( "email" )
             email_field.send_keys(user['email'])
             
@@ -357,10 +369,23 @@ class Adapter:
             sleep(10)
             
             return True
+        except Exception as e:
+            self.saveScreenshot(str(e))
+            self.console.exception()
+            
+
+        return False
+
+    def saveScreenshot(self, message = None):
+        try:
+            id = randint(10000, 99999)
+            if message:
+                with open(self.screenshotDir + ('%d-error.log' % id), 'w') as f:
+                    f.write(message)
+            self.driver.save_screenshot(self.screenshotDir  + ('%d-screenshot.png' % id))
         except:
             self.console.exception()
 
-        return False
 
     def registerApi(self, user, day_value = randint(1, 28), month_value = randint(1, 12), year_value = randint(1970, 2005), gender = choice(['male', 'female'])):
 

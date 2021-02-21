@@ -1,14 +1,9 @@
-
-import seleniumwire
 from src.services.console import Console
 from selenium.webdriver.chrome.options import Options
-#from selenium.webdriver.chrome.webdriver import WebDriver
 from selenium.webdriver.common.desired_capabilities import DesiredCapabilities
-
 from zipfile import ZipFile
 from selenium.webdriver.chrome.service import Service
-
-#from selenium import webdriver
+from shutil import rmtree
 from random import randint
 import os
 import shutil
@@ -18,9 +13,9 @@ from src.services.bash import version
 from traceback import format_exc
 from platform import system
 from src.services.proxies import Proxy
-
+from os import path
 seleniumWire = True
-if not seleniumwire:
+if not seleniumWire:
     from selenium import webdriver
 else:
     from seleniumwire import webdriver 
@@ -56,7 +51,11 @@ class ChromeDriverAdapter:
             self.service.start()
         else:
             self.service = None
-
+        self.extensionDir = (path.dirname(__file__) or '.') + ('/../../../temp/extension/')
+        try:
+            os.makedirs(self.extensionDir)
+        except:
+            pass
         self.drivers = []
         self.userDataDir = []
         
@@ -89,6 +88,7 @@ class ChromeDriverAdapter:
 
             options = Options()
             options.add_argument('--no-sandbox')  
+            options.add_argument('--disable-setuid-sandbox')  
             options.add_argument("--disable-dev-shm-usage")
             options.add_argument('media.eme.enabled')
             options.add_argument("--disable-gpu")
@@ -111,8 +111,15 @@ class ChromeDriverAdapter:
             options.page_load_strategy = 'normal'
             #options.add_argument("--window-position=-32000,-32000");
             #options.add_argument("--log-path=" + (os.path.dirname(__file__) or '.') + "/../chrome.log")
-            #options.add_argument("--log-level=3")
-            #options.add_argument("--single-process")
+            options.add_argument("--log-level=3")
+            options.add_argument("--disable-logging")
+            options.add_argument("--disable-in-process-stack-traces");
+            options.add_argument("--single-process")
+            options.add_argument("--disable-arc-cpu-restriction")
+            options.add_argument("--disable-background-networking")
+            options.add_argument("--disable-breakpad")
+            options.add_argument("--disable-component-extensions-with-background-pages")
+            options.add_argument("--disable-crash-reporter")
             
             
 
@@ -142,56 +149,67 @@ class ChromeDriverAdapter:
             soptions = {}
             if seleniumWire:
                 soptions = {
-                    'ignore_http_methods': [],
+                    'ignore_http_methods': ['GET', 'PUT', 'OPTION', 'POST'],
                     'connection_timeout': None, 
                     'verify_ssl': False,
+                    'backend': 'mitmproxy',
+                    'mitm_confdir': (path.dirname(__file__) or '.') + '/../../../.mitmproxy',
+                    'mitm_ssl_insecure': True,
+                    #'mitm_upstream_cert': True,
+                    #'mitm_add_upstream_certs_to_client_chain': True,
+                    #'mitm_keep_host_header': True,
+                    #'mitm_console_eventlog_verbosity': 'error',
+                    'suppress_connection_errors': True
                 }
                 if proxy:
-                    proxyUrl = Proxy.getUrl(proxy)
                     soptions['proxy'] = {
-                        'https': '%s' % proxyUrl,
-                        'http': '%s' % proxyUrl,
+                        'https': '%s' % Proxy.getUrl(proxy, 'https'),
+                        'http': '%s' % Proxy.getUrl(proxy, 'http'),
                         'no_proxy': 'localhost,127.0.0.1',
                     }
             else:
                 if proxy:
-                    proxyUrl = Proxy.getUrl(proxy)
-                    desired_capabilities['proxy'] = {
-                        'proxyType': 'manual',
-                        'httpProxy': '%s' % proxyUrl,
-                        'sslProxy': '%s' % proxyUrl,
-                        'no_proxy': 'localhost,127.0.0.1',
-                    }
+                    pluginfile = self.buildChromeExtension(proxy)
+                    options.add_extension(pluginfile)
 
-            
-            #incognito argument disable the use of the proxy, DO NOT SET ! 
-            #options.add_argument("--incognito")
-            
+                    #proxyUrl = Proxy.getUrl(proxy, 'https')
+                    #desired_capabilities['proxy'] = {
+                    #    'proxyType': 'manual',
+                    #    'httpProxy': '%s' % proxyUrl,
+                    #    'sslProxy': '%s' % proxyUrl,
+                    #    'no_proxy': 'localhost,127.0.0.1',
+                    #}
 
-            
-            
-            
-
-            
-            # add a proxy if available
-            #if proxy:
-            #    pluginfile = self.buildChromeExtension(proxy)
-            #    options.add_extension(pluginfile)
-
-            #prefs: {
-            #    protocol_handler: {
-            #        excluded_schemes: {
-            #            sms: false,
-            #        },
-            #    },
-            #},
             
             
             #Instantiate the driver
             if self.service:
-                driver = webdriver.Remote(self.service.service_url, desired_capabilities=desired_capabilities, options=options, seleniumwire_options=soptions)
+                if seleniumWire:
+                    driver = webdriver.Remote(
+                        self.service.service_url,
+                        desired_capabilities=desired_capabilities,
+                        options=options,
+                        seleniumwire_options=soptions
+                    )
+                else:
+                    driver = webdriver.Remote(
+                        self.service.service_url,
+                        desired_capabilities=desired_capabilities,
+                        options=options
+                    )
             else:
-                driver = webdriver.Chrome(options=options, desired_capabilities=desired_capabilities, seleniumwire_options=soptions)
+                if seleniumWire:
+                    #self.console.log('Start Chrome driver (%s)' % (("screen", 'headless')[headless]))
+                    driver = webdriver.Chrome(
+                        options=options,
+                        desired_capabilities=desired_capabilities,
+                        seleniumwire_options=soptions,
+                    )
+                else:
+                    driver = webdriver.Chrome(
+                        options=options,
+                        desired_capabilities=desired_capabilities,
+                    )
             #driver = webdriver.Remote(self.service.service_url, desired_capabilities=desired_capabilities, options=options)
             
             #Make webdriver = undefined
@@ -207,9 +225,9 @@ class ChromeDriverAdapter:
             #        request.headers['Zeus-proxy': '%s:%s:%s:%s' % (proxy['host', proxy['port'], proxy['username'], proxy['password']])]
             #    driver.request_interceptor = requestInterceptor
 
-            #if pluginfile:
-            #    os.remove(pluginfile)
-            #    pluginfile = None
+            if pluginfile:
+                os.remove(pluginfile)
+                pluginfile = None
 
             return {
                 'driver': driver,
@@ -217,14 +235,18 @@ class ChromeDriverAdapter:
             }
         except:
             self.console.exception()
-            if pluginfile:
+        
+        if pluginfile:
                 os.remove(pluginfile)
-            return None
+        if userDataDir:
+                rmtree(path=userDataDir, ignore_errors=True)
+        return None
+        
     
     def buildChromeExtension(self, proxy):
-        pluginfile = 'proxy_auth_plugin_%d.zip' % randint(100000, 999999)
+        pluginfile = self.extensionDir + ('proxy_auth_plugin_%d.zip' % randint(100000, 999999))
         background_js = ''
-        if len(proxy) == 4:
+        if len(proxy) >= 4:
             background_js = """
 var config = {
         mode: "fixed_servers",

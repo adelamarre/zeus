@@ -1,14 +1,16 @@
 # https://pythonspeed.com/articles/python-multiprocessing/ !!!top
-from multiprocessing import Array, Event, Lock
+from multiprocessing import Array, Event, Lock, current_process
+from multiprocessing.context import Process
 import sys
 import psutil
+from requests.api import head
 from src.services.console import Console
 from src.services.drivers import DriverManager
 from src.application.spotify.register import Register, RegisterContext
 import boto3
 from src.services.config import Config
 from time import sleep
-from os import get_terminal_size, stat
+from os import get_terminal_size, mkdir
 from colorama import Fore
 from sys import stdout, argv
 from src.services.stats import Stats
@@ -19,15 +21,27 @@ from datetime import timedelta
 
 
 
-def shutdown():
+
+def shutdown(shutdownEvent, processes):
+    shutdownEvent.set()
     print('Shutdown, please wait...')
-    for p in processes:
+
+    count = 0
+    while len(processes):
+        leftProcess = []
         if p.is_alive():
             try:
-                p.terminate()
+                if count > 1:
+                    p.terminate()
+                elif count > 4:
+                    p.kill()
             except:
                 pass
-    driverManager.purge()
+            leftProcess.append(p)
+        processes = leftProcess
+        sleep(2)
+        count += 1
+
 
 def showStats():
     totalThreads = 0
@@ -79,27 +93,36 @@ def showStats():
     stdout.flush()  
 
 if __name__ == '__main__':
+    cpid = current_process().pid
     startTime = time()
     showInfo = False
     noOutput = False
+    headless = False
     for arg in argv:
         if arg == '--info':
             showInfo = True
         if arg == '--nooutput':
             noOutput = True
+        if arg == '--headless':
+            headless = True
     
+    shutdownEvent = Event()
     config = Config()
-    processes = []
+    
     console = Console(ouput= not noOutput)
-    driverManager = DriverManager(console)
+    
+    driverManager = DriverManager(console, shutdownEvent)
     driverVersion = driverManager.getDriverVersion('chrome')
     browserVersion = driverManager.getBrowserVersion('chrome')
+    del driverManager
+
     client = boto3.client('sqs')
-    shutdownEvent = Event()
+    
     
     
     stats = Stats()
     messages = []
+    processes = []
     lastProcessStart = 0
     lockThreadsCount = Lock()
     
@@ -120,18 +143,20 @@ if __name__ == '__main__':
         sys.exit(1)
 
     accountToCreate = round(totalAccountCount / maxProcess)
-
+    console.log('Account per process %d' % accountToCreate)
     vnc = False
     if (totalAccountCount == 1):
         response = input('Would you like to activate virtual screen [Y/n] ?')
         if response == '' or response == 'y' or response == 'Y':
             vnc = True
 
+    mkdir('temp/%d' % cpid)
     chanel = 0
     for x in range(maxProcess):
         sleep(config.REGISTER_SPAWN_INTERVAL)
         threadsCount[chanel] = 0
         p_context = RegisterContext(
+            batchId=cpid,
             config = config,
             console= console,
             lock=lockThreadsCount,
@@ -142,6 +167,7 @@ if __name__ == '__main__':
             channel=chanel,
             accountToCreate= accountToCreate,
             playlist=config.PLAYLIST,
+            headless=headless,
             vnc=vnc
         )
 
@@ -165,15 +191,17 @@ if __name__ == '__main__':
                 showStats()
             if len(processes) == 0:
                 break
+            #if console.getch() == 'q':
+            #    shutdown(shutdownEvent, processes)
+            #    break
         except KeyboardInterrupt:
-            shutdownEvent.set()
-            sleep(1)
-            shutdown()
+            shutdown(shutdownEvent, processes)
             break
         except:
             console.exception()
+            shutdown(shutdownEvent, processes)
             break
-
+    print('Stopped')
 
 
 

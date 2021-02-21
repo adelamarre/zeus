@@ -18,6 +18,7 @@ from src.services.x11vncwrapper import X11vnc
 
 class ListenerContext:
     def __init__(self, 
+        batchId: int,
         messagesCount: Array, 
         threadsCount: Array, 
         channel: int, 
@@ -26,8 +27,11 @@ class ListenerContext:
         lock: Lock, 
         shutdownEvent: Event, 
         console: Console,
-        vnc: bool = False
+        vnc: bool = False,
+        headless: bool = True,
+        
     ):
+        self.batchId = batchId
         self.maxThread = maxThread
         self.lock = lock
         self.shutdownEvent = shutdownEvent
@@ -37,21 +41,24 @@ class ListenerContext:
         self.threadsCount = threadsCount
         self.messagesCount = messagesCount
         self.vnc = vnc
+        self.headless = headless
 
 class TaskContext:
-    def __init__(self, user: dict, playlist: str, receiptHandle: str, proxy: dict = None, vnc: bool = False):
+    def __init__(self, batchId: int,  user: dict, playlist: str, receiptHandle: str, proxy: dict = None, vnc: bool = False, headless = True):
+        self.batchId = batchId
         self.user = user
         self.playlist = playlist
         self.proxy = proxy
         self.receiptHandle = receiptHandle
         self.vnc = vnc
+        self.headless = headless
         
 
 class Listener(Process):
     def __init__(self, pcontext: ListenerContext):
         super().__init__()
         self.p_context = pcontext
-        self.driverManager = DriverManager(pcontext.console, startService=False)
+        self.driverManager = DriverManager(pcontext.console, pcontext.shutdownEvent, startService=False)
         self.client = client('sqs')
         self.totalMessageReceived = 0
         self.proxyManager = ProxyManager(proxyFile=PROXY_FILE_LISTENER)
@@ -62,11 +69,11 @@ class Listener(Process):
         threads = []
         messages = []
 
-        while not self.p_context.shutdownEvent.is_set():
+        while True:
             try:
                 sleep(self.p_context.config.LISTENER_SPAWN_INTERVAL)
                 freeSlot = self.p_context.maxThread - len(threads) 
-                if len(messages) < 1 and freeSlot:
+                if len(messages) < 1 and freeSlot and (not self.p_context.shutdownEvent.is_set()):
                     try:
                         with self.lockClient:
                             response = self.client.receive_message(
@@ -92,11 +99,13 @@ class Listener(Process):
                         proxy = self.proxyManager.getRandomProxy()
                     
                     t_context = TaskContext(
+                        batchId=self.p_context.batchId,
                         playlist=body['playlist'],
                         proxy=proxy,
                         user=body['user'],
                         receiptHandle=message['ReceiptHandle'],
-                        vnc = self.p_context.vnc
+                        vnc = self.p_context.vnc,
+                        headless= self.p_context.headless
                     )
                     t = Thread(target=self.runner, args=(t_context,))
                     t.start()
@@ -124,16 +133,22 @@ class Listener(Process):
     def runner(self, t_context: TaskContext):
         tid = current_thread().native_id
         self.p_context.console.log('#%d Start' % tid)
+        driver = None
         try:
             if self.p_context.shutdownEvent.is_set():
                 return 
             vdisplay = None
             x11vnc = None
-            if t_context.vnc:
-                vdisplay = Xvfb(width=1280, height=1024, colordepth=24, tempdir=None, noreset='+render')
+            if t_context.headless == False:
+                width = 1280
+                height = 1024
+                if 'windowSize' in t_context.user:
+                    [width,height] = t_context.user['windowSize'].split(',')
+                vdisplay = Xvfb(width=width, height=height, colordepth=24, tempdir=None, noreset='+render')
                 vdisplay.start()
-                x11vnc = X11vnc(vdisplay)
-                x11vnc.start()
+                if t_context.vnc:
+                    x11vnc = X11vnc(vdisplay)
+                    x11vnc.start()
 
             with self.lockDriver:
                 driverData = self.driverManager.getDriver(
@@ -141,11 +156,10 @@ class Listener(Process):
                     uid=tid,
                     user=t_context.user,
                     proxy=t_context.proxy,
-                    headless= not t_context.vnc
+                    headless= t_context.headless
                 )
             if not driverData:
                 return
-
             driver = driverData['driver']
             userDataDir = driverData['userDataDir']
             if not driver:
@@ -169,6 +183,7 @@ class Listener(Process):
                     self.p_context.console.log('#%d Message deleted' % tid)
             except:
                 self.p_context.console.exception()
+                spotify.saveScreenshot()
                         
         if driver:
             try:

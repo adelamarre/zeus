@@ -1,7 +1,0 @@
-[02-18-2021-11-14-33][LOG]: #3049133 Start
-[02-18-2021-11-17-39][EXCEPTION]: Traceback (most recent call last):
-  File "/home/spotify/projects/zeus/src/application/spotify/Spotify.py", line 45, in navigate
-    statusCode = int(request.response.response_status_code)
-AttributeError: 'Response' object has no attribute 'response_status_code'
-
-[02-18-2021-11-17-59][LOG]: #3049133 Message deleted

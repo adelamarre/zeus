@@ -1,6 +1,0 @@
-[02-18-2021-09-02-12][LOG]: #3038693 Start
-[02-18-2021-09-02-14][ERROR]: Unavailale webdriver: Traceback (most recent call last):
-  File "/home/spotify/projects/zeus/src/application/spotify/listener.py", line 154, in runner
-    input('Would you connect vnc ?')
-EOFError: EOF when reading a line
-

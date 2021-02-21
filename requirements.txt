@@ -6,4 +6,5 @@ PyInquirer
 requests
 xvfbwrapper
 psutil
-proxy.py
+#proxy.py
+mitmproxy

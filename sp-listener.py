@@ -1,5 +1,5 @@
 # https://pythonspeed.com/articles/python-multiprocessing/ !!!top
-from multiprocessing import Array, Event, Lock
+from multiprocessing import Array, Event, Lock, current_process
 import psutil
 from src.services.console import Console
 from src.services.drivers import DriverManager
@@ -19,13 +19,25 @@ from datetime import timedelta
 
 
 def shutdown():
+    shutdownEvent.set()
     print('Shutdown, please wait...')
-    for p in processes:
+
+    count = 0
+    while len(processes):
+        leftProcess = []
         if p.is_alive():
             try:
-                p.terminate()
+                if count > 1:
+                    p.terminate()
+                elif count > 4:
+                    p.kill()
             except:
                 pass
+            leftProcess.append(p)
+        processes = leftProcess
+        sleep(2)
+        count += 1
+
     driverManager.purge()
 
 def showStats(data, queueUrl, stats: Stats):
@@ -94,21 +106,27 @@ if __name__ == '__main__':
     startTime = time()
     showInfo = False
     noOutput = False
+    headless = False
+    vnc = False
     for arg in argv:
         if arg == '--info':
             showInfo = True
         if arg == '--nooutput':
             noOutput = True
+        if arg == '--headless':
+            headless = True
+        if arg == '--vnc':
+            vnc = True
     
-    
+    shutdownEvent = Event()
     config = Config()
     processes = []
     console = Console(ouput= not noOutput)
-    driverManager = DriverManager(console)
+    driverManager = DriverManager(console, shutdownEvent)
     driverVersion = driverManager.getDriverVersion('chrome')
     browserVersion = driverManager.getBrowserVersion('chrome')
     client = boto3.client('sqs')
-    shutdownEvent = Event()
+    
     
     totalMessageReceived = 0
     stats = Stats()
@@ -141,6 +159,7 @@ if __name__ == '__main__':
         sleep(config.LISTENER_SPAWN_INTERVAL)
         threadsCount[chanel] = 0
         p_context = ListenerContext(
+            batchId=current_process().pid,
             config = config,
             console= console,
             lock=lockThreadsCount,
@@ -148,7 +167,9 @@ if __name__ == '__main__':
             maxThread=threadPerProcess,
             threadsCount=threadsCount,
             messagesCount=messagesCount,
-            channel=chanel
+            channel=chanel,
+            vnc = vnc,
+            headless = headless
         )
         p = Listener(p_context)
         processes.append(p)
@@ -168,13 +189,15 @@ if __name__ == '__main__':
             processes = leftProcesses
             if showInfo:
                 _showStats()
+            #if console.getch() == 'q':
+            #    shutdown()
+            #    break
         except KeyboardInterrupt:
-            shutdownEvent.set()
-            sleep(1)
             shutdown()
             break
         except:
             console.exception()
+            shutdown()
             break
 
 

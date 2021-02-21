@@ -6,11 +6,17 @@ PROXY_FILE_LISTENER = __DIR__ + '/../../data/listener_proxies.txt'
 PROXY_FILE_REGISTER = __DIR__ + '/../../data/register_proxies.txt'
 
 class Proxy():
-    def getUrl(proxy) -> str:
-        if 'username' in proxy:
-            return f'{proxy["type"]}://{proxy["username"]}:{proxy["password"]}@{proxy["host"]}:{proxy["port"]}'
+    def getUrl(proxy, scheme = None) -> str:
+        if scheme:
+                type = scheme
         else:
-            return f'{proxy["type"]}://{proxy["host"]}:{proxy["port"]}'
+            type = proxy['type']
+            
+        if 'username' in proxy:
+                
+            return f'{type}://{proxy["username"]}:{proxy["password"]}@{proxy["host"]}:{proxy["port"]}'
+        else:
+            return f'{type}://{proxy["host"]}:{proxy["port"]}'
 
     def loads(csv):
         p = csv.strip().split(':')

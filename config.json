@@ -1,13 +1,13 @@
 {
-    "SQS_URL": "https://sqs.eu-west-3.amazonaws.com/891263387851/ZSPQ",
-    "SQS_ENDPOINT": "https://eu-west-3.queue.amazonaws.com/891263387851/ZSPQ",
+    "SQS_URL": "https://sqs.eu-west-3.amazonaws.com/884650520697/18e66ed8d655f1747c9afbc572955f46",
+    "SQS_ENDPOINT": "https://sqs.eu-west-3.amazonaws.com/884650520697/18e66ed8d655f1747c9afbc572955f46",
     
     "REGISTER_MAX_PROCESS": -1,
-    "REGISTER_MAX_THREAD": 240,
+    "REGISTER_MAX_THREAD": 100,
     "REGISTER_SPAWN_INTERVAL": 0.5,
 
     "LISTENER_MAX_PROCESS": -1,
-    "LISTENER_MAX_THREAD": 100,
+    "LISTENER_MAX_THREAD": 200,
     "LISTENER_SPAWN_INTERVAL": 0.5,
     "LISTENER_OVERIDE_PLAYLIST": "https://open.spotify.com/playlist/1LvzxA8TzGHIgJoDc7tTo9",
     "LISTENER_OVERIDE_PROXY": true,
