@@ -22,7 +22,7 @@ if __name__ == '__main__':
     console = Console()
     runTest = True
     if runTest:
-        pm = ProxyManager(PROXY_FILE_REGISTER)
+        pm = ProxyManager(PROXY_FILE_LISTENER)
         proxy = pm.getRandomProxy()
         dm = DriverManager(Console(), Event())
         vdisplay=Xvfb()

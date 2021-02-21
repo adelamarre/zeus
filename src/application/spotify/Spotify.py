@@ -31,6 +31,7 @@ class Adapter:
         self.console = console
         self.shutdownEvent = shutdownEvent
         self.screenshotDir = (path.dirname(__file__) or '.') + ('/../../../temp/%d/' % batchId)
+        os.makedirs(self.screenshotDir, exist_ok=True)
         
     def getMyIp(self):
         #self.driver.get('https://api.myip.com/')
@@ -48,7 +49,8 @@ class Adapter:
             #    return result['ip']
             #else:
             #    return 'unknown'
-        except:
+        except Exception as e:
+            self.saveScreenshot(str(e))
             self.console.exception()
         
 
