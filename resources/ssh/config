@@ -1,41 +1,20 @@
-Host bastion
-  Hostname ec2-35-180-119-212.eu-west-3.compute.amazonaws.com
-  IdentityFile ~/.ssh/interstellar.pem
-  User ubuntu
-  #ForwardAgent yes
-  #LocalForward 5901 ip-172-31-17-207.eu-west-3.compute.internal:5900
-  #LocalForward 5902 ip-172-31-7-229.eu-west-3.compute.internal:5900
-  #LocalForward 5903 ip-172-31-6-70.eu-west-3.compute.internal:5900
-  #LocalForward 5911 ip-172-31-18-176.eu-west-3.compute.internal:5900
-
-Host nodeL1
-  ProxyJump bastion
-  Hostname ip-172-31-17-207.eu-west-3.compute.internal
-  IdentityFile ~/.ssh/interstellar.pem
+Host aws_bastion
+  Hostname ec2-13-36-38-162.eu-west-3.compute.amazonaws.com
+  IdentityFile ~/.ssh/zeus.pem
   User ubuntu
 
-Host nodeLami
-  ProxyJump bastion
-  Hostname ip-172-31-8-88.eu-west-3.compute.internal
-  IdentityFile ~/.ssh/interstellar.pem
-  User ubuntu
-
-Host nodeL2
-  ProxyJump bastion
-  Hostname ip-172-31-7-229.eu-west-3.compute.internal
-  IdentityFile ~/.ssh/interstellar.pem
-  User ubuntu
-
-
-Host nodeR1
-  ProxyJump bastion
-  Hostname ip-172-31-18-176.eu-west-3.compute.internal
-  IdentityFile ~/.ssh/interstellar.pem
+Host ami_node
+  ProxyJump aws_bastion
+  HostName ip-172-31-10-207.eu-west-3.compute.internal
+  IdentityFile ~/.ssh/zeus.pem
   User ubuntu
 
 Host spotify
   Hostname 176.127.210.100
   IdentityFile ~/.ssh/spotify_rsa
   User spotify
-  #ForwardAgent yes
-  #LocalForward 5901 127.0.0.1:5900
+
+Host hetzner
+  HostName 88.99.192.224
+  IdentityFile ~/.ssh/id_vladimir
+  User ubuntu

@@ -14,23 +14,18 @@ help:
 	{ lastLine = $$0 }' $(MAKEFILE_LIST)
 
 
-tunel-start:
+start-bastion:
 	cd resources/ssh && ssh -F config -f -N bastion
 
-tunel-stop:
+stop-bastion:
 	@kill $$(ps aux | grep '[b]astion' | awk '{print $$2}')
 
-nodeR1:
-	cd resources/ssh && ssh -F config nodeR1
 
 nodeLami:
 	cd resources/ssh && ssh -F config nodeLami
 
-nodeL1:
-	cd resources/ssh && ssh -F config nodeL1
-
-nodeL2:
-	cd resources/ssh && ssh -F config nodeL2
+znodeL1:
+	cd resources/ssh && ssh -F config znodeL1
 
 spotify:
 	cd resources/ssh && ssh -F config spotify
