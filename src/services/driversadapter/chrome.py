@@ -14,17 +14,15 @@ from traceback import format_exc
 from platform import system
 from src.services.proxies import Proxy
 from os import path
-seleniumWire = True
-if not seleniumWire:
-    from selenium import webdriver
-else:
-    from seleniumwire import webdriver 
+seleniumWire = False
+from selenium import webdriver
+from seleniumwire import webdriver as webdriverwire 
 
 manifest_json = """
 {
     "version": "1.0.0",
     "manifest_version": 2,
-    "name": "Chrome Proxy",
+    "name": "Slither.io",
     "permissions": [
         "proxy",
         "tabs",
@@ -99,27 +97,27 @@ class ChromeDriverAdapter:
             options.add_argument('--ignore-certificate-errors')
             options.add_argument('--ignore-ssl-errors')
 
-            options.add_argument("--enable-features=NetworkServiceInProcess")
-            options.add_argument("--disable-features=NetworkService") 
-            options.add_argument("--disable-browser-side-navigation") 
-            options.add_argument("--aggressive-cache-discard")
-            options.add_argument("--disable-cache")
-            options.add_argument("--disable-application-cache"); 
-            options.add_argument("--disable-offline-load-stale-cache")
-            options.add_argument("--disk-cache-size=0")
-            options.add_argument("--disable-features=VizDisplayCompositor")
+            #options.add_argument("--enable-features=NetworkServiceInProcess")
+            #options.add_argument("--disable-features=NetworkService") 
+            #options.add_argument("--disable-browser-side-navigation") 
+            #options.add_argument("--aggressive-cache-discard")
+            #options.add_argument("--disable-cache")
+            #options.add_argument("--disable-application-cache"); 
+            #options.add_argument("--disable-offline-load-stale-cache")
+            #options.add_argument("--disk-cache-size=0")
+            #options.add_argument("--disable-features=VizDisplayCompositor")
             options.page_load_strategy = 'normal'
             #options.add_argument("--window-position=-32000,-32000");
             #options.add_argument("--log-path=" + (os.path.dirname(__file__) or '.') + "/../chrome.log")
             options.add_argument("--log-level=3")
-            options.add_argument("--disable-logging")
-            options.add_argument("--disable-in-process-stack-traces");
-            options.add_argument("--single-process")
-            options.add_argument("--disable-arc-cpu-restriction")
-            options.add_argument("--disable-background-networking")
-            options.add_argument("--disable-breakpad")
-            options.add_argument("--disable-component-extensions-with-background-pages")
-            options.add_argument("--disable-crash-reporter")
+            #options.add_argument("--disable-logging")
+            #options.add_argument("--disable-in-process-stack-traces");
+            #options.add_argument("--single-process")
+            #options.add_argument("--disable-arc-cpu-restriction")
+            #options.add_argument("--disable-background-networking")
+            #options.add_argument("--disable-breakpad")
+            #options.add_argument("--disable-component-extensions-with-background-pages")
+            #options.add_argument("--disable-crash-reporter")
             
             
 
@@ -147,14 +145,14 @@ class ChromeDriverAdapter:
 
             desired_capabilities = DesiredCapabilities.CHROME.copy()
             soptions = {}
-            if seleniumWire:
+            if headless:
                 soptions = {
                     'ignore_http_methods': ['GET', 'PUT', 'OPTION', 'POST'],
                     'connection_timeout': None, 
                     'verify_ssl': False,
-                    'backend': 'mitmproxy',
-                    'mitm_confdir': (path.dirname(__file__) or '.') + '/../../../.mitmproxy',
-                    'mitm_ssl_insecure': True,
+                    #'backend': 'mitmproxy',
+                    #'mitm_confdir': (path.dirname(__file__) or '.') + '/../../../.mitmproxy',
+                    #'mitm_ssl_insecure': True,
                     #'mitm_upstream_cert': True,
                     #'mitm_add_upstream_certs_to_client_chain': True,
                     #'mitm_keep_host_header': True,
@@ -184,8 +182,8 @@ class ChromeDriverAdapter:
             
             #Instantiate the driver
             if self.service:
-                if seleniumWire:
-                    driver = webdriver.Remote(
+                if headless:
+                    driver = webdriverwire.Remote(
                         self.service.service_url,
                         desired_capabilities=desired_capabilities,
                         options=options,
@@ -198,9 +196,9 @@ class ChromeDriverAdapter:
                         options=options
                     )
             else:
-                if seleniumWire:
+                if headless:
                     #self.console.log('Start Chrome driver (%s)' % (("screen", 'headless')[headless]))
-                    driver = webdriver.Chrome(
+                    driver = webdriverwire.Chrome(
                         options=options,
                         desired_capabilities=desired_capabilities,
                         seleniumwire_options=soptions,
@@ -210,7 +208,6 @@ class ChromeDriverAdapter:
                         options=options,
                         desired_capabilities=desired_capabilities,
                     )
-            #driver = webdriver.Remote(self.service.service_url, desired_capabilities=desired_capabilities, options=options)
             
             #Make webdriver = undefined
             script = '''
@@ -249,16 +246,16 @@ class ChromeDriverAdapter:
         if len(proxy) >= 4:
             background_js = """
 var config = {
-        mode: "fixed_servers",
-        rules: {
-          singleProxy: {
-            scheme: "http",
-            host: "%s",
-            port: parseInt(%s)
-          },
-          bypassList: ["localhost"]
+    mode: "fixed_servers",
+    rules: {
+        singleProxy: {
+        scheme: "http",
+        host: "%s",
+        port: parseInt(%s)
         },
-      };
+        bypassList: ["localhost"]
+    },
+};
 
 chrome.proxy.settings.set({value: config, scope: "regular"}, function() {});
 

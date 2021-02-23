@@ -1,0 +1,179 @@
+
+mitmproxy has crashed!
+Traceback (most recent call last):
+  File "/home/spotify/.local/lib/python3.9/site-packages/mitmproxy/net/tcp.py", line 97, in write
+    r = self.o.write(v)
+  File "/usr/local/lib/python3.9/socket.py", line 722, in write
+    return self._sock.send(b)
+BrokenPipeError: [Errno 32] Broken pipe
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/spotify/.local/lib/python3.9/site-packages/mitmproxy/proxy/server.py", line 121, in handle
+    root_layer()
+  File "/home/spotify/.local/lib/python3.9/site-packages/mitmproxy/proxy/modes/http_proxy.py", line 23, in __call__
+    layer()
+  File "/home/spotify/.local/lib/python3.9/site-packages/mitmproxy/proxy/protocol/tls.py", line 285, in __call__
+    layer()
+  File "/home/spotify/.local/lib/python3.9/site-packages/mitmproxy/proxy/protocol/http1.py", line 100, in __call__
+    layer()
+  File "/home/spotify/.local/lib/python3.9/site-packages/mitmproxy/proxy/protocol/http.py", line 204, in __call__
+    if not self._process_flow(flow):
+  File "/home/spotify/.local/lib/python3.9/site-packages/mitmproxy/proxy/protocol/http.py", line 279, in _process_flow
+    return self.handle_upstream_connect(f)
+  File "/home/spotify/.local/lib/python3.9/site-packages/mitmproxy/proxy/protocol/http.py", line 249, in handle_upstream_connect
+    self.send_response(f.response)
+  File "/home/spotify/.local/lib/python3.9/site-packages/mitmproxy/proxy/protocol/http.py", line 52, in send_response
+    self.send_response_body(response, [response.data.content])
+  File "/home/spotify/.local/lib/python3.9/site-packages/mitmproxy/proxy/protocol/http1.py", line 72, in send_response_body
+    self.client_conn.wfile.write(chunk)
+  File "/home/spotify/.local/lib/python3.9/site-packages/mitmproxy/net/tcp.py", line 101, in write
+    raise exceptions.TcpDisconnect(str(e))
+mitmproxy.exceptions.TcpDisconnect: [Errno 32] Broken pipe
+
+mitmproxy has crashed!
+Please lodge a bug report at: https://github.com/mitmproxy/mitmproxy
+Please lodge a bug report at: https://github.com/mitmproxy/mitmproxy
+Traceback (most recent call last):
+  File "/home/spotify/.local/lib/python3.9/site-packages/mitmproxy/net/tcp.py", line 97, in write
+    r = self.o.write(v)
+  File "/usr/local/lib/python3.9/socket.py", line 722, in write
+    return self._sock.send(b)
+BrokenPipeError: [Errno 32] Broken pipe
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/spotify/.local/lib/python3.9/site-packages/mitmproxy/proxy/server.py", line 121, in handle
+    root_layer()
+  File "/home/spotify/.local/lib/python3.9/site-packages/mitmproxy/proxy/modes/http_proxy.py", line 23, in __call__
+    layer()
+  File "/home/spotify/.local/lib/python3.9/site-packages/mitmproxy/proxy/protocol/tls.py", line 285, in __call__
+    layer()
+  File "/home/spotify/.local/lib/python3.9/site-packages/mitmproxy/proxy/protocol/http1.py", line 100, in __call__
+    layer()
+  File "/home/spotify/.local/lib/python3.9/site-packages/mitmproxy/proxy/protocol/http.py", line 204, in __call__
+    if not self._process_flow(flow):
+  File "/home/spotify/.local/lib/python3.9/site-packages/mitmproxy/proxy/protocol/http.py", line 279, in _process_flow
+    return self.handle_upstream_connect(f)
+  File "/home/spotify/.local/lib/python3.9/site-packages/mitmproxy/proxy/protocol/http.py", line 249, in handle_upstream_connect
+    self.send_response(f.response)
+  File "/home/spotify/.local/lib/python3.9/site-packages/mitmproxy/proxy/protocol/http.py", line 52, in send_response
+    self.send_response_body(response, [response.data.content])
+  File "/home/spotify/.local/lib/python3.9/site-packages/mitmproxy/proxy/protocol/http1.py", line 72, in send_response_body
+    self.client_conn.wfile.write(chunk)
+  File "/home/spotify/.local/lib/python3.9/site-packages/mitmproxy/net/tcp.py", line 101, in write
+    raise exceptions.TcpDisconnect(str(e))
+mitmproxy.exceptions.TcpDisconnect: [Errno 32] Broken pipe
+
+mitmproxy has crashed!
+Please lodge a bug report at: https://github.com/mitmproxy/mitmproxy
+Traceback (most recent call last):
+  File "/home/spotify/.local/lib/python3.9/site-packages/mitmproxy/net/tcp.py", line 97, in write
+    r = self.o.write(v)
+  File "/usr/local/lib/python3.9/socket.py", line 722, in write
+    return self._sock.send(b)
+BrokenPipeError: [Errno 32] Broken pipe
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/spotify/.local/lib/python3.9/site-packages/mitmproxy/proxy/server.py", line 121, in handle
+    root_layer()
+  File "/home/spotify/.local/lib/python3.9/site-packages/mitmproxy/proxy/modes/http_proxy.py", line 23, in __call__
+    layer()
+  File "/home/spotify/.local/lib/python3.9/site-packages/mitmproxy/proxy/protocol/tls.py", line 285, in __call__
+    layer()
+  File "/home/spotify/.local/lib/python3.9/site-packages/mitmproxy/proxy/protocol/http1.py", line 100, in __call__
+    layer()
+  File "/home/spotify/.local/lib/python3.9/site-packages/mitmproxy/proxy/protocol/http.py", line 204, in __call__
+    if not self._process_flow(flow):
+  File "/home/spotify/.local/lib/python3.9/site-packages/mitmproxy/proxy/protocol/http.py", line 279, in _process_flow
+    return self.handle_upstream_connect(f)
+  File "/home/spotify/.local/lib/python3.9/site-packages/mitmproxy/proxy/protocol/http.py", line 249, in handle_upstream_connect
+    self.send_response(f.response)
+  File "/home/spotify/.local/lib/python3.9/site-packages/mitmproxy/proxy/protocol/http.py", line 52, in send_response
+    self.send_response_body(response, [response.data.content])
+  File "/home/spotify/.local/lib/python3.9/site-packages/mitmproxy/proxy/protocol/http1.py", line 72, in send_response_body
+    self.client_conn.wfile.write(chunk)
+  File "/home/spotify/.local/lib/python3.9/site-packages/mitmproxy/net/tcp.py", line 101, in write
+    raise exceptions.TcpDisconnect(str(e))
+mitmproxy.exceptions.TcpDisconnect: [Errno 32] Broken pipe
+
+mitmproxy has crashed!
+Please lodge a bug report at: https://github.com/mitmproxy/mitmproxy
+Traceback (most recent call last):
+  File "/home/spotify/.local/lib/python3.9/site-packages/mitmproxy/net/tcp.py", line 97, in write
+    r = self.o.write(v)
+  File "/usr/local/lib/python3.9/socket.py", line 722, in write
+    return self._sock.send(b)
+BrokenPipeError: [Errno 32] Broken pipe
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/spotify/.local/lib/python3.9/site-packages/mitmproxy/proxy/server.py", line 121, in handle
+    root_layer()
+  File "/home/spotify/.local/lib/python3.9/site-packages/mitmproxy/proxy/modes/http_proxy.py", line 23, in __call__
+    layer()
+  File "/home/spotify/.local/lib/python3.9/site-packages/mitmproxy/proxy/protocol/tls.py", line 285, in __call__
+    layer()
+  File "/home/spotify/.local/lib/python3.9/site-packages/mitmproxy/proxy/protocol/http1.py", line 100, in __call__
+    layer()
+  File "/home/spotify/.local/lib/python3.9/site-packages/mitmproxy/proxy/protocol/http.py", line 204, in __call__
+    if not self._process_flow(flow):
+  File "/home/spotify/.local/lib/python3.9/site-packages/mitmproxy/proxy/protocol/http.py", line 279, in _process_flow
+    return self.handle_upstream_connect(f)
+  File "/home/spotify/.local/lib/python3.9/site-packages/mitmproxy/proxy/protocol/http.py", line 249, in handle_upstream_connect
+    self.send_response(f.response)
+  File "/home/spotify/.local/lib/python3.9/site-packages/mitmproxy/proxy/protocol/http.py", line 52, in send_response
+    self.send_response_body(response, [response.data.content])
+  File "/home/spotify/.local/lib/python3.9/site-packages/mitmproxy/proxy/protocol/http1.py", line 72, in send_response_body
+    self.client_conn.wfile.write(chunk)
+  File "/home/spotify/.local/lib/python3.9/site-packages/mitmproxy/net/tcp.py", line 101, in write
+    raise exceptions.TcpDisconnect(str(e))
+mitmproxy.exceptions.TcpDisconnect: [Errno 32] Broken pipe
+
+mitmproxy has crashed!
+Please lodge a bug report at: https://github.com/mitmproxy/mitmproxy
+Traceback (most recent call last):
+  File "/home/spotify/.local/lib/python3.9/site-packages/mitmproxy/net/tcp.py", line 97, in write
+    r = self.o.write(v)
+  File "/usr/local/lib/python3.9/socket.py", line 722, in write
+    return self._sock.send(b)
+BrokenPipeError: [Errno 32] Broken pipe
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/spotify/.local/lib/python3.9/site-packages/mitmproxy/proxy/server.py", line 121, in handle
+    root_layer()
+  File "/home/spotify/.local/lib/python3.9/site-packages/mitmproxy/proxy/modes/http_proxy.py", line 23, in __call__
+    layer()
+  File "/home/spotify/.local/lib/python3.9/site-packages/mitmproxy/proxy/protocol/tls.py", line 285, in __call__
+    layer()
+  File "/home/spotify/.local/lib/python3.9/site-packages/mitmproxy/proxy/protocol/http1.py", line 100, in __call__
+    layer()
+  File "/home/spotify/.local/lib/python3.9/site-packages/mitmproxy/proxy/protocol/http.py", line 204, in __call__
+    if not self._process_flow(flow):
+  File "/home/spotify/.local/lib/python3.9/site-packages/mitmproxy/proxy/protocol/http.py", line 279, in _process_flow
+    return self.handle_upstream_connect(f)
+  File "/home/spotify/.local/lib/python3.9/site-packages/mitmproxy/proxy/protocol/http.py", line 249, in handle_upstream_connect
+    self.send_response(f.response)
+  File "/home/spotify/.local/lib/python3.9/site-packages/mitmproxy/proxy/protocol/http.py", line 52, in send_response
+    self.send_response_body(response, [response.data.content])
+  File "/home/spotify/.local/lib/python3.9/site-packages/mitmproxy/proxy/protocol/http1.py", line 72, in send_response_body
+    self.client_conn.wfile.write(chunk)
+  File "/home/spotify/.local/lib/python3.9/site-packages/mitmproxy/net/tcp.py", line 101, in write
+    raise exceptions.TcpDisconnect(str(e))
+mitmproxy.exceptions.TcpDisconnect: [Errno 32] Broken pipe
+
+mitmproxy has crashed!
+Please lodge a bug report at: https://github.com/mitmproxy/mitmproxy
+Traceback (most recent call last):
+  File "/home/spotify/.local/lib/python3.9/site-packages/mitmproxy/net/tcp.py", line 97, in write
+    r = self.o.write(v)
+  File "/usr/local/lib/python3.9/socket.py", line 722, in write
+    return self._sock.send(b)
+BrokenPipeError: [Errno 32] Broken pipe

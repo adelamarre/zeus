@@ -6,7 +6,7 @@ from multiprocessing import Event
 
 class DriverManager:
     def __init__(self, console: Console, shutdownEvent: Event, startService=False):
-        self.chrome = ChromeDriverAdapter(console, startService=startService)
+        self.chrome = ChromeDriverAdapter(console=console, startService=startService)
         self.console = console
         self.shutdownEvent = shutdownEvent
     
