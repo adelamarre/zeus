@@ -6,6 +6,7 @@ from src.application.spotify.listener import Listener, ListenerContext, TaskCont
 from src.services.drivers import DriverManager
 from src.services.proxies import ProxyManager, PROXY_FILE_LISTENER
 from time import sleep
+from sp-listener import runner
 
 
 

@@ -15,10 +15,8 @@ from platform import system
 from src.services.proxies import Proxy
 from os import path
 seleniumWire = False
-if not seleniumWire:
-    from selenium import webdriver
-else:
-    from seleniumwire import webdriver 
+from selenium import webdriver
+from seleniumwire import webdriver as webdriverwire 
 
 manifest_json = """
 {
@@ -147,7 +145,7 @@ class ChromeDriverAdapter:
 
             desired_capabilities = DesiredCapabilities.CHROME.copy()
             soptions = {}
-            if seleniumWire:
+            if headless:
                 soptions = {
                     'ignore_http_methods': ['GET', 'PUT', 'OPTION', 'POST'],
                     'connection_timeout': None, 
@@ -184,8 +182,8 @@ class ChromeDriverAdapter:
             
             #Instantiate the driver
             if self.service:
-                if seleniumWire:
-                    driver = webdriver.Remote(
+                if headless:
+                    driver = webdriverwire.Remote(
                         self.service.service_url,
                         desired_capabilities=desired_capabilities,
                         options=options,
@@ -198,9 +196,9 @@ class ChromeDriverAdapter:
                         options=options
                     )
             else:
-                if seleniumWire:
+                if headless:
                     #self.console.log('Start Chrome driver (%s)' % (("screen", 'headless')[headless]))
-                    driver = webdriver.Chrome(
+                    driver = webdriverwire.Chrome(
                         options=options,
                         desired_capabilities=desired_capabilities,
                         seleniumwire_options=soptions,

@@ -1,6 +1,8 @@
 # https://pythonspeed.com/articles/python-multiprocessing/ !!!top
 from multiprocessing import Array, Event, Lock, current_process, process
 from multiprocessing.context import Process
+import os
+from random import randint
 import psutil
 from src.services.console import Console
 from src.services.drivers import DriverManager
@@ -13,7 +15,7 @@ from sys import stdout, argv
 from src.services.stats import Stats
 from time import time
 from psutil import getloadavg
-from datetime import timedelta
+from datetime import datetime, timedelta
 from xvfbwrapper import Xvfb
 from src.services.x11vncwrapper import X11vnc
 from src.application.spotify.Spotify import Adapter
@@ -110,6 +112,7 @@ def run(
     proxy: dict,
     playlist: str,
     vnc: bool,
+    screenshotDir,
     stats: Array,
     states: Array
     ):
@@ -143,11 +146,11 @@ def run(
                 headless= headless
             )
             if not driverData:
-                return
+                raise Exception('No driverData was returned from adapter')
             driver = driverData['driver']
             userDataDir = driverData['userDataDir']
             if not driver:
-                return
+                raise Exception('No driver was returned from adapter')
             
         except:
             stats[STAT_DRIVER_NONE] += 1
@@ -155,19 +158,23 @@ def run(
         else:
             try:
                 spotify = Adapter(driver, console, shutdownEvent)
-                if spotify.login(user['email'], user['password']):
-                    stats[STAT_LOGGED_IN] += 1
-                    console.log('#%d Logged In' % tid)
-                    if not shutdownEvent.is_set():
-                        console.log('#%d Start listening...' % tid)
-                        spotify.playPlaylist(playlist, shutdownEvent, 90, 110)
-                        console.log('#%d Played' % tid)
-                        stats[STAT_PLAYED] += 1
-            except:
+                spotify.login(user['email'], user['password'])
+                stats[STAT_LOGGED_IN] += 1
+                console.log('#%d Logged In' % tid)
+                spotify.playPlaylist(playlist, shutdownEvent, 80, 100)
+                console.log('#%d Played' % tid)
+                stats[STAT_PLAYED] += 1
+            except Exception as e:
                 stats[STAT_ERROR] += 1
-                console.exception()
-                spotify.saveScreenshot()
-                        
+                try:
+                    id = randint(10000, 99999)
+                    
+                    with open(screenshotDir + ('%d.log' % id), 'w') as f:
+                        f.write(str(e))
+                    driver.save_screenshot(screenshotDir  + ('%d.png' % id))
+                except:
+                    console.exception()
+                            
         if driver:
             try:
                 driver.quit()
@@ -208,10 +215,16 @@ if __name__ == '__main__':
         if arg == '--vnc':
             vnc = True
     
+    logDir = (os.path.dirname(__file__) or '.') + '/temp/listener/' + datetime.now().strftime("%m-%d-%Y-%H-%M-%S") + '/'
+    logfile =  'all.log'
+    os.makedirs(logDir, exist_ok=True)
+    screenshotDir = logDir + 'screenshot/'
+    os.makedirs(screenshotDir, exist_ok=True)
+
     shutdownEvent = Event()
     config = Config()
     processes = []
-    console = Console(ouput= not noOutput)
+    console = Console(ouput= not noOutput, logfile=logfile)
     proxyManager = ProxyManager(PROXY_FILE_LISTENER)
     
 
@@ -223,12 +236,14 @@ if __name__ == '__main__':
     
     
     
-    listenerStats = Array('i', 4)
-    listenerStats[STAT_PLAYED] = 0
-    listenerStats[STAT_LOGGED_IN] = 0
-    listenerStats[STAT_ERROR] = 0
-    listenerStats[STAT_DRIVER_NONE] = 0
+    runnerStats = Array('i', 4)
+    runnerStats[STAT_PLAYED] = 0
+    runnerStats[STAT_LOGGED_IN] = 0
+    runnerStats[STAT_ERROR] = 0
+    runnerStats[STAT_DRIVER_NONE] = 0
     
+    
+
     processStates = Array('i', maxProcess)
     messages = []
     client = client('sqs')
@@ -270,7 +285,8 @@ if __name__ == '__main__':
                             proxy,
                             body['playlist'],
                             vnc,
-                            listenerStats,
+                            screenshotDir,
+                            runnerStats,
                             processStates,
                             
                         ))
@@ -281,6 +297,7 @@ if __name__ == '__main__':
                             ReceiptHandle=message['ReceiptHandle']
                         )
                 except:
+                    runnerStats[STAT_ERROR] += 1
                     console.exception()    
             
             leftProcesses = []
@@ -291,7 +308,7 @@ if __name__ == '__main__':
                     p.join()
             processes = leftProcesses
             if showInfo:
-                showStats(len(processes), systemStats, listenerStats)
+                showStats(len(processes), systemStats, runnerStats)
             if len(processes) == 0:
                 break
         except KeyboardInterrupt:

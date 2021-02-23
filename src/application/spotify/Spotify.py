@@ -1,4 +1,5 @@
 from multiprocessing import Event
+from src.application.spotify.AbstractAdapter import AbstractAdapter
 from threading import current_thread
 
 import os
@@ -25,13 +26,10 @@ WEBPLAYER_URL = 'https://open.spotify.com/'
 LOGIN_URL = 'https://accounts.spotify.com/en/login'
 SIGNUP_URL = 'https://www.spotify.com/fr/signup'
 
-class Adapter:
-    def __init__(self, driver, console: Console, shutdownEvent: Event, batchId: int  = 0):
-        self.driver: WebDriver = driver
+class Adapter(AbstractAdapter):
+    def __init__(self, driver, console: Console, shutdownEvent: Event):
+        AbstractAdapter.__init__(self,driver=driver, shutdownEvent=shutdownEvent)
         self.console = console
-        self.shutdownEvent = shutdownEvent
-        self.screenshotDir = (path.dirname(__file__) or '.') + ('/../../../temp/%d/' % batchId)
-        os.makedirs(self.screenshotDir, exist_ok=True)
         
     def getMyIp(self):
         #self.driver.get('https://api.myip.com/')
@@ -53,7 +51,6 @@ class Adapter:
             self.saveScreenshot(str(e))
             self.console.exception()
         
-
     def getClientInfo(self, mirrorServerUrl):
         self.driver.get(mirrorServerUrl)
         result = {}
@@ -65,230 +62,89 @@ class Adapter:
         return result
     
     def navigate(self, url):
-        try:
-            self.driver.get(url)
-            ''' for request in self.driver.requests:
-                if request.url == url:
-                    if request.response:
-                        statusCode = int(request.response.response_status_code)
-                        if statusCode > 399:
-                            self.console.error('Response status code : %d' %  statusCode)
-                            return False
-                    else:
-                       self.console.error('Empty response from : %s' %  url)
-                       return False '''
-            return True
-        except:
-            self.console.exception()
-            return False
-
-
+        self.driver.get(url)
+        ''' for request in self.driver.requests:
+            if request.url == url:
+                if request.response:
+                    statusCode = int(request.response.response_status_code)
+                    if statusCode > 399:
+                        self.console.error('Response status code : %d' %  statusCode)
+                        return False
+                else:
+                    self.console.error('Empty response from : %s' %  url)
+                    return False '''
+        return True
+    
     # returns the status of the account's login
     def login(self, email, password):
-        if not self.navigate(LOGIN_URL):
-            return False
-        self.wait_increment = 5
-        time.sleep(self.wait_increment)
-
-        try:
-            username_field = self.driver.find_element_by_xpath('//input[@name="username"]')
-        except NoSuchElementException:
-            try:
-                _ = self.driver.find_element_by_xpath(
-                    '//a[@id="account-settings-link"]')
-                print(f"{email} already logged in")
-                return True
-            except NoSuchElementException:
-                print(f"Issue in browser opened with {email}")
-                return False
-
+        self.driver.get(LOGIN_URL)
+        
+        #Username (email)
+        if self.sleep(2): return
+        username_field = self.getElementByXpath('//input[@name="username"]')
         username_field.send_keys(email)
-        sleep(3)
-        password_field = self.driver.find_element_by_xpath('//input[@name="password"]')
+
+        #Password
+        if self.sleep(2): return
+        password_field = self.getElementByXpath('//input[@name="password"]')
         password_field.send_keys(password)
 
-        login_button = self.driver.find_element_by_xpath(
-            '//button[@id="login-button"]')
-        login_button.click()
-        time.sleep(self.wait_increment)
+        #Press login button
+        if self.sleep(2): return
+        self.clickElementByXpath('//button[@id="login-button"]')
+        
+        if self.sleep(5): return
 
         # check whether or not the login was successful
-        success = True
-        try:
-            _ = self.driver.find_element_by_xpath('//p[@role="status"]')
-            success = False
-        except NoSuchElementException:
-            pass
-
-        return success
+        #self.getElementById('mh-usericon-title')
+        
 
     def logout(self):
         self.driver.get('https://www.spotify.com/logout')
         time.sleep(5)
 
     def playPlaylist(self, playlist_url, shutDownEvent: Event, min_listening_time = 70, max_listening_time = 110):
-        try:
-            if not self.navigate(playlist_url):
-                return False
-            
-            # play it!!!
-            # Cookie banner
-            sleep(2)
-            try:
-                self.clickElementById('onetrust-accept-btn-handler')
-                #element = WebDriverWait(self.driver, 30).until(
-                #    EC.presence_of_element_located((By.ID, "onetrust-accept-btn-handler"))
-                #)
-                #sleep(2)
-                #js_script = "document.getElementById( 'onetrust-accept-btn-handler' ).click();"
-                #self.driver.execute_script( js_script )
-            except:
-                pass
-            if shutDownEvent.is_set():
-                return False
-            sleep(3)
-            
-            #Press Play button
-            if not self.pressPlayButton():
-                return False
-            
-            listenTime = randint(min_listening_time, max_listening_time)
-            startListen = time.time()
-
-            #Listen music
-            while not shutDownEvent.is_set():
-                time.sleep(1)
-                since = (time.time()-startListen)
-                if self.shutdownEvent.is_set():
-                    return False
-                if since > listenTime:
-                    break
-
-            if shutDownEvent.is_set():
-                return False
-
-            if not self.pressNextButton():
-                return False
-
-            if shutDownEvent.is_set():
-                return False
-            sleep(randint(5, 8))
-            return True
-        except Exception as e:
-            self.saveScreenshot(str(e))
-            self.console.exception()
-        return False
-
-
-    def clickByXpath(self, path, maxTry=30, waitPerTry=1):
-        while True: #not self.context.shutdownEvent.is_set():
-            sleep(waitPerTry)
-            try:
-                self.driver.find_element_by_xpath(path).click()
-                break
-            except:
-                pass
-            if maxTry:
-                maxTry -= 1
-            else:
-                return False    
-        return True
-
-    def getElementByXpath(self, path, maxTry=30, waitPerTry=1):
-        while True: #not self.context.shutdownEvent.is_set():
-            sleep(waitPerTry)
-            try:
-                element = self.driver.find_element_by_xpath(path)
-                return element
-            except:
-                pass
-            if maxTry:
-                maxTry -= 1
-            else:
-                return False    
-        return True
-
-    def getElementByTagName(self, tagname, element=None, maxTry=30, waitPerTry=1):
-        while True: #not self.context.shutdownEvent.is_set():
-            sleep(waitPerTry)
-            try:
-                if element:
-                    result = element.find_element_by_tag_name(tagname)
-                else:
-                    result = self.driver.find_element_by_tag_name(tagname)
-                break
-            except:
-                pass
-            if maxTry:
-                maxTry -= 1
-            else:
-                return False    
-        return True
-
-    def clickElementById(self, id, maxTry=30, waitPerTry=2):
-        while True: #not self.context.shutdownEvent.is_set():
-            sleep(waitPerTry)
-            try:
-                element = self.driver.find_element_by_id(id)
-                element.click()
-                return True
-            except:
-                pass
-            if maxTry:
-                maxTry -= 1
-            else:
-                return False    
         
+        #Navigate to the play list
+        self.driver.get(playlist_url)
+        
+        # Cookie banner
+        if self.sleep(5): return
+        cookieBannerButton = self.getElementById('onetrust-accept-btn-handler', 5, 1, element= None, raiseException = False)
+        if cookieBannerButton:
+            try:
+                cookieBannerButton.click()
+            except:
+                pass
 
-    def pressPlayButton(self):
-        #dataGaAction =  self.getElementByXpath('//a[@data-ga-action="play"]')
-        #if dataGaAction:
-        #    dataGaAction.click()
-        #    dataTestId = self.getElementByXpath('//button[@data-testid="play-button"]')
-        #    if dataTestId:
-        #        svg = self.getElementByTagName('svg', dataTestId)
-        #        if svg:
-        dataTestId = self.getElementByXpath('//*[@id="main"]/div/div[2]/div[3]/main/div[2]/div[2]/div/div/div[2]/section/div[2]/div[2]/div/button[1]')
-        if dataTestId:
-            #title = dataTestId.get_attribute('title')
-            #if 'Play' == title:
-            dataTestId.click()
-            return True
-        return False    
+        #Press Play button
+        if self.sleep(3): return
+        self.clickElementByXpath('//*[@id="main"]/div/div[2]/div[3]/main/div[2]/div[2]/div/div/div[2]/section/div[2]/div[2]/div/button[1]')
+        
+        #Wait music play
+        listenTime = randint(min_listening_time, max_listening_time)
+        if self.sleep(listenTime): return
+        
+        # Cookie banner
+        if self.sleep(5): return
+        cookieBannerButton = self.getElementById('onetrust-accept-btn-handler', 5, 1, element= None, raiseException = False)
+        if cookieBannerButton:
+            try:
+                cookieBannerButton.click()
+            except:
+                pass
+
+        #Press next button
+        bnextContainer = self.getElementByXpath('//*[@class="player-controls__buttons"]', 1, 2)
+        bnext = self.getElementByXpath('//button[@aria-label="Next"]', 1, 2, bnextContainer)
+        bnext.click()
+        
+        #Wait after next button pressed before quit
+        self.sleep(randint(5, 8))
+        
+         
 
     
-
-    def pressNextButton(self):
-        #dataGaAction =  self.getElementByXpath('//a[@data-ga-action="play"]')
-        #if dataGaAction:
-        #    dataGaAction.click()
-        #    dataTestId = self.getElementByXpath('//button[@data-testid="play-button"]')
-        #    if dataTestId:
-        #        svg = self.getElementByTagName('svg', dataTestId)
-        #        if svg:
-        while True:
-            if self.shutdownEvent.is_set():
-                return False
-            sleep(1)
-            bnext = self.driver.find_element_by_xpath('//*[@class="player-controls__buttons"]')
-            bnext.find_element_by_xpath('//button[@aria-label="Next"]').click() # aria-label="Previous"
-
-            try:
-                self.driver.find_element_by_xpath('//button[@data-testid="control-button-pause"]')
-                #self.context.console.log('Click next!')
-                break
-            except:
-                pass
-        return True
-
-        #dataTestId = self.getElementByXpath('//*[@id="main"]/div/div[2]/div[2]/footer/div/div[2]/div/div[1]/button[4]')
-        #if dataTestId:
-            #title = dataTestId.get_attribute('title')
-            #if 'Play' == title:
-        #    dataTestId.click()
-        #    return True
-        #return False
-
     def savePlaylist(self):
         # click the like button
         try:
@@ -316,94 +172,100 @@ class Adapter:
         self.driver.quit()
 
     def register(self, user, day_value = randint(1, 28), month_value = randint(1, 12), year_value = randint(1970, 2005), gender = choice(['male', 'female'])):
-        #print("\r" + "Task : {}".format(str(os.getpid()))) 
-        try:
-            if self.shutdownEvent.is_set():
-                return False
-            self.driver.get( SIGNUP_URL )
-            self.driver.maximize_window()
-            if self.shutdownEvent.is_set():
-                return False
-            sleep(3)
-            email_field = self.driver.find_element_by_id( "email" )
-            email_field.send_keys(user['email'])
-            
-            confirm_field = self.driver.find_element_by_id( "confirm" )
-            confirm_field.send_keys(user['email'])
-            #sleep(2)
-            password_field = self.driver.find_element_by_id( "password" )
-            password_field.send_keys(user['password'])
-            #sleep(2)
-            username_field = self.driver.find_element_by_id( "displayname" )
-            username_field.send_keys(user['displayName'])
-            #sleep(2)
-            birth_day_field = self.driver.find_element_by_id( "day" )
-            birth_day_field.send_keys(day_value )
-            
-            birth_month_field = Select(self.driver.find_element_by_id( "month" ))
-            birth_month_field.select_by_index( month_value)
-            
-            birth_year_field = self.driver.find_element_by_id( "year" )
-            birth_year_field.send_keys(year_value)
-            
-            # scroll
-            html = self.driver.find_element_by_tag_name('html')
-            html.send_keys(Keys.END)
-            sleep(2)
-            if self.shutdownEvent.is_set():
-                return False
-            gender_list = ["Male", "Femal", "Non-binary"]
-            gender_field = self.driver.find_element_by_name("gender")
-            gender_field = self.driver.find_element_by_xpath('//*[@id="__next"]/main/div[2]/form/div[6]/div[2]/label[1]')
-            gender_field.send_keys(gender_list[randint(0, 2)])
-            gender_field.click()
-            
-            third_party = self.driver.find_elements_by_xpath('//span[@class="LinkContainer-sc-1t58wcv-0 iqOoUm"]')[0].click()
-            sleep(1)
-            if self.shutdownEvent.is_set():
-                return False
-            # Bypass captcha
-            cp = self.driver.find_element_by_xpath('//input[@data-testid="recaptcha-input-test"]')
-            self.driver.execute_script("arguments[0].hidden = arguments[1]", cp, "")
-            cp.send_keys(1)
-            if self.shutdownEvent.is_set():
-                return False
-            # scroll
-            html = self.driver.find_element_by_tag_name('html')
-            html.send_keys(Keys.END)
-            sleep(2)
-            if self.shutdownEvent.is_set():
-                return False
-            # Cookie banner
-            try:
-                #third_party = self.driver.find_elements_by_xpath('//button[@class="onetrust-close-btn-handler onetrust-close-btn-ui banner-close-button onetrust-lg ot-close-icon"]')[0].click()
-                third_party = self.driver.find_elements_by_xpath('//button[@id="onetrust-accept-btn-handler"]')[0].click()
-            except:
-                pass
-            sleep(2)
-            if self.shutdownEvent.is_set():
-                return False
-            # submit
-            submit = self.driver.find_element_by_xpath('//button[@class="Button-oyfj48-0 fivrVz SignupButton___StyledButtonPrimary-cjcq5h-1 gzFCtx"]').click()
-            sleep(10)
-            
-            return True
-        except Exception as e:
-            self.saveScreenshot(str(e))
-            self.console.exception()
-            
+        
+        
+        #Navigate to the signup page
+        self.driver.get( SIGNUP_URL )
+        if self.sleep(3): return
+        self.driver.maximize_window()
+        
+        #Email
+        if self.sleep(1): return
+        email_field = self.getElementById( "email" )
+        email_field.send_keys(user['email'])
+        
+        #Email confirmation
+        if self.sleep(1): return
+        confirm_field = self.driver.find_element_by_id( "confirm" )
+        confirm_field.send_keys(user['email'])
 
-        return False
+        #Password
+        if self.sleep(1): return
+        password_field = self.driver.find_element_by_id( "password" )
+        password_field.send_keys(user['password'])
+        
+        #Display name
+        if self.sleep(1): return
+        username_field = self.driver.find_element_by_id( "displayname" )
+        username_field.send_keys(user['displayName'])
+        
+        #Day
+        if self.sleep(1): return
+        birth_day_field = self.driver.find_element_by_id( "day" )
+        birth_day_field.send_keys(day_value )
+        
+        #Month
+        if self.sleep(1): return
+        birth_month_field = Select(self.driver.find_element_by_id( "month" ))
+        birth_month_field.select_by_index( month_value)
+        
+        #Year
+        if self.sleep(1): return
+        birth_year_field = self.driver.find_element_by_id( "year" )
+        birth_year_field.send_keys(year_value)
+        
+        # scroll
+        html = self.driver.find_element_by_tag_name('html')
+        html.send_keys(Keys.END)
+        if self.sleep(2): return
 
-    def saveScreenshot(self, message = None):
-        try:
-            id = randint(10000, 99999)
-            if message:
-                with open(self.screenshotDir + ('%d-error.log' % id), 'w') as f:
-                    f.write(message)
-            self.driver.save_screenshot(self.screenshotDir  + ('%d-screenshot.png' % id))
-        except:
-            self.console.exception()
+        #Gender
+        if self.sleep(1): return
+        gender_list = [
+        '//*[@id="__next"]/main/div[2]/form/div[6]/div[2]/label[1]/span[2]',
+        '//*[@id="__next"]/main/div[2]/form/div[6]/div[2]/label[2]/span[2]',
+        '//*[@id="__next"]/main/div[2]/form/div[6]/div[2]/label[3]/span[2]',
+        ]
+        selector = randint(1,100)
+        if selector <= 49: #49% male, #49% female, 2% no binary
+            selector = 0 
+        elif selector <= 98:
+            selector = 1
+        else:               
+            selector = 2
+        span = self.getElementByXpath(gender_list[selector])
+        span.click()
+        
+        #Third party
+        if self.sleep(1): return
+        third_party = self.driver.find_elements_by_xpath('//span[@class="LinkContainer-sc-1t58wcv-0 iqOoUm"]')[0].click()
+        
+        
+        # Bypass captcha
+        if self.sleep(1): return
+        cp = self.getElementByXpath('//input[@data-testid="recaptcha-input-test"]')
+        self.driver.execute_script("arguments[0].hidden = arguments[1]", cp, "")
+        cp.send_keys(1)
+        
+        # scroll
+        if self.sleep(1): return
+        html = self.getElementByTagName('html')
+        html.send_keys(Keys.END)
+        
+        if self.sleep(1): return
+        third_party = self.getElementById('onetrust-accept-btn-handler', maxTry = 10, raiseException = False)
+        if third_party:
+            third_party.click()
+    
+        # submit
+        if self.sleep(1): return
+        submit = self.driver.find_element_by_xpath('//button[@class="Button-oyfj48-0 fivrVz SignupButton___StyledButtonPrimary-cjcq5h-1 gzFCtx"]')
+        submit.click()
+        sleep(10)
+        
+        # Error class = LinkContainer-sc-1t58wcv-0
+        # InputErrorMessage__Container-tliowl-0
+        # InputErrorMessage__Container-tliowl-0
 
 
     def registerApi(self, user, day_value = randint(1, 28), month_value = randint(1, 12), year_value = randint(1970, 2005), gender = choice(['male', 'female'])):

@@ -44,16 +44,15 @@ class Console:
         'NOTICE': Fore.YELLOW,
         'LOG': Fore.WHITE
     }
-    def __init__(self, verbose=2, logToFile=True, ouput=True):
+    def __init__(self, verbose=2, logToFile=True, ouput=True, logfile=None):
         self.lock = Lock()
         self.verbose = verbose
         self.logToFile = logToFile
         self.output = ouput
-        try:
+        if logfile:
+            self.logfile= logfile
+        else:
             self.logfile= (os.path.dirname(__file__) or '.') + '/../../temp/' + datetime.now().strftime("%m-%d-%Y-%H-%M-%S")+ '.log'
-        except:
-            traceback.print_exc()
-        
         try:
             import termios
         except ImportError:
