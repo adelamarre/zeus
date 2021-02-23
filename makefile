@@ -18,19 +18,13 @@ tunel-start:
 	cd resources/ssh && ssh -F config -f -N bastion
 
 tunel-stop:
-	@kill $$(ps aux | grep '[b]astion' | awk '{print $$2}')
+	@kill $$(ps aux | grep '[a]ws_bastion' | awk '{print $$2}')
 
-nodeR1:
-	cd resources/ssh && ssh -F config nodeR1
+awsbastion:
+	cd resources/ssh && ssh -F config aws_bastion
 
-nodeLami:
-	cd resources/ssh && ssh -F config nodeLami
-
-nodeL1:
-	cd resources/ssh && ssh -F config nodeL1
-
-nodeL2:
-	cd resources/ssh && ssh -F config nodeL2
+aminodel:
+	cd resources/ssh && ssh -F config ami_node_L
 
 spotify:
 	cd resources/ssh && ssh -F config spotify

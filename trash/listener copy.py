@@ -17,19 +17,46 @@ from src.services.proxies import ProxyManager, PROXY_FILE_LISTENER
 from src.services.x11vncwrapper import X11vnc
 
 class ListenerContext:
-    def __init__(self, console: Console, batchId: int,  user: dict, playlist: str, shutdownEvent: Event, proxy: dict = None, vnc: bool = False, headless = True):
+    def __init__(self, 
+        batchId: int,
+        messagesCount: Array, 
+        threadsCount: Array, 
+        channel: int, 
+        config: Config, 
+        maxThread: int, 
+        lock: Lock, 
+        shutdownEvent: Event, 
+        console: Console,
+        vnc: bool = False,
+        headless: bool = True,
+        
+    ):
+        self.batchId = batchId
+        self.maxThread = maxThread
+        self.lock = lock
+        self.shutdownEvent = shutdownEvent
         self.console = console
+        self.config = config
+        self.channel = channel
+        self.threadsCount = threadsCount
+        self.messagesCount = messagesCount
+        self.vnc = vnc
+        self.headless = headless
+
+class TaskContext:
+    def __init__(self, batchId: int,  user: dict, playlist: str, receiptHandle: str, proxy: dict = None, vnc: bool = False, headless = True):
         self.batchId = batchId
         self.user = user
         self.playlist = playlist
         self.proxy = proxy
+        self.receiptHandle = receiptHandle
         self.vnc = vnc
         self.headless = headless
-        self.shutdownEvent = shutdownEvent      
-    
+        
+
 class Listener(Process):
     def __init__(self, pcontext: ListenerContext):
-        Process.__init__(self)
+        super().__init__()
         self.p_context = pcontext
         self.driverManager = DriverManager(pcontext.console, pcontext.shutdownEvent, startService=False)
         self.client = client('sqs')
@@ -39,6 +66,71 @@ class Listener(Process):
         self.lockDriver = Lock()
 
     def run(self):
+        threads = []
+        messages = []
+
+        while True:
+            try:
+                sleep(self.p_context.config.LISTENER_SPAWN_INTERVAL)
+                freeSlot = self.p_context.maxThread - len(threads) 
+                if len(messages) < 1 and freeSlot and (not self.p_context.shutdownEvent.is_set()):
+                    try:
+                        with self.lockClient:
+                            response = self.client.receive_message(
+                                QueueUrl=self.p_context.config.SQS_ENDPOINT,
+                                MaxNumberOfMessages=freeSlot,
+                                VisibilityTimeout=600,
+                                WaitTimeSeconds=2,
+                            )
+                        if 'Messages' in response:
+                            newMessages = response['Messages']
+                            messages =  newMessages + messages
+                            self.totalMessageReceived += len(newMessages)
+                            self.p_context.messagesCount[self.p_context.channel] = self.totalMessageReceived
+                    except:
+                        self.p_context.console.exception()
+                if freeSlot and len(messages):
+                    message = messages.pop()
+                    body = loads(message['Body'])
+                    proxy = None
+                    if self.p_context.config.LISTENER_OVERIDE_PLAYLIST:
+                        body['playlist'] = self.p_context.config.LISTENER_OVERIDE_PLAYLIST
+                    if self.p_context.config.LISTENER_OVERIDE_PROXY:
+                        proxy = self.proxyManager.getRandomProxy()
+                    
+                    t_context = TaskContext(
+                        batchId=self.p_context.batchId,
+                        playlist=body['playlist'],
+                        proxy=proxy,
+                        user=body['user'],
+                        receiptHandle=message['ReceiptHandle'],
+                        vnc = self.p_context.vnc,
+                        headless= self.p_context.headless
+                    )
+                    t = Thread(target=self.runner, args=(t_context,))
+                    t.start()
+                    threads.append(t)
+
+                leftThread = []
+                for thread in threads:
+                    if thread.is_alive():
+                        leftThread.append(thread)
+                    else:
+                        del thread
+                        collect()
+                threads = leftThread
+                self.p_context.threadsCount[self.p_context.channel] = len(threads)
+                if len(threads) == 0:
+                    break
+            except:
+                self.p_context.console.exception()
+        
+        del self.driverManager
+        del self.p_context
+        collect()
+
+
+    def runner(self, t_context: TaskContext):
         tid = current_thread().native_id
         self.p_context.console.log('#%d Start' % tid)
         driver = None

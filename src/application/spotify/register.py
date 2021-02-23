@@ -143,11 +143,15 @@ class Register(Process):
     def runner(self, t_context: TaskContext):
         tid = current_thread().native_id
         self.p_context.console.log('Start thread %d' % tid)
+        driver = None
+        vdisplay = None
+        x11vnc = None
+        userDataDir = None
+        spotify = None
         try:
             if self.p_context.shutdownEvent.is_set():
                 return 
-            vdisplay = None
-            x11vnc = None
+            
             if t_context.headless == False:
                 vdisplay = Xvfb(width=1280, height=1024, colordepth=24, tempdir=None, noreset='+render')
                 vdisplay.start()
@@ -161,52 +165,59 @@ class Register(Process):
                     uid=tid,
                     user=t_context.user,
                     proxy=t_context.proxy,
-                    headless= not t_context.vnc
+                    headless= t_context.headless
                 )
             if not driverData:
-                return
+                raise Exception('No driverData was returned from adapter')
 
             driver = driverData['driver']
             userDataDir = driverData['userDataDir']
             if not driver:
-                return
+                raise Exception('No driver was returned from adapter')
         except:
             self.p_context.console.error('Unavailale webdriver: %s' % format_exc())
         else:
-            spotify = Spotify.Adapter(driver, 
-                self.p_context.console,
-                self.p_context.shutdownEvent,
-                t_context.batchId
-            )
-            self.p_context.console.log('#%d Start create account for %s' % (tid, t_context.user['email']))
-            if spotify.register(t_context.user):
-                self.p_context.console.log('#%d Account created for %s' % (tid, t_context.user['email']))
-                message = {
-                    'user': t_context.user,
-                    'playlist': t_context.playlist
-                }
-                with self.lockClient:
-                    try:
-                        self.client.send_message(
-                            QueueUrl=self.p_context.config.SQS_ENDPOINT,
-                            MessageBody=dumps(message),
-                            DelaySeconds=1,
-                        )
-                    except:
-                        self.p_context.console.exception('T#%d Failed to send message to the queue %s' % (tid, self.p_context.config.SQS_ENDPOINT))
-                    else:
-                        self.p_context.console.log('#%d Message sent for %s' % (tid, t_context.user['email']))
-                        with self.lockAccountCount:
-                            self.totalAccountCreated += 1
-                            self.p_context.accountsCount[self.p_context.channel] = self.totalAccountCreated
-            else:
-                if not self.p_context.shutdownEvent.is_set():
-                    self.p_context.console.error('#%d Failed to create account for %s' % (tid, t_context.user['email']))
-
+            try:
+                spotify = Spotify.Adapter(driver, 
+                    self.p_context.console,
+                    self.p_context.shutdownEvent,
+                    t_context.batchId
+                )
+                self.p_context.console.log('#%d Start create account for %s' % (tid, t_context.user['email']))
+                if spotify.register(t_context.user):
+                    self.p_context.console.log('#%d Account created for %s' % (tid, t_context.user['email']))
+                    message = {
+                        'user': t_context.user,
+                        'playlist': t_context.playlist
+                    }
+                    with self.lockClient:
+                        try:
+                            self.client.send_message(
+                                QueueUrl=self.p_context.config.SQS_ENDPOINT,
+                                MessageBody=dumps(message),
+                                DelaySeconds=1,
+                            )
+                        except:
+                            self.p_context.console.exception('T#%d Failed to send message to the queue %s' % (tid, self.p_context.config.SQS_ENDPOINT))
+                        else:
+                            self.p_context.console.log('#%d Message sent for %s' % (tid, t_context.user['email']))
+                            with self.lockAccountCount:
+                                self.totalAccountCreated += 1
+                                self.p_context.accountsCount[self.p_context.channel] = self.totalAccountCreated
+                else:
+                    if not self.p_context.shutdownEvent.is_set():
+                        self.p_context.console.error('#%d Failed to create account for %s' % (tid, t_context.user['email']))
+            except:
+                self.p_context.console.exception()
         if driver:
             try:
                 driver.quit()
                 del driver
+            except:
+                pass
+        if spotify:
+            try:
+                del spotify
             except:
                 pass
         if userDataDir:

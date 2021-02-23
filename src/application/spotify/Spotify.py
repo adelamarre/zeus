@@ -133,13 +133,15 @@ class Adapter:
             
             # play it!!!
             # Cookie banner
+            sleep(2)
             try:
-                element = WebDriverWait(self.driver, 30).until(
-                    EC.presence_of_element_located((By.ID, "onetrust-accept-btn-handler"))
-                )
-                sleep(2)
-                js_script = "document.getElementById( 'onetrust-accept-btn-handler' ).click();"
-                self.driver.execute_script( js_script )
+                self.clickElementById('onetrust-accept-btn-handler')
+                #element = WebDriverWait(self.driver, 30).until(
+                #    EC.presence_of_element_located((By.ID, "onetrust-accept-btn-handler"))
+                #)
+                #sleep(2)
+                #js_script = "document.getElementById( 'onetrust-accept-btn-handler' ).click();"
+                #self.driver.execute_script( js_script )
             except:
                 pass
             if shutDownEvent.is_set():
@@ -222,6 +224,21 @@ class Adapter:
             else:
                 return False    
         return True
+
+    def clickElementById(self, id, maxTry=30, waitPerTry=2):
+        while True: #not self.context.shutdownEvent.is_set():
+            sleep(waitPerTry)
+            try:
+                element = self.driver.find_element_by_id(id)
+                element.click()
+                return True
+            except:
+                pass
+            if maxTry:
+                maxTry -= 1
+            else:
+                return False    
+        
 
     def pressPlayButton(self):
         #dataGaAction =  self.getElementByXpath('//a[@data-ga-action="play"]')
@@ -313,13 +330,13 @@ class Adapter:
             
             confirm_field = self.driver.find_element_by_id( "confirm" )
             confirm_field.send_keys(user['email'])
-            #sleep(5)
+            #sleep(2)
             password_field = self.driver.find_element_by_id( "password" )
             password_field.send_keys(user['password'])
-            #sleep(5)
+            #sleep(2)
             username_field = self.driver.find_element_by_id( "displayname" )
             username_field.send_keys(user['displayName'])
-            
+            #sleep(2)
             birth_day_field = self.driver.find_element_by_id( "day" )
             birth_day_field.send_keys(day_value )
             

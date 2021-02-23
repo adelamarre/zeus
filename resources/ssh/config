@@ -33,6 +33,17 @@ Host nodeR1
   IdentityFile ~/.ssh/interstellar.pem
   User ubuntu
 
+Host aws_bastion
+  Hostname ec2-13-36-38-162.eu-west-3.compute.amazonaws.com
+  IdentityFile ~/.ssh/zeus.pem
+  User ubuntu
+
+Host ami_node
+  ProxyJump aws_bastion
+  HostName ec2-15-237-37-163.eu-west-3.compute.amazonaws.com
+  IdentityFile ~/.ssh/zeus.pem
+  User ubuntu
+
 Host spotify
   Hostname 176.127.210.100
   IdentityFile ~/.ssh/spotify_rsa
