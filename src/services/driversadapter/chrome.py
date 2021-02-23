@@ -210,12 +210,13 @@ class ChromeDriverAdapter:
                     )
             
             #Make webdriver = undefined
-            script = '''
-            Object.defineProperty(navigator, 'webdriver', {
-                get: () => undefined
-            })
-            '''
-            driver.execute_script(script)
+            # When headless this property is added to navigator by chrome
+            #script = '''
+            #Object.defineProperty(navigator, 'webdriver', {
+            #    get: () => undefined
+            #})
+            #'''
+            #driver.execute_script(script)
             
             #if proxy:
             #    def requestInterceptor(request):
@@ -232,7 +233,7 @@ class ChromeDriverAdapter:
             }
         except:
             self.console.exception()
-        
+        sleep(4)
         if pluginfile:
                 os.remove(pluginfile)
         if userDataDir:

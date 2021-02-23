@@ -234,15 +234,11 @@ if __name__ == '__main__':
     if maxProcess < 0:
         maxProcess = psutil.cpu_count(logical=True)
     
-    
-    
     runnerStats = Array('i', 4)
     runnerStats[STAT_PLAYED] = 0
     runnerStats[STAT_LOGGED_IN] = 0
     runnerStats[STAT_ERROR] = 0
     runnerStats[STAT_DRIVER_NONE] = 0
-    
-    
 
     processStates = Array('i', maxProcess)
     messages = []
@@ -309,8 +305,8 @@ if __name__ == '__main__':
             processes = leftProcesses
             if showInfo:
                 showStats(len(processes), systemStats, runnerStats)
-            if len(processes) == 0:
-                break
+            #if len(processes) == 0:
+            #    break
         except KeyboardInterrupt:
             shutdown(processes)
             break
