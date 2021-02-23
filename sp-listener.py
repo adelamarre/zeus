@@ -230,21 +230,31 @@ if __name__ == '__main__':
     listenerStats[STAT_DRIVER_NONE] = 0
     
     processStates = Array('i', maxProcess)
-
+    messages = []
     client = client('sqs')
     while True:
         try:
             sleep(config.LISTENER_SPAWN_INTERVAL)
-            if len(processes) < maxProcess:
+            freeslot = maxProcess - len(processes)
+            if freeslot:
                 try:
-                    response = client.receive_message(
-                        QueueUrl=config.SQS_ENDPOINT,
-                        MaxNumberOfMessages=1,
-                        VisibilityTimeout=600,
-                        WaitTimeSeconds=2,
-                    )
-                    if 'Messages' in response:
-                        message = response['Messages'][0]
+                    if len(messages) < 1:
+                        if freeslot > 10:
+                            nbrOfMessages = 10
+                        else:
+                            nbrOfMessages = freeslot
+                        response = client.receive_message(
+                            QueueUrl=config.SQS_ENDPOINT,
+                            MaxNumberOfMessages=nbrOfMessages,
+                            VisibilityTimeout=600,
+                            WaitTimeSeconds=2,
+                        )
+                        if 'Messages' in response:
+                            newMessages = response['Messages']
+                            messages =  newMessages + messages
+                    
+                    if len(messages):
+                        message = messages.pop()
                         body = loads(message['Body'])
                         proxy = None
                         if config.LISTENER_OVERIDE_PLAYLIST:
