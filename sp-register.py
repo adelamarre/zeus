@@ -288,7 +288,7 @@ if __name__ == '__main__':
     
     while True:
         try:
-            sleep(config.LISTENER_SPAWN_INTERVAL)
+            sleep(config.REGISTER_SPAWN_INTERVAL)
             freeslot = maxProcess - len(processes)
             if freeslot and len(users):
                 try:

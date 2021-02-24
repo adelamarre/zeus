@@ -283,8 +283,22 @@ class Adapter(AbstractAdapter):
         if self.sleep(1): return
         submit = self.driver.find_element_by_xpath('//button[@class="Button-oyfj48-0 fivrVz SignupButton___StyledButtonPrimary-cjcq5h-1 gzFCtx"]')
         submit.click()
-        sleep(10)
+        if self.sleep(20): return
         
+        maxTry = 40
+        while True:
+            if self.sleep(2): return
+            errorElements = self.getElementsByClass('InputErrorMessage__Container-tliowl-0', maxTry=1, raiseException=False)
+            if errorElements:
+                raise Exception('Account creation failed')
+            loggedInElements = self.getElementsByClass('mh-header-primary', maxTry=1, raiseException=False)
+            if loggedInElements:
+                break
+            maxTry -=1
+            if maxTry == 0:
+                raise Exception('Account creation timeout')
+
+        # mh-header-primary
         # Error class = LinkContainer-sc-1t58wcv-0
         # InputErrorMessage__Container-tliowl-0
         # InputErrorMessage__Container-tliowl-0
