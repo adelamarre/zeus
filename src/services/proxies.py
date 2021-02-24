@@ -7,16 +7,16 @@ PROXY_FILE_REGISTER = __DIR__ + '/../../data/register_proxies.txt'
 
 class Proxy():
     def getUrl(proxy, scheme = None) -> str:
+        _scheme = 'http'
         if scheme:
-                type = scheme
-        else:
-            type = proxy['type']
+            _scheme = scheme
+        elif 'scheme' in proxy:
+            _scheme = proxy['scheme']
             
         if 'username' in proxy:
-                
-            return f'{type}://{proxy["username"]}:{proxy["password"]}@{proxy["host"]}:{proxy["port"]}'
+            return f'{_scheme}://{proxy["username"]}:{proxy["password"]}@{proxy["host"]}:{proxy["port"]}'
         else:
-            return f'{type}://{proxy["host"]}:{proxy["port"]}'
+            return f'{_scheme}://{proxy["host"]}:{proxy["port"]}'
 
     def loads(csv):
         p = csv.strip().split(':')
@@ -26,7 +26,7 @@ class Proxy():
                 'port': int(p[1]),
                 'username': p[2],
                 'password': p[3],
-                'type': 'http'
+                'scheme': 'http'
             }
         elif len(p) == 5 :
             return {
@@ -34,19 +34,19 @@ class Proxy():
                 'port': int(p[1]),
                 'username': p[2],
                 'password': p[3],
-                'type': p[4]
+                'scheme': p[4]
             }    
         elif len(p) == 2:
             return {
                 'host': p[0],
                 'port': int(p[1]),
-                'type': 'http'
+                'scheme': 'http'
             }   
         elif len(p) == 3:
             return {
                 'host': p[0],
                 'port': int(p[1]),
-                'type': p[2]
+                'scheme': p[2]
             } 
         else:
             print('Malformed proxy data : %s' % csv.strip())

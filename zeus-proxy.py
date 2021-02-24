@@ -28,7 +28,8 @@ if __name__ == '__main__':
         vdisplay=Xvfb()
         vdisplay.start()
         x11vnc = X11vnc(vdisplay)
-        driverData = dm.getDriver('chrome', 1, {}, proxy, True)
+        x11vnc.start()
+        driverData = dm.getDriver('chrome', 1, {}, proxy, False)
         driver = driverData['driver']
         
         spotify = Spotify.Adapter(driver, console, Event())

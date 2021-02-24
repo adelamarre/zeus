@@ -33,7 +33,8 @@ manifest_json = """
         "webRequestBlocking"
     ],
     "background": {
-        "scripts": ["background.js"]
+        "scripts": ["background.js"],
+        "persistent": true
     },
     "minimum_chrome_version":"22.0.0"
 }
@@ -167,8 +168,13 @@ class ChromeDriverAdapter:
                     }
             else:
                 if proxy:
+
                     pluginfile = self.buildChromeExtension(proxy)
                     options.add_extension(pluginfile)
+                    # IMPORTANT !!
+                    # Without this argument the proxy credential windows will popup
+                    # and block the driver
+                    options.add_argument('--google-base-url=http://localhost')
 
                     #proxyUrl = Proxy.getUrl(proxy, 'https')
                     #desired_capabilities['proxy'] = {
@@ -211,31 +217,35 @@ class ChromeDriverAdapter:
             
             #Make webdriver = undefined
             # When headless this property is added to navigator by chrome
-            #script = '''
-            #Object.defineProperty(navigator, 'webdriver', {
-            #    get: () => undefined
-            #})
-            #'''
-            #driver.execute_script(script)
+            script = '''
+            Object.defineProperty(navigator, 'webdriver', {
+                get: () => undefined
+            });
+            '''
+            driver.execute_script(script)
             
             #if proxy:
             #    def requestInterceptor(request):
             #        request.headers['Zeus-proxy': '%s:%s:%s:%s' % (proxy['host', proxy['port'], proxy['username'], proxy['password']])]
             #    driver.request_interceptor = requestInterceptor
 
+            #if pluginfile:
+            #    os.remove(pluginfile)
+            #    pluginfile = None
             if pluginfile:
                 os.remove(pluginfile)
-                pluginfile = None
-
             return {
                 'driver': driver,
                 'userDataDir': userDataDir,
             }
         except:
             self.console.exception()
-        sleep(4)
+        
         if pluginfile:
-                os.remove(pluginfile)
+                try:
+                    os.remove(pluginfile)
+                except:
+                    pass
         if userDataDir:
                 rmtree(path=userDataDir, ignore_errors=True)
         return None
@@ -244,55 +254,53 @@ class ChromeDriverAdapter:
     def buildChromeExtension(self, proxy):
         pluginfile = self.extensionDir + ('proxy_auth_plugin_%d.zip' % randint(100000, 999999))
         background_js = ''
-        if len(proxy) >= 4:
+        if len(proxy) == 5:
             background_js = """
 var config = {
     mode: "fixed_servers",
     rules: {
         singleProxy: {
-        scheme: "http",
-        host: "%s",
-        port: parseInt(%s)
+            scheme: "%s",
+            host: "%s",
+            port: parseInt(%s)
         },
         bypassList: ["localhost"]
     },
 };
-
 chrome.proxy.settings.set({value: config, scope: "regular"}, function() {});
-
-function callbackFn(details) {
-    return {
-        authCredentials: {
-            username: "%s",
-            password: "%s"
-        }
-    };
-}
-
 chrome.webRequest.onAuthRequired.addListener(
-            callbackFn,
-            {urls: ["<all_urls>"]},
-            ['blocking']
+    function (details) {
+        return {
+            authCredentials: {
+                username: "%s",
+                password: "%s"
+            }
+        };
+    },
+    {urls: ["<all_urls>"]},
+    ['blocking']
 );
-""" % (proxy['host'], proxy['port'], proxy['username'], proxy['password'])
-        elif len(proxy) == 2:
+""" % (proxy['scheme'], proxy['host'], proxy['port'], proxy['username'], proxy['password'] )
+        elif len(proxy) == 3:
             background_js = """
 var config = {
         mode: "fixed_servers",
         rules: {
           singleProxy: {
-            scheme: "http",
+            scheme: "%s",
             host: "%s",
-            port: parseInt(%s)
+            port: parseInt('%s')
           },
           bypassList: ["localhost"]
         },
       };
 
-chrome.proxy.settings.set({value: config, scope: "regular"}, function() {});
-""" % (proxy['host'], proxy['port'])
-
+chrome.proxy.settings.set({value: config, scope: "regular"}, function() \{\});
+""" % (proxy['scheme'], proxy['host'], proxy['port'])
+        else:
+            raise Exception('Could not create chrome extension, invalid proxy provided: %s'  % (str(proxy)))
+        print(background_js.encode('utf8'))
         with ZipFile(pluginfile, 'w') as zp:
-            zp.writestr("manifest.json", manifest_json)
-            zp.writestr("background.js", background_js)
+            zp.writestr("manifest.json", manifest_json.encode('utf8'))
+            zp.writestr("background.js", background_js.encode('utf8'))
         return pluginfile

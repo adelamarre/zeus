@@ -35,3 +35,6 @@ kill-register:
 
 kill-listener:
 	@kill $$(ps aux | grep '[l]istener' | awk '{print $$2}')
+
+purgelog:
+	@rm -rf temp/*
