@@ -284,7 +284,6 @@ if __name__ == '__main__':
                             screenshotDir,
                             runnerStats,
                             processStates,
-                            
                         ))
                         p.start()
                         processes.append(p)
