@@ -93,8 +93,30 @@ class Adapter(AbstractAdapter):
         if self.sleep(2): return
         self.clickElementByXpath('//button[@id="login-button"]')
         
-        if self.sleep(5): return
+        if self.sleep(10): return
 
+        maxTry = 20
+        while True:
+            if self.shutdownEvent.is_set():
+                return
+            errorElements = self.getElementsByClass('alert', maxTry=1, raiseException=False)
+            if errorElements:
+                raise Exception('Login failed')
+            loggedInElements = self.getElementById('account-settings-link', maxTry=1, raiseException=False)
+            if loggedInElements:
+                break
+            maxTry -=1
+            if maxTry == 0:
+                raise Exception('Login timeout')
+            
+        #
+        ##account-settings-link
+        #
+        #
+        #<p class="alert alert-warning" role="status" aria-live="polite">
+        #  <!-- ngIf: !response.error -->
+        #  <!-- ngIf: response.error --><span ng-if="response.error" ng-bind-html="response.error | localize:responseArguments" class="ng-binding ng-scope">Nom d'utilisateur ou mot de passe incorrect.</span><!-- end ngIf: response.error -->
+        #</p>
         # check whether or not the login was successful
         #self.getElementById('mh-usericon-title')
         

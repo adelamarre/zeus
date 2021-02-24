@@ -35,7 +35,23 @@ class AbstractAdapter:
                     raise e
             exit = sleep(waitPerTry)
 
-    def getElementByXpath(self, path, maxTry=30, waitPerTry=1, container: WebElement = None) -> WebElement:
+    def getElementsByClass(self, classname, maxTry=30, waitPerTry=1, raiseException: bool = True):
+        exit = False
+        while not exit: #not self.context.shutdownEvent.is_set():
+            try:
+                element = self.driver.find_elements_by_class_name(classname)
+                return element
+            except Exception as e:
+                maxTry -= 1
+                if maxTry == 0:
+                    if raiseException:
+                        raise e
+                    else:
+                        break
+            exit = self.sleep(waitPerTry)
+        return None
+
+    def getElementByXpath(self, path, maxTry=30, waitPerTry=1, container: WebElement = None, raiseException: bool = True) -> WebElement:
         exit = False
         while not exit: #not self.context.shutdownEvent.is_set():
             try:
@@ -45,14 +61,16 @@ class AbstractAdapter:
                     element = self.driver.find_element_by_xpath(path)
                 return element
             except Exception as e: 
-                if maxTry:
-                    maxTry -= 1
-                else:
-                    raise e
+                maxTry -= 1
+                if maxTry == 0:
+                    if raiseException:
+                        raise e
+                    else:
+                        break
             exit = self.sleep(waitPerTry)
         return None
 
-    def getElementByTagName(self, tagname, element: WebElement=None, maxTry=30, waitPerTry=1):
+    def getElementByTagName(self, tagname, element: WebElement=None, maxTry=30, waitPerTry=1, raiseException: bool = True):
         exit = False
         while not exit: #not self.context.shutdownEvent.is_set():
             try:
@@ -62,10 +80,12 @@ class AbstractAdapter:
                     result = self.driver.find_element_by_tag_name(tagname)
                 return result
             except Exception as e:
-                if maxTry:
-                    maxTry -= 1
-                else:
-                    raise e
+                maxTry -= 1
+                if maxTry == 0:
+                    if raiseException:
+                        raise e
+                    else:
+                        break
             exit = self.sleep(waitPerTry)
 
     def getElementById(self, id: str, maxTry: int = 30, waitPerTry: int = 2, element: WebElement = None, raiseException = True) -> WebElement:
@@ -78,9 +98,8 @@ class AbstractAdapter:
                     result = self.driver.find_element_by_id(id)
                 return result
             except Exception as e:
-                if maxTry:
-                    maxTry -= 1
-                else:
+                maxTry -= 1
+                if maxTry == 0:
                     if raiseException:
                         raise e
                     else:

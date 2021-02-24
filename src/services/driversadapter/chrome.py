@@ -299,7 +299,6 @@ chrome.proxy.settings.set({value: config, scope: "regular"}, function() \{\});
 """ % (proxy['scheme'], proxy['host'], proxy['port'])
         else:
             raise Exception('Could not create chrome extension, invalid proxy provided: %s'  % (str(proxy)))
-        print(background_js.encode('utf8'))
         with ZipFile(pluginfile, 'w') as zp:
             zp.writestr("manifest.json", manifest_json.encode('utf8'))
             zp.writestr("background.js", background_js.encode('utf8'))

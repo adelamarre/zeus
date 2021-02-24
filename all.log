@@ -33788,3 +33788,3644 @@ Exception: No driverData was returned from adapter
 [02-24-2021-00-44-47][LOG]: #210568 Start
 [02-24-2021-00-44-48][LOG]: #210774 Start
 [02-24-2021-00-44-58][LOG]: #208220 Logged In
+[02-24-2021-18-30-47][LOG]: #318665 Start
+[02-24-2021-18-30-47][LOG]: #318714 Start
+[02-24-2021-18-30-48][LOG]: #318762 Start
+[02-24-2021-18-30-48][LOG]: #318818 Start
+[02-24-2021-18-30-49][LOG]: #318871 Start
+[02-24-2021-18-30-49][LOG]: #319073 Start
+[02-24-2021-18-30-50][EXCEPTION]: Traceback (most recent call last):
+  File "/home/ubuntu/projects/zeus/src/services/driversadapter/chrome.py", line 213, in getNewInstance
+    driver = webdriver.Chrome(
+  File "/home/ubuntu/.local/lib/python3.9/site-packages/selenium/webdriver/chrome/webdriver.py", line 73, in __init__
+    self.service.start()
+  File "/home/ubuntu/.local/lib/python3.9/site-packages/selenium/webdriver/common/service.py", line 102, in start
+    time.sleep(1)
+KeyboardInterrupt
+
+[02-24-2021-18-30-50][EXCEPTION]: Driver unavailable
+Traceback (most recent call last):
+  File "/home/ubuntu/projects/zeus/sp-listener.py", line 140, in run
+    driverManager = DriverManager(console, shutdownEvent)
+  File "/home/ubuntu/projects/zeus/src/services/drivers.py", line 9, in __init__
+    self.chrome = ChromeDriverAdapter(console=console, startService=startService)
+  File "/home/ubuntu/projects/zeus/src/services/driversadapter/chrome.py", line 65, in __init__
+    sleep(1)
+KeyboardInterrupt
+
+[02-24-2021-18-30-50][EXCEPTION]: Traceback (most recent call last):
+  File "/home/ubuntu/projects/zeus/src/services/driversadapter/chrome.py", line 213, in getNewInstance
+    driver = webdriver.Chrome(
+  File "/home/ubuntu/.local/lib/python3.9/site-packages/selenium/webdriver/chrome/webdriver.py", line 73, in __init__
+    self.service.start()
+  File "/home/ubuntu/.local/lib/python3.9/site-packages/selenium/webdriver/common/service.py", line 102, in start
+    time.sleep(1)
+KeyboardInterrupt
+
+[02-24-2021-18-30-50][EXCEPTION]: Traceback (most recent call last):
+  File "/home/ubuntu/projects/zeus/src/services/driversadapter/chrome.py", line 213, in getNewInstance
+    driver = webdriver.Chrome(
+  File "/home/ubuntu/.local/lib/python3.9/site-packages/selenium/webdriver/chrome/webdriver.py", line 76, in __init__
+    RemoteWebDriver.__init__(
+  File "/home/ubuntu/.local/lib/python3.9/site-packages/selenium/webdriver/remote/webdriver.py", line 157, in __init__
+    self.start_session(capabilities, browser_profile)
+  File "/home/ubuntu/.local/lib/python3.9/site-packages/selenium/webdriver/remote/webdriver.py", line 252, in start_session
+    response = self.execute(Command.NEW_SESSION, parameters)
+  File "/home/ubuntu/.local/lib/python3.9/site-packages/selenium/webdriver/remote/webdriver.py", line 319, in execute
+    response = self.command_executor.execute(driver_command, params)
+  File "/home/ubuntu/.local/lib/python3.9/site-packages/selenium/webdriver/remote/remote_connection.py", line 374, in execute
+    return self._request(command_info[0], url, body=data)
+  File "/home/ubuntu/.local/lib/python3.9/site-packages/selenium/webdriver/remote/remote_connection.py", line 397, in _request
+    resp = self._conn.request(method, url, body=body, headers=headers)
+  File "/home/ubuntu/.local/lib/python3.9/site-packages/urllib3/request.py", line 78, in request
+    return self.request_encode_body(
+  File "/home/ubuntu/.local/lib/python3.9/site-packages/urllib3/request.py", line 170, in request_encode_body
+    return self.urlopen(method, url, **extra_kw)
+  File "/home/ubuntu/.local/lib/python3.9/site-packages/urllib3/poolmanager.py", line 375, in urlopen
+    response = conn.urlopen(method, u.request_uri, **kw)
+  File "/home/ubuntu/.local/lib/python3.9/site-packages/urllib3/connectionpool.py", line 699, in urlopen
+    httplib_response = self._make_request(
+  File "/home/ubuntu/.local/lib/python3.9/site-packages/urllib3/connectionpool.py", line 445, in _make_request
+    six.raise_from(e, None)
+  File "<string>", line 3, in raise_from
+  File "/home/ubuntu/.local/lib/python3.9/site-packages/urllib3/connectionpool.py", line 440, in _make_request
+    httplib_response = conn.getresponse()
+  File "/usr/local/lib/python3.9/http/client.py", line 1347, in getresponse
+    response.begin()
+  File "/usr/local/lib/python3.9/http/client.py", line 307, in begin
+    version, status, reason = self._read_status()
+  File "/usr/local/lib/python3.9/http/client.py", line 268, in _read_status
+    line = str(self.fp.readline(_MAXLINE + 1), "iso-8859-1")
+  File "/usr/local/lib/python3.9/socket.py", line 704, in readinto
+    return self._sock.recv_into(b)
+KeyboardInterrupt
+
+[02-24-2021-18-30-50][EXCEPTION]: Driver unavailable
+Traceback (most recent call last):
+  File "/home/ubuntu/projects/zeus/sp-listener.py", line 140, in run
+    driverManager = DriverManager(console, shutdownEvent)
+  File "/home/ubuntu/projects/zeus/src/services/drivers.py", line 9, in __init__
+    self.chrome = ChromeDriverAdapter(console=console, startService=startService)
+  File "/home/ubuntu/projects/zeus/src/services/driversadapter/chrome.py", line 65, in __init__
+    sleep(1)
+KeyboardInterrupt
+
+[02-24-2021-18-30-51][EXCEPTION]: Driver unavailable
+Traceback (most recent call last):
+  File "/home/ubuntu/projects/zeus/sp-listener.py", line 149, in run
+    raise Exception('No driverData was returned from adapter')
+Exception: No driverData was returned from adapter
+
+[02-24-2021-18-30-51][EXCEPTION]: Driver unavailable
+Traceback (most recent call last):
+  File "/home/ubuntu/projects/zeus/sp-listener.py", line 149, in run
+    raise Exception('No driverData was returned from adapter')
+Exception: No driverData was returned from adapter
+
+[02-24-2021-18-30-51][EXCEPTION]: Driver unavailable
+Traceback (most recent call last):
+  File "/home/ubuntu/projects/zeus/sp-listener.py", line 149, in run
+    raise Exception('No driverData was returned from adapter')
+Exception: No driverData was returned from adapter
+
+[02-24-2021-18-31-43][LOG]: #319483 Start
+[02-24-2021-18-31-44][LOG]: #319531 Start
+[02-24-2021-18-31-44][LOG]: #319579 Start
+[02-24-2021-18-31-45][LOG]: #319635 Start
+[02-24-2021-18-31-45][LOG]: #319690 Start
+[02-24-2021-18-31-46][LOG]: #319892 Start
+[02-24-2021-18-31-46][LOG]: #320093 Start
+[02-24-2021-18-31-47][LOG]: #320299 Start
+[02-24-2021-18-31-47][LOG]: #320604 Start
+[02-24-2021-18-31-48][LOG]: #320915 Start
+[02-24-2021-18-31-48][LOG]: #321254 Start
+[02-24-2021-18-31-49][LOG]: #321556 Start
+[02-24-2021-18-31-49][LOG]: #321789 Start
+[02-24-2021-18-31-50][LOG]: #322185 Start
+[02-24-2021-18-31-50][LOG]: #322493 Start
+[02-24-2021-18-31-51][LOG]: #323004 Start
+[02-24-2021-18-31-52][LOG]: #323443 Start
+[02-24-2021-18-31-52][LOG]: #323679 Start
+[02-24-2021-18-31-53][LOG]: #324111 Start
+[02-24-2021-18-31-53][LOG]: #324519 Start
+[02-24-2021-18-31-54][LOG]: #324768 Start
+[02-24-2021-18-31-54][LOG]: #325294 Start
+[02-24-2021-18-31-55][LOG]: #325587 Start
+[02-24-2021-18-31-55][LOG]: #325825 Start
+[02-24-2021-18-31-56][LOG]: #326046 Start
+[02-24-2021-18-31-56][LOG]: #326273 Start
+[02-24-2021-18-31-57][LOG]: #326462 Start
+[02-24-2021-18-31-57][LOG]: #327305 Start
+[02-24-2021-18-31-58][LOG]: #327541 Start
+[02-24-2021-18-31-58][LOG]: #327959 Start
+[02-24-2021-18-31-59][LOG]: #328608 Start
+[02-24-2021-18-31-59][LOG]: #319483 Logged In
+[02-24-2021-18-32-00][LOG]: #329297 Start
+[02-24-2021-18-32-00][LOG]: #329843 Start
+[02-24-2021-18-32-00][LOG]: #319579 Logged In
+[02-24-2021-18-32-01][LOG]: #330187 Start
+[02-24-2021-18-32-01][LOG]: #319635 Logged In
+[02-24-2021-18-32-01][LOG]: #319531 Logged In
+[02-24-2021-18-32-01][LOG]: #330618 Start
+[02-24-2021-18-32-02][LOG]: #330876 Start
+[02-24-2021-18-32-02][LOG]: #331130 Start
+[02-24-2021-18-32-02][LOG]: #319690 Logged In
+[02-24-2021-18-32-03][LOG]: #331342 Start
+[02-24-2021-18-32-03][LOG]: #320299 Logged In
+[02-24-2021-18-32-03][LOG]: #319892 Logged In
+[02-24-2021-18-32-03][LOG]: #331659 Start
+[02-24-2021-18-32-04][LOG]: #320093 Logged In
+[02-24-2021-18-32-04][LOG]: #320604 Logged In
+[02-24-2021-18-32-04][LOG]: #331961 Start
+[02-24-2021-18-32-04][LOG]: #320915 Logged In
+[02-24-2021-18-32-04][LOG]: #332300 Start
+[02-24-2021-18-32-05][LOG]: #332595 Start
+[02-24-2021-18-32-06][LOG]: #332846 Start
+[02-24-2021-18-32-06][LOG]: #321789 Logged In
+[02-24-2021-18-32-06][LOG]: #321254 Logged In
+[02-24-2021-18-32-06][LOG]: #333155 Start
+[02-24-2021-18-32-06][LOG]: #322185 Logged In
+[02-24-2021-18-32-06][LOG]: #321556 Logged In
+[02-24-2021-18-32-07][LOG]: #333479 Start
+[02-24-2021-18-32-07][LOG]: #322493 Logged In
+[02-24-2021-18-32-07][LOG]: #333849 Start
+[02-24-2021-18-32-07][LOG]: #323443 Logged In
+[02-24-2021-18-32-08][LOG]: #323004 Logged In
+[02-24-2021-18-32-08][LOG]: #334066 Start
+[02-24-2021-18-32-08][LOG]: #334327 Start
+[02-24-2021-18-32-09][LOG]: #323679 Logged In
+[02-24-2021-18-32-09][LOG]: #334596 Start
+[02-24-2021-18-32-09][LOG]: #324111 Logged In
+[02-24-2021-18-32-10][LOG]: #334813 Start
+[02-24-2021-18-32-10][LOG]: #324519 Logged In
+[02-24-2021-18-32-10][LOG]: #335128 Start
+[02-24-2021-18-32-11][LOG]: #324768 Logged In
+[02-24-2021-18-32-11][LOG]: #335538 Start
+[02-24-2021-18-32-11][LOG]: #335882 Start
+[02-24-2021-18-32-12][LOG]: #336193 Start
+[02-24-2021-18-32-12][LOG]: #336487 Start
+[02-24-2021-18-32-13][LOG]: #325294 Logged In
+[02-24-2021-18-32-13][LOG]: #325825 Logged In
+[02-24-2021-18-32-13][LOG]: #336881 Start
+[02-24-2021-18-32-13][LOG]: #326046 Logged In
+[02-24-2021-18-32-13][LOG]: #337259 Start
+[02-24-2021-18-32-14][LOG]: #337565 Start
+[02-24-2021-18-32-14][LOG]: #325587 Logged In
+[02-24-2021-18-32-15][LOG]: #337832 Start
+[02-24-2021-18-32-15][LOG]: #338144 Start
+[02-24-2021-18-32-16][LOG]: #338472 Start
+[02-24-2021-18-32-16][LOG]: #326462 Logged In
+[02-24-2021-18-32-16][LOG]: #327541 Logged In
+[02-24-2021-18-32-17][LOG]: #338731 Start
+[02-24-2021-18-32-17][LOG]: #338932 Start
+[02-24-2021-18-32-18][LOG]: #339212 Start
+[02-24-2021-18-32-18][LOG]: #339522 Start
+[02-24-2021-18-32-19][LOG]: #339866 Start
+[02-24-2021-18-32-19][LOG]: #326273 Logged In
+[02-24-2021-18-32-19][LOG]: #340283 Start
+[02-24-2021-18-32-20][LOG]: #327959 Logged In
+[02-24-2021-18-32-20][LOG]: #340695 Start
+[02-24-2021-18-32-21][LOG]: #341282 Start
+[02-24-2021-18-32-21][LOG]: #327305 Logged In
+[02-24-2021-18-32-21][LOG]: #341726 Start
+[02-24-2021-18-32-22][LOG]: #342200 Start
+[02-24-2021-18-32-22][LOG]: #328608 Logged In
+[02-24-2021-18-32-22][LOG]: #342630 Start
+[02-24-2021-18-32-23][LOG]: #343003 Start
+[02-24-2021-18-32-23][LOG]: #343309 Start
+[02-24-2021-18-32-24][LOG]: #329843 Logged In
+[02-24-2021-18-32-24][LOG]: #343807 Start
+[02-24-2021-18-32-25][LOG]: #344087 Start
+[02-24-2021-18-32-26][LOG]: #344448 Start
+[02-24-2021-18-32-26][LOG]: #344693 Start
+[02-24-2021-18-32-26][LOG]: #329297 Logged In
+[02-24-2021-18-32-27][LOG]: #344851 Start
+[02-24-2021-18-32-27][LOG]: #345055 Start
+[02-24-2021-18-32-28][LOG]: #345366 Start
+[02-24-2021-18-32-29][LOG]: #345656 Start
+[02-24-2021-18-32-29][LOG]: #345919 Start
+[02-24-2021-18-32-30][LOG]: #346116 Start
+[02-24-2021-18-32-30][LOG]: #346493 Start
+[02-24-2021-18-32-31][LOG]: #330187 Logged In
+[02-24-2021-18-32-31][LOG]: #346913 Start
+[02-24-2021-18-32-31][LOG]: #330876 Logged In
+[02-24-2021-18-32-31][LOG]: #347190 Start
+[02-24-2021-18-32-32][LOG]: #347491 Start
+[02-24-2021-18-32-32][LOG]: #330618 Logged In
+[02-24-2021-18-32-33][LOG]: #347924 Start
+[02-24-2021-18-32-33][LOG]: #348267 Start
+[02-24-2021-18-32-33][LOG]: #331130 Logged In
+[02-24-2021-18-32-34][LOG]: #348633 Start
+[02-24-2021-18-32-35][LOG]: #349259 Start
+[02-24-2021-18-32-36][LOG]: #349632 Start
+[02-24-2021-18-32-36][LOG]: #349988 Start
+[02-24-2021-18-32-37][LOG]: #350246 Start
+[02-24-2021-18-32-37][LOG]: #350591 Start
+[02-24-2021-18-32-38][LOG]: #331659 Logged In
+[02-24-2021-18-32-38][LOG]: #331961 Logged In
+[02-24-2021-18-32-38][LOG]: #350913 Start
+[02-24-2021-18-32-39][LOG]: #351146 Start
+[02-24-2021-18-32-39][LOG]: #351544 Start
+[02-24-2021-18-32-40][LOG]: #331342 Logged In
+[02-24-2021-18-32-40][LOG]: #332846 Logged In
+[02-24-2021-18-32-40][LOG]: #351940 Start
+[02-24-2021-18-32-41][LOG]: #352264 Start
+[02-24-2021-18-32-41][LOG]: #332300 Logged In
+[02-24-2021-18-32-43][LOG]: #332595 Logged In
+[02-24-2021-18-32-44][LOG]: #333155 Logged In
+[02-24-2021-18-32-46][LOG]: #333849 Logged In
+[02-24-2021-18-32-49][LOG]: #334066 Logged In
+[02-24-2021-18-32-50][LOG]: #334596 Logged In
+[02-24-2021-18-32-51][LOG]: #333479 Logged In
+[02-24-2021-18-32-53][LOG]: #334327 Logged In
+[02-24-2021-18-32-54][LOG]: #334813 Logged In
+[02-24-2021-18-32-59][LOG]: #335882 Logged In
+[02-24-2021-18-33-00][LOG]: #335128 Logged In
+[02-24-2021-18-33-01][LOG]: #335538 Logged In
+[02-24-2021-18-33-03][LOG]: #336193 Logged In
+[02-24-2021-18-33-04][LOG]: #336487 Logged In
+[02-24-2021-18-33-04][LOG]: #336881 Logged In
+[02-24-2021-18-33-08][LOG]: #338731 Logged In
+[02-24-2021-18-33-08][LOG]: #337259 Logged In
+[02-24-2021-18-33-09][LOG]: #337565 Logged In
+[02-24-2021-18-33-10][LOG]: #338472 Logged In
+[02-24-2021-18-33-11][LOG]: #337832 Logged In
+[02-24-2021-18-33-11][LOG]: #338144 Logged In
+[02-24-2021-18-33-12][LOG]: #339212 Logged In
+[02-24-2021-18-33-13][LOG]: #339866 Logged In
+[02-24-2021-18-33-13][LOG]: #338932 Logged In
+[02-24-2021-18-33-17][LOG]: #339522 Logged In
+[02-24-2021-18-33-17][LOG]: #342200 Logged In
+[02-24-2021-18-33-17][LOG]: #341726 Logged In
+[02-24-2021-18-33-20][LOG]: #343807 Logged In
+[02-24-2021-18-33-20][LOG]: #342630 Logged In
+[02-24-2021-18-33-21][LOG]: #341282 Logged In
+[02-24-2021-18-33-22][LOG]: #340695 Logged In
+[02-24-2021-18-33-24][LOG]: #340283 Logged In
+[02-24-2021-18-33-25][LOG]: #343309 Logged In
+[02-24-2021-18-33-27][LOG]: #345055 Logged In
+[02-24-2021-18-33-27][LOG]: #344693 Logged In
+[02-24-2021-18-33-28][LOG]: #343003 Logged In
+[02-24-2021-18-33-28][LOG]: #344087 Logged In
+[02-24-2021-18-33-28][LOG]: #344448 Logged In
+[02-24-2021-18-33-30][LOG]: #345919 Logged In
+[02-24-2021-18-33-31][LOG]: #345366 Logged In
+[02-24-2021-18-33-33][LOG]: #344851 Logged In
+[02-24-2021-18-33-35][LOG]: #346913 Logged In
+[02-24-2021-18-33-35][LOG]: #346493 Logged In
+[02-24-2021-18-33-35][LOG]: #348267 Logged In
+[02-24-2021-18-33-36][LOG]: #348633 Logged In
+[02-24-2021-18-33-36][LOG]: #346116 Logged In
+[02-24-2021-18-33-36][LOG]: #347491 Logged In
+[02-24-2021-18-33-36][LOG]: #347924 Logged In
+[02-24-2021-18-33-37][LOG]: #347190 Logged In
+[02-24-2021-18-33-37][LOG]: #345656 Logged In
+[02-24-2021-18-33-39][LOG]: #349259 Logged In
+[02-24-2021-18-33-42][LOG]: #350591 Logged In
+[02-24-2021-18-33-42][LOG]: #350246 Logged In
+[02-24-2021-18-33-42][LOG]: #349988 Logged In
+[02-24-2021-18-33-44][LOG]: #349632 Logged In
+[02-24-2021-18-33-45][LOG]: #351544 Logged In
+[02-24-2021-18-33-45][LOG]: #350913 Logged In
+[02-24-2021-18-33-45][LOG]: #352264 Logged In
+[02-24-2021-18-33-47][LOG]: #351146 Logged In
+[02-24-2021-18-33-51][LOG]: #351940 Logged In
+[02-24-2021-18-33-57][LOG]: #319579 Played
+[02-24-2021-18-34-05][LOG]: #319483 Played
+[02-24-2021-18-34-10][LOG]: #371713 Start
+[02-24-2021-18-34-12][LOG]: #319531 Played
+[02-24-2021-18-34-14][LOG]: #319635 Played
+[02-24-2021-18-34-16][LOG]: #372425 Start
+[02-24-2021-18-34-17][LOG]: #372479 Start
+[02-24-2021-18-34-18][LOG]: #320093 Played
+[02-24-2021-18-34-19][LOG]: #372731 Start
+[02-24-2021-18-34-22][LOG]: #373002 Start
+[02-24-2021-18-34-23][LOG]: #373055 Start
+[02-24-2021-18-34-23][LOG]: #320915 Played
+[02-24-2021-18-34-25][LOG]: #320299 Played
+[02-24-2021-18-34-26][LOG]: #373463 Start
+[02-24-2021-18-34-27][LOG]: #319690 Played
+[02-24-2021-18-34-28][LOG]: #319892 Played
+[02-24-2021-18-34-31][LOG]: #322185 Played
+[02-24-2021-18-34-32][LOG]: #374093 Start
+[02-24-2021-18-34-32][LOG]: #374191 Start
+[02-24-2021-18-34-34][LOG]: #374381 Start
+[02-24-2021-18-34-38][LOG]: #374890 Start
+[02-24-2021-18-34-38][LOG]: #321556 Played
+[02-24-2021-18-34-38][LOG]: #321789 Played
+[02-24-2021-18-34-39][LOG]: #322493 Played
+[02-24-2021-18-34-42][LOG]: #321254 Played
+[02-24-2021-18-34-43][LOG]: #375674 Start
+[02-24-2021-18-34-44][LOG]: #323443 Played
+[02-24-2021-18-34-45][LOG]: #324519 Played
+[02-24-2021-18-34-45][LOG]: #376413 Start
+[02-24-2021-18-34-48][LOG]: #323004 Played
+[02-24-2021-18-34-49][LOG]: #376847 Start
+[02-24-2021-18-34-51][LOG]: #377113 Start
+[02-24-2021-18-34-52][LOG]: #377218 Start
+[02-24-2021-18-34-52][LOG]: #324111 Played
+[02-24-2021-18-34-53][LOG]: #377359 Start
+[02-24-2021-18-34-54][LOG]: #377541 Start
+[02-24-2021-18-34-55][LOG]: #323679 Played
+[02-24-2021-18-34-58][LOG]: #378299 Start
+[02-24-2021-18-35-00][LOG]: #326046 Played
+[02-24-2021-18-35-01][LOG]: #378840 Start
+[02-24-2021-18-35-02][LOG]: #324768 Played
+[02-24-2021-18-35-04][LOG]: #325294 Played
+[02-24-2021-18-35-06][LOG]: #379779 Start
+[02-24-2021-18-35-07][LOG]: #327959 Played
+[02-24-2021-18-35-07][LOG]: #380092 Start
+[02-24-2021-18-35-09][LOG]: #380508 Start
+[02-24-2021-18-35-10][LOG]: #325587 Played
+[02-24-2021-18-35-11][LOG]: #325825 Played
+[02-24-2021-18-35-12][LOG]: #381270 Start
+[02-24-2021-18-35-13][LOG]: #381380 Start
+[02-24-2021-18-35-14][LOG]: #381596 Start
+[02-24-2021-18-35-15][LOG]: #381743 Start
+[02-24-2021-18-35-15][LOG]: #327541 Played
+[02-24-2021-18-35-17][LOG]: #382065 Start
+[02-24-2021-18-35-20][LOG]: #372479 Logged In
+[02-24-2021-18-35-20][LOG]: #371713 Logged In
+[02-24-2021-18-35-20][LOG]: #382716 Start
+[02-24-2021-18-35-21][LOG]: #326273 Played
+[02-24-2021-18-35-23][LOG]: #327305 Played
+[02-24-2021-18-35-23][LOG]: #372425 Logged In
+[02-24-2021-18-35-25][LOG]: #330876 Played
+[02-24-2021-18-35-26][LOG]: #383972 Start
+[02-24-2021-18-35-27][LOG]: #384248 Start
+[02-24-2021-18-35-28][LOG]: #328608 Played
+[02-24-2021-18-35-29][LOG]: #373002 Logged In
+[02-24-2021-18-35-30][LOG]: #384993 Start
+[02-24-2021-18-35-30][LOG]: #373055 Logged In
+[02-24-2021-18-35-31][LOG]: #385281 Start
+[02-24-2021-18-35-31][LOG]: #372731 Logged In
+[02-24-2021-18-35-32][LOG]: #385537 Start
+[02-24-2021-18-35-34][LOG]: #331659 Played
+[02-24-2021-18-35-36][LOG]: #373463 Logged In
+[02-24-2021-18-35-37][LOG]: #330187 Played
+[02-24-2021-18-35-38][LOG]: #374093 Logged In
+[02-24-2021-18-35-39][LOG]: #386560 Start
+[02-24-2021-18-35-40][LOG]: #374381 Logged In
+[02-24-2021-18-35-41][LOG]: #374191 Logged In
+[02-24-2021-18-35-42][LOG]: #374890 Logged In
+[02-24-2021-18-35-42][LOG]: #331342 Played
+[02-24-2021-18-35-46][LOG]: #331961 Played
+[02-24-2021-18-35-47][LOG]: #375674 Logged In
+[02-24-2021-18-35-49][LOG]: #388558 Start
+[02-24-2021-18-35-50][LOG]: #388691 Start
+[02-24-2021-18-35-50][LOG]: #334596 Played
+[02-24-2021-18-35-52][LOG]: #332846 Played
+[02-24-2021-18-35-52][LOG]: #331130 Played
+[02-24-2021-18-35-53][LOG]: #334066 Played
+[02-24-2021-18-35-53][LOG]: #333479 Played
+[02-24-2021-18-35-54][LOG]: #389513 Start
+[02-24-2021-18-35-55][LOG]: #376847 Logged In
+[02-24-2021-18-35-56][LOG]: #389972 Start
+[02-24-2021-18-35-57][LOG]: #377218 Logged In
+[02-24-2021-18-35-57][LOG]: #376413 Logged In
+[02-24-2021-18-35-57][LOG]: #390108 Start
+[02-24-2021-18-35-58][LOG]: #333849 Played
+[02-24-2021-18-35-58][LOG]: #390257 Start
+[02-24-2021-18-35-59][LOG]: #390428 Start
+[02-24-2021-18-35-59][LOG]: #334327 Played
+[02-24-2021-18-36-00][LOG]: #333155 Played
+[02-24-2021-18-36-00][LOG]: #377113 Logged In
+[02-24-2021-18-36-01][LOG]: #377541 Logged In
+[02-24-2021-18-36-02][LOG]: #391020 Start
+[02-24-2021-18-36-03][LOG]: #391267 Start
+[02-24-2021-18-36-03][LOG]: #378299 Logged In
+[02-24-2021-18-36-03][LOG]: #391422 Start
+[02-24-2021-18-36-04][LOG]: #332595 Played
+[02-24-2021-18-36-04][LOG]: #377359 Logged In
+[02-24-2021-18-36-04][LOG]: #391570 Start
+[02-24-2021-18-36-05][LOG]: #391749 Start
+[02-24-2021-18-36-05][LOG]: #392000 Start
+[02-24-2021-18-36-06][LOG]: #335128 Played
+[02-24-2021-18-36-06][LOG]: #332300 Played
+[02-24-2021-18-36-06][LOG]: #392241 Start
+[02-24-2021-18-36-08][LOG]: #338731 Played
+[02-24-2021-18-36-09][LOG]: #393009 Start
+[02-24-2021-18-36-09][LOG]: #336881 Played
+[02-24-2021-18-36-10][LOG]: #393274 Start
+[02-24-2021-18-36-11][LOG]: #393610 Start
+[02-24-2021-18-36-11][LOG]: #336193 Played
+[02-24-2021-18-36-13][LOG]: #380092 Logged In
+[02-24-2021-18-36-13][LOG]: #378840 Logged In
+[02-24-2021-18-36-14][LOG]: #394179 Start
+[02-24-2021-18-36-14][LOG]: #394357 Start
+[02-24-2021-18-36-15][LOG]: #379779 Logged In
+[02-24-2021-18-36-15][LOG]: #339212 Played
+[02-24-2021-18-36-16][LOG]: #341726 Played
+[02-24-2021-18-36-16][LOG]: #380508 Logged In
+[02-24-2021-18-36-17][LOG]: #335882 Played
+[02-24-2021-18-36-17][LOG]: #381270 Logged In
+[02-24-2021-18-36-17][LOG]: #381596 Logged In
+[02-24-2021-18-36-18][LOG]: #382065 Logged In
+[02-24-2021-18-36-18][LOG]: #336487 Played
+[02-24-2021-18-36-18][LOG]: #337565 Played
+[02-24-2021-18-36-19][LOG]: #395730 Start
+[02-24-2021-18-36-19][LOG]: #339866 Played
+[02-24-2021-18-36-19][LOG]: #341282 Played
+[02-24-2021-18-36-20][LOG]: #381743 Logged In
+[02-24-2021-18-36-20][LOG]: #396048 Start
+[02-24-2021-18-36-20][LOG]: #343807 Played
+[02-24-2021-18-36-21][LOG]: #396169 Start
+[02-24-2021-18-36-21][LOG]: #334813 Played
+[02-24-2021-18-36-22][LOG]: #396305 Start
+[02-24-2021-18-36-22][LOG]: #396508 Start
+[02-24-2021-18-36-22][LOG]: #342200 Played
+[02-24-2021-18-36-23][LOG]: #345055 Played
+[02-24-2021-18-36-23][LOG]: #396757 Start
+[02-24-2021-18-36-23][LOG]: #381380 Logged In
+[02-24-2021-18-36-24][LOG]: #382716 Logged In
+[02-24-2021-18-36-24][LOG]: #397051 Start
+[02-24-2021-18-36-25][LOG]: #339522 Played
+[02-24-2021-18-36-26][LOG]: #338932 Played
+[02-24-2021-18-36-26][LOG]: #385281 Logged In
+[02-24-2021-18-36-26][LOG]: #397724 Start
+[02-24-2021-18-36-27][LOG]: #337832 Played
+[02-24-2021-18-36-27][LOG]: #397992 Start
+[02-24-2021-18-36-28][LOG]: #345919 Played
+[02-24-2021-18-36-29][LOG]: #398387 Start
+[02-24-2021-18-36-30][LOG]: #384248 Logged In
+[02-24-2021-18-36-30][LOG]: #340283 Played
+[02-24-2021-18-36-30][LOG]: #340695 Played
+[02-24-2021-18-36-30][LOG]: #383972 Logged In
+[02-24-2021-18-36-30][LOG]: #398810 Start
+[02-24-2021-18-36-31][LOG]: #338472 Played
+[02-24-2021-18-36-32][LOG]: #346116 Played
+[02-24-2021-18-36-32][LOG]: #399526 Start
+[02-24-2021-18-36-32][LOG]: #338144 Played
+[02-24-2021-18-36-32][LOG]: #347924 Played
+[02-24-2021-18-36-33][LOG]: #384993 Logged In
+[02-24-2021-18-36-33][LOG]: #342630 Played
+[02-24-2021-18-36-33][LOG]: #400021 Start
+[02-24-2021-18-36-34][LOG]: #385537 Logged In
+[02-24-2021-18-36-34][LOG]: #400357 Start
+[02-24-2021-18-36-35][LOG]: #400767 Start
+[02-24-2021-18-36-35][LOG]: #345366 Played
+[02-24-2021-18-36-36][LOG]: #344087 Played
+[02-24-2021-18-36-36][LOG]: #401095 Start
+[02-24-2021-18-36-37][LOG]: #401338 Start
+[02-24-2021-18-36-37][LOG]: #401767 Start
+[02-24-2021-18-36-38][LOG]: #402233 Start
+[02-24-2021-18-36-39][LOG]: #402517 Start
+[02-24-2021-18-36-40][LOG]: #346493 Played
+[02-24-2021-18-36-40][LOG]: #402926 Start
+[02-24-2021-18-36-40][LOG]: #403187 Start
+[02-24-2021-18-36-41][LOG]: #348633 Played
+[02-24-2021-18-36-41][LOG]: #343309 Played
+[02-24-2021-18-36-41][LOG]: #343003 Played
+[02-24-2021-18-36-42][LOG]: #386560 Logged In
+[02-24-2021-18-36-43][LOG]: #347491 Played
+[02-24-2021-18-36-43][LOG]: #388558 Logged In
+[02-24-2021-18-36-43][LOG]: #346913 Played
+[02-24-2021-18-36-43][LOG]: #403988 Start
+[02-24-2021-18-36-44][LOG]: #404227 Start
+[02-24-2021-18-36-44][LOG]: #349988 Played
+[02-24-2021-18-36-45][LOG]: #404556 Start
+[02-24-2021-18-36-45][LOG]: #388691 Logged In
+[02-24-2021-18-36-46][LOG]: #404807 Start
+[02-24-2021-18-36-46][LOG]: #405091 Start
+[02-24-2021-18-36-47][LOG]: #405437 Start
+[02-24-2021-18-36-48][LOG]: #344448 Played
+[02-24-2021-18-36-48][LOG]: #405694 Start
+[02-24-2021-18-36-48][LOG]: #406118 Start
+[02-24-2021-18-36-49][LOG]: #352264 Played
+[02-24-2021-18-36-49][LOG]: #406695 Start
+[02-24-2021-18-36-50][LOG]: #348267 Played
+[02-24-2021-18-36-50][LOG]: #407153 Start
+[02-24-2021-18-36-51][LOG]: #389513 Logged In
+[02-24-2021-18-36-51][LOG]: #349259 Played
+[02-24-2021-18-36-52][LOG]: #350913 Played
+[02-24-2021-18-36-52][LOG]: #344693 Played
+[02-24-2021-18-36-53][LOG]: #408152 Start
+[02-24-2021-18-36-53][LOG]: #345656 Played
+[02-24-2021-18-36-54][LOG]: #408474 Start
+[02-24-2021-18-36-54][LOG]: #408818 Start
+[02-24-2021-18-36-55][LOG]: #349632 Played
+[02-24-2021-18-36-56][LOG]: #351940 Played
+[02-24-2021-18-36-56][LOG]: #409314 Start
+[02-24-2021-18-36-56][LOG]: #409766 Start
+[02-24-2021-18-36-57][LOG]: #410009 Start
+[02-24-2021-18-36-58][LOG]: #347190 Played
+[02-24-2021-18-36-58][LOG]: #410198 Start
+[02-24-2021-18-36-58][LOG]: #389972 Logged In
+[02-24-2021-18-36-58][LOG]: #350246 Played
+[02-24-2021-18-36-59][LOG]: #410684 Start
+[02-24-2021-18-36-59][LOG]: #392241 Logged In
+[02-24-2021-18-36-59][LOG]: #390428 Logged In
+[02-24-2021-18-36-59][LOG]: #411017 Start
+[02-24-2021-18-36-59][LOG]: #391020 Logged In
+[02-24-2021-18-36-59][LOG]: #390108 Logged In
+[02-24-2021-18-37-00][LOG]: #411359 Start
+[02-24-2021-18-37-01][LOG]: #390257 Logged In
+[02-24-2021-18-37-01][LOG]: #391422 Logged In
+[02-24-2021-18-37-02][LOG]: #412462 Start
+[02-24-2021-18-37-02][LOG]: #392000 Logged In
+[02-24-2021-18-37-02][LOG]: #351544 Played
+[02-24-2021-18-37-03][LOG]: #413061 Start
+[02-24-2021-18-37-04][LOG]: #391570 Logged In
+[02-24-2021-18-37-04][LOG]: #391267 Logged In
+[02-24-2021-18-37-04][LOG]: #391749 Logged In
+[02-24-2021-18-37-07][LOG]: #393009 Logged In
+[02-24-2021-18-37-08][LOG]: #393610 Logged In
+[02-24-2021-18-37-08][LOG]: #350591 Played
+[02-24-2021-18-37-09][LOG]: #393274 Logged In
+[02-24-2021-18-37-10][LOG]: #415599 Start
+[02-24-2021-18-37-12][LOG]: #416426 Start
+[02-24-2021-18-37-15][LOG]: #395730 Logged In
+[02-24-2021-18-37-18][LOG]: #396508 Logged In
+[02-24-2021-18-37-18][LOG]: #394357 Logged In
+[02-24-2021-18-37-19][LOG]: #396048 Logged In
+[02-24-2021-18-37-19][LOG]: #394179 Logged In
+[02-24-2021-18-37-21][LOG]: #397051 Logged In
+[02-24-2021-18-37-21][LOG]: #396757 Logged In
+[02-24-2021-18-37-24][LOG]: #396169 Logged In
+[02-24-2021-18-37-26][LOG]: #396305 Logged In
+[02-24-2021-18-37-26][LOG]: #397724 Logged In
+[02-24-2021-18-37-26][LOG]: #397992 Logged In
+[02-24-2021-18-37-30][LOG]: #399526 Logged In
+[02-24-2021-18-37-35][LOG]: #401767 Logged In
+[02-24-2021-18-37-37][LOG]: #398387 Logged In
+[02-24-2021-18-37-38][LOG]: #398810 Logged In
+[02-24-2021-18-37-38][LOG]: #400767 Logged In
+[02-24-2021-18-37-38][LOG]: #400021 Logged In
+[02-24-2021-18-37-40][LOG]: #401338 Logged In
+[02-24-2021-18-37-40][LOG]: #400357 Logged In
+[02-24-2021-18-37-41][LOG]: #402233 Logged In
+[02-24-2021-18-37-43][LOG]: #401095 Logged In
+[02-24-2021-18-37-43][LOG]: #403187 Logged In
+[02-24-2021-18-37-44][LOG]: #402926 Logged In
+[02-24-2021-18-37-45][LOG]: #405437 Logged In
+[02-24-2021-18-37-46][LOG]: #404556 Logged In
+[02-24-2021-18-37-47][LOG]: #402517 Logged In
+[02-24-2021-18-37-48][LOG]: #404227 Logged In
+[02-24-2021-18-37-49][LOG]: #406118 Logged In
+[02-24-2021-18-37-50][LOG]: #404807 Logged In
+[02-24-2021-18-37-51][LOG]: #403988 Logged In
+[02-24-2021-18-37-52][LOG]: #405694 Logged In
+[02-24-2021-18-37-53][LOG]: #406695 Logged In
+[02-24-2021-18-37-55][LOG]: #407153 Logged In
+[02-24-2021-18-37-56][LOG]: #408474 Logged In
+[02-24-2021-18-37-57][LOG]: #408152 Logged In
+[02-24-2021-18-37-59][LOG]: #405091 Logged In
+[02-24-2021-18-38-01][LOG]: #410009 Logged In
+[02-24-2021-18-38-01][LOG]: #410684 Logged In
+[02-24-2021-18-38-01][LOG]: #408818 Logged In
+[02-24-2021-18-38-03][LOG]: #409314 Logged In
+[02-24-2021-18-38-03][LOG]: #412462 Logged In
+[02-24-2021-18-38-04][LOG]: #410198 Logged In
+[02-24-2021-18-38-05][LOG]: #411017 Logged In
+[02-24-2021-18-38-07][LOG]: #411359 Logged In
+[02-24-2021-18-38-07][LOG]: #409766 Logged In
+[02-24-2021-18-38-08][LOG]: #413061 Logged In
+[02-24-2021-18-38-16][LOG]: #415599 Logged In
+[02-24-2021-18-38-19][LOG]: #416426 Logged In
+[02-24-2021-18-38-20][LOG]: #372425 Played
+[02-24-2021-18-38-25][LOG]: #428724 Start
+[02-24-2021-18-38-31][LOG]: #429300 Start
+[02-24-2021-18-38-32][LOG]: #373463 Played
+[02-24-2021-18-38-34][LOG]: #372731 Played
+[02-24-2021-18-38-35][LOG]: #373002 Played
+[02-24-2021-18-38-36][LOG]: #371713 Played
+[02-24-2021-18-38-37][LOG]: #429976 Start
+[02-24-2021-18-38-37][LOG]: #373055 Played
+[02-24-2021-18-38-39][LOG]: #430212 Start
+[02-24-2021-18-38-39][LOG]: #430267 Start
+[02-24-2021-18-38-40][LOG]: #430340 Start
+[02-24-2021-18-38-40][LOG]: #374381 Played
+[02-24-2021-18-38-42][LOG]: #374890 Played
+[02-24-2021-18-38-42][LOG]: #372479 Played
+[02-24-2021-18-38-42][LOG]: #374191 Played
+[02-24-2021-18-38-45][LOG]: #431019 Start
+[02-24-2021-18-38-46][LOG]: #431075 Start
+[02-24-2021-18-38-47][LOG]: #374093 Played
+[02-24-2021-18-38-47][LOG]: #431203 Start
+[02-24-2021-18-38-47][LOG]: #431266 Start
+[02-24-2021-18-38-48][LOG]: #431369 Start
+[02-24-2021-18-38-50][LOG]: #431666 Start
+[02-24-2021-18-38-56][LOG]: #377113 Played
+[02-24-2021-18-39-00][LOG]: #433047 Start
+[02-24-2021-18-39-02][LOG]: #377218 Played
+[02-24-2021-18-39-03][LOG]: #378299 Played
+[02-24-2021-18-39-03][LOG]: #433743 Start
+[02-24-2021-18-39-05][LOG]: #377541 Played
+[02-24-2021-18-39-07][LOG]: #375674 Played
+[02-24-2021-18-39-08][LOG]: #434626 Start
+[02-24-2021-18-39-09][LOG]: #434733 Start
+[02-24-2021-18-39-09][LOG]: #434797 Start
+[02-24-2021-18-39-10][LOG]: #376413 Played
+[02-24-2021-18-39-12][LOG]: #435244 Start
+[02-24-2021-18-39-14][LOG]: #435651 Start
+[02-24-2021-18-39-14][LOG]: #379779 Played
+[02-24-2021-18-39-18][LOG]: #380092 Played
+[02-24-2021-18-39-20][LOG]: #380508 Played
+[02-24-2021-18-39-22][LOG]: #437401 Start
+[02-24-2021-18-39-23][LOG]: #382716 Played
+[02-24-2021-18-39-26][LOG]: #381596 Played
+[02-24-2021-18-39-26][LOG]: #381270 Played
+[02-24-2021-18-39-27][LOG]: #438448 Start
+[02-24-2021-18-39-27][LOG]: #428724 Logged In
+[02-24-2021-18-39-28][LOG]: #382065 Played
+[02-24-2021-18-39-28][LOG]: #438688 Start
+[02-24-2021-18-39-28][LOG]: #384248 Played
+[02-24-2021-18-39-28][LOG]: #378840 Played
+[02-24-2021-18-39-29][LOG]: #438943 Start
+[02-24-2021-18-39-33][LOG]: #439436 Start
+[02-24-2021-18-39-34][LOG]: #439513 Start
+[02-24-2021-18-39-34][LOG]: #439618 Start
+[02-24-2021-18-39-35][LOG]: #381743 Played
+[02-24-2021-18-39-35][LOG]: #439778 Start
+[02-24-2021-18-39-35][LOG]: #429300 Logged In
+[02-24-2021-18-39-36][LOG]: #385281 Played
+[02-24-2021-18-39-37][LOG]: #381380 Played
+[02-24-2021-18-39-39][LOG]: #440556 Start
+[02-24-2021-18-39-39][LOG]: #383972 Played
+[02-24-2021-18-39-41][LOG]: #440639 Start
+[02-24-2021-18-39-41][LOG]: #440771 Start
+[02-24-2021-18-39-42][LOG]: #430212 Logged In
+[02-24-2021-18-39-43][LOG]: #441251 Start
+[02-24-2021-18-39-44][LOG]: #430340 Logged In
+[02-24-2021-18-39-45][LOG]: #441488 Start
+[02-24-2021-18-39-45][LOG]: #429976 Logged In
+[02-24-2021-18-39-45][LOG]: #441682 Start
+[02-24-2021-18-39-46][LOG]: #441834 Start
+[02-24-2021-18-39-47][LOG]: #384993 Played
+[02-24-2021-18-39-48][LOG]: #386560 Played
+[02-24-2021-18-39-48][LOG]: #430267 Logged In
+[02-24-2021-18-39-51][LOG]: #431203 Logged In
+[02-24-2021-18-39-52][LOG]: #443161 Start
+[02-24-2021-18-39-52][LOG]: #389513 Played
+[02-24-2021-18-39-54][LOG]: #443335 Start
+[02-24-2021-18-39-54][LOG]: #431369 Logged In
+[02-24-2021-18-39-55][LOG]: #388558 Played
+[02-24-2021-18-39-56][LOG]: #431019 Logged In
+[02-24-2021-18-39-56][LOG]: #431075 Logged In
+[02-24-2021-18-39-56][LOG]: #443866 Start
+[02-24-2021-18-39-56][LOG]: #431266 Logged In
+[02-24-2021-18-39-57][LOG]: #431666 Logged In
+[02-24-2021-18-39-59][LOG]: #444488 Start
+[02-24-2021-18-40-00][LOG]: #444748 Start
+[02-24-2021-18-40-04][LOG]: #433047 Logged In
+[02-24-2021-18-40-04][LOG]: #388691 Played
+[02-24-2021-18-40-06][LOG]: #391422 Played
+[02-24-2021-18-40-06][LOG]: #390257 Played
+[02-24-2021-18-40-07][LOG]: #389972 Played
+[02-24-2021-18-40-08][LOG]: #391267 Played
+[02-24-2021-18-40-09][LOG]: #446560 Start
+[02-24-2021-18-40-10][LOG]: #446825 Start
+[02-24-2021-18-40-11][LOG]: #447060 Start
+[02-24-2021-18-40-12][LOG]: #433743 Logged In
+[02-24-2021-18-40-12][LOG]: #390108 Played
+[02-24-2021-18-40-12][LOG]: #447346 Start
+[02-24-2021-18-40-12][LOG]: #390428 Played
+[02-24-2021-18-40-13][LOG]: #447665 Start
+[02-24-2021-18-40-16][LOG]: #448436 Start
+[02-24-2021-18-40-16][LOG]: #391570 Played
+[02-24-2021-18-40-17][LOG]: #434733 Logged In
+[02-24-2021-18-40-17][LOG]: #448811 Start
+[02-24-2021-18-40-17][LOG]: #434797 Logged In
+[02-24-2021-18-40-18][LOG]: #435244 Logged In
+[02-24-2021-18-40-18][LOG]: #392241 Played
+[02-24-2021-18-40-19][LOG]: #392000 Played
+[02-24-2021-18-40-21][LOG]: #393610 Played
+[02-24-2021-18-40-21][LOG]: #449539 Start
+[02-24-2021-18-40-21][LOG]: #434626 Logged In
+[02-24-2021-18-40-22][LOG]: #397051 Played
+[02-24-2021-18-40-22][LOG]: #449913 Start
+[02-24-2021-18-40-23][LOG]: #450088 Start
+[02-24-2021-18-40-23][LOG]: #394179 Played
+[02-24-2021-18-40-24][LOG]: #393009 Played
+[02-24-2021-18-40-24][LOG]: #396757 Played
+[02-24-2021-18-40-24][LOG]: #450451 Start
+[02-24-2021-18-40-25][LOG]: #391749 Played
+[02-24-2021-18-40-25][LOG]: #435651 Logged In
+[02-24-2021-18-40-25][LOG]: #450773 Start
+[02-24-2021-18-40-26][LOG]: #451207 Start
+[02-24-2021-18-40-26][LOG]: #394357 Played
+[02-24-2021-18-40-27][LOG]: #451381 Start
+[02-24-2021-18-40-28][LOG]: #451752 Start
+[02-24-2021-18-40-29][LOG]: #438448 Logged In
+[02-24-2021-18-40-29][LOG]: #451983 Start
+[02-24-2021-18-40-30][LOG]: #452157 Start
+[02-24-2021-18-40-30][LOG]: #437401 Logged In
+[02-24-2021-18-40-31][LOG]: #396048 Played
+[02-24-2021-18-40-31][LOG]: #452444 Start
+[02-24-2021-18-40-31][LOG]: #393274 Played
+[02-24-2021-18-40-33][LOG]: #439618 Logged In
+[02-24-2021-18-40-33][LOG]: #397992 Played
+[02-24-2021-18-40-34][LOG]: #453652 Start
+[02-24-2021-18-40-34][LOG]: #396508 Played
+[02-24-2021-18-40-35][LOG]: #395730 Played
+[02-24-2021-18-40-36][LOG]: #397724 Played
+[02-24-2021-18-40-36][LOG]: #438688 Logged In
+[02-24-2021-18-40-37][LOG]: #439513 Logged In
+[02-24-2021-18-40-38][LOG]: #454858 Start
+[02-24-2021-18-40-39][LOG]: #396169 Played
+[02-24-2021-18-40-39][LOG]: #454968 Start
+[02-24-2021-18-40-39][LOG]: #455158 Start
+[02-24-2021-18-40-40][LOG]: #438943 Logged In
+[02-24-2021-18-40-40][LOG]: #396305 Played
+[02-24-2021-18-40-40][LOG]: #455310 Start
+[02-24-2021-18-40-40][LOG]: #439778 Logged In
+[02-24-2021-18-40-41][LOG]: #455465 Start
+[02-24-2021-18-40-41][LOG]: #455665 Start
+[02-24-2021-18-40-42][LOG]: #439436 Logged In
+[02-24-2021-18-40-43][LOG]: #398387 Played
+[02-24-2021-18-40-43][LOG]: #456214 Start
+[02-24-2021-18-40-44][LOG]: #440639 Logged In
+[02-24-2021-18-40-44][LOG]: #400767 Played
+[02-24-2021-18-40-45][LOG]: #456786 Start
+[02-24-2021-18-40-45][LOG]: #441251 Logged In
+[02-24-2021-18-40-46][LOG]: #457147 Start
+[02-24-2021-18-40-46][LOG]: #440771 Logged In
+[02-24-2021-18-40-46][LOG]: #441488 Logged In
+[02-24-2021-18-40-47][LOG]: #440556 Logged In
+[02-24-2021-18-40-48][LOG]: #399526 Played
+[02-24-2021-18-40-50][LOG]: #441834 Logged In
+[02-24-2021-18-40-50][LOG]: #404556 Played
+[02-24-2021-18-40-51][LOG]: #406118 Played
+[02-24-2021-18-40-51][LOG]: #441682 Logged In
+[02-24-2021-18-40-52][LOG]: #400021 Played
+[02-24-2021-18-40-52][LOG]: #402926 Played
+[02-24-2021-18-40-53][LOG]: #459666 Start
+[02-24-2021-18-40-53][LOG]: #443161 Logged In
+[02-24-2021-18-40-54][LOG]: #444488 Logged In
+[02-24-2021-18-40-54][LOG]: #401338 Played
+[02-24-2021-18-40-54][LOG]: #460061 Start
+[02-24-2021-18-40-55][LOG]: #460378 Start
+[02-24-2021-18-40-56][LOG]: #400357 Played
+[02-24-2021-18-40-56][LOG]: #460862 Start
+[02-24-2021-18-40-57][LOG]: #404807 Played
+[02-24-2021-18-40-57][LOG]: #461092 Start
+[02-24-2021-18-40-58][LOG]: #443866 Logged In
+[02-24-2021-18-40-59][LOG]: #443335 Logged In
+[02-24-2021-18-40-59][LOG]: #461760 Start
+[02-24-2021-18-41-01][LOG]: #444748 Logged In
+[02-24-2021-18-41-01][LOG]: #462300 Start
+[02-24-2021-18-41-02][LOG]: #398810 Played
+[02-24-2021-18-41-02][LOG]: #462635 Start
+[02-24-2021-18-41-04][LOG]: #402517 Played
+[02-24-2021-18-41-04][LOG]: #403187 Played
+[02-24-2021-18-41-05][LOG]: #463281 Start
+[02-24-2021-18-41-06][LOG]: #463443 Start
+[02-24-2021-18-41-06][LOG]: #401095 Played
+[02-24-2021-18-41-07][LOG]: #408152 Played
+[02-24-2021-18-41-07][LOG]: #446560 Logged In
+[02-24-2021-18-41-08][LOG]: #403988 Played
+[02-24-2021-18-41-08][LOG]: #464214 Start
+[02-24-2021-18-41-09][LOG]: #446825 Logged In
+[02-24-2021-18-41-09][LOG]: #447346 Logged In
+[02-24-2021-18-41-09][LOG]: #405437 Played
+[02-24-2021-18-41-09][LOG]: #464628 Start
+[02-24-2021-18-41-09][LOG]: #408818 Played
+[02-24-2021-18-41-10][LOG]: #464856 Start
+[02-24-2021-18-41-11][LOG]: #465220 Start
+[02-24-2021-18-41-12][LOG]: #407153 Played
+[02-24-2021-18-41-12][LOG]: #465578 Start
+[02-24-2021-18-41-12][LOG]: #447060 Logged In
+[02-24-2021-18-41-13][LOG]: #465902 Start
+[02-24-2021-18-41-13][LOG]: #404227 Played
+[02-24-2021-18-41-13][LOG]: #466090 Start
+[02-24-2021-18-41-16][LOG]: #447665 Logged In
+[02-24-2021-18-41-16][LOG]: #410198 Played
+[02-24-2021-18-41-16][LOG]: #466931 Start
+[02-24-2021-18-41-16][LOG]: #450088 Logged In
+[02-24-2021-18-41-17][LOG]: #412462 Played
+[02-24-2021-18-41-17][LOG]: #405694 Played
+[02-24-2021-18-41-17][LOG]: #448811 Logged In
+[02-24-2021-18-41-17][LOG]: #467230 Start
+[02-24-2021-18-41-17][LOG]: #449539 Logged In
+[02-24-2021-18-41-18][LOG]: #448436 Logged In
+[02-24-2021-18-41-18][LOG]: #411359 Played
+[02-24-2021-18-41-18][LOG]: #406695 Played
+[02-24-2021-18-41-19][LOG]: #405091 Played
+[02-24-2021-18-41-19][LOG]: #450451 Logged In
+[02-24-2021-18-41-19][LOG]: #411017 Played
+[02-24-2021-18-41-21][LOG]: #468464 Start
+[02-24-2021-18-41-21][LOG]: #468642 Start
+[02-24-2021-18-41-22][LOG]: #468959 Start
+[02-24-2021-18-41-23][LOG]: #410009 Played
+[02-24-2021-18-41-23][LOG]: #469242 Start
+[02-24-2021-18-41-24][LOG]: #451381 Logged In
+[02-24-2021-18-41-24][LOG]: #409314 Played
+[02-24-2021-18-41-24][LOG]: #469553 Start
+[02-24-2021-18-41-24][LOG]: #451207 Logged In
+[02-24-2021-18-41-25][LOG]: #410684 Played
+[02-24-2021-18-41-25][LOG]: #450773 Logged In
+[02-24-2021-18-41-25][LOG]: #469770 Start
+[02-24-2021-18-41-25][LOG]: #449913 Logged In
+[02-24-2021-18-41-25][LOG]: #452157 Logged In
+[02-24-2021-18-41-26][LOG]: #413061 Played
+[02-24-2021-18-41-27][LOG]: #470393 Start
+[02-24-2021-18-41-28][LOG]: #451752 Logged In
+[02-24-2021-18-41-29][LOG]: #415599 Played
+[02-24-2021-18-41-29][LOG]: #471222 Start
+[02-24-2021-18-41-29][LOG]: #451983 Logged In
+[02-24-2021-18-41-31][LOG]: #471974 Start
+[02-24-2021-18-41-32][LOG]: #453652 Logged In
+[02-24-2021-18-41-33][LOG]: #416426 Played
+[02-24-2021-18-41-34][LOG]: #472877 Start
+[02-24-2021-18-41-35][LOG]: #473281 Start
+[02-24-2021-18-41-37][LOG]: #474100 Start
+[02-24-2021-18-41-37][LOG]: #455310 Logged In
+[02-24-2021-18-41-37][LOG]: #454968 Logged In
+[02-24-2021-18-41-37][LOG]: #452444 Logged In
+[02-24-2021-18-41-38][LOG]: #474499 Start
+[02-24-2021-18-41-41][LOG]: #455665 Logged In
+[02-24-2021-18-41-41][LOG]: #455465 Logged In
+[02-24-2021-18-41-42][LOG]: #456214 Logged In
+[02-24-2021-18-41-43][LOG]: #455158 Logged In
+[02-24-2021-18-41-43][LOG]: #454858 Logged In
+[02-24-2021-18-41-49][LOG]: #457147 Logged In
+[02-24-2021-18-41-49][LOG]: #477727 Start
+[02-24-2021-18-41-52][LOG]: #460862 Logged In
+[02-24-2021-18-41-53][LOG]: #456786 Logged In
+[02-24-2021-18-41-55][LOG]: #459666 Logged In
+[02-24-2021-18-41-56][LOG]: #461092 Logged In
+[02-24-2021-18-41-57][LOG]: #460061 Logged In
+[02-24-2021-18-41-58][LOG]: #460378 Logged In
+[02-24-2021-18-42-00][LOG]: #461760 Logged In
+[02-24-2021-18-42-02][LOG]: #462635 Logged In
+[02-24-2021-18-42-03][LOG]: #462300 Logged In
+[02-24-2021-18-42-05][LOG]: #463443 Logged In
+[02-24-2021-18-42-07][LOG]: #463281 Logged In
+[02-24-2021-18-42-08][LOG]: #464214 Logged In
+[02-24-2021-18-42-12][LOG]: #464856 Logged In
+[02-24-2021-18-42-15][LOG]: #465902 Logged In
+[02-24-2021-18-42-15][LOG]: #465220 Logged In
+[02-24-2021-18-42-15][LOG]: #465578 Logged In
+[02-24-2021-18-42-19][LOG]: #464628 Logged In
+[02-24-2021-18-42-22][LOG]: #466931 Logged In
+[02-24-2021-18-42-22][LOG]: #467230 Logged In
+[02-24-2021-18-42-24][LOG]: #468464 Logged In
+[02-24-2021-18-42-24][LOG]: #468642 Logged In
+[02-24-2021-18-42-25][LOG]: #466090 Logged In
+[02-24-2021-18-42-25][LOG]: #468959 Logged In
+[02-24-2021-18-42-28][LOG]: #469242 Logged In
+[02-24-2021-18-42-29][LOG]: #469770 Logged In
+[02-24-2021-18-42-30][LOG]: #469553 Logged In
+[02-24-2021-18-42-33][LOG]: #470393 Logged In
+[02-24-2021-18-42-35][LOG]: #471974 Logged In
+[02-24-2021-18-42-37][LOG]: #472877 Logged In
+[02-24-2021-18-42-39][LOG]: #471222 Logged In
+[02-24-2021-18-42-39][LOG]: #474100 Logged In
+[02-24-2021-18-42-40][LOG]: #473281 Logged In
+[02-24-2021-18-42-40][LOG]: #485920 Start
+[02-24-2021-18-42-41][LOG]: #430340 Played
+[02-24-2021-18-42-43][LOG]: #474499 Logged In
+[02-24-2021-18-42-44][LOG]: #486351 Start
+[02-24-2021-18-42-45][LOG]: #428724 Played
+[02-24-2021-18-42-48][LOG]: #430212 Played
+[02-24-2021-18-42-49][LOG]: #486770 Start
+[02-24-2021-18-42-50][LOG]: #486822 Start
+[02-24-2021-18-42-52][LOG]: #487027 Start
+[02-24-2021-18-42-56][LOG]: #429300 Played
+[02-24-2021-18-42-57][LOG]: #431266 Played
+[02-24-2021-18-42-57][LOG]: #429976 Played
+[02-24-2021-18-42-57][LOG]: #477727 Logged In
+[02-24-2021-18-42-58][LOG]: #431666 Played
+[02-24-2021-18-43-00][LOG]: #488041 Start
+[02-24-2021-18-43-02][LOG]: #488190 Start
+[02-24-2021-18-43-02][LOG]: #431369 Played
+[02-24-2021-18-43-02][LOG]: #488294 Start
+[02-24-2021-18-43-03][LOG]: #488501 Start
+[02-24-2021-18-43-05][LOG]: #488888 Start
+[02-24-2021-18-43-06][LOG]: #431075 Played
+[02-24-2021-18-43-06][LOG]: #431019 Played
+[02-24-2021-18-43-07][LOG]: #489211 Start
+[02-24-2021-18-43-08][LOG]: #431203 Played
+[02-24-2021-18-43-09][LOG]: #430267 Played
+[02-24-2021-18-43-10][LOG]: #489510 Start
+[02-24-2021-18-43-12][LOG]: #433743 Played
+[02-24-2021-18-43-12][LOG]: #434626 Played
+[02-24-2021-18-43-13][LOG]: #489963 Start
+[02-24-2021-18-43-13][LOG]: #435244 Played
+[02-24-2021-18-43-13][LOG]: #490086 Start
+[02-24-2021-18-43-16][LOG]: #490639 Start
+[02-24-2021-18-43-17][LOG]: #490767 Start
+[02-24-2021-18-43-18][LOG]: #491011 Start
+[02-24-2021-18-43-19][LOG]: #491220 Start
+[02-24-2021-18-43-22][LOG]: #434797 Played
+[02-24-2021-18-43-24][LOG]: #434733 Played
+[02-24-2021-18-43-30][LOG]: #493664 Start
+[02-24-2021-18-43-31][LOG]: #493843 Start
+[02-24-2021-18-43-32][LOG]: #494013 Start
+[02-24-2021-18-43-33][LOG]: #437401 Played
+[02-24-2021-18-43-37][LOG]: #495114 Start
+[02-24-2021-18-43-38][LOG]: #495171 Start
+[02-24-2021-18-43-39][LOG]: #439778 Played
+[02-24-2021-18-43-39][LOG]: #435651 Played
+[02-24-2021-18-43-43][LOG]: #496146 Start
+[02-24-2021-18-43-43][LOG]: #438448 Played
+[02-24-2021-18-43-44][LOG]: #496290 Start
+[02-24-2021-18-43-44][LOG]: #485920 Logged In
+[02-24-2021-18-43-46][LOG]: #441488 Played
+[02-24-2021-18-43-47][LOG]: #486351 Logged In
+[02-24-2021-18-43-48][LOG]: #497164 Start
+[02-24-2021-18-43-49][LOG]: #438943 Played
+[02-24-2021-18-43-49][LOG]: #443161 Played
+[02-24-2021-18-43-49][LOG]: #441251 Played
+[02-24-2021-18-43-52][LOG]: #498052 Start
+[02-24-2021-18-43-52][LOG]: #439513 Played
+[02-24-2021-18-43-53][LOG]: #486770 Logged In
+[02-24-2021-18-43-53][LOG]: #440556 Played
+[02-24-2021-18-43-53][LOG]: #498399 Start
+[02-24-2021-18-43-53][LOG]: #440771 Played
+[02-24-2021-18-43-54][LOG]: #498610 Start
+[02-24-2021-18-43-56][LOG]: #498854 Start
+[02-24-2021-18-43-56][LOG]: #487027 Logged In
+[02-24-2021-18-43-56][LOG]: #440639 Played
+[02-24-2021-18-43-56][LOG]: #441834 Played
+[02-24-2021-18-43-57][LOG]: #499165 Start
+[02-24-2021-18-43-58][LOG]: #499446 Start
+[02-24-2021-18-43-59][LOG]: #499601 Start
+[02-24-2021-18-43-59][LOG]: #486822 Logged In
+[02-24-2021-18-44-00][LOG]: #499776 Start
+[02-24-2021-18-44-00][LOG]: #439436 Played
+[02-24-2021-18-44-00][LOG]: #444748 Played
+[02-24-2021-18-44-00][LOG]: #441682 Played
+[02-24-2021-18-44-01][LOG]: #443335 Played
+[02-24-2021-18-44-02][LOG]: #488190 Logged In
+[02-24-2021-18-44-03][LOG]: #488294 Logged In
+[02-24-2021-18-44-05][LOG]: #500824 Start
+[02-24-2021-18-44-05][LOG]: #488041 Logged In
+[02-24-2021-18-44-06][LOG]: #488501 Logged In
+[02-24-2021-18-44-06][LOG]: #501055 Start
+[02-24-2021-18-44-07][LOG]: #501295 Start
+[02-24-2021-18-44-07][LOG]: #488888 Logged In
+[02-24-2021-18-44-07][LOG]: #501540 Start
+[02-24-2021-18-44-09][LOG]: #446560 Played
+[02-24-2021-18-44-10][LOG]: #489510 Logged In
+[02-24-2021-18-44-12][LOG]: #502562 Start
+[02-24-2021-18-44-13][LOG]: #489211 Logged In
+[02-24-2021-18-44-13][LOG]: #443866 Played
+[02-24-2021-18-44-14][LOG]: #489963 Logged In
+[02-24-2021-18-44-15][LOG]: #446825 Played
+[02-24-2021-18-44-15][LOG]: #444488 Played
+[02-24-2021-18-44-18][LOG]: #490767 Logged In
+[02-24-2021-18-44-18][LOG]: #490086 Logged In
+[02-24-2021-18-44-19][LOG]: #503768 Start
+[02-24-2021-18-44-19][LOG]: #452157 Played
+[02-24-2021-18-44-20][LOG]: #504128 Start
+[02-24-2021-18-44-21][LOG]: #490639 Logged In
+[02-24-2021-18-44-21][LOG]: #504357 Start
+[02-24-2021-18-44-21][LOG]: #504600 Start
+[02-24-2021-18-44-22][LOG]: #447060 Played
+[02-24-2021-18-44-23][LOG]: #491011 Logged In
+[02-24-2021-18-44-23][LOG]: #505115 Start
+[02-24-2021-18-44-23][LOG]: #505406 Start
+[02-24-2021-18-44-24][LOG]: #451381 Played
+[02-24-2021-18-44-24][LOG]: #491220 Logged In
+[02-24-2021-18-44-27][LOG]: #450451 Played
+[02-24-2021-18-44-28][LOG]: #506401 Start
+[02-24-2021-18-44-28][LOG]: #450773 Played
+[02-24-2021-18-44-28][LOG]: #451207 Played
+[02-24-2021-18-44-31][LOG]: #507155 Start
+[02-24-2021-18-44-32][LOG]: #507378 Start
+[02-24-2021-18-44-33][LOG]: #493843 Logged In
+[02-24-2021-18-44-33][LOG]: #447346 Played
+[02-24-2021-18-44-36][LOG]: #494013 Logged In
+[02-24-2021-18-44-37][LOG]: #495171 Logged In
+[02-24-2021-18-44-37][LOG]: #448811 Played
+[02-24-2021-18-44-38][LOG]: #450088 Played
+[02-24-2021-18-44-38][LOG]: #509146 Start
+[02-24-2021-18-44-38][LOG]: #455665 Played
+[02-24-2021-18-44-39][LOG]: #448436 Played
+[02-24-2021-18-44-39][LOG]: #509397 Start
+[02-24-2021-18-44-40][LOG]: #449913 Played
+[02-24-2021-18-44-40][LOG]: #451752 Played
+[02-24-2021-18-44-40][LOG]: #451983 Played
+[02-24-2021-18-44-40][LOG]: #493664 Logged In
+[02-24-2021-18-44-41][LOG]: #453652 Played
+[02-24-2021-18-44-42][LOG]: #509874 Start
+[02-24-2021-18-44-42][LOG]: #510081 Start
+[02-24-2021-18-44-42][LOG]: #496146 Logged In
+[02-24-2021-18-44-43][LOG]: #510374 Start
+[02-24-2021-18-44-44][LOG]: #510565 Start
+[02-24-2021-18-44-45][LOG]: #510770 Start
+[02-24-2021-18-44-45][LOG]: #455310 Played
+[02-24-2021-18-44-45][LOG]: #495114 Logged In
+[02-24-2021-18-44-46][LOG]: #460862 Played
+[02-24-2021-18-44-46][LOG]: #510993 Start
+[02-24-2021-18-44-46][LOG]: #511146 Start
+[02-24-2021-18-44-47][LOG]: #511330 Start
+[02-24-2021-18-44-47][LOG]: #454858 Played
+[02-24-2021-18-44-48][LOG]: #511497 Start
+[02-24-2021-18-44-48][LOG]: #455158 Played
+[02-24-2021-18-44-48][LOG]: #460378 Played
+[02-24-2021-18-44-48][LOG]: #496290 Logged In
+[02-24-2021-18-44-50][LOG]: #455465 Played
+[02-24-2021-18-44-51][LOG]: #512496 Start
+[02-24-2021-18-44-52][LOG]: #497164 Logged In
+[02-24-2021-18-44-52][LOG]: #461760 Played
+[02-24-2021-18-44-52][LOG]: #512837 Start
+[02-24-2021-18-44-53][LOG]: #498610 Logged In
+[02-24-2021-18-44-54][LOG]: #454968 Played
+[02-24-2021-18-44-54][LOG]: #498052 Logged In
+[02-24-2021-18-44-55][LOG]: #513659 Start
+[02-24-2021-18-44-55][LOG]: #498399 Logged In
+[02-24-2021-18-44-56][LOG]: #513847 Start
+[02-24-2021-18-44-56][LOG]: #452444 Played
+[02-24-2021-18-44-56][LOG]: #498854 Logged In
+[02-24-2021-18-44-57][LOG]: #461092 Played
+[02-24-2021-18-44-57][LOG]: #457147 Played
+[02-24-2021-18-44-57][LOG]: #456786 Played
+[02-24-2021-18-44-58][LOG]: #499601 Logged In
+[02-24-2021-18-44-58][LOG]: #499446 Logged In
+[02-24-2021-18-44-59][LOG]: #514892 Start
+[02-24-2021-18-45-00][LOG]: #499165 Logged In
+[02-24-2021-18-45-00][LOG]: #515276 Start
+[02-24-2021-18-45-00][LOG]: #499776 Logged In
+[02-24-2021-18-45-01][LOG]: #515660 Start
+[02-24-2021-18-45-01][LOG]: #460061 Played
+[02-24-2021-18-45-02][LOG]: #456214 Played
+[02-24-2021-18-45-02][LOG]: #515915 Start
+[02-24-2021-18-45-03][LOG]: #516208 Start
+[02-24-2021-18-45-04][LOG]: #501295 Logged In
+[02-24-2021-18-45-04][LOG]: #465578 Played
+[02-24-2021-18-45-04][LOG]: #516661 Start
+[02-24-2021-18-45-05][LOG]: #501540 Logged In
+[02-24-2021-18-45-05][LOG]: #500824 Logged In
+[02-24-2021-18-45-05][LOG]: #517013 Start
+[02-24-2021-18-45-06][LOG]: #501055 Logged In
+[02-24-2021-18-45-06][LOG]: #517311 Start
+[02-24-2021-18-45-07][LOG]: #517884 Start
+[02-24-2021-18-45-08][LOG]: #502562 Logged In
+[02-24-2021-18-45-10][LOG]: #464856 Played
+[02-24-2021-18-45-10][LOG]: #462635 Played
+[02-24-2021-18-45-11][LOG]: #468464 Played
+[02-24-2021-18-45-12][LOG]: #465220 Played
+[02-24-2021-18-45-12][LOG]: #519428 Start
+[02-24-2021-18-45-12][LOG]: #519636 Start
+[02-24-2021-18-45-13][LOG]: #519830 Start
+[02-24-2021-18-45-14][LOG]: #520122 Start
+[02-24-2021-18-45-15][LOG]: #520438 Start
+[02-24-2021-18-45-16][LOG]: #520733 Start
+[02-24-2021-18-45-17][LOG]: #503768 Logged In
+[02-24-2021-18-45-17][LOG]: #504600 Logged In
+[02-24-2021-18-45-17][LOG]: #520990 Start
+[02-24-2021-18-45-18][LOG]: #521329 Start
+[02-24-2021-18-45-18][LOG]: #504128 Logged In
+[02-24-2021-18-45-18][LOG]: #521593 Start
+[02-24-2021-18-45-19][LOG]: #504357 Logged In
+[02-24-2021-18-45-20][LOG]: #505406 Logged In
+[02-24-2021-18-45-20][LOG]: #466931 Played
+[02-24-2021-18-45-21][LOG]: #522538 Start
+[02-24-2021-18-45-21][LOG]: #505115 Logged In
+[02-24-2021-18-45-22][LOG]: #462300 Played
+[02-24-2021-18-45-24][LOG]: #464628 Played
+[02-24-2021-18-45-24][LOG]: #463281 Played
+[02-24-2021-18-45-24][LOG]: #523507 Start
+[02-24-2021-18-45-25][LOG]: #506401 Logged In
+[02-24-2021-18-45-26][LOG]: #507378 Logged In
+[02-24-2021-18-45-26][LOG]: #524114 Start
+[02-24-2021-18-45-28][LOG]: #467230 Played
+[02-24-2021-18-45-28][LOG]: #524590 Start
+[02-24-2021-18-45-28][LOG]: #507155 Logged In
+[02-24-2021-18-45-29][LOG]: #524939 Start
+[02-24-2021-18-45-29][LOG]: #464214 Played
+[02-24-2021-18-45-31][LOG]: #470393 Played
+[02-24-2021-18-45-31][LOG]: #469770 Played
+[02-24-2021-18-45-32][LOG]: #509146 Logged In
+[02-24-2021-18-45-32][LOG]: #468642 Played
+[02-24-2021-18-45-32][LOG]: #526301 Start
+[02-24-2021-18-45-34][LOG]: #526876 Start
+[02-24-2021-18-45-36][LOG]: #527385 Start
+[02-24-2021-18-45-37][LOG]: #527586 Start
+[02-24-2021-18-45-37][LOG]: #469553 Played
+[02-24-2021-18-45-37][LOG]: #509397 Logged In
+[02-24-2021-18-45-38][LOG]: #509874 Logged In
+[02-24-2021-18-45-38][LOG]: #528040 Start
+[02-24-2021-18-45-39][LOG]: #510081 Logged In
+[02-24-2021-18-45-42][LOG]: #529085 Start
+[02-24-2021-18-45-44][LOG]: #510565 Logged In
+[02-24-2021-18-45-44][LOG]: #469242 Played
+[02-24-2021-18-45-45][LOG]: #510770 Logged In
+[02-24-2021-18-45-46][LOG]: #510374 Logged In
+[02-24-2021-18-45-47][LOG]: #511146 Logged In
+[02-24-2021-18-45-47][LOG]: #510993 Logged In
+[02-24-2021-18-45-47][LOG]: #468959 Played
+[02-24-2021-18-45-49][LOG]: #511497 Logged In
+[02-24-2021-18-45-49][LOG]: #512837 Logged In
+[02-24-2021-18-45-50][LOG]: #531758 Start
+[02-24-2021-18-45-50][LOG]: #471222 Played
+[02-24-2021-18-45-52][LOG]: #473281 Played
+[02-24-2021-18-45-52][LOG]: #532281 Start
+[02-24-2021-18-45-53][LOG]: #474499 Played
+[02-24-2021-18-45-54][LOG]: #513659 Logged In
+[02-24-2021-18-45-54][LOG]: #513847 Logged In
+[02-24-2021-18-45-54][LOG]: #474100 Played
+[02-24-2021-18-45-54][LOG]: #512496 Logged In
+[02-24-2021-18-45-54][LOG]: #511330 Logged In
+[02-24-2021-18-45-55][LOG]: #515276 Logged In
+[02-24-2021-18-45-55][LOG]: #532981 Start
+[02-24-2021-18-45-56][LOG]: #533144 Start
+[02-24-2021-18-45-56][LOG]: #514892 Logged In
+[02-24-2021-18-45-59][LOG]: #472877 Played
+[02-24-2021-18-46-00][LOG]: #533918 Start
+[02-24-2021-18-46-00][LOG]: #515660 Logged In
+[02-24-2021-18-46-03][LOG]: #471974 Played
+[02-24-2021-18-46-04][LOG]: #534947 Start
+[02-24-2021-18-46-05][LOG]: #516661 Logged In
+[02-24-2021-18-46-05][LOG]: #535425 Start
+[02-24-2021-18-46-07][LOG]: #536060 Start
+[02-24-2021-18-46-08][LOG]: #516208 Logged In
+[02-24-2021-18-46-08][LOG]: #517013 Logged In
+[02-24-2021-18-46-09][LOG]: #515915 Logged In
+[02-24-2021-18-46-09][LOG]: #517884 Logged In
+[02-24-2021-18-46-14][LOG]: #519636 Logged In
+[02-24-2021-18-46-15][LOG]: #517311 Logged In
+[02-24-2021-18-46-16][LOG]: #519428 Logged In
+[02-24-2021-18-46-16][LOG]: #520733 Logged In
+[02-24-2021-18-46-17][LOG]: #519830 Logged In
+[02-24-2021-18-46-17][LOG]: #477727 Played
+[02-24-2021-18-46-18][LOG]: #520122 Logged In
+[02-24-2021-18-46-21][LOG]: #520438 Logged In
+[02-24-2021-18-46-22][LOG]: #521593 Logged In
+[02-24-2021-18-46-25][LOG]: #520990 Logged In
+[02-24-2021-18-46-25][LOG]: #521329 Logged In
+[02-24-2021-18-46-26][LOG]: #540199 Start
+[02-24-2021-18-46-27][LOG]: #522538 Logged In
+[02-24-2021-18-46-29][LOG]: #523507 Logged In
+[02-24-2021-18-46-30][LOG]: #524590 Logged In
+[02-24-2021-18-46-32][LOG]: #524114 Logged In
+[02-24-2021-18-46-33][LOG]: #524939 Logged In
+[02-24-2021-18-46-37][LOG]: #526301 Logged In
+[02-24-2021-18-46-42][LOG]: #527586 Logged In
+[02-24-2021-18-46-42][LOG]: #526876 Logged In
+[02-24-2021-18-46-44][LOG]: #527385 Logged In
+[02-24-2021-18-46-44][LOG]: #528040 Logged In
+[02-24-2021-18-46-49][LOG]: #486770 Played
+[02-24-2021-18-46-50][LOG]: #529085 Logged In
+[02-24-2021-18-46-53][LOG]: #485920 Played
+[02-24-2021-18-46-54][LOG]: #531758 Logged In
+[02-24-2021-18-46-55][LOG]: #488294 Played
+[02-24-2021-18-46-57][LOG]: #544009 Start
+[02-24-2021-18-46-57][LOG]: #486351 Played
+[02-24-2021-18-46-58][LOG]: #544139 Start
+[02-24-2021-18-46-59][LOG]: #532281 Logged In
+[02-24-2021-18-46-59][LOG]: #533144 Logged In
+[02-24-2021-18-47-00][LOG]: #488501 Played
+[02-24-2021-18-47-00][LOG]: #544441 Start
+[02-24-2021-18-47-01][LOG]: #544513 Start
+[02-24-2021-18-47-04][LOG]: #532981 Logged In
+[02-24-2021-18-47-05][LOG]: #487027 Played
+[02-24-2021-18-47-05][LOG]: #489510 Played
+[02-24-2021-18-47-05][LOG]: #533918 Logged In
+[02-24-2021-18-47-06][LOG]: #544845 Start
+[02-24-2021-18-47-06][LOG]: #489211 Played
+[02-24-2021-18-47-07][LOG]: #491011 Played
+[02-24-2021-18-47-07][LOG]: #534947 Logged In
+[02-24-2021-18-47-07][LOG]: #489963 Played
+[02-24-2021-18-47-08][LOG]: #488888 Played
+[02-24-2021-18-47-08][LOG]: #545153 Start
+[02-24-2021-18-47-09][LOG]: #545199 Start
+[02-24-2021-18-47-10][LOG]: #545310 Start
+[02-24-2021-18-47-10][LOG]: #545439 Start
+[02-24-2021-18-47-10][LOG]: #535425 Logged In
+[02-24-2021-18-47-11][LOG]: #545585 Start
+[02-24-2021-18-47-12][LOG]: #545714 Start
+[02-24-2021-18-47-12][LOG]: #488041 Played
+[02-24-2021-18-47-13][LOG]: #545842 Start
+[02-24-2021-18-47-14][LOG]: #536060 Logged In
+[02-24-2021-18-47-15][LOG]: #486822 Played
+[02-24-2021-18-47-16][LOG]: #546340 Start
+[02-24-2021-18-47-17][LOG]: #490086 Played
+[02-24-2021-18-47-19][LOG]: #490639 Played
+[02-24-2021-18-47-19][LOG]: #546624 Start
+[02-24-2021-18-47-21][LOG]: #494013 Played
+[02-24-2021-18-47-23][LOG]: #547500 Start
+[02-24-2021-18-47-25][LOG]: #547934 Start
+[02-24-2021-18-47-25][LOG]: #548068 Start
+[02-24-2021-18-47-29][LOG]: #490767 Played
+[02-24-2021-18-47-29][LOG]: #540199 Logged In
+[02-24-2021-18-47-34][LOG]: #549663 Start
+[02-24-2021-18-47-35][LOG]: #549867 Start
+[02-24-2021-18-47-40][LOG]: #491220 Played
+[02-24-2021-18-47-42][LOG]: #551463 Start
+[02-24-2021-18-47-42][LOG]: #493843 Played
+[02-24-2021-18-47-44][LOG]: #498399 Played
+[02-24-2021-18-47-47][LOG]: #493664 Played
+[02-24-2021-18-47-47][LOG]: #552839 Start
+[02-24-2021-18-47-48][LOG]: #496290 Played
+[02-24-2021-18-47-52][LOG]: #495114 Played
+[02-24-2021-18-47-52][LOG]: #498052 Played
+[02-24-2021-18-47-53][LOG]: #554316 Start
+[02-24-2021-18-47-54][LOG]: #554496 Start
+[02-24-2021-18-47-55][LOG]: #554837 Start
+[02-24-2021-18-47-55][LOG]: #498610 Played
+[02-24-2021-18-47-56][LOG]: #554982 Start
+[02-24-2021-18-47-57][LOG]: #555194 Start
+[02-24-2021-18-47-59][LOG]: #497164 Played
+[02-24-2021-18-48-00][LOG]: #555669 Start
+[02-24-2021-18-48-00][LOG]: #501295 Played
+[02-24-2021-18-48-00][LOG]: #544009 Logged In
+[02-24-2021-18-48-01][LOG]: #496146 Played
+[02-24-2021-18-48-03][LOG]: #556087 Start
+[02-24-2021-18-48-03][LOG]: #499446 Played
+[02-24-2021-18-48-04][LOG]: #544139 Logged In
+[02-24-2021-18-48-04][LOG]: #544513 Logged In
+[02-24-2021-18-48-04][LOG]: #556315 Start
+[02-24-2021-18-48-05][LOG]: #556403 Start
+[02-24-2021-18-48-08][LOG]: #556875 Start
+[02-24-2021-18-48-08][LOG]: #498854 Played
+[02-24-2021-18-48-09][LOG]: #545153 Logged In
+[02-24-2021-18-48-11][LOG]: #499776 Played
+[02-24-2021-18-48-12][LOG]: #557834 Start
+[02-24-2021-18-48-12][LOG]: #557946 Start
+[02-24-2021-18-48-13][LOG]: #544845 Logged In
+[02-24-2021-18-48-14][LOG]: #545199 Logged In
+[02-24-2021-18-48-14][LOG]: #501540 Played
+[02-24-2021-18-48-14][LOG]: #544441 Logged In
+[02-24-2021-18-48-14][LOG]: #545842 Logged In
+[02-24-2021-18-48-15][LOG]: #505406 Played
+[02-24-2021-18-48-16][LOG]: #545714 Logged In
+[02-24-2021-18-48-17][LOG]: #545310 Logged In
+[02-24-2021-18-48-17][LOG]: #500824 Played
+[02-24-2021-18-48-18][LOG]: #545439 Logged In
+[02-24-2021-18-48-18][LOG]: #501055 Played
+[02-24-2021-18-48-18][LOG]: #559003 Start
+[02-24-2021-18-48-19][LOG]: #499601 Played
+[02-24-2021-18-48-19][LOG]: #505115 Played
+[02-24-2021-18-48-20][LOG]: #545585 Logged In
+[02-24-2021-18-48-21][LOG]: #559367 Start
+[02-24-2021-18-48-21][LOG]: #546340 Logged In
+[02-24-2021-18-48-21][LOG]: #559484 Start
+[02-24-2021-18-48-23][LOG]: #559888 Start
+[02-24-2021-18-48-24][LOG]: #559987 Start
+[02-24-2021-18-48-24][LOG]: #499165 Played
+[02-24-2021-18-48-25][LOG]: #546624 Logged In
+[02-24-2021-18-48-25][LOG]: #504128 Played
+[02-24-2021-18-48-29][LOG]: #504357 Played
+[02-24-2021-18-48-29][LOG]: #561141 Start
+[02-24-2021-18-48-30][LOG]: #547500 Logged In
+[02-24-2021-18-48-31][LOG]: #561363 Start
+[02-24-2021-18-48-32][LOG]: #504600 Played
+[02-24-2021-18-48-33][LOG]: #502562 Played
+[02-24-2021-18-48-33][LOG]: #507378 Played
+[02-24-2021-18-48-34][LOG]: #548068 Logged In
+[02-24-2021-18-48-34][LOG]: #562144 Start
+[02-24-2021-18-48-36][LOG]: #503768 Played
+[02-24-2021-18-48-37][LOG]: #547934 Logged In
+[02-24-2021-18-48-37][LOG]: #549663 Logged In
+[02-24-2021-18-48-37][LOG]: #562801 Start
+[02-24-2021-18-48-38][LOG]: #506401 Played
+[02-24-2021-18-48-38][LOG]: #563004 Start
+[02-24-2021-18-48-39][LOG]: #563260 Start
+[02-24-2021-18-48-39][LOG]: #549867 Logged In
+[02-24-2021-18-48-40][LOG]: #563599 Start
+[02-24-2021-18-48-41][LOG]: #563726 Start
+[02-24-2021-18-48-42][LOG]: #564037 Start
+[02-24-2021-18-48-43][LOG]: #551463 Logged In
+[02-24-2021-18-48-45][LOG]: #507155 Played
+[02-24-2021-18-48-48][LOG]: #509397 Played
+[02-24-2021-18-48-48][LOG]: #565268 Start
+[02-24-2021-18-48-48][LOG]: #513847 Played
+[02-24-2021-18-48-48][LOG]: #552839 Logged In
+[02-24-2021-18-48-49][LOG]: #565595 Start
+[02-24-2021-18-48-49][LOG]: #510993 Played
+[02-24-2021-18-48-50][LOG]: #565775 Start
+[02-24-2021-18-48-51][LOG]: #566372 Start
+[02-24-2021-18-48-52][LOG]: #566579 Start
+[02-24-2021-18-48-53][LOG]: #554982 Logged In
+[02-24-2021-18-48-53][LOG]: #566826 Start
+[02-24-2021-18-48-54][LOG]: #512837 Played
+[02-24-2021-18-48-54][LOG]: #567398 Start
+[02-24-2021-18-48-56][LOG]: #513659 Played
+[02-24-2021-18-48-58][LOG]: #555669 Logged In
+[02-24-2021-18-48-58][LOG]: #510081 Played
+[02-24-2021-18-48-58][LOG]: #568602 Start
+[02-24-2021-18-48-58][LOG]: #554496 Logged In
+[02-24-2021-18-48-59][LOG]: #554316 Logged In
+[02-24-2021-18-48-59][LOG]: #554837 Logged In
+[02-24-2021-18-48-59][LOG]: #511330 Played
+[02-24-2021-18-49-00][LOG]: #511497 Played
+[02-24-2021-18-49-02][LOG]: #555194 Logged In
+[02-24-2021-18-49-02][LOG]: #556087 Logged In
+[02-24-2021-18-49-02][LOG]: #512496 Played
+[02-24-2021-18-49-03][LOG]: #569563 Start
+[02-24-2021-18-49-03][LOG]: #569762 Start
+[02-24-2021-18-49-04][LOG]: #569952 Start
+[02-24-2021-18-49-04][LOG]: #510565 Played
+[02-24-2021-18-49-05][LOG]: #570129 Start
+[02-24-2021-18-49-06][LOG]: #510374 Played
+[02-24-2021-18-49-06][LOG]: #556403 Logged In
+[02-24-2021-18-49-08][LOG]: #517013 Played
+[02-24-2021-18-49-08][LOG]: #571063 Start
+[02-24-2021-18-49-09][LOG]: #557834 Logged In
+[02-24-2021-18-49-10][LOG]: #556315 Logged In
+[02-24-2021-18-49-10][LOG]: #571514 Start
+[02-24-2021-18-49-10][LOG]: #557946 Logged In
+[02-24-2021-18-49-11][LOG]: #571701 Start
+[02-24-2021-18-49-11][LOG]: #556875 Logged In
+[02-24-2021-18-49-13][LOG]: #572375 Start
+[02-24-2021-18-49-14][LOG]: #515276 Played
+[02-24-2021-18-49-16][LOG]: #515660 Played
+[02-24-2021-18-49-19][LOG]: #574187 Start
+[02-24-2021-18-49-19][LOG]: #514892 Played
+[02-24-2021-18-49-20][LOG]: #574408 Start
+[02-24-2021-18-49-20][LOG]: #559003 Logged In
+[02-24-2021-18-49-20][LOG]: #516661 Played
+[02-24-2021-18-49-21][LOG]: #515915 Played
+[02-24-2021-18-49-22][LOG]: #520733 Played
+[02-24-2021-18-49-22][LOG]: #517884 Played
+[02-24-2021-18-49-23][LOG]: #516208 Played
+[02-24-2021-18-49-24][LOG]: #559987 Logged In
+[02-24-2021-18-49-24][LOG]: #575583 Start
+[02-24-2021-18-49-25][LOG]: #559484 Logged In
+[02-24-2021-18-49-25][LOG]: #575805 Start
+[02-24-2021-18-49-25][LOG]: #559367 Logged In
+[02-24-2021-18-49-26][LOG]: #575941 Start
+[02-24-2021-18-49-26][LOG]: #519428 Played
+[02-24-2021-18-49-26][LOG]: #521329 Played
+[02-24-2021-18-49-27][LOG]: #519830 Played
+[02-24-2021-18-49-27][LOG]: #576114 Start
+[02-24-2021-18-49-27][LOG]: #559888 Logged In
+[02-24-2021-18-49-28][LOG]: #576397 Start
+[02-24-2021-18-49-28][LOG]: #561141 Logged In
+[02-24-2021-18-49-28][LOG]: #576656 Start
+[02-24-2021-18-49-29][LOG]: #521593 Played
+[02-24-2021-18-49-29][LOG]: #517311 Played
+[02-24-2021-18-49-29][LOG]: #520438 Played
+[02-24-2021-18-49-32][LOG]: #577542 Start
+[02-24-2021-18-49-32][LOG]: #577820 Start
+[02-24-2021-18-49-33][LOG]: #578090 Start
+[02-24-2021-18-49-33][LOG]: #561363 Logged In
+[02-24-2021-18-49-34][LOG]: #562144 Logged In
+[02-24-2021-18-49-34][LOG]: #578379 Start
+[02-24-2021-18-49-34][LOG]: #519636 Played
+[02-24-2021-18-49-35][LOG]: #578540 Start
+[02-24-2021-18-49-35][LOG]: #520990 Played
+[02-24-2021-18-49-36][LOG]: #562801 Logged In
+[02-24-2021-18-49-36][LOG]: #523507 Played
+[02-24-2021-18-49-37][LOG]: #563004 Logged In
+[02-24-2021-18-49-37][LOG]: #579566 Start
+[02-24-2021-18-49-38][LOG]: #579821 Start
+[02-24-2021-18-49-38][LOG]: #563260 Logged In
+[02-24-2021-18-49-38][LOG]: #524114 Played
+[02-24-2021-18-49-38][LOG]: #524590 Played
+[02-24-2021-18-49-39][LOG]: #580144 Start
+[02-24-2021-18-49-39][LOG]: #526876 Played
+[02-24-2021-18-49-39][LOG]: #563599 Logged In
+[02-24-2021-18-49-39][LOG]: #520122 Played
+[02-24-2021-18-49-40][LOG]: #580596 Start
+[02-24-2021-18-49-42][LOG]: #564037 Logged In
+[02-24-2021-18-49-42][LOG]: #581263 Start
+[02-24-2021-18-49-43][LOG]: #581654 Start
+[02-24-2021-18-49-44][LOG]: #565595 Logged In
+[02-24-2021-18-49-44][LOG]: #581875 Start
+[02-24-2021-18-49-44][LOG]: #527586 Played
+[02-24-2021-18-49-45][LOG]: #582225 Start
+[02-24-2021-18-49-45][LOG]: #526301 Played
+[02-24-2021-18-49-46][LOG]: #563726 Logged In
+[02-24-2021-18-49-48][LOG]: #566579 Logged In
+[02-24-2021-18-49-48][LOG]: #524939 Played
+[02-24-2021-18-49-49][LOG]: #565268 Logged In
+[02-24-2021-18-49-49][LOG]: #583226 Start
+[02-24-2021-18-49-50][LOG]: #583350 Start
+[02-24-2021-18-49-50][LOG]: #565775 Logged In
+[02-24-2021-18-49-51][LOG]: #566372 Logged In
+[02-24-2021-18-49-51][LOG]: #528040 Played
+[02-24-2021-18-49-51][LOG]: #529085 Played
+[02-24-2021-18-49-52][LOG]: #584110 Start
+[02-24-2021-18-49-53][LOG]: #584329 Start
+[02-24-2021-18-49-55][LOG]: #567398 Logged In
+[02-24-2021-18-49-56][LOG]: #585088 Start
+[02-24-2021-18-49-56][LOG]: #568602 Logged In
+[02-24-2021-18-49-56][LOG]: #566826 Logged In
+[02-24-2021-18-49-57][LOG]: #569952 Logged In
+[02-24-2021-18-50-02][LOG]: #570129 Logged In
+[02-24-2021-18-50-02][LOG]: #569563 Logged In
+[02-24-2021-18-50-06][LOG]: #569762 Logged In
+[02-24-2021-18-50-06][LOG]: #531758 Played
+[02-24-2021-18-50-07][LOG]: #588583 Start
+[02-24-2021-18-50-08][LOG]: #571063 Logged In
+[02-24-2021-18-50-08][LOG]: #532981 Played
+[02-24-2021-18-50-10][LOG]: #571514 Logged In
+[02-24-2021-18-50-12][LOG]: #589860 Start
+[02-24-2021-18-50-12][LOG]: #533144 Played
+[02-24-2021-18-50-13][LOG]: #590150 Start
+[02-24-2021-18-50-14][LOG]: #590449 Start
+[02-24-2021-18-50-14][LOG]: #533918 Played
+[02-24-2021-18-50-16][LOG]: #591148 Start
+[02-24-2021-18-50-16][LOG]: #535425 Played
+[02-24-2021-18-50-17][LOG]: #572375 Logged In
+[02-24-2021-18-50-18][LOG]: #571701 Logged In
+[02-24-2021-18-50-18][LOG]: #574408 Logged In
+[02-24-2021-18-50-19][LOG]: #534947 Played
+[02-24-2021-18-50-19][LOG]: #532281 Played
+[02-24-2021-18-50-21][LOG]: #574187 Logged In
+[02-24-2021-18-50-22][LOG]: #592612 Start
+[02-24-2021-18-50-23][LOG]: #593001 Start
+[02-24-2021-18-50-24][LOG]: #536060 Played
+[02-24-2021-18-50-24][LOG]: #593231 Start
+[02-24-2021-18-50-25][LOG]: #575805 Logged In
+[02-24-2021-18-50-25][LOG]: #576656 Logged In
+[02-24-2021-18-50-26][LOG]: #575583 Logged In
+[02-24-2021-18-50-27][LOG]: #540199 Played
+[02-24-2021-18-50-28][LOG]: #594070 Start
+[02-24-2021-18-50-28][LOG]: #576397 Logged In
+[02-24-2021-18-50-31][LOG]: #575941 Logged In
+[02-24-2021-18-50-31][LOG]: #577542 Logged In
+[02-24-2021-18-50-32][LOG]: #594768 Start
+[02-24-2021-18-50-32][LOG]: #576114 Logged In
+[02-24-2021-18-50-32][LOG]: #594879 Start
+[02-24-2021-18-50-33][LOG]: #577820 Logged In
+[02-24-2021-18-50-34][LOG]: #580144 Logged In
+[02-24-2021-18-50-36][LOG]: #578090 Logged In
+[02-24-2021-18-50-37][LOG]: #578540 Logged In
+[02-24-2021-18-50-37][LOG]: #578379 Logged In
+[02-24-2021-18-50-37][LOG]: #579821 Logged In
+[02-24-2021-18-50-38][LOG]: #595855 Start
+[02-24-2021-18-50-40][LOG]: #579566 Logged In
+[02-24-2021-18-50-42][LOG]: #596661 Start
+[02-24-2021-18-50-43][LOG]: #581263 Logged In
+[02-24-2021-18-50-43][LOG]: #581875 Logged In
+[02-24-2021-18-50-46][LOG]: #582225 Logged In
+[02-24-2021-18-50-47][LOG]: #581654 Logged In
+[02-24-2021-18-50-47][LOG]: #580596 Logged In
+[02-24-2021-18-50-53][LOG]: #598454 Start
+[02-24-2021-18-50-54][LOG]: #583350 Logged In
+[02-24-2021-18-50-55][LOG]: #584329 Logged In
+[02-24-2021-18-50-56][LOG]: #584110 Logged In
+[02-24-2021-18-50-57][LOG]: #585088 Logged In
+[02-24-2021-18-51-01][LOG]: #599861 Start
+[02-24-2021-18-51-02][LOG]: #583226 Logged In
+[02-24-2021-18-51-08][LOG]: #588583 Logged In
+[02-24-2021-18-51-09][LOG]: #545842 Played
+[02-24-2021-18-51-11][LOG]: #589860 Logged In
+[02-24-2021-18-51-14][LOG]: #590150 Logged In
+[02-24-2021-18-51-14][LOG]: #545714 Played
+[02-24-2021-18-51-14][LOG]: #602131 Start
+[02-24-2021-18-51-17][LOG]: #544139 Played
+[02-24-2021-18-51-18][LOG]: #602591 Start
+[02-24-2021-18-51-19][LOG]: #591148 Logged In
+[02-24-2021-18-51-19][LOG]: #544009 Played
+[02-24-2021-18-51-20][LOG]: #545199 Played
+[02-24-2021-18-51-21][LOG]: #545153 Played
+[02-24-2021-18-51-22][LOG]: #603209 Start
+[02-24-2021-18-51-22][LOG]: #546340 Played
+[02-24-2021-18-51-22][LOG]: #590449 Logged In
+[02-24-2021-18-51-23][LOG]: #603370 Start
+[02-24-2021-18-51-24][LOG]: #545310 Played
+[02-24-2021-18-51-24][LOG]: #547500 Played
+[02-24-2021-18-51-25][LOG]: #603673 Start
+[02-24-2021-18-51-25][LOG]: #545439 Played
+[02-24-2021-18-51-25][LOG]: #592612 Logged In
+[02-24-2021-18-51-26][LOG]: #603778 Start
+[02-24-2021-18-51-27][LOG]: #593001 Logged In
+[02-24-2021-18-51-28][LOG]: #544845 Played
+[02-24-2021-18-51-29][LOG]: #604346 Start
+[02-24-2021-18-51-31][LOG]: #593231 Logged In
+[02-24-2021-18-51-32][LOG]: #548068 Played
+[02-24-2021-18-51-32][LOG]: #594768 Logged In
+[02-24-2021-18-51-33][LOG]: #604811 Start
+[02-24-2021-18-51-33][LOG]: #545585 Played
+[02-24-2021-18-51-34][LOG]: #604916 Start
+[02-24-2021-18-51-34][LOG]: #594070 Logged In
+[02-24-2021-18-51-37][LOG]: #605412 Start
+[02-24-2021-18-51-37][LOG]: #594879 Logged In
+[02-24-2021-18-51-38][LOG]: #605737 Start
+[02-24-2021-18-51-43][LOG]: #546624 Played
+[02-24-2021-18-51-43][LOG]: #606596 Start
+[02-24-2021-18-51-44][LOG]: #595855 Logged In
+[02-24-2021-18-51-45][LOG]: #549663 Played
+[02-24-2021-18-51-46][LOG]: #607013 Start
+[02-24-2021-18-51-47][LOG]: #547934 Played
+[02-24-2021-18-51-47][LOG]: #551463 Played
+[02-24-2021-18-51-47][LOG]: #596661 Logged In
+[02-24-2021-18-51-47][LOG]: #607176 Start
+[02-24-2021-18-51-49][LOG]: #552839 Played
+[02-24-2021-18-51-50][LOG]: #607458 Start
+[02-24-2021-18-51-51][LOG]: #607783 Start
+[02-24-2021-18-51-52][LOG]: #607967 Start
+[02-24-2021-18-51-53][LOG]: #608125 Start
+[02-24-2021-18-51-54][LOG]: #608273 Start
+[02-24-2021-18-51-54][LOG]: #549867 Played
+[02-24-2021-18-51-55][LOG]: #554837 Played
+[02-24-2021-18-52-02][LOG]: #598454 Logged In
+[02-24-2021-18-52-02][LOG]: #555194 Played
+[02-24-2021-18-52-04][LOG]: #554496 Played
+[02-24-2021-18-52-05][LOG]: #556403 Played
+[02-24-2021-18-52-05][LOG]: #599861 Logged In
+[02-24-2021-18-52-07][LOG]: #556087 Played
+[02-24-2021-18-52-08][LOG]: #556315 Played
+[02-24-2021-18-52-09][LOG]: #611400 Start
+[02-24-2021-18-52-09][LOG]: #555669 Played
+[02-24-2021-18-52-10][LOG]: #611699 Start
+[02-24-2021-18-52-11][LOG]: #611931 Start
+[02-24-2021-18-52-13][LOG]: #612298 Start
+[02-24-2021-18-52-14][LOG]: #612478 Start
+[02-24-2021-18-52-14][LOG]: #557946 Played
+[02-24-2021-18-52-15][LOG]: #612723 Start
+[02-24-2021-18-52-16][LOG]: #612925 Start
+[02-24-2021-18-52-18][LOG]: #556875 Played
+[02-24-2021-18-52-19][LOG]: #613484 Start
+[02-24-2021-18-52-19][LOG]: #557834 Played
+[02-24-2021-18-52-21][LOG]: #602131 Logged In
+[02-24-2021-18-52-23][LOG]: #614142 Start
+[02-24-2021-18-52-24][LOG]: #614360 Start
+[02-24-2021-18-52-24][LOG]: #559484 Played
+[02-24-2021-18-52-25][LOG]: #614677 Start
+[02-24-2021-18-52-25][LOG]: #614867 Start
+[02-24-2021-18-52-26][LOG]: #602591 Logged In
+[02-24-2021-18-52-27][LOG]: #559987 Played
+[02-24-2021-18-52-27][LOG]: #603673 Logged In
+[02-24-2021-18-52-27][LOG]: #603370 Logged In
+[02-24-2021-18-52-28][LOG]: #559367 Played
+[02-24-2021-18-52-28][LOG]: #615571 Start
+[02-24-2021-18-52-29][LOG]: #603209 Logged In
+[02-24-2021-18-52-31][LOG]: #616324 Start
+[02-24-2021-18-52-32][LOG]: #559003 Played
+[02-24-2021-18-52-33][LOG]: #616726 Start
+[02-24-2021-18-52-33][LOG]: #559888 Played
+[02-24-2021-18-52-33][LOG]: #603778 Logged In
+[02-24-2021-18-52-35][LOG]: #604346 Logged In
+[02-24-2021-18-52-36][LOG]: #617529 Start
+[02-24-2021-18-52-37][LOG]: #617716 Start
+[02-24-2021-18-52-39][LOG]: #604916 Logged In
+[02-24-2021-18-52-41][LOG]: #604811 Logged In
+[02-24-2021-18-52-46][LOG]: #561363 Played
+[02-24-2021-18-52-46][LOG]: #563599 Played
+[02-24-2021-18-52-47][LOG]: #605412 Logged In
+[02-24-2021-18-52-47][LOG]: #606596 Logged In
+[02-24-2021-18-52-50][LOG]: #605737 Logged In
+[02-24-2021-18-52-50][LOG]: #607176 Logged In
+[02-24-2021-18-52-50][LOG]: #620540 Start
+[02-24-2021-18-52-50][LOG]: #562144 Played
+[02-24-2021-18-52-51][LOG]: #562801 Played
+[02-24-2021-18-52-51][LOG]: #620728 Start
+[02-24-2021-18-52-53][LOG]: #563260 Played
+[02-24-2021-18-52-55][LOG]: #565775 Played
+[02-24-2021-18-52-55][LOG]: #621703 Start
+[02-24-2021-18-52-56][LOG]: #607013 Logged In
+[02-24-2021-18-52-57][LOG]: #622000 Start
+[02-24-2021-18-52-57][LOG]: #563726 Played
+[02-24-2021-18-52-57][LOG]: #566579 Played
+[02-24-2021-18-52-58][LOG]: #622298 Start
+[02-24-2021-18-52-58][LOG]: #607967 Logged In
+[02-24-2021-18-52-59][LOG]: #563004 Played
+[02-24-2021-18-53-01][LOG]: #607458 Logged In
+[02-24-2021-18-53-02][LOG]: #622938 Start
+[02-24-2021-18-53-03][LOG]: #623133 Start
+[02-24-2021-18-53-03][LOG]: #564037 Played
+[02-24-2021-18-53-04][LOG]: #623281 Start
+[02-24-2021-18-53-04][LOG]: #608273 Logged In
+[02-24-2021-18-53-04][LOG]: #608125 Logged In
+[02-24-2021-18-53-04][LOG]: #565595 Played
+[02-24-2021-18-53-04][LOG]: #607783 Logged In
+[02-24-2021-18-53-05][LOG]: #566826 Played
+[02-24-2021-18-53-05][LOG]: #566372 Played
+[02-24-2021-18-53-07][LOG]: #624128 Start
+[02-24-2021-18-53-08][LOG]: #624249 Start
+[02-24-2021-18-53-08][LOG]: #569563 Played
+[02-24-2021-18-53-10][LOG]: #568602 Played
+[02-24-2021-18-53-10][LOG]: #624968 Start
+[02-24-2021-18-53-11][LOG]: #571514 Played
+[02-24-2021-18-53-11][LOG]: #625178 Start
+[02-24-2021-18-53-12][LOG]: #571063 Played
+[02-24-2021-18-53-13][LOG]: #625622 Start
+[02-24-2021-18-53-13][LOG]: #565268 Played
+[02-24-2021-18-53-13][LOG]: #625726 Start
+[02-24-2021-18-53-14][LOG]: #625847 Start
+[02-24-2021-18-53-15][LOG]: #612298 Logged In
+[02-24-2021-18-53-15][LOG]: #626155 Start
+[02-24-2021-18-53-15][LOG]: #567398 Played
+[02-24-2021-18-53-16][LOG]: #569952 Played
+[02-24-2021-18-53-16][LOG]: #611400 Logged In
+[02-24-2021-18-53-17][LOG]: #626684 Start
+[02-24-2021-18-53-17][LOG]: #569762 Played
+[02-24-2021-18-53-18][LOG]: #612925 Logged In
+[02-24-2021-18-53-18][LOG]: #570129 Played
+[02-24-2021-18-53-18][LOG]: #626897 Start
+[02-24-2021-18-53-19][LOG]: #611699 Logged In
+[02-24-2021-18-53-19][LOG]: #612478 Logged In
+[02-24-2021-18-53-20][LOG]: #627309 Start
+[02-24-2021-18-53-21][LOG]: #612723 Logged In
+[02-24-2021-18-53-22][LOG]: #627845 Start
+[02-24-2021-18-53-23][LOG]: #611931 Logged In
+[02-24-2021-18-53-23][LOG]: #627957 Start
+[02-24-2021-18-53-23][LOG]: #613484 Logged In
+[02-24-2021-18-53-25][LOG]: #575805 Played
+[02-24-2021-18-53-25][LOG]: #571701 Played
+[02-24-2021-18-53-25][LOG]: #614867 Logged In
+[02-24-2021-18-53-25][LOG]: #614677 Logged In
+[02-24-2021-18-53-26][LOG]: #614142 Logged In
+[02-24-2021-18-53-27][LOG]: #614360 Logged In
+[02-24-2021-18-53-27][LOG]: #616324 Logged In
+[02-24-2021-18-53-28][LOG]: #629198 Start
+[02-24-2021-18-53-30][LOG]: #629608 Start
+[02-24-2021-18-53-30][LOG]: #629974 Start
+[02-24-2021-18-53-30][LOG]: #574187 Played
+[02-24-2021-18-53-31][LOG]: #616726 Logged In
+[02-24-2021-18-53-32][LOG]: #615571 Logged In
+[02-24-2021-18-53-33][LOG]: #575583 Played
+[02-24-2021-18-53-34][LOG]: #576656 Played
+[02-24-2021-18-53-36][LOG]: #631688 Start
+[02-24-2021-18-53-37][LOG]: #576397 Played
+[02-24-2021-18-53-37][LOG]: #578379 Played
+[02-24-2021-18-53-37][LOG]: #631885 Start
+[02-24-2021-18-53-38][LOG]: #577820 Played
+[02-24-2021-18-53-39][LOG]: #617529 Logged In
+[02-24-2021-18-53-39][LOG]: #617716 Logged In
+[02-24-2021-18-53-40][LOG]: #632648 Start
+[02-24-2021-18-53-40][LOG]: #572375 Played
+[02-24-2021-18-53-41][LOG]: #574408 Played
+[02-24-2021-18-53-41][LOG]: #577542 Played
+[02-24-2021-18-53-41][LOG]: #632978 Start
+[02-24-2021-18-53-42][LOG]: #633215 Start
+[02-24-2021-18-53-43][LOG]: #633446 Start
+[02-24-2021-18-53-44][LOG]: #578090 Played
+[02-24-2021-18-53-45][LOG]: #634186 Start
+[02-24-2021-18-53-46][LOG]: #634494 Start
+[02-24-2021-18-53-47][LOG]: #576114 Played
+[02-24-2021-18-53-47][LOG]: #634980 Start
+[02-24-2021-18-53-48][LOG]: #579566 Played
+[02-24-2021-18-53-48][LOG]: #581263 Played
+[02-24-2021-18-53-48][LOG]: #635160 Start
+[02-24-2021-18-53-50][LOG]: #575941 Played
+[02-24-2021-18-53-51][LOG]: #620540 Logged In
+[02-24-2021-18-53-51][LOG]: #636019 Start
+[02-24-2021-18-53-53][LOG]: #636476 Start
+[02-24-2021-18-53-54][LOG]: #583350 Played
+[02-24-2021-18-53-54][LOG]: #636836 Start
+[02-24-2021-18-53-54][LOG]: #620728 Logged In
+[02-24-2021-18-53-55][LOG]: #637227 Start
+[02-24-2021-18-53-57][LOG]: #622298 Logged In
+[02-24-2021-18-53-58][LOG]: #638387 Start
+[02-24-2021-18-53-59][LOG]: #622938 Logged In
+[02-24-2021-18-54-00][LOG]: #622000 Logged In
+[02-24-2021-18-54-01][LOG]: #621703 Logged In
+[02-24-2021-18-54-01][LOG]: #581875 Played
+[02-24-2021-18-54-02][LOG]: #639460 Start
+[02-24-2021-18-54-02][LOG]: #580144 Played
+[02-24-2021-18-54-03][LOG]: #623281 Logged In
+[02-24-2021-18-54-04][LOG]: #578540 Played
+[02-24-2021-18-54-04][LOG]: #579821 Played
+[02-24-2021-18-54-05][LOG]: #640267 Start
+[02-24-2021-18-54-06][LOG]: #581654 Played
+[02-24-2021-18-54-06][LOG]: #585088 Played
+[02-24-2021-18-54-06][LOG]: #580596 Played
+[02-24-2021-18-54-07][LOG]: #624128 Logged In
+[02-24-2021-18-54-07][LOG]: #624249 Logged In
+[02-24-2021-18-54-07][LOG]: #640884 Start
+[02-24-2021-18-54-08][LOG]: #583226 Played
+[02-24-2021-18-54-09][LOG]: #624968 Logged In
+[02-24-2021-18-54-09][LOG]: #625622 Logged In
+[02-24-2021-18-54-09][LOG]: #584110 Played
+[02-24-2021-18-54-09][LOG]: #623133 Logged In
+[02-24-2021-18-54-09][LOG]: #641281 Start
+[02-24-2021-18-54-10][LOG]: #641526 Start
+[02-24-2021-18-54-11][LOG]: #625178 Logged In
+[02-24-2021-18-54-11][LOG]: #641799 Start
+[02-24-2021-18-54-12][LOG]: #642014 Start
+[02-24-2021-18-54-13][LOG]: #642354 Start
+[02-24-2021-18-54-13][LOG]: #642638 Start
+[02-24-2021-18-54-14][LOG]: #626897 Logged In
+[02-24-2021-18-54-16][LOG]: #589860 Played
+[02-24-2021-18-54-17][LOG]: #625726 Logged In
+[02-24-2021-18-54-18][LOG]: #626684 Logged In
+[02-24-2021-18-54-18][LOG]: #625847 Logged In
+[02-24-2021-18-54-19][LOG]: #627309 Logged In
+[02-24-2021-18-54-20][LOG]: #644258 Start
+[02-24-2021-18-54-20][LOG]: #627957 Logged In
+[02-24-2021-18-54-20][LOG]: #627845 Logged In
+[02-24-2021-18-54-21][LOG]: #626155 Logged In
+[02-24-2021-18-54-21][LOG]: #590449 Played
+[02-24-2021-18-54-23][LOG]: #645025 Start
+[02-24-2021-18-54-25][LOG]: #629198 Logged In
+[02-24-2021-18-54-25][LOG]: #645610 Start
+[02-24-2021-18-54-26][LOG]: #588583 Played
+[02-24-2021-18-54-26][LOG]: #645853 Start
+[02-24-2021-18-54-31][LOG]: #647336 Start
+[02-24-2021-18-54-32][LOG]: #629974 Logged In
+[02-24-2021-18-54-34][LOG]: #629608 Logged In
+[02-24-2021-18-54-38][LOG]: #590150 Played
+[02-24-2021-18-54-39][LOG]: #591148 Played
+[02-24-2021-18-54-41][LOG]: #631688 Logged In
+[02-24-2021-18-54-43][LOG]: #650068 Start
+[02-24-2021-18-54-44][LOG]: #632978 Logged In
+[02-24-2021-18-54-44][LOG]: #650233 Start
+[02-24-2021-18-54-44][LOG]: #631885 Logged In
+[02-24-2021-18-54-45][LOG]: #633446 Logged In
+[02-24-2021-18-54-45][LOG]: #650481 Start
+[02-24-2021-18-54-45][LOG]: #594768 Played
+[02-24-2021-18-54-46][LOG]: #632648 Logged In
+[02-24-2021-18-54-47][LOG]: #633215 Logged In
+[02-24-2021-18-54-47][LOG]: #635160 Logged In
+[02-24-2021-18-54-48][LOG]: #651323 Start
+[02-24-2021-18-54-49][LOG]: #634980 Logged In
+[02-24-2021-18-54-49][LOG]: #594070 Played
+[02-24-2021-18-54-50][LOG]: #593231 Played
+[02-24-2021-18-54-50][LOG]: #595855 Played
+[02-24-2021-18-54-51][LOG]: #636019 Logged In
+[02-24-2021-18-54-51][LOG]: #594879 Played
+[02-24-2021-18-54-53][LOG]: #636836 Logged In
+[02-24-2021-18-54-53][LOG]: #593001 Played
+[02-24-2021-18-54-53][LOG]: #634494 Logged In
+[02-24-2021-18-54-55][LOG]: #652571 Start
+[02-24-2021-18-54-55][LOG]: #634186 Logged In
+[02-24-2021-18-54-55][LOG]: #652659 Start
+[02-24-2021-18-54-56][LOG]: #652843 Start
+[02-24-2021-18-54-56][LOG]: #636476 Logged In
+[02-24-2021-18-54-57][LOG]: #652961 Start
+[02-24-2021-18-54-57][LOG]: #653035 Start
+[02-24-2021-18-54-59][LOG]: #637227 Logged In
+[02-24-2021-18-55-01][LOG]: #639460 Logged In
+[02-24-2021-18-55-03][LOG]: #638387 Logged In
+[02-24-2021-18-55-08][LOG]: #596661 Played
+[02-24-2021-18-55-11][LOG]: #641526 Logged In
+[02-24-2021-18-55-11][LOG]: #640267 Logged In
+[02-24-2021-18-55-11][LOG]: #642638 Logged In
+[02-24-2021-18-55-11][LOG]: #641281 Logged In
+[02-24-2021-18-55-16][LOG]: #642014 Logged In
+[02-24-2021-18-55-16][LOG]: #641799 Logged In
+[02-24-2021-18-55-17][LOG]: #640884 Logged In
+[02-24-2021-18-55-20][LOG]: #642354 Logged In
+[02-24-2021-18-55-21][LOG]: #599861 Played
+[02-24-2021-18-55-25][LOG]: #645853 Logged In
+[02-24-2021-18-55-26][LOG]: #658634 Start
+[02-24-2021-18-55-27][LOG]: #658791 Start
+[02-24-2021-18-55-28][LOG]: #659105 Start
+[02-24-2021-18-55-28][LOG]: #645025 Logged In
+[02-24-2021-18-55-31][LOG]: #645610 Logged In
+[02-24-2021-18-55-31][LOG]: #602591 Played
+[02-24-2021-18-55-32][LOG]: #603673 Played
+[02-24-2021-18-55-33][LOG]: #647336 Logged In
+[02-24-2021-18-55-33][LOG]: #644258 Logged In
+[02-24-2021-18-55-35][LOG]: #660074 Start
+[02-24-2021-18-55-35][LOG]: #603209 Played
+[02-24-2021-18-55-36][LOG]: #603370 Played
+[02-24-2021-18-55-37][LOG]: #660330 Start
+[02-24-2021-18-55-40][LOG]: #602131 Played
+[02-24-2021-18-55-41][LOG]: #660816 Start
+[02-24-2021-18-55-42][LOG]: #660968 Start
+[02-24-2021-18-55-42][LOG]: #604346 Played
+[02-24-2021-18-55-42][LOG]: #650233 Logged In
+[02-24-2021-18-55-43][LOG]: #603778 Played
+[02-24-2021-18-55-44][LOG]: #661318 Start
+[02-24-2021-18-55-45][LOG]: #651323 Logged In
+[02-24-2021-18-55-45][LOG]: #604811 Played
+[02-24-2021-18-55-46][LOG]: #650068 Logged In
+[02-24-2021-18-55-46][LOG]: #661562 Start
+[02-24-2021-18-55-47][LOG]: #661672 Start
+[02-24-2021-18-55-48][LOG]: #661838 Start
+[02-24-2021-18-55-49][LOG]: #662014 Start
+[02-24-2021-18-55-51][LOG]: #652961 Logged In
+[02-24-2021-18-55-52][LOG]: #650481 Logged In
+[02-24-2021-18-55-52][LOG]: #652571 Logged In
+[02-24-2021-18-55-55][LOG]: #605737 Played
+[02-24-2021-18-55-56][LOG]: #607013 Played
+[02-24-2021-18-55-58][LOG]: #652843 Logged In
+[02-24-2021-18-55-58][LOG]: #604916 Played
+[02-24-2021-18-55-58][LOG]: #652659 Logged In
+[02-24-2021-18-55-59][LOG]: #606596 Played
+[02-24-2021-18-55-59][LOG]: #663845 Start
+[02-24-2021-18-56-01][LOG]: #664313 Start
+[02-24-2021-18-56-02][LOG]: #653035 Logged In
+[02-24-2021-18-56-02][LOG]: #664534 Start
+[02-24-2021-18-56-03][LOG]: #605412 Played
+[02-24-2021-18-56-04][LOG]: #664919 Start
+[02-24-2021-18-56-05][LOG]: #607783 Played
+[02-24-2021-18-56-07][LOG]: #608273 Played
+[02-24-2021-18-56-08][LOG]: #665553 Start
+[02-24-2021-18-56-09][LOG]: #665720 Start
+[02-24-2021-18-56-12][LOG]: #666121 Start
+[02-24-2021-18-56-13][LOG]: #607458 Played
+[02-24-2021-18-56-13][LOG]: #666371 Start
+[02-24-2021-18-56-15][LOG]: #612298 Played
+[02-24-2021-18-56-17][LOG]: #607967 Played
+[02-24-2021-18-56-19][LOG]: #667611 Start
+[02-24-2021-18-56-20][LOG]: #616324 Played
+[02-24-2021-18-56-21][LOG]: #612925 Played
+[02-24-2021-18-56-22][LOG]: #668192 Start
+[02-24-2021-18-56-23][LOG]: #668302 Start
+[02-24-2021-18-56-24][LOG]: #668779 Start
+[02-24-2021-18-56-26][LOG]: #658791 Logged In
+[02-24-2021-18-56-26][LOG]: #669166 Start
+[02-24-2021-18-56-26][LOG]: #608125 Played
+[02-24-2021-18-56-27][LOG]: #659105 Logged In
+[02-24-2021-18-56-28][LOG]: #611400 Played
+[02-24-2021-18-56-28][LOG]: #612723 Played
+[02-24-2021-18-56-28][LOG]: #658634 Logged In
+[02-24-2021-18-56-29][LOG]: #613484 Played
+[02-24-2021-18-56-30][LOG]: #670300 Start
+[02-24-2021-18-56-32][LOG]: #670684 Start
+[02-24-2021-18-56-32][LOG]: #616726 Played
+[02-24-2021-18-56-33][LOG]: #670812 Start
+[02-24-2021-18-56-33][LOG]: #617716 Played
+[02-24-2021-18-56-34][LOG]: #671078 Start
+[02-24-2021-18-56-34][LOG]: #614677 Played
+[02-24-2021-18-56-35][LOG]: #611931 Played
+[02-24-2021-18-56-37][LOG]: #671739 Start
+[02-24-2021-18-56-37][LOG]: #660074 Logged In
+[02-24-2021-18-56-38][LOG]: #672000 Start
+[02-24-2021-18-56-38][LOG]: #612478 Played
+[02-24-2021-18-56-39][LOG]: #672270 Start
+[02-24-2021-18-56-39][LOG]: #660330 Logged In
+[02-24-2021-18-56-40][LOG]: #672503 Start
+[02-24-2021-18-56-40][LOG]: #672685 Start
+[02-24-2021-18-56-41][LOG]: #660968 Logged In
+[02-24-2021-18-56-42][LOG]: #611699 Played
+[02-24-2021-18-56-42][LOG]: #660816 Logged In
+[02-24-2021-18-56-42][LOG]: #673122 Start
+[02-24-2021-18-56-46][LOG]: #662014 Logged In
+[02-24-2021-18-56-46][LOG]: #661318 Logged In
+[02-24-2021-18-56-47][LOG]: #674055 Start
+[02-24-2021-18-56-48][LOG]: #661562 Logged In
+[02-24-2021-18-56-50][LOG]: #674799 Start
+[02-24-2021-18-56-52][LOG]: #661672 Logged In
+[02-24-2021-18-56-52][LOG]: #615571 Played
+[02-24-2021-18-56-54][LOG]: #661838 Logged In
+[02-24-2021-18-56-56][LOG]: #622938 Played
+[02-24-2021-18-56-57][LOG]: #676383 Start
+[02-24-2021-18-56-58][LOG]: #617529 Played
+[02-24-2021-18-56-58][LOG]: #676546 Start
+[02-24-2021-18-56-58][LOG]: #664313 Logged In
+[02-24-2021-18-57-00][LOG]: #620728 Played
+[02-24-2021-18-57-01][LOG]: #677277 Start
+[02-24-2021-18-57-03][LOG]: #664919 Logged In
+[02-24-2021-18-57-04][LOG]: #677969 Start
+[02-24-2021-18-57-06][LOG]: #622298 Played
+[02-24-2021-18-57-07][LOG]: #664534 Logged In
+[02-24-2021-18-57-08][LOG]: #621703 Played
+[02-24-2021-18-57-10][LOG]: #663845 Logged In
+[02-24-2021-18-57-10][LOG]: #626897 Played
+[02-24-2021-18-57-11][LOG]: #624249 Played
+[02-24-2021-18-57-11][LOG]: #623281 Played
+[02-24-2021-18-57-12][LOG]: #620540 Played
+[02-24-2021-18-57-12][LOG]: #679870 Start
+[02-24-2021-18-57-13][LOG]: #624128 Played
+[02-24-2021-18-57-13][LOG]: #680066 Start
+[02-24-2021-18-57-15][LOG]: #680508 Start
+[02-24-2021-18-57-15][LOG]: #623133 Played
+[02-24-2021-18-57-15][LOG]: #665720 Logged In
+[02-24-2021-18-57-15][LOG]: #680764 Start
+[02-24-2021-18-57-16][LOG]: #680980 Start
+[02-24-2021-18-57-17][LOG]: #681134 Start
+[02-24-2021-18-57-18][LOG]: #681357 Start
+[02-24-2021-18-57-18][LOG]: #681510 Start
+[02-24-2021-18-57-19][LOG]: #666371 Logged In
+[02-24-2021-18-57-19][LOG]: #666121 Logged In
+[02-24-2021-18-57-19][LOG]: #681757 Start
+[02-24-2021-18-57-20][LOG]: #665553 Logged In
+[02-24-2021-18-57-25][LOG]: #627845 Played
+[02-24-2021-18-57-26][LOG]: #670300 Logged In
+[02-24-2021-18-57-26][LOG]: #626684 Played
+[02-24-2021-18-57-27][LOG]: #625726 Played
+[02-24-2021-18-57-28][LOG]: #667611 Logged In
+[02-24-2021-18-57-28][LOG]: #683396 Start
+[02-24-2021-18-57-29][LOG]: #625847 Played
+[02-24-2021-18-57-29][LOG]: #625622 Played
+[02-24-2021-18-57-29][LOG]: #669166 Logged In
+[02-24-2021-18-57-29][LOG]: #668192 Logged In
+[02-24-2021-18-57-30][LOG]: #668779 Logged In
+[02-24-2021-18-57-30][LOG]: #625178 Played
+[02-24-2021-18-57-31][LOG]: #684231 Start
+[02-24-2021-18-57-32][LOG]: #668302 Logged In
+[02-24-2021-18-57-33][LOG]: #684567 Start
+[02-24-2021-18-57-33][LOG]: #627957 Played
+[02-24-2021-18-57-34][LOG]: #684872 Start
+[02-24-2021-18-57-34][LOG]: #685088 Start
+[02-24-2021-18-57-34][LOG]: #627309 Played
+[02-24-2021-18-57-35][LOG]: #685373 Start
+[02-24-2021-18-57-36][LOG]: #685554 Start
+[02-24-2021-18-57-36][LOG]: #626155 Played
+[02-24-2021-18-57-37][LOG]: #685730 Start
+[02-24-2021-18-57-37][LOG]: #670684 Logged In
+[02-24-2021-18-57-37][LOG]: #670812 Logged In
+[02-24-2021-18-57-37][LOG]: #671078 Logged In
+[02-24-2021-18-57-38][LOG]: #685949 Start
+[02-24-2021-18-57-38][LOG]: #671739 Logged In
+[02-24-2021-18-57-39][LOG]: #672270 Logged In
+[02-24-2021-18-57-39][LOG]: #686127 Start
+[02-24-2021-18-57-41][LOG]: #629198 Played
+[02-24-2021-18-57-41][LOG]: #629974 Played
+[02-24-2021-18-57-41][LOG]: #686491 Start
+[02-24-2021-18-57-44][LOG]: #633215 Played
+[02-24-2021-18-57-45][LOG]: #672503 Logged In
+[02-24-2021-18-57-45][LOG]: #672685 Logged In
+[02-24-2021-18-57-45][LOG]: #687435 Start
+[02-24-2021-18-57-46][LOG]: #672000 Logged In
+[02-24-2021-18-57-46][LOG]: #687758 Start
+[02-24-2021-18-57-48][LOG]: #674055 Logged In
+[02-24-2021-18-57-49][LOG]: #631885 Played
+[02-24-2021-18-57-53][LOG]: #673122 Logged In
+[02-24-2021-18-57-54][LOG]: #690197 Start
+[02-24-2021-18-57-55][LOG]: #674799 Logged In
+[02-24-2021-18-57-56][LOG]: #676546 Logged In
+[02-24-2021-18-57-57][LOG]: #631688 Played
+[02-24-2021-18-57-58][LOG]: #676383 Logged In
+[02-24-2021-18-58-01][LOG]: #633446 Played
+[02-24-2021-18-58-01][LOG]: #677277 Logged In
+[02-24-2021-18-58-01][LOG]: #632648 Played
+[02-24-2021-18-58-02][LOG]: #691903 Start
+[02-24-2021-18-58-03][LOG]: #632978 Played
+[02-24-2021-18-58-04][LOG]: #634186 Played
+[02-24-2021-18-58-05][LOG]: #636019 Played
+[02-24-2021-18-58-05][LOG]: #637227 Played
+[02-24-2021-18-58-06][LOG]: #636476 Played
+[02-24-2021-18-58-06][LOG]: #677969 Logged In
+[02-24-2021-18-58-06][LOG]: #634980 Played
+[02-24-2021-18-58-07][LOG]: #692846 Start
+[02-24-2021-18-58-07][LOG]: #692978 Start
+[02-24-2021-18-58-08][LOG]: #693121 Start
+[02-24-2021-18-58-09][LOG]: #693384 Start
+[02-24-2021-18-58-10][LOG]: #693604 Start
+[02-24-2021-18-58-10][LOG]: #636836 Played
+[02-24-2021-18-58-10][LOG]: #638387 Played
+[02-24-2021-18-58-10][LOG]: #693775 Start
+[02-24-2021-18-58-11][LOG]: #639460 Played
+[02-24-2021-18-58-11][LOG]: #693921 Start
+[02-24-2021-18-58-12][LOG]: #694194 Start
+[02-24-2021-18-58-12][LOG]: #634494 Played
+[02-24-2021-18-58-12][LOG]: #694458 Start
+[02-24-2021-18-58-13][LOG]: #694636 Start
+[02-24-2021-18-58-14][LOG]: #694872 Start
+[02-24-2021-18-58-15][LOG]: #642638 Played
+[02-24-2021-18-58-15][LOG]: #695329 Start
+[02-24-2021-18-58-16][LOG]: #680066 Logged In
+[02-24-2021-18-58-16][LOG]: #679870 Logged In
+[02-24-2021-18-58-17][LOG]: #695864 Start
+[02-24-2021-18-58-18][LOG]: #680764 Logged In
+[02-24-2021-18-58-18][LOG]: #641799 Played
+[02-24-2021-18-58-19][LOG]: #680508 Logged In
+[02-24-2021-18-58-19][LOG]: #696487 Start
+[02-24-2021-18-58-19][LOG]: #681134 Logged In
+[02-24-2021-18-58-19][LOG]: #681357 Logged In
+[02-24-2021-18-58-23][LOG]: #640267 Played
+[02-24-2021-18-58-23][LOG]: #680980 Logged In
+[02-24-2021-18-58-23][LOG]: #681757 Logged In
+[02-24-2021-18-58-24][LOG]: #641526 Played
+[02-24-2021-18-58-24][LOG]: #681510 Logged In
+[02-24-2021-18-58-26][LOG]: #640884 Played
+[02-24-2021-18-58-27][LOG]: #642354 Played
+[02-24-2021-18-58-28][LOG]: #699162 Start
+[02-24-2021-18-58-30][LOG]: #699466 Start
+[02-24-2021-18-58-31][LOG]: #699646 Start
+[02-24-2021-18-58-31][LOG]: #699812 Start
+[02-24-2021-18-58-32][LOG]: #699999 Start
+[02-24-2021-18-58-32][LOG]: #644258 Played
+[02-24-2021-18-58-33][LOG]: #685088 Logged In
+[02-24-2021-18-58-33][LOG]: #700209 Start
+[02-24-2021-18-58-33][LOG]: #685373 Logged In
+[02-24-2021-18-58-34][LOG]: #684567 Logged In
+[02-24-2021-18-58-34][LOG]: #700438 Start
+[02-24-2021-18-58-34][LOG]: #645853 Played
+[02-24-2021-18-58-34][LOG]: #683396 Logged In
+[02-24-2021-18-58-34][LOG]: #685730 Logged In
+[02-24-2021-18-58-36][LOG]: #685949 Logged In
+[02-24-2021-18-58-37][LOG]: #701065 Start
+[02-24-2021-18-58-37][LOG]: #645025 Played
+[02-24-2021-18-58-38][LOG]: #701631 Start
+[02-24-2021-18-58-38][LOG]: #685554 Logged In
+[02-24-2021-18-58-38][LOG]: #684231 Logged In
+[02-24-2021-18-58-40][LOG]: #686127 Logged In
+[02-24-2021-18-58-41][LOG]: #645610 Played
+[02-24-2021-18-58-44][LOG]: #684872 Logged In
+[02-24-2021-18-58-44][LOG]: #702834 Start
+[02-24-2021-18-58-46][LOG]: #703551 Start
+[02-24-2021-18-58-47][LOG]: #687758 Logged In
+[02-24-2021-18-58-48][LOG]: #687435 Logged In
+[02-24-2021-18-58-49][LOG]: #647336 Played
+[02-24-2021-18-58-50][LOG]: #686491 Logged In
+[02-24-2021-18-58-54][LOG]: #650068 Played
+[02-24-2021-18-58-54][LOG]: #705932 Start
+[02-24-2021-18-58-59][LOG]: #706898 Start
+[02-24-2021-18-58-59][LOG]: #651323 Played
+[02-24-2021-18-59-00][LOG]: #652571 Played
+[02-24-2021-18-59-00][LOG]: #652961 Played
+[02-24-2021-18-59-03][LOG]: #650233 Played
+[02-24-2021-18-59-05][LOG]: #708080 Start
+[02-24-2021-18-59-05][LOG]: #690197 Logged In
+[02-24-2021-18-59-06][LOG]: #708219 Start
+[02-24-2021-18-59-06][LOG]: #652843 Played
+[02-24-2021-18-59-08][LOG]: #650481 Played
+[02-24-2021-18-59-10][LOG]: #709329 Start
+[02-24-2021-18-59-10][LOG]: #692846 Logged In
+[02-24-2021-18-59-11][LOG]: #691903 Logged In
+[02-24-2021-18-59-12][LOG]: #652659 Played
+[02-24-2021-18-59-13][LOG]: #710019 Start
+[02-24-2021-18-59-15][LOG]: #693604 Logged In
+[02-24-2021-18-59-15][LOG]: #693121 Logged In
+[02-24-2021-18-59-17][LOG]: #694458 Logged In
+[02-24-2021-18-59-17][LOG]: #694636 Logged In
+[02-24-2021-18-59-17][LOG]: #693775 Logged In
+[02-24-2021-18-59-17][LOG]: #693384 Logged In
+[02-24-2021-18-59-18][LOG]: #692978 Logged In
+[02-24-2021-18-59-18][LOG]: #695329 Logged In
+[02-24-2021-18-59-18][LOG]: #694872 Logged In
+[02-24-2021-18-59-18][LOG]: #711072 Start
+[02-24-2021-18-59-19][LOG]: #693921 Logged In
+[02-24-2021-18-59-21][LOG]: #653035 Played
+[02-24-2021-18-59-22][LOG]: #694194 Logged In
+[02-24-2021-18-59-23][LOG]: #695864 Logged In
+[02-24-2021-18-59-25][LOG]: #712158 Start
+[02-24-2021-18-59-26][LOG]: #696487 Logged In
+[02-24-2021-18-59-27][LOG]: #712590 Start
+[02-24-2021-18-59-33][LOG]: #699646 Logged In
+[02-24-2021-18-59-33][LOG]: #713594 Start
+[02-24-2021-18-59-35][LOG]: #713819 Start
+[02-24-2021-18-59-35][LOG]: #659105 Played
+[02-24-2021-18-59-35][LOG]: #700209 Logged In
+[02-24-2021-18-59-36][LOG]: #699466 Logged In
+[02-24-2021-18-59-36][LOG]: #699812 Logged In
+[02-24-2021-18-59-38][LOG]: #658634 Played
+[02-24-2021-18-59-38][LOG]: #699162 Logged In
+[02-24-2021-18-59-39][LOG]: #714526 Start
+[02-24-2021-18-59-40][LOG]: #699999 Logged In
+[02-24-2021-18-59-41][LOG]: #700438 Logged In
+[02-24-2021-18-59-41][LOG]: #701631 Logged In
+[02-24-2021-18-59-44][LOG]: #701065 Logged In
+[02-24-2021-18-59-44][LOG]: #660330 Played
+[02-24-2021-18-59-49][LOG]: #703551 Logged In
+[02-24-2021-18-59-51][LOG]: #702834 Logged In
+[02-24-2021-18-59-51][LOG]: #662014 Played
+[02-24-2021-18-59-54][LOG]: #658791 Played
+[02-24-2021-18-59-56][LOG]: #717019 Start
+[02-24-2021-18-59-56][LOG]: #717106 Start
+[02-24-2021-18-59-56][LOG]: #660968 Played
+[02-24-2021-18-59-58][LOG]: #706898 Logged In
+[02-24-2021-18-59-58][LOG]: #661562 Played
+[02-24-2021-18-59-58][LOG]: #717428 Start
+[02-24-2021-18-59-59][LOG]: #661838 Played
+[02-24-2021-18-59-59][LOG]: #717510 Start
+[02-24-2021-19-00-00][LOG]: #705932 Logged In
+[02-24-2021-19-00-00][LOG]: #660074 Played
+[02-24-2021-19-00-00][LOG]: #660816 Played
+[02-24-2021-19-00-02][LOG]: #717914 Start
+[02-24-2021-19-00-03][LOG]: #718137 Start
+[02-24-2021-19-00-04][LOG]: #718400 Start
+[02-24-2021-19-00-05][LOG]: #718482 Start
+[02-24-2021-19-00-06][LOG]: #718661 Start
+[02-24-2021-19-00-07][LOG]: #661318 Played
+[02-24-2021-19-00-09][LOG]: #663845 Played
+[02-24-2021-19-00-11][LOG]: #719764 Start
+[02-24-2021-19-00-14][LOG]: #661672 Played
+[02-24-2021-19-00-14][LOG]: #720336 Start
+[02-24-2021-19-00-14][LOG]: #708219 Logged In
+[02-24-2021-19-00-14][LOG]: #664534 Played
+[02-24-2021-19-00-15][LOG]: #664313 Played
+[02-24-2021-19-00-16][LOG]: #709329 Logged In
+[02-24-2021-19-00-16][LOG]: #664919 Played
+[02-24-2021-19-00-17][LOG]: #710019 Logged In
+[02-24-2021-19-00-17][LOG]: #708080 Logged In
+[02-24-2021-19-00-18][LOG]: #721065 Start
+[02-24-2021-19-00-19][LOG]: #711072 Logged In
+[02-24-2021-19-00-21][LOG]: #721632 Start
+[02-24-2021-19-00-28][LOG]: #666371 Played
+[02-24-2021-19-00-30][LOG]: #666121 Played
+[02-24-2021-19-00-31][LOG]: #723238 Start
+[02-24-2021-19-00-31][LOG]: #723432 Start
+[02-24-2021-19-00-32][LOG]: #665720 Played
+[02-24-2021-19-00-32][LOG]: #723735 Start
+[02-24-2021-19-00-34][LOG]: #713594 Logged In
+[02-24-2021-19-00-34][LOG]: #712158 Logged In
+[02-24-2021-19-00-34][LOG]: #665553 Played
+[02-24-2021-19-00-34][LOG]: #712590 Logged In
+[02-24-2021-19-00-35][LOG]: #724385 Start
+[02-24-2021-19-00-36][LOG]: #724554 Start
+[02-24-2021-19-00-38][LOG]: #724935 Start
+[02-24-2021-19-00-39][LOG]: #725017 Start
+[02-24-2021-19-00-39][LOG]: #713819 Logged In
+[02-24-2021-19-00-40][LOG]: #668779 Played
+[02-24-2021-19-00-40][LOG]: #667611 Played
+[02-24-2021-19-00-40][LOG]: #672270 Played
+[02-24-2021-19-00-44][LOG]: #714526 Logged In
+[02-24-2021-19-00-44][LOG]: #670300 Played
+[02-24-2021-19-00-44][LOG]: #725997 Start
+[02-24-2021-19-00-46][LOG]: #726201 Start
+[02-24-2021-19-00-46][LOG]: #726413 Start
+[02-24-2021-19-00-47][LOG]: #670812 Played
+[02-24-2021-19-00-49][LOG]: #727182 Start
+[02-24-2021-19-00-50][LOG]: #669166 Played
+[02-24-2021-19-00-51][LOG]: #727580 Start
+[02-24-2021-19-00-51][LOG]: #670684 Played
+[02-24-2021-19-00-52][LOG]: #672685 Played
+[02-24-2021-19-00-54][LOG]: #668302 Played
+[02-24-2021-19-00-55][LOG]: #668192 Played
+[02-24-2021-19-00-55][LOG]: #728664 Start
+[02-24-2021-19-00-56][LOG]: #674055 Played
+[02-24-2021-19-00-56][LOG]: #728809 Start
+[02-24-2021-19-00-57][LOG]: #729045 Start
+[02-24-2021-19-00-58][LOG]: #671739 Played
+[02-24-2021-19-00-59][LOG]: #717106 Logged In
+[02-24-2021-19-00-59][LOG]: #672000 Played
+[02-24-2021-19-00-59][LOG]: #729334 Start
+[02-24-2021-19-01-01][LOG]: #729676 Start
+[02-24-2021-19-01-01][LOG]: #674799 Played
+[02-24-2021-19-01-02][LOG]: #717019 Logged In
+[02-24-2021-19-01-02][LOG]: #717428 Logged In
+[02-24-2021-19-01-03][LOG]: #730191 Start
+[02-24-2021-19-01-03][LOG]: #730306 Start
+[02-24-2021-19-01-05][LOG]: #717510 Logged In
+[02-24-2021-19-01-05][LOG]: #673122 Played
+[02-24-2021-19-01-06][LOG]: #672503 Played
+[02-24-2021-19-01-08][LOG]: #676383 Played
+[02-24-2021-19-01-08][LOG]: #732018 Start
+[02-24-2021-19-01-09][LOG]: #718661 Logged In
+[02-24-2021-19-01-09][LOG]: #717914 Logged In
+[02-24-2021-19-01-11][LOG]: #718482 Logged In
+[02-24-2021-19-01-13][LOG]: #718137 Logged In
+[02-24-2021-19-01-13][LOG]: #732666 Start
+[02-24-2021-19-01-14][LOG]: #732797 Start
+[02-24-2021-19-01-14][LOG]: #732996 Start
+[02-24-2021-19-01-15][LOG]: #718400 Logged In
+[02-24-2021-19-01-15][LOG]: #733148 Start
+[02-24-2021-19-01-16][LOG]: #720336 Logged In
+[02-24-2021-19-01-17][LOG]: #676546 Played
+[02-24-2021-19-01-17][LOG]: #719764 Logged In
+[02-24-2021-19-01-17][LOG]: #677277 Played
+[02-24-2021-19-01-18][LOG]: #677969 Played
+[02-24-2021-19-01-21][LOG]: #721632 Logged In
+[02-24-2021-19-01-22][LOG]: #721065 Logged In
+[02-24-2021-19-01-23][LOG]: #734833 Start
+[02-24-2021-19-01-24][LOG]: #735044 Start
+[02-24-2021-19-01-24][LOG]: #735214 Start
+[02-24-2021-19-01-26][LOG]: #681357 Played
+[02-24-2021-19-01-29][LOG]: #685088 Played
+[02-24-2021-19-01-30][LOG]: #736735 Start
+[02-24-2021-19-01-32][LOG]: #737100 Start
+[02-24-2021-19-01-33][LOG]: #737191 Start
+[02-24-2021-19-01-34][LOG]: #737430 Start
+[02-24-2021-19-01-34][LOG]: #723735 Logged In
+[02-24-2021-19-01-35][LOG]: #680066 Played
+[02-24-2021-19-01-35][LOG]: #723432 Logged In
+[02-24-2021-19-01-36][LOG]: #679870 Played
+[02-24-2021-19-01-36][LOG]: #738195 Start
+[02-24-2021-19-01-37][LOG]: #724935 Logged In
+[02-24-2021-19-01-38][LOG]: #723238 Logged In
+[02-24-2021-19-01-39][LOG]: #681510 Played
+[02-24-2021-19-01-39][LOG]: #681134 Played
+[02-24-2021-19-01-39][LOG]: #738772 Start
+[02-24-2021-19-01-40][LOG]: #724385 Logged In
+[02-24-2021-19-01-41][LOG]: #739251 Start
+[02-24-2021-19-01-42][LOG]: #681757 Played
+[02-24-2021-19-01-42][LOG]: #724554 Logged In
+[02-24-2021-19-01-42][LOG]: #725017 Logged In
+[02-24-2021-19-01-42][LOG]: #680764 Played
+[02-24-2021-19-01-43][LOG]: #739675 Start
+[02-24-2021-19-01-45][LOG]: #683396 Played
+[02-24-2021-19-01-46][LOG]: #740151 Start
+[02-24-2021-19-01-47][LOG]: #740430 Start
+[02-24-2021-19-01-47][LOG]: #725997 Logged In
+[02-24-2021-19-01-48][LOG]: #685373 Played
+[02-24-2021-19-01-48][LOG]: #740751 Start
+[02-24-2021-19-01-49][LOG]: #741091 Start
+[02-24-2021-19-01-49][LOG]: #680980 Played
+[02-24-2021-19-01-50][LOG]: #741312 Start
+[02-24-2021-19-01-51][LOG]: #687758 Played
+[02-24-2021-19-01-52][LOG]: #741959 Start
+[02-24-2021-19-01-54][LOG]: #685949 Played
+[02-24-2021-19-01-54][LOG]: #726413 Logged In
+[02-24-2021-19-01-54][LOG]: #726201 Logged In
+[02-24-2021-19-01-56][LOG]: #727182 Logged In
+[02-24-2021-19-01-56][LOG]: #685730 Played
+[02-24-2021-19-01-57][LOG]: #727580 Logged In
+[02-24-2021-19-01-57][LOG]: #743192 Start
+[02-24-2021-19-01-58][LOG]: #728664 Logged In
+[02-24-2021-19-01-58][LOG]: #728809 Logged In
+[02-24-2021-19-01-58][LOG]: #743356 Start
+[02-24-2021-19-01-59][LOG]: #729334 Logged In
+[02-24-2021-19-01-59][LOG]: #743700 Start
+[02-24-2021-19-02-01][LOG]: #690197 Played
+[02-24-2021-19-02-03][LOG]: #686491 Played
+[02-24-2021-19-02-04][LOG]: #687435 Played
+[02-24-2021-19-02-05][LOG]: #684872 Played
+[02-24-2021-19-02-05][LOG]: #685554 Played
+[02-24-2021-19-02-05][LOG]: #744950 Start
+[02-24-2021-19-02-07][LOG]: #729676 Logged In
+[02-24-2021-19-02-07][LOG]: #745437 Start
+[02-24-2021-19-02-07][LOG]: #730306 Logged In
+[02-24-2021-19-02-08][LOG]: #745677 Start
+[02-24-2021-19-02-09][LOG]: #729045 Logged In
+[02-24-2021-19-02-09][LOG]: #745880 Start
+[02-24-2021-19-02-10][LOG]: #694636 Played
+[02-24-2021-19-02-10][LOG]: #746130 Start
+[02-24-2021-19-02-10][LOG]: #730191 Logged In
+[02-24-2021-19-02-11][LOG]: #732018 Logged In
+[02-24-2021-19-02-15][LOG]: #747540 Start
+[02-24-2021-19-02-16][LOG]: #733148 Logged In
+[02-24-2021-19-02-17][LOG]: #693775 Played
+[02-24-2021-19-02-17][LOG]: #732666 Logged In
+[02-24-2021-19-02-17][LOG]: #732996 Logged In
+[02-24-2021-19-02-19][LOG]: #732797 Logged In
+[02-24-2021-19-02-19][LOG]: #748365 Start
+[02-24-2021-19-02-20][LOG]: #692846 Played
+[02-24-2021-19-02-21][LOG]: #748921 Start
+[02-24-2021-19-02-21][LOG]: #693604 Played
+[02-24-2021-19-02-22][LOG]: #691903 Played
+[02-24-2021-19-02-24][LOG]: #749631 Start
+[02-24-2021-19-02-24][LOG]: #694194 Played
+[02-24-2021-19-02-25][LOG]: #735044 Logged In
+[02-24-2021-19-02-25][LOG]: #750069 Start
+[02-24-2021-19-02-26][LOG]: #750388 Start
+[02-24-2021-19-02-27][LOG]: #693921 Played
+[02-24-2021-19-02-28][LOG]: #750759 Start
+[02-24-2021-19-02-28][LOG]: #693384 Played
+[02-24-2021-19-02-28][LOG]: #694872 Played
+[02-24-2021-19-02-29][LOG]: #751168 Start
+[02-24-2021-19-02-29][LOG]: #695329 Played
+[02-24-2021-19-02-29][LOG]: #734833 Logged In
+[02-24-2021-19-02-31][LOG]: #737191 Logged In
+[02-24-2021-19-02-31][LOG]: #692978 Played
+[02-24-2021-19-02-31][LOG]: #751981 Start
+[02-24-2021-19-02-32][LOG]: #752255 Start
+[02-24-2021-19-02-32][LOG]: #735214 Logged In
+[02-24-2021-19-02-33][LOG]: #736735 Logged In
+[02-24-2021-19-02-34][LOG]: #752609 Start
+[02-24-2021-19-02-34][LOG]: #752795 Start
+[02-24-2021-19-02-35][LOG]: #737430 Logged In
+[02-24-2021-19-02-36][LOG]: #753052 Start
+[02-24-2021-19-02-36][LOG]: #696487 Played
+[02-24-2021-19-02-36][LOG]: #699466 Played
+[02-24-2021-19-02-36][LOG]: #737100 Logged In
+[02-24-2021-19-02-37][LOG]: #753291 Start
+[02-24-2021-19-02-39][LOG]: #738772 Logged In
+[02-24-2021-19-02-39][LOG]: #694458 Played
+[02-24-2021-19-02-39][LOG]: #700209 Played
+[02-24-2021-19-02-41][LOG]: #754398 Start
+[02-24-2021-19-02-42][LOG]: #754805 Start
+[02-24-2021-19-02-42][LOG]: #739675 Logged In
+[02-24-2021-19-02-43][LOG]: #738195 Logged In
+[02-24-2021-19-02-43][LOG]: #740430 Logged In
+[02-24-2021-19-02-43][LOG]: #755114 Start
+[02-24-2021-19-02-43][LOG]: #739251 Logged In
+[02-24-2021-19-02-44][LOG]: #703551 Played
+[02-24-2021-19-02-46][LOG]: #755809 Start
+[02-24-2021-19-02-47][LOG]: #740151 Logged In
+[02-24-2021-19-02-48][LOG]: #756616 Start
+[02-24-2021-19-02-48][LOG]: #699162 Played
+[02-24-2021-19-02-49][LOG]: #699812 Played
+[02-24-2021-19-02-51][LOG]: #699999 Played
+[02-24-2021-19-02-52][LOG]: #741959 Logged In
+[02-24-2021-19-02-53][LOG]: #757765 Start
+[02-24-2021-19-02-53][LOG]: #740751 Logged In
+[02-24-2021-19-02-53][LOG]: #757949 Start
+[02-24-2021-19-02-54][LOG]: #700438 Played
+[02-24-2021-19-02-54][LOG]: #758259 Start
+[02-24-2021-19-02-55][LOG]: #741091 Logged In
+[02-24-2021-19-02-57][LOG]: #743192 Logged In
+[02-24-2021-19-02-57][LOG]: #741312 Logged In
+[02-24-2021-19-02-57][LOG]: #758788 Start
+[02-24-2021-19-02-57][LOG]: #699646 Played
+[02-24-2021-19-02-59][LOG]: #759447 Start
+[02-24-2021-19-03-01][LOG]: #760867 Start
+[02-24-2021-19-03-01][LOG]: #743700 Logged In
+[02-24-2021-19-03-04][LOG]: #743356 Logged In
+[02-24-2021-19-03-06][LOG]: #706898 Played
+[02-24-2021-19-03-08][LOG]: #702834 Played
+[02-24-2021-19-03-09][LOG]: #701631 Played
+[02-24-2021-19-03-09][LOG]: #744950 Logged In
+[02-24-2021-19-03-09][LOG]: #745437 Logged In
+[02-24-2021-19-03-09][LOG]: #745880 Logged In
+[02-24-2021-19-03-12][LOG]: #763023 Start
+[02-24-2021-19-03-12][LOG]: #745677 Logged In
+[02-24-2021-19-03-13][LOG]: #763218 Start
+[02-24-2021-19-03-13][LOG]: #747540 Logged In
+[02-24-2021-19-03-13][LOG]: #748365 Logged In
+[02-24-2021-19-03-14][LOG]: #763578 Start
+[02-24-2021-19-03-14][LOG]: #746130 Logged In
+[02-24-2021-19-03-14][LOG]: #705932 Played
+[02-24-2021-19-03-18][LOG]: #764552 Start
+[02-24-2021-19-03-18][LOG]: #748921 Logged In
+[02-24-2021-19-03-21][LOG]: #765426 Start
+[02-24-2021-19-03-24][LOG]: #708219 Played
+[02-24-2021-19-03-27][LOG]: #751168 Logged In
+[02-24-2021-19-03-28][LOG]: #710019 Played
+[02-24-2021-19-03-29][LOG]: #750069 Logged In
+[02-24-2021-19-03-29][LOG]: #749631 Logged In
+[02-24-2021-19-03-29][LOG]: #750388 Logged In
+[02-24-2021-19-03-30][LOG]: #767133 Start
+[02-24-2021-19-03-30][LOG]: #751981 Logged In
+[02-24-2021-19-03-31][LOG]: #753052 Logged In
+[02-24-2021-19-03-32][LOG]: #767569 Start
+[02-24-2021-19-03-32][LOG]: #750759 Logged In
+[02-24-2021-19-03-32][LOG]: #711072 Played
+[02-24-2021-19-03-33][LOG]: #752255 Logged In
+[02-24-2021-19-03-34][LOG]: #767919 Start
+[02-24-2021-19-03-34][LOG]: #713594 Played
+[02-24-2021-19-03-36][LOG]: #709329 Played
+[02-24-2021-19-03-36][LOG]: #768940 Start
+[02-24-2021-19-03-37][LOG]: #769042 Start
+[02-24-2021-19-03-40][LOG]: #752795 Logged In
+[02-24-2021-19-03-41][LOG]: #752609 Logged In
+[02-24-2021-19-03-41][LOG]: #754398 Logged In
+[02-24-2021-19-03-42][LOG]: #753291 Logged In
+[02-24-2021-19-03-42][LOG]: #769671 Start
+[02-24-2021-19-03-48][LOG]: #756616 Logged In
+[02-24-2021-19-03-48][LOG]: #754805 Logged In
+[02-24-2021-19-03-49][LOG]: #755809 Logged In
+[02-24-2021-19-03-51][LOG]: #755114 Logged In
+[02-24-2021-19-03-53][LOG]: #771515 Start
+[02-24-2021-19-03-55][LOG]: #714526 Played
+[02-24-2021-19-03-56][LOG]: #757765 Logged In
+[02-24-2021-19-03-57][LOG]: #757949 Logged In
+[02-24-2021-19-03-58][LOG]: #758259 Logged In
+[02-24-2021-19-03-58][LOG]: #759447 Logged In
+[02-24-2021-19-03-58][LOG]: #772311 Start
+[02-24-2021-19-03-59][LOG]: #713819 Played
+[02-24-2021-19-04-00][LOG]: #772491 Start
+[02-24-2021-19-04-00][LOG]: #712590 Played
+[02-24-2021-19-04-00][LOG]: #772588 Start
+[02-24-2021-19-04-01][LOG]: #760867 Logged In
+[02-24-2021-19-04-02][LOG]: #758788 Logged In
+[02-24-2021-19-04-04][LOG]: #773080 Start
+[02-24-2021-19-04-06][LOG]: #773391 Start
+[02-24-2021-19-04-08][LOG]: #717106 Played
+[02-24-2021-19-04-10][LOG]: #774036 Start
+[02-24-2021-19-04-11][LOG]: #763023 Logged In
+[02-24-2021-19-04-12][LOG]: #774429 Start
+[02-24-2021-19-04-13][LOG]: #774542 Start
+[02-24-2021-19-04-16][LOG]: #718137 Played
+[02-24-2021-19-04-18][LOG]: #718482 Played
+[02-24-2021-19-04-18][LOG]: #763218 Logged In
+[02-24-2021-19-04-19][LOG]: #717510 Played
+[02-24-2021-19-04-19][LOG]: #764552 Logged In
+[02-24-2021-19-04-19][LOG]: #763578 Logged In
+[02-24-2021-19-04-20][LOG]: #775894 Start
+[02-24-2021-19-04-22][LOG]: #776291 Start
+[02-24-2021-19-04-22][LOG]: #717428 Played
+[02-24-2021-19-04-24][LOG]: #721065 Played
+[02-24-2021-19-04-24][LOG]: #776680 Start
+[02-24-2021-19-04-26][LOG]: #720336 Played
+[02-24-2021-19-04-26][LOG]: #777128 Start
+[02-24-2021-19-04-27][LOG]: #765426 Logged In
+[02-24-2021-19-04-27][LOG]: #721632 Played
+[02-24-2021-19-04-31][LOG]: #777833 Start
+[02-24-2021-19-04-32][LOG]: #778045 Start
+[02-24-2021-19-04-33][LOG]: #723735 Played
+[02-24-2021-19-04-35][LOG]: #717914 Played
+[02-24-2021-19-04-35][LOG]: #767133 Logged In
+[02-24-2021-19-04-35][LOG]: #767569 Logged In
+[02-24-2021-19-04-39][LOG]: #769042 Logged In
+[02-24-2021-19-04-39][LOG]: #779880 Start
+[02-24-2021-19-04-39][LOG]: #767919 Logged In
+[02-24-2021-19-04-45][LOG]: #780987 Start
+[02-24-2021-19-04-46][LOG]: #781125 Start
+[02-24-2021-19-04-46][LOG]: #768940 Logged In
+[02-24-2021-19-04-51][LOG]: #724554 Played
+[02-24-2021-19-04-51][LOG]: #725997 Played
+[02-24-2021-19-04-54][LOG]: #771515 Logged In
+[02-24-2021-19-04-55][LOG]: #782437 Start
+[02-24-2021-19-04-56][LOG]: #769671 Logged In
+[02-24-2021-19-04-56][LOG]: #782601 Start
+[02-24-2021-19-04-56][LOG]: #724385 Played
+[02-24-2021-19-04-58][LOG]: #725017 Played
+[02-24-2021-19-04-59][LOG]: #727182 Played
+[02-24-2021-19-05-00][LOG]: #772588 Logged In
+[02-24-2021-19-05-01][LOG]: #726201 Played
+[02-24-2021-19-05-01][LOG]: #723432 Played
+[02-24-2021-19-05-02][LOG]: #727580 Played
+[02-24-2021-19-05-02][LOG]: #783907 Start
+[02-24-2021-19-05-03][LOG]: #729334 Played
+[02-24-2021-19-05-03][LOG]: #772311 Logged In
+[02-24-2021-19-05-03][LOG]: #784095 Start
+[02-24-2021-19-05-04][LOG]: #723238 Played
+[02-24-2021-19-05-05][LOG]: #772491 Logged In
+[02-24-2021-19-05-06][LOG]: #784608 Start
+[02-24-2021-19-05-06][LOG]: #730306 Played
+[02-24-2021-19-05-07][LOG]: #730191 Played
+[02-24-2021-19-05-07][LOG]: #784771 Start
+[02-24-2021-19-05-07][LOG]: #784872 Start
+[02-24-2021-19-05-08][LOG]: #729676 Played
+[02-24-2021-19-05-08][LOG]: #728809 Played
+[02-24-2021-19-05-08][LOG]: #785034 Start
+[02-24-2021-19-05-09][LOG]: #774036 Logged In
+[02-24-2021-19-05-09][LOG]: #773080 Logged In
+[02-24-2021-19-05-09][LOG]: #785286 Start
+[02-24-2021-19-05-10][LOG]: #785383 Start
+[02-24-2021-19-05-10][LOG]: #773391 Logged In
+[02-24-2021-19-05-11][LOG]: #785632 Start
+[02-24-2021-19-05-11][LOG]: #785777 Start
+[02-24-2021-19-05-12][LOG]: #786098 Start
+[02-24-2021-19-05-13][LOG]: #786258 Start
+[02-24-2021-19-05-16][LOG]: #732797 Played
+[02-24-2021-19-05-18][LOG]: #728664 Played
+[02-24-2021-19-05-19][LOG]: #774542 Logged In
+[02-24-2021-19-05-20][LOG]: #775894 Logged In
+[02-24-2021-19-05-21][LOG]: #774429 Logged In
+[02-24-2021-19-05-21][LOG]: #787915 Start
+[02-24-2021-19-05-22][LOG]: #734833 Played
+[02-24-2021-19-05-23][LOG]: #788226 Start
+[02-24-2021-19-05-24][LOG]: #788354 Start
+[02-24-2021-19-05-25][LOG]: #776680 Logged In
+[02-24-2021-19-05-26][LOG]: #788785 Start
+[02-24-2021-19-05-28][LOG]: #777128 Logged In
+[02-24-2021-19-05-28][LOG]: #789334 Start
+[02-24-2021-19-05-29][LOG]: #776291 Logged In
+[02-24-2021-19-05-30][LOG]: #729045 Played
+[02-24-2021-19-05-32][LOG]: #733148 Played
+[02-24-2021-19-05-34][LOG]: #732996 Played
+[02-24-2021-19-05-34][LOG]: #778045 Logged In
+[02-24-2021-19-05-35][LOG]: #790673 Start
+[02-24-2021-19-05-36][LOG]: #732666 Played
+[02-24-2021-19-05-36][LOG]: #777833 Logged In
+[02-24-2021-19-05-37][LOG]: #791052 Start
+[02-24-2021-19-05-38][LOG]: #779880 Logged In
+[02-24-2021-19-05-39][LOG]: #791816 Start
+[02-24-2021-19-05-41][LOG]: #792345 Start
+[02-24-2021-19-05-41][LOG]: #740151 Played
+[02-24-2021-19-05-42][LOG]: #792570 Start
+[02-24-2021-19-05-42][LOG]: #736735 Played
+[02-24-2021-19-05-44][LOG]: #780987 Logged In
+[02-24-2021-19-05-45][LOG]: #737191 Played
+[02-24-2021-19-05-46][LOG]: #793668 Start
+[02-24-2021-19-05-47][LOG]: #793962 Start
+[02-24-2021-19-05-47][LOG]: #740430 Played
+[02-24-2021-19-05-48][LOG]: #794142 Start
+[02-24-2021-19-05-49][LOG]: #739251 Played
+[02-24-2021-19-05-51][LOG]: #794776 Start
+[02-24-2021-19-05-51][LOG]: #794973 Start
+[02-24-2021-19-05-52][LOG]: #740751 Played
+[02-24-2021-19-05-52][LOG]: #737100 Played
+[02-24-2021-19-05-52][LOG]: #781125 Logged In
+[02-24-2021-19-05-52][LOG]: #795321 Start
+[02-24-2021-19-05-53][LOG]: #737430 Played
+[02-24-2021-19-05-54][LOG]: #795685 Start
+[02-24-2021-19-05-54][LOG]: #735214 Played
+[02-24-2021-19-05-54][LOG]: #741959 Played
+[02-24-2021-19-05-57][LOG]: #796514 Start
+[02-24-2021-19-05-58][LOG]: #796683 Start
+[02-24-2021-19-05-58][LOG]: #796913 Start
+[02-24-2021-19-05-59][LOG]: #782601 Logged In
+[02-24-2021-19-05-59][LOG]: #797119 Start
+[02-24-2021-19-06-00][LOG]: #797440 Start
+[02-24-2021-19-06-00][LOG]: #741312 Played
+[02-24-2021-19-06-00][LOG]: #738772 Played
+[02-24-2021-19-06-01][LOG]: #782437 Logged In
+[02-24-2021-19-06-01][LOG]: #783907 Logged In
+[02-24-2021-19-06-03][LOG]: #743356 Played
+[02-24-2021-19-06-05][LOG]: #798751 Start
+[02-24-2021-19-06-06][LOG]: #798971 Start
+[02-24-2021-19-06-06][LOG]: #799166 Start
+[02-24-2021-19-06-07][LOG]: #784771 Logged In
+[02-24-2021-19-06-08][LOG]: #799595 Start
+[02-24-2021-19-06-09][LOG]: #741091 Played
+[02-24-2021-19-06-09][LOG]: #784095 Logged In
+[02-24-2021-19-06-09][LOG]: #744950 Played
+[02-24-2021-19-06-09][LOG]: #784608 Logged In
+[02-24-2021-19-06-09][LOG]: #785383 Logged In
+[02-24-2021-19-06-11][LOG]: #747540 Played
+[02-24-2021-19-06-11][LOG]: #745677 Played
+[02-24-2021-19-06-13][LOG]: #786258 Logged In
+[02-24-2021-19-06-13][LOG]: #784872 Logged In
+[02-24-2021-19-06-14][LOG]: #801034 Start
+[02-24-2021-19-06-15][LOG]: #801360 Start
+[02-24-2021-19-06-16][LOG]: #785286 Logged In
+[02-24-2021-19-06-17][LOG]: #801789 Start
+[02-24-2021-19-06-18][LOG]: #802052 Start
+[02-24-2021-19-06-18][LOG]: #785034 Logged In
+[02-24-2021-19-06-18][LOG]: #743700 Played
+[02-24-2021-19-06-18][LOG]: #785777 Logged In
+[02-24-2021-19-06-19][LOG]: #745437 Played
+[02-24-2021-19-06-19][LOG]: #748921 Played
+[02-24-2021-19-06-21][LOG]: #785632 Logged In
+[02-24-2021-19-06-21][LOG]: #786098 Logged In
+[02-24-2021-19-06-23][LOG]: #803577 Start
+[02-24-2021-19-06-24][LOG]: #803858 Start
+[02-24-2021-19-06-27][LOG]: #748365 Played
+[02-24-2021-19-06-27][LOG]: #787915 Logged In
+[02-24-2021-19-06-28][LOG]: #804874 Start
+[02-24-2021-19-06-28][LOG]: #789334 Logged In
+[02-24-2021-19-06-29][LOG]: #788226 Logged In
+[02-24-2021-19-06-30][LOG]: #745880 Played
+[02-24-2021-19-06-30][LOG]: #788785 Logged In
+[02-24-2021-19-06-31][LOG]: #788354 Logged In
+[02-24-2021-19-06-32][LOG]: #746130 Played
+[02-24-2021-19-06-32][LOG]: #805838 Start
+[02-24-2021-19-06-33][LOG]: #806190 Start
+[02-24-2021-19-06-34][LOG]: #751168 Played
+[02-24-2021-19-06-37][LOG]: #752255 Played
+[02-24-2021-19-06-37][LOG]: #750069 Played
+[02-24-2021-19-06-37][LOG]: #807104 Start
+[02-24-2021-19-06-39][LOG]: #807496 Start
+[02-24-2021-19-06-39][LOG]: #791052 Logged In
+[02-24-2021-19-06-40][LOG]: #749631 Played
+[02-24-2021-19-06-41][LOG]: #750759 Played
+[02-24-2021-19-06-41][LOG]: #790673 Logged In
+[02-24-2021-19-06-41][LOG]: #808170 Start
+[02-24-2021-19-06-42][LOG]: #792345 Logged In
+[02-24-2021-19-06-43][LOG]: #754398 Played
+[02-24-2021-19-06-43][LOG]: #791816 Logged In
+[02-24-2021-19-06-44][LOG]: #753052 Played
+[02-24-2021-19-06-45][LOG]: #808960 Start
+[02-24-2021-19-06-46][LOG]: #809192 Start
+[02-24-2021-19-06-46][LOG]: #793962 Logged In
+[02-24-2021-19-06-47][LOG]: #750388 Played
+[02-24-2021-19-06-47][LOG]: #809485 Start
+[02-24-2021-19-06-50][LOG]: #752795 Played
+[02-24-2021-19-06-50][LOG]: #792570 Logged In
+[02-24-2021-19-06-50][LOG]: #755809 Played
+[02-24-2021-19-06-51][LOG]: #793668 Logged In
+[02-24-2021-19-06-51][LOG]: #810505 Start
+[02-24-2021-19-06-53][LOG]: #751981 Played
+[02-24-2021-19-06-53][LOG]: #794973 Logged In
+[02-24-2021-19-06-53][LOG]: #795321 Logged In
+[02-24-2021-19-06-53][LOG]: #795685 Logged In
+[02-24-2021-19-06-54][LOG]: #811086 Start
+[02-24-2021-19-06-54][LOG]: #794142 Logged In
+[02-24-2021-19-06-55][LOG]: #811401 Start
+[02-24-2021-19-06-57][LOG]: #794776 Logged In
+[02-24-2021-19-06-57][LOG]: #757949 Played
+[02-24-2021-19-06-57][LOG]: #752609 Played
+[02-24-2021-19-06-58][LOG]: #812340 Start
+[02-24-2021-19-06-58][LOG]: #753291 Played
+[02-24-2021-19-06-58][LOG]: #754805 Played
+[02-24-2021-19-06-58][LOG]: #796514 Logged In
+[02-24-2021-19-06-59][LOG]: #812508 Start
+[02-24-2021-19-06-59][LOG]: #763023 Played
+[02-24-2021-19-07-00][LOG]: #796683 Logged In
+[02-24-2021-19-07-01][LOG]: #797119 Logged In
+[02-24-2021-19-07-01][LOG]: #796913 Logged In
+[02-24-2021-19-07-01][LOG]: #813151 Start
+[02-24-2021-19-07-01][LOG]: #797440 Logged In
+[02-24-2021-19-07-02][LOG]: #759447 Played
+[02-24-2021-19-07-03][LOG]: #813441 Start
+[02-24-2021-19-07-04][LOG]: #813570 Start
+[02-24-2021-19-07-04][LOG]: #813852 Start
+[02-24-2021-19-07-05][LOG]: #814117 Start
+[02-24-2021-19-07-06][LOG]: #814301 Start
+[02-24-2021-19-07-07][LOG]: #814464 Start
+[02-24-2021-19-07-07][LOG]: #814686 Start
+[02-24-2021-19-07-07][LOG]: #798751 Logged In
+[02-24-2021-19-07-09][LOG]: #799166 Logged In
+[02-24-2021-19-07-11][LOG]: #758259 Played
+[02-24-2021-19-07-12][LOG]: #760867 Played
+[02-24-2021-19-07-13][LOG]: #798971 Logged In
+[02-24-2021-19-07-13][LOG]: #755114 Played
+[02-24-2021-19-07-15][LOG]: #801034 Logged In
+[02-24-2021-19-07-15][LOG]: #757765 Played
+[02-24-2021-19-07-15][LOG]: #802052 Logged In
+[02-24-2021-19-07-17][LOG]: #758788 Played
+[02-24-2021-19-07-17][LOG]: #799595 Logged In
+[02-24-2021-19-07-18][LOG]: #817262 Start
+[02-24-2021-19-07-19][LOG]: #817496 Start
+[02-24-2021-19-07-19][LOG]: #801789 Logged In
+[02-24-2021-19-07-19][LOG]: #817753 Start
+[02-24-2021-19-07-20][LOG]: #818034 Start
+[02-24-2021-19-07-21][LOG]: #818258 Start
+[02-24-2021-19-07-24][LOG]: #801360 Logged In
+[02-24-2021-19-07-24][LOG]: #763218 Played
+[02-24-2021-19-07-27][LOG]: #803577 Logged In
+[02-24-2021-19-07-28][LOG]: #820138 Start
+[02-24-2021-19-07-29][LOG]: #803858 Logged In
+[02-24-2021-19-07-33][LOG]: #764552 Played
+[02-24-2021-19-07-34][LOG]: #765426 Played
+[02-24-2021-19-07-35][LOG]: #804874 Logged In
+[02-24-2021-19-07-35][LOG]: #805838 Logged In
+[02-24-2021-19-07-36][LOG]: #763578 Played
+[02-24-2021-19-07-37][LOG]: #806190 Logged In
+[02-24-2021-19-07-37][LOG]: #767569 Played
+[02-24-2021-19-07-38][LOG]: #822892 Start
+[02-24-2021-19-07-41][LOG]: #823438 Start
+[02-24-2021-19-07-42][LOG]: #807104 Logged In
+[02-24-2021-19-07-42][LOG]: #823718 Start
+[02-24-2021-19-07-45][LOG]: #808960 Logged In
+[02-24-2021-19-07-45][LOG]: #808170 Logged In
+[02-24-2021-19-07-45][LOG]: #807496 Logged In
+[02-24-2021-19-07-46][LOG]: #824291 Start
+[02-24-2021-19-07-46][LOG]: #809192 Logged In
+[02-24-2021-19-07-47][LOG]: #767919 Played
+[02-24-2021-19-07-47][LOG]: #767133 Played
+[02-24-2021-19-07-50][LOG]: #810505 Logged In
+[02-24-2021-19-07-50][LOG]: #809485 Logged In
+[02-24-2021-19-07-51][LOG]: #825382 Start
+[02-24-2021-19-07-52][LOG]: #825555 Start
+[02-24-2021-19-07-56][LOG]: #812340 Logged In
+[02-24-2021-19-07-59][LOG]: #811086 Logged In
+[02-24-2021-19-07-59][LOG]: #769671 Played
+[02-24-2021-19-08-01][LOG]: #768940 Played
+[02-24-2021-19-08-02][LOG]: #812508 Logged In
+[02-24-2021-19-08-02][LOG]: #813570 Logged In
+[02-24-2021-19-08-03][LOG]: #813852 Logged In
+[02-24-2021-19-08-03][LOG]: #813441 Logged In
+[02-24-2021-19-08-03][LOG]: #827714 Start
+[02-24-2021-19-08-05][LOG]: #813151 Logged In
+[02-24-2021-19-08-05][LOG]: #811401 Logged In
+[02-24-2021-19-08-05][LOG]: #828028 Start
+[02-24-2021-19-08-09][LOG]: #814117 Logged In
+[02-24-2021-19-08-09][LOG]: #771515 Played
+[02-24-2021-19-08-11][LOG]: #814686 Logged In
+[02-24-2021-19-08-12][LOG]: #814464 Logged In
+[02-24-2021-19-08-12][LOG]: #773080 Played
+[02-24-2021-19-08-13][LOG]: #814301 Logged In
+[02-24-2021-19-08-13][LOG]: #772311 Played
+[02-24-2021-19-08-14][LOG]: #829288 Start
+[02-24-2021-19-08-16][LOG]: #772588 Played
+[02-24-2021-19-08-17][LOG]: #772491 Played
+[02-24-2021-19-08-17][LOG]: #829865 Start
+[02-24-2021-19-08-18][LOG]: #830054 Start
+[02-24-2021-19-08-19][LOG]: #830301 Start
+[02-24-2021-19-08-20][LOG]: #830611 Start
+[02-24-2021-19-08-21][LOG]: #818034 Logged In
+[02-24-2021-19-08-22][LOG]: #830926 Start
+[02-24-2021-19-08-22][LOG]: #773391 Played
+[02-24-2021-19-08-23][LOG]: #817262 Logged In
+[02-24-2021-19-08-24][LOG]: #817753 Logged In
+[02-24-2021-19-08-25][LOG]: #818258 Logged In
+[02-24-2021-19-08-25][LOG]: #831565 Start
+[02-24-2021-19-08-26][LOG]: #817496 Logged In
+[02-24-2021-19-08-29][LOG]: #774429 Played
+[02-24-2021-19-08-29][LOG]: #820138 Logged In
+[02-24-2021-19-08-29][LOG]: #774036 Played
+[02-24-2021-19-08-30][LOG]: #832468 Start
+[02-24-2021-19-08-33][LOG]: #832899 Start
+[02-24-2021-19-08-34][LOG]: #833022 Start
+[02-24-2021-19-08-34][LOG]: #774542 Played
+[02-24-2021-19-08-37][LOG]: #775894 Played
+[02-24-2021-19-08-38][LOG]: #833916 Start
+[02-24-2021-19-08-39][LOG]: #833989 Start
+[02-24-2021-19-08-40][LOG]: #822892 Logged In
+[02-24-2021-19-08-43][LOG]: #823718 Logged In
+[02-24-2021-19-08-44][LOG]: #778045 Played
+[02-24-2021-19-08-44][LOG]: #823438 Logged In
+[02-24-2021-19-08-47][LOG]: #824291 Logged In
+[02-24-2021-19-08-48][LOG]: #780987 Played
+[02-24-2021-19-08-49][LOG]: #835536 Start
+[02-24-2021-19-08-50][LOG]: #776291 Played
+[02-24-2021-19-08-52][LOG]: #836259 Start
+[02-24-2021-19-08-54][LOG]: #825382 Logged In
+[02-24-2021-19-08-55][LOG]: #837058 Start
+[02-24-2021-19-08-55][LOG]: #825555 Logged In
+[02-24-2021-19-08-59][LOG]: #782437 Played
+[02-24-2021-19-09-02][LOG]: #777833 Played
+[02-24-2021-19-09-03][LOG]: #838426 Start
+[02-24-2021-19-09-04][LOG]: #838555 Start
+[02-24-2021-19-09-05][LOG]: #781125 Played
+[02-24-2021-19-09-06][LOG]: #828028 Logged In
+[02-24-2021-19-09-07][LOG]: #827714 Logged In
+[02-24-2021-19-09-08][LOG]: #839335 Start
+[02-24-2021-19-09-08][LOG]: #839473 Start
+[02-24-2021-19-09-10][LOG]: #839778 Start
+[02-24-2021-19-09-11][LOG]: #840129 Start
+[02-24-2021-19-09-12][LOG]: #782601 Played
+[02-24-2021-19-09-15][LOG]: #783907 Played
+[02-24-2021-19-09-15][LOG]: #840715 Start
+[02-24-2021-19-09-16][LOG]: #840833 Start
+[02-24-2021-19-09-18][LOG]: #829288 Logged In
+[02-24-2021-19-09-18][LOG]: #784608 Played
+[02-24-2021-19-09-18][LOG]: #784095 Played
+[02-24-2021-19-09-19][LOG]: #785034 Played
+[02-24-2021-19-09-19][LOG]: #830301 Logged In
+[02-24-2021-19-09-19][LOG]: #829865 Logged In
+[02-24-2021-19-09-22][LOG]: #841877 Start
+[02-24-2021-19-09-23][LOG]: #830054 Logged In
+[02-24-2021-19-09-23][LOG]: #842056 Start
+[02-24-2021-19-09-23][LOG]: #785383 Played
+[02-24-2021-19-09-24][LOG]: #842207 Start
+[02-24-2021-19-09-25][LOG]: #842431 Start
+[02-24-2021-19-09-26][LOG]: #785632 Played
+[02-24-2021-19-09-26][LOG]: #831565 Logged In
+[02-24-2021-19-09-27][LOG]: #830611 Logged In
+[02-24-2021-19-09-27][LOG]: #843016 Start
+[02-24-2021-19-09-28][LOG]: #830926 Logged In
+[02-24-2021-19-09-28][LOG]: #832468 Logged In
+[02-24-2021-19-09-29][LOG]: #786258 Played
+[02-24-2021-19-09-29][LOG]: #843304 Start
+[02-24-2021-19-09-32][LOG]: #786098 Played
+[02-24-2021-19-09-34][LOG]: #844086 Start
+[02-24-2021-19-09-35][LOG]: #832899 Logged In
+[02-24-2021-19-09-35][LOG]: #787915 Played
+[02-24-2021-19-09-36][LOG]: #788785 Played
+[02-24-2021-19-09-36][LOG]: #844619 Start
+[02-24-2021-19-09-37][LOG]: #833022 Logged In
+[02-24-2021-19-09-37][LOG]: #785777 Played
+[02-24-2021-19-09-38][LOG]: #833916 Logged In
+[02-24-2021-19-09-39][LOG]: #788226 Played
+[02-24-2021-19-09-40][LOG]: #791816 Played
+[02-24-2021-19-09-40][LOG]: #845267 Start
+[02-24-2021-19-09-41][LOG]: #845431 Start
+[02-24-2021-19-09-42][LOG]: #845619 Start
+[02-24-2021-19-09-43][LOG]: #790673 Played
+[02-24-2021-19-09-45][LOG]: #833989 Logged In
+[02-24-2021-19-09-45][LOG]: #789334 Played
+[02-24-2021-19-09-46][LOG]: #785286 Played
+[02-24-2021-19-09-46][LOG]: #846581 Start
+[02-24-2021-19-09-48][LOG]: #846910 Start
+[02-24-2021-19-09-50][LOG]: #792570 Played
+[02-24-2021-19-09-50][LOG]: #793962 Played
+[02-24-2021-19-09-51][LOG]: #847634 Start
+[02-24-2021-19-09-51][LOG]: #793668 Played
+[02-24-2021-19-09-54][LOG]: #836259 Logged In
+[02-24-2021-19-09-54][LOG]: #848290 Start
+[02-24-2021-19-09-54][LOG]: #795685 Played
+[02-24-2021-19-09-55][LOG]: #848434 Start
+[02-24-2021-19-09-55][LOG]: #848643 Start
+[02-24-2021-19-09-56][LOG]: #848932 Start
+[02-24-2021-19-09-56][LOG]: #835536 Logged In
+[02-24-2021-19-09-57][LOG]: #849123 Start
+[02-24-2021-19-09-58][LOG]: #791052 Played
+[02-24-2021-19-09-58][EXCEPTION]: Traceback (most recent call last):
+  File "/home/ubuntu/projects/zeus/src/services/driversadapter/chrome.py", line 213, in getNewInstance
+    driver = webdriver.Chrome(
+  File "/home/ubuntu/.local/lib/python3.9/site-packages/selenium/webdriver/chrome/webdriver.py", line 76, in __init__
+    RemoteWebDriver.__init__(
+  File "/home/ubuntu/.local/lib/python3.9/site-packages/selenium/webdriver/remote/webdriver.py", line 157, in __init__
+    self.start_session(capabilities, browser_profile)
+  File "/home/ubuntu/.local/lib/python3.9/site-packages/selenium/webdriver/remote/webdriver.py", line 252, in start_session
+    response = self.execute(Command.NEW_SESSION, parameters)
+  File "/home/ubuntu/.local/lib/python3.9/site-packages/selenium/webdriver/remote/webdriver.py", line 319, in execute
+    response = self.command_executor.execute(driver_command, params)
+  File "/home/ubuntu/.local/lib/python3.9/site-packages/selenium/webdriver/remote/remote_connection.py", line 374, in execute
+    return self._request(command_info[0], url, body=data)
+  File "/home/ubuntu/.local/lib/python3.9/site-packages/selenium/webdriver/remote/remote_connection.py", line 397, in _request
+    resp = self._conn.request(method, url, body=body, headers=headers)
+  File "/home/ubuntu/.local/lib/python3.9/site-packages/urllib3/request.py", line 78, in request
+    return self.request_encode_body(
+  File "/home/ubuntu/.local/lib/python3.9/site-packages/urllib3/request.py", line 170, in request_encode_body
+    return self.urlopen(method, url, **extra_kw)
+  File "/home/ubuntu/.local/lib/python3.9/site-packages/urllib3/poolmanager.py", line 375, in urlopen
+    response = conn.urlopen(method, u.request_uri, **kw)
+  File "/home/ubuntu/.local/lib/python3.9/site-packages/urllib3/connectionpool.py", line 699, in urlopen
+    httplib_response = self._make_request(
+  File "/home/ubuntu/.local/lib/python3.9/site-packages/urllib3/connectionpool.py", line 445, in _make_request
+    six.raise_from(e, None)
+  File "<string>", line 3, in raise_from
+  File "/home/ubuntu/.local/lib/python3.9/site-packages/urllib3/connectionpool.py", line 440, in _make_request
+    httplib_response = conn.getresponse()
+  File "/usr/local/lib/python3.9/http/client.py", line 1347, in getresponse
+    response.begin()
+  File "/usr/local/lib/python3.9/http/client.py", line 307, in begin
+    version, status, reason = self._read_status()
+  File "/usr/local/lib/python3.9/http/client.py", line 268, in _read_status
+    line = str(self.fp.readline(_MAXLINE + 1), "iso-8859-1")
+  File "/usr/local/lib/python3.9/socket.py", line 704, in readinto
+    return self._sock.recv_into(b)
+KeyboardInterrupt
+
+[02-24-2021-19-09-58][EXCEPTION]: Traceback (most recent call last):
+  File "/home/ubuntu/projects/zeus/src/services/driversadapter/chrome.py", line 213, in getNewInstance
+    driver = webdriver.Chrome(
+  File "/home/ubuntu/.local/lib/python3.9/site-packages/selenium/webdriver/chrome/webdriver.py", line 76, in __init__
+    RemoteWebDriver.__init__(
+  File "/home/ubuntu/.local/lib/python3.9/site-packages/selenium/webdriver/remote/webdriver.py", line 157, in __init__
+    self.start_session(capabilities, browser_profile)
+  File "/home/ubuntu/.local/lib/python3.9/site-packages/selenium/webdriver/remote/webdriver.py", line 252, in start_session
+    response = self.execute(Command.NEW_SESSION, parameters)
+  File "/home/ubuntu/.local/lib/python3.9/site-packages/selenium/webdriver/remote/webdriver.py", line 319, in execute
+    response = self.command_executor.execute(driver_command, params)
+  File "/home/ubuntu/.local/lib/python3.9/site-packages/selenium/webdriver/remote/remote_connection.py", line 374, in execute
+    return self._request(command_info[0], url, body=data)
+  File "/home/ubuntu/.local/lib/python3.9/site-packages/selenium/webdriver/remote/remote_connection.py", line 397, in _request
+    resp = self._conn.request(method, url, body=body, headers=headers)
+  File "/home/ubuntu/.local/lib/python3.9/site-packages/urllib3/request.py", line 78, in request
+    return self.request_encode_body(
+  File "/home/ubuntu/.local/lib/python3.9/site-packages/urllib3/request.py", line 170, in request_encode_body
+    return self.urlopen(method, url, **extra_kw)
+  File "/home/ubuntu/.local/lib/python3.9/site-packages/urllib3/poolmanager.py", line 375, in urlopen
+    response = conn.urlopen(method, u.request_uri, **kw)
+  File "/home/ubuntu/.local/lib/python3.9/site-packages/urllib3/connectionpool.py", line 699, in urlopen
+    httplib_response = self._make_request(
+  File "/home/ubuntu/.local/lib/python3.9/site-packages/urllib3/connectionpool.py", line 445, in _make_request
+    six.raise_from(e, None)
+  File "<string>", line 3, in raise_from
+  File "/home/ubuntu/.local/lib/python3.9/site-packages/urllib3/connectionpool.py", line 440, in _make_request
+    httplib_response = conn.getresponse()
+  File "/usr/local/lib/python3.9/http/client.py", line 1347, in getresponse
+    response.begin()
+  File "/usr/local/lib/python3.9/http/client.py", line 307, in begin
+    version, status, reason = self._read_status()
+  File "/usr/local/lib/python3.9/http/client.py", line 268, in _read_status
+    line = str(self.fp.readline(_MAXLINE + 1), "iso-8859-1")
+  File "/usr/local/lib/python3.9/socket.py", line 704, in readinto
+    return self._sock.recv_into(b)
+KeyboardInterrupt
+
+[02-24-2021-19-09-58][EXCEPTION]: Traceback (most recent call last):
+  File "/home/ubuntu/projects/zeus/src/services/driversadapter/chrome.py", line 213, in getNewInstance
+    driver = webdriver.Chrome(
+  File "/home/ubuntu/.local/lib/python3.9/site-packages/selenium/webdriver/chrome/webdriver.py", line 76, in __init__
+    RemoteWebDriver.__init__(
+  File "/home/ubuntu/.local/lib/python3.9/site-packages/selenium/webdriver/remote/webdriver.py", line 157, in __init__
+    self.start_session(capabilities, browser_profile)
+  File "/home/ubuntu/.local/lib/python3.9/site-packages/selenium/webdriver/remote/webdriver.py", line 252, in start_session
+    response = self.execute(Command.NEW_SESSION, parameters)
+  File "/home/ubuntu/.local/lib/python3.9/site-packages/selenium/webdriver/remote/webdriver.py", line 319, in execute
+    response = self.command_executor.execute(driver_command, params)
+  File "/home/ubuntu/.local/lib/python3.9/site-packages/selenium/webdriver/remote/remote_connection.py", line 374, in execute
+    return self._request(command_info[0], url, body=data)
+  File "/home/ubuntu/.local/lib/python3.9/site-packages/selenium/webdriver/remote/remote_connection.py", line 397, in _request
+    resp = self._conn.request(method, url, body=body, headers=headers)
+  File "/home/ubuntu/.local/lib/python3.9/site-packages/urllib3/request.py", line 78, in request
+    return self.request_encode_body(
+  File "/home/ubuntu/.local/lib/python3.9/site-packages/urllib3/request.py", line 170, in request_encode_body
+    return self.urlopen(method, url, **extra_kw)
+  File "/home/ubuntu/.local/lib/python3.9/site-packages/urllib3/poolmanager.py", line 375, in urlopen
+    response = conn.urlopen(method, u.request_uri, **kw)
+  File "/home/ubuntu/.local/lib/python3.9/site-packages/urllib3/connectionpool.py", line 699, in urlopen
+    httplib_response = self._make_request(
+  File "/home/ubuntu/.local/lib/python3.9/site-packages/urllib3/connectionpool.py", line 445, in _make_request
+    six.raise_from(e, None)
+  File "<string>", line 3, in raise_from
+  File "/home/ubuntu/.local/lib/python3.9/site-packages/urllib3/connectionpool.py", line 440, in _make_request
+    httplib_response = conn.getresponse()
+  File "/usr/local/lib/python3.9/http/client.py", line 1347, in getresponse
+    response.begin()
+  File "/usr/local/lib/python3.9/http/client.py", line 307, in begin
+    version, status, reason = self._read_status()
+  File "/usr/local/lib/python3.9/http/client.py", line 268, in _read_status
+    line = str(self.fp.readline(_MAXLINE + 1), "iso-8859-1")
+  File "/usr/local/lib/python3.9/socket.py", line 704, in readinto
+    return self._sock.recv_into(b)
+KeyboardInterrupt
+
+[02-24-2021-19-09-58][EXCEPTION]: Traceback (most recent call last):
+  File "/home/ubuntu/projects/zeus/src/services/driversadapter/chrome.py", line 213, in getNewInstance
+    driver = webdriver.Chrome(
+  File "/home/ubuntu/.local/lib/python3.9/site-packages/selenium/webdriver/chrome/webdriver.py", line 76, in __init__
+    RemoteWebDriver.__init__(
+  File "/home/ubuntu/.local/lib/python3.9/site-packages/selenium/webdriver/remote/webdriver.py", line 157, in __init__
+    self.start_session(capabilities, browser_profile)
+  File "/home/ubuntu/.local/lib/python3.9/site-packages/selenium/webdriver/remote/webdriver.py", line 252, in start_session
+    response = self.execute(Command.NEW_SESSION, parameters)
+  File "/home/ubuntu/.local/lib/python3.9/site-packages/selenium/webdriver/remote/webdriver.py", line 319, in execute
+    response = self.command_executor.execute(driver_command, params)
+  File "/home/ubuntu/.local/lib/python3.9/site-packages/selenium/webdriver/remote/remote_connection.py", line 374, in execute
+    return self._request(command_info[0], url, body=data)
+  File "/home/ubuntu/.local/lib/python3.9/site-packages/selenium/webdriver/remote/remote_connection.py", line 397, in _request
+    resp = self._conn.request(method, url, body=body, headers=headers)
+  File "/home/ubuntu/.local/lib/python3.9/site-packages/urllib3/request.py", line 78, in request
+    return self.request_encode_body(
+  File "/home/ubuntu/.local/lib/python3.9/site-packages/urllib3/request.py", line 170, in request_encode_body
+    return self.urlopen(method, url, **extra_kw)
+  File "/home/ubuntu/.local/lib/python3.9/site-packages/urllib3/poolmanager.py", line 375, in urlopen
+    response = conn.urlopen(method, u.request_uri, **kw)
+  File "/home/ubuntu/.local/lib/python3.9/site-packages/urllib3/connectionpool.py", line 699, in urlopen
+    httplib_response = self._make_request(
+  File "/home/ubuntu/.local/lib/python3.9/site-packages/urllib3/connectionpool.py", line 445, in _make_request
+    six.raise_from(e, None)
+  File "<string>", line 3, in raise_from
+  File "/home/ubuntu/.local/lib/python3.9/site-packages/urllib3/connectionpool.py", line 440, in _make_request
+    httplib_response = conn.getresponse()
+  File "/usr/local/lib/python3.9/http/client.py", line 1347, in getresponse
+    response.begin()
+  File "/usr/local/lib/python3.9/http/client.py", line 307, in begin
+    version, status, reason = self._read_status()
+  File "/usr/local/lib/python3.9/http/client.py", line 268, in _read_status
+    line = str(self.fp.readline(_MAXLINE + 1), "iso-8859-1")
+  File "/usr/local/lib/python3.9/socket.py", line 704, in readinto
+    return self._sock.recv_into(b)
+KeyboardInterrupt
+
+[02-24-2021-19-09-58][EXCEPTION]: Traceback (most recent call last):
+  File "/home/ubuntu/projects/zeus/src/services/driversadapter/chrome.py", line 213, in getNewInstance
+    driver = webdriver.Chrome(
+  File "/home/ubuntu/.local/lib/python3.9/site-packages/selenium/webdriver/chrome/webdriver.py", line 76, in __init__
+    RemoteWebDriver.__init__(
+  File "/home/ubuntu/.local/lib/python3.9/site-packages/selenium/webdriver/remote/webdriver.py", line 157, in __init__
+    self.start_session(capabilities, browser_profile)
+  File "/home/ubuntu/.local/lib/python3.9/site-packages/selenium/webdriver/remote/webdriver.py", line 252, in start_session
+    response = self.execute(Command.NEW_SESSION, parameters)
+  File "/home/ubuntu/.local/lib/python3.9/site-packages/selenium/webdriver/remote/webdriver.py", line 319, in execute
+    response = self.command_executor.execute(driver_command, params)
+  File "/home/ubuntu/.local/lib/python3.9/site-packages/selenium/webdriver/remote/remote_connection.py", line 374, in execute
+    return self._request(command_info[0], url, body=data)
+  File "/home/ubuntu/.local/lib/python3.9/site-packages/selenium/webdriver/remote/remote_connection.py", line 397, in _request
+    resp = self._conn.request(method, url, body=body, headers=headers)
+  File "/home/ubuntu/.local/lib/python3.9/site-packages/urllib3/request.py", line 78, in request
+    return self.request_encode_body(
+  File "/home/ubuntu/.local/lib/python3.9/site-packages/urllib3/request.py", line 170, in request_encode_body
+    return self.urlopen(method, url, **extra_kw)
+  File "/home/ubuntu/.local/lib/python3.9/site-packages/urllib3/poolmanager.py", line 375, in urlopen
+    response = conn.urlopen(method, u.request_uri, **kw)
+  File "/home/ubuntu/.local/lib/python3.9/site-packages/urllib3/connectionpool.py", line 699, in urlopen
+    httplib_response = self._make_request(
+  File "/home/ubuntu/.local/lib/python3.9/site-packages/urllib3/connectionpool.py", line 445, in _make_request
+    six.raise_from(e, None)
+  File "<string>", line 3, in raise_from
+  File "/home/ubuntu/.local/lib/python3.9/site-packages/urllib3/connectionpool.py", line 440, in _make_request
+    httplib_response = conn.getresponse()
+  File "/usr/local/lib/python3.9/http/client.py", line 1347, in getresponse
+    response.begin()
+  File "/usr/local/lib/python3.9/http/client.py", line 307, in begin
+    version, status, reason = self._read_status()
+  File "/usr/local/lib/python3.9/http/client.py", line 268, in _read_status
+    line = str(self.fp.readline(_MAXLINE + 1), "iso-8859-1")
+  File "/usr/local/lib/python3.9/socket.py", line 704, in readinto
+    return self._sock.recv_into(b)
+KeyboardInterrupt
+
+[02-24-2021-19-09-58][EXCEPTION]: Driver unavailable
+Traceback (most recent call last):
+  File "/home/ubuntu/projects/zeus/sp-listener.py", line 140, in run
+    driverManager = DriverManager(console, shutdownEvent)
+  File "/home/ubuntu/projects/zeus/src/services/drivers.py", line 9, in __init__
+    self.chrome = ChromeDriverAdapter(console=console, startService=startService)
+  File "/home/ubuntu/projects/zeus/src/services/driversadapter/chrome.py", line 65, in __init__
+    sleep(1)
+KeyboardInterrupt
+
+[02-24-2021-19-09-58][EXCEPTION]: Traceback (most recent call last):
+  File "/home/ubuntu/projects/zeus/src/services/driversadapter/chrome.py", line 213, in getNewInstance
+    driver = webdriver.Chrome(
+  File "/home/ubuntu/.local/lib/python3.9/site-packages/selenium/webdriver/chrome/webdriver.py", line 76, in __init__
+    RemoteWebDriver.__init__(
+  File "/home/ubuntu/.local/lib/python3.9/site-packages/selenium/webdriver/remote/webdriver.py", line 157, in __init__
+    self.start_session(capabilities, browser_profile)
+  File "/home/ubuntu/.local/lib/python3.9/site-packages/selenium/webdriver/remote/webdriver.py", line 252, in start_session
+    response = self.execute(Command.NEW_SESSION, parameters)
+  File "/home/ubuntu/.local/lib/python3.9/site-packages/selenium/webdriver/remote/webdriver.py", line 319, in execute
+    response = self.command_executor.execute(driver_command, params)
+  File "/home/ubuntu/.local/lib/python3.9/site-packages/selenium/webdriver/remote/remote_connection.py", line 374, in execute
+    return self._request(command_info[0], url, body=data)
+  File "/home/ubuntu/.local/lib/python3.9/site-packages/selenium/webdriver/remote/remote_connection.py", line 397, in _request
+    resp = self._conn.request(method, url, body=body, headers=headers)
+  File "/home/ubuntu/.local/lib/python3.9/site-packages/urllib3/request.py", line 78, in request
+    return self.request_encode_body(
+  File "/home/ubuntu/.local/lib/python3.9/site-packages/urllib3/request.py", line 170, in request_encode_body
+    return self.urlopen(method, url, **extra_kw)
+  File "/home/ubuntu/.local/lib/python3.9/site-packages/urllib3/poolmanager.py", line 375, in urlopen
+    response = conn.urlopen(method, u.request_uri, **kw)
+  File "/home/ubuntu/.local/lib/python3.9/site-packages/urllib3/connectionpool.py", line 699, in urlopen
+    httplib_response = self._make_request(
+  File "/home/ubuntu/.local/lib/python3.9/site-packages/urllib3/connectionpool.py", line 445, in _make_request
+    six.raise_from(e, None)
+  File "<string>", line 3, in raise_from
+  File "/home/ubuntu/.local/lib/python3.9/site-packages/urllib3/connectionpool.py", line 440, in _make_request
+    httplib_response = conn.getresponse()
+  File "/usr/local/lib/python3.9/http/client.py", line 1347, in getresponse
+    response.begin()
+  File "/usr/local/lib/python3.9/http/client.py", line 307, in begin
+    version, status, reason = self._read_status()
+  File "/usr/local/lib/python3.9/http/client.py", line 268, in _read_status
+    line = str(self.fp.readline(_MAXLINE + 1), "iso-8859-1")
+  File "/usr/local/lib/python3.9/socket.py", line 704, in readinto
+    return self._sock.recv_into(b)
+KeyboardInterrupt
+
+[02-24-2021-19-09-58][EXCEPTION]: Traceback (most recent call last):
+  File "/home/ubuntu/projects/zeus/src/services/driversadapter/chrome.py", line 213, in getNewInstance
+    driver = webdriver.Chrome(
+  File "/home/ubuntu/.local/lib/python3.9/site-packages/selenium/webdriver/chrome/webdriver.py", line 76, in __init__
+    RemoteWebDriver.__init__(
+  File "/home/ubuntu/.local/lib/python3.9/site-packages/selenium/webdriver/remote/webdriver.py", line 157, in __init__
+    self.start_session(capabilities, browser_profile)
+  File "/home/ubuntu/.local/lib/python3.9/site-packages/selenium/webdriver/remote/webdriver.py", line 252, in start_session
+    response = self.execute(Command.NEW_SESSION, parameters)
+  File "/home/ubuntu/.local/lib/python3.9/site-packages/selenium/webdriver/remote/webdriver.py", line 319, in execute
+    response = self.command_executor.execute(driver_command, params)
+  File "/home/ubuntu/.local/lib/python3.9/site-packages/selenium/webdriver/remote/remote_connection.py", line 374, in execute
+    return self._request(command_info[0], url, body=data)
+  File "/home/ubuntu/.local/lib/python3.9/site-packages/selenium/webdriver/remote/remote_connection.py", line 397, in _request
+    resp = self._conn.request(method, url, body=body, headers=headers)
+  File "/home/ubuntu/.local/lib/python3.9/site-packages/urllib3/request.py", line 78, in request
+    return self.request_encode_body(
+  File "/home/ubuntu/.local/lib/python3.9/site-packages/urllib3/request.py", line 170, in request_encode_body
+    return self.urlopen(method, url, **extra_kw)
+  File "/home/ubuntu/.local/lib/python3.9/site-packages/urllib3/poolmanager.py", line 375, in urlopen
+    response = conn.urlopen(method, u.request_uri, **kw)
+  File "/home/ubuntu/.local/lib/python3.9/site-packages/urllib3/connectionpool.py", line 699, in urlopen
+    httplib_response = self._make_request(
+  File "/home/ubuntu/.local/lib/python3.9/site-packages/urllib3/connectionpool.py", line 445, in _make_request
+    six.raise_from(e, None)
+  File "<string>", line 3, in raise_from
+  File "/home/ubuntu/.local/lib/python3.9/site-packages/urllib3/connectionpool.py", line 440, in _make_request
+    httplib_response = conn.getresponse()
+  File "/usr/local/lib/python3.9/http/client.py", line 1347, in getresponse
+    response.begin()
+  File "/usr/local/lib/python3.9/http/client.py", line 307, in begin
+    version, status, reason = self._read_status()
+  File "/usr/local/lib/python3.9/http/client.py", line 268, in _read_status
+    line = str(self.fp.readline(_MAXLINE + 1), "iso-8859-1")
+  File "/usr/local/lib/python3.9/socket.py", line 704, in readinto
+    return self._sock.recv_into(b)
+KeyboardInterrupt
+
+[02-24-2021-19-09-58][EXCEPTION]: Traceback (most recent call last):
+  File "/home/ubuntu/projects/zeus/src/services/driversadapter/chrome.py", line 225, in getNewInstance
+    driver.execute_script(script)
+  File "/home/ubuntu/.local/lib/python3.9/site-packages/selenium/webdriver/remote/webdriver.py", line 634, in execute_script
+    return self.execute(command, {
+  File "/home/ubuntu/.local/lib/python3.9/site-packages/selenium/webdriver/remote/webdriver.py", line 319, in execute
+    response = self.command_executor.execute(driver_command, params)
+  File "/home/ubuntu/.local/lib/python3.9/site-packages/selenium/webdriver/remote/remote_connection.py", line 374, in execute
+    return self._request(command_info[0], url, body=data)
+  File "/home/ubuntu/.local/lib/python3.9/site-packages/selenium/webdriver/remote/remote_connection.py", line 397, in _request
+    resp = self._conn.request(method, url, body=body, headers=headers)
+  File "/home/ubuntu/.local/lib/python3.9/site-packages/urllib3/request.py", line 78, in request
+    return self.request_encode_body(
+  File "/home/ubuntu/.local/lib/python3.9/site-packages/urllib3/request.py", line 170, in request_encode_body
+    return self.urlopen(method, url, **extra_kw)
+  File "/home/ubuntu/.local/lib/python3.9/site-packages/urllib3/poolmanager.py", line 375, in urlopen
+    response = conn.urlopen(method, u.request_uri, **kw)
+  File "/home/ubuntu/.local/lib/python3.9/site-packages/urllib3/connectionpool.py", line 699, in urlopen
+    httplib_response = self._make_request(
+  File "/home/ubuntu/.local/lib/python3.9/site-packages/urllib3/connectionpool.py", line 445, in _make_request
+    six.raise_from(e, None)
+  File "<string>", line 3, in raise_from
+  File "/home/ubuntu/.local/lib/python3.9/site-packages/urllib3/connectionpool.py", line 440, in _make_request
+    httplib_response = conn.getresponse()
+  File "/usr/local/lib/python3.9/http/client.py", line 1347, in getresponse
+    response.begin()
+  File "/usr/local/lib/python3.9/http/client.py", line 307, in begin
+    version, status, reason = self._read_status()
+  File "/usr/local/lib/python3.9/http/client.py", line 268, in _read_status
+    line = str(self.fp.readline(_MAXLINE + 1), "iso-8859-1")
+  File "/usr/local/lib/python3.9/socket.py", line 704, in readinto
+    return self._sock.recv_into(b)
+KeyboardInterrupt
+
+[02-24-2021-19-09-58][EXCEPTION]: Traceback (most recent call last):
+  File "/home/ubuntu/projects/zeus/src/services/driversadapter/chrome.py", line 213, in getNewInstance
+    driver = webdriver.Chrome(
+  File "/home/ubuntu/.local/lib/python3.9/site-packages/selenium/webdriver/chrome/webdriver.py", line 73, in __init__
+    self.service.start()
+  File "/home/ubuntu/.local/lib/python3.9/site-packages/selenium/webdriver/common/service.py", line 72, in start
+    self.process = subprocess.Popen(cmd, env=self.env,
+  File "/usr/local/lib/python3.9/subprocess.py", line 947, in __init__
+    self._execute_child(args, executable, preexec_fn, close_fds,
+  File "/usr/local/lib/python3.9/subprocess.py", line 1775, in _execute_child
+    part = os.read(errpipe_read, 50000)
+KeyboardInterrupt
+
+[02-24-2021-19-09-58][EXCEPTION]: Traceback (most recent call last):
+  File "/home/ubuntu/projects/zeus/src/services/driversadapter/chrome.py", line 213, in getNewInstance
+    driver = webdriver.Chrome(
+  File "/home/ubuntu/.local/lib/python3.9/site-packages/selenium/webdriver/chrome/webdriver.py", line 73, in __init__
+    self.service.start()
+  File "/home/ubuntu/.local/lib/python3.9/site-packages/selenium/webdriver/common/service.py", line 72, in start
+    self.process = subprocess.Popen(cmd, env=self.env,
+  File "/usr/local/lib/python3.9/subprocess.py", line 947, in __init__
+    self._execute_child(args, executable, preexec_fn, close_fds,
+  File "/usr/local/lib/python3.9/subprocess.py", line 1775, in _execute_child
+    part = os.read(errpipe_read, 50000)
+KeyboardInterrupt
+
+[02-24-2021-19-09-58][EXCEPTION]: Driver unavailable
+Traceback (most recent call last):
+  File "/home/ubuntu/projects/zeus/sp-listener.py", line 140, in run
+    driverManager = DriverManager(console, shutdownEvent)
+  File "/home/ubuntu/projects/zeus/src/services/drivers.py", line 9, in __init__
+    self.chrome = ChromeDriverAdapter(console=console, startService=startService)
+  File "/home/ubuntu/projects/zeus/src/services/driversadapter/chrome.py", line 61, in __init__
+    bv = version('google-chrome')
+  File "/home/ubuntu/projects/zeus/src/services/bash.py", line 10, in version
+    return bash([name, '--version']).split(' ')
+  File "/home/ubuntu/projects/zeus/src/services/bash.py", line 6, in bash
+    result = subprocess.run(cmd, stdout=subprocess.PIPE)
+  File "/usr/local/lib/python3.9/subprocess.py", line 503, in run
+    stdout, stderr = process.communicate(input, timeout=timeout)
+  File "/usr/local/lib/python3.9/subprocess.py", line 1117, in communicate
+    stdout = self.stdout.read()
+KeyboardInterrupt
+
+[02-24-2021-19-09-58][EXCEPTION]: Driver unavailable
+Traceback (most recent call last):
+  File "/home/ubuntu/projects/zeus/sp-listener.py", line 140, in run
+    driverManager = DriverManager(console, shutdownEvent)
+  File "/home/ubuntu/projects/zeus/src/services/drivers.py", line 9, in __init__
+    self.chrome = ChromeDriverAdapter(console=console, startService=startService)
+  File "/home/ubuntu/projects/zeus/src/services/driversadapter/chrome.py", line 61, in __init__
+    bv = version('google-chrome')
+  File "/home/ubuntu/projects/zeus/src/services/bash.py", line 10, in version
+    return bash([name, '--version']).split(' ')
+  File "/home/ubuntu/projects/zeus/src/services/bash.py", line 6, in bash
+    result = subprocess.run(cmd, stdout=subprocess.PIPE)
+  File "/usr/local/lib/python3.9/subprocess.py", line 503, in run
+    stdout, stderr = process.communicate(input, timeout=timeout)
+  File "/usr/local/lib/python3.9/subprocess.py", line 1117, in communicate
+    stdout = self.stdout.read()
+KeyboardInterrupt
+
+[02-24-2021-19-09-59][LOG]: #823718 Played
+[02-24-2021-19-10-00][EXCEPTION]: Driver unavailable
+Traceback (most recent call last):
+  File "/home/ubuntu/projects/zeus/sp-listener.py", line 149, in run
+    raise Exception('No driverData was returned from adapter')
+Exception: No driverData was returned from adapter
+
+[02-24-2021-19-10-00][EXCEPTION]: Driver unavailable
+Traceback (most recent call last):
+  File "/home/ubuntu/projects/zeus/sp-listener.py", line 149, in run
+    raise Exception('No driverData was returned from adapter')
+Exception: No driverData was returned from adapter
+
+[02-24-2021-19-10-01][EXCEPTION]: Driver unavailable
+Traceback (most recent call last):
+  File "/home/ubuntu/projects/zeus/sp-listener.py", line 149, in run
+    raise Exception('No driverData was returned from adapter')
+Exception: No driverData was returned from adapter
+
+[02-24-2021-19-10-01][EXCEPTION]: Driver unavailable
+Traceback (most recent call last):
+  File "/home/ubuntu/projects/zeus/sp-listener.py", line 149, in run
+    raise Exception('No driverData was returned from adapter')
+Exception: No driverData was returned from adapter
+
+[02-24-2021-19-10-01][EXCEPTION]: Driver unavailable
+Traceback (most recent call last):
+  File "/home/ubuntu/projects/zeus/sp-listener.py", line 149, in run
+    raise Exception('No driverData was returned from adapter')
+Exception: No driverData was returned from adapter
+
+[02-24-2021-19-10-01][EXCEPTION]: Driver unavailable
+Traceback (most recent call last):
+  File "/home/ubuntu/projects/zeus/sp-listener.py", line 149, in run
+    raise Exception('No driverData was returned from adapter')
+Exception: No driverData was returned from adapter
+
+[02-24-2021-19-10-01][EXCEPTION]: Driver unavailable
+Traceback (most recent call last):
+  File "/home/ubuntu/projects/zeus/sp-listener.py", line 149, in run
+    raise Exception('No driverData was returned from adapter')
+Exception: No driverData was returned from adapter
+
+[02-24-2021-19-10-01][EXCEPTION]: Driver unavailable
+Traceback (most recent call last):
+  File "/home/ubuntu/projects/zeus/sp-listener.py", line 149, in run
+    raise Exception('No driverData was returned from adapter')
+Exception: No driverData was returned from adapter
+
+[02-24-2021-19-10-01][EXCEPTION]: Driver unavailable
+Traceback (most recent call last):
+  File "/home/ubuntu/projects/zeus/sp-listener.py", line 149, in run
+    raise Exception('No driverData was returned from adapter')
+Exception: No driverData was returned from adapter
+
+[02-24-2021-19-10-01][EXCEPTION]: Driver unavailable
+Traceback (most recent call last):
+  File "/home/ubuntu/projects/zeus/sp-listener.py", line 149, in run
+    raise Exception('No driverData was returned from adapter')
+Exception: No driverData was returned from adapter
+
+[02-24-2021-19-12-14][LOG]: #849849 Start
+[02-24-2021-19-12-49][LOG]: #849953 Start
+[02-24-2021-19-13-11][LOG]: #850397 Start
+[02-24-2021-19-13-33][LOG]: #850842 Start
+[02-24-2021-19-13-57][LOG]: #851287 Start
+[02-24-2021-19-14-18][LOG]: #851750 Start
+[02-24-2021-19-14-40][LOG]: #852208 Start
+[02-24-2021-19-15-15][LOG]: #852466 Start
+[02-24-2021-19-20-51][LOG]: #853292 Start
+[02-24-2021-19-21-17][LOG]: #853753 Start
+[02-24-2021-19-21-17][LOG]: #853801 Start
+[02-24-2021-19-21-18][LOG]: #853850 Start
+[02-24-2021-19-21-18][LOG]: #853903 Start
+[02-24-2021-19-21-19][LOG]: #853956 Start
+[02-24-2021-19-21-19][LOG]: #854146 Start
+[02-24-2021-19-21-20][LOG]: #854357 Start
+[02-24-2021-19-21-20][LOG]: #854546 Start
+[02-24-2021-19-21-21][LOG]: #854763 Start
+[02-24-2021-19-21-21][LOG]: #855365 Start
+[02-24-2021-19-21-22][LOG]: #855615 Start
+[02-24-2021-19-21-22][LOG]: #855849 Start
+[02-24-2021-19-21-23][LOG]: #856256 Start
+[02-24-2021-19-21-23][LOG]: #856457 Start
+[02-24-2021-19-21-24][LOG]: #856867 Start
+[02-24-2021-19-21-24][LOG]: #857095 Start
+[02-24-2021-19-21-25][LOG]: #857315 Start
+[02-24-2021-19-21-26][LOG]: #857695 Start
+[02-24-2021-19-21-26][LOG]: #857954 Start
+[02-24-2021-19-21-27][LOG]: #858383 Start
+[02-24-2021-19-21-27][LOG]: #858612 Start
+[02-24-2021-19-21-28][LOG]: #859021 Start
+[02-24-2021-19-21-28][LOG]: #859448 Start
+[02-24-2021-19-21-29][LOG]: #859788 Start
+[02-24-2021-19-21-29][LOG]: #860329 Start
+[02-24-2021-19-21-30][LOG]: #860703 Start
+[02-24-2021-19-21-30][LOG]: #860933 Start
+[02-24-2021-19-21-31][LOG]: #861157 Start
+[02-24-2021-19-21-31][LOG]: #861642 Start
+[02-24-2021-19-21-32][LOG]: #861960 Start
+[02-24-2021-19-21-32][LOG]: #862246 Start
+[02-24-2021-19-21-33][LOG]: #862586 Start
+[02-24-2021-19-21-33][LOG]: #863177 Start
+[02-24-2021-19-21-34][LOG]: #863658 Start
+[02-24-2021-19-21-35][LOG]: #864197 Start
+[02-24-2021-19-21-35][LOG]: #864607 Start
+[02-24-2021-19-21-36][LOG]: #864836 Start
+[02-24-2021-19-21-36][LOG]: #865491 Start
+[02-24-2021-19-21-37][LOG]: #865846 Start
+[02-24-2021-19-21-37][LOG]: #866102 Start
+[02-24-2021-19-21-38][LOG]: #866625 Start
+[02-24-2021-19-21-38][LOG]: #853753 Logged In
+[02-24-2021-19-21-38][LOG]: #853801 Logged In
+[02-24-2021-19-21-38][LOG]: #853903 Logged In
+[02-24-2021-19-21-38][LOG]: #866935 Start
+[02-24-2021-19-21-39][LOG]: #867227 Start
+[02-24-2021-19-21-39][LOG]: #853850 Logged In
+[02-24-2021-19-21-39][LOG]: #853956 Logged In
+[02-24-2021-19-21-39][LOG]: #867589 Start
+[02-24-2021-19-21-40][LOG]: #867917 Start
+[02-24-2021-19-21-41][LOG]: #868220 Start
+[02-24-2021-19-21-41][LOG]: #854763 Logged In
+[02-24-2021-19-21-41][LOG]: #868689 Start
+[02-24-2021-19-21-42][LOG]: #854546 Logged In
+[02-24-2021-19-21-42][LOG]: #869151 Start
+[02-24-2021-19-21-42][LOG]: #855615 Logged In
+[02-24-2021-19-21-42][LOG]: #869463 Start
+[02-24-2021-19-21-43][LOG]: #855365 Logged In
+[02-24-2021-19-21-43][LOG]: #855849 Logged In
+[02-24-2021-19-21-43][LOG]: #869827 Start
+[02-24-2021-19-21-43][LOG]: #856256 Logged In
+[02-24-2021-19-21-43][LOG]: #870254 Start
+[02-24-2021-19-21-44][LOG]: #856457 Logged In
+[02-24-2021-19-21-44][LOG]: #870517 Start
+[02-24-2021-19-21-45][LOG]: #870840 Start
+[02-24-2021-19-21-45][LOG]: #857095 Logged In
+[02-24-2021-19-21-45][LOG]: #871230 Start
+[02-24-2021-19-21-45][LOG]: #856867 Logged In
+[02-24-2021-19-21-46][LOG]: #857315 Logged In
+[02-24-2021-19-21-46][LOG]: #871672 Start
+[02-24-2021-19-21-46][LOG]: #871936 Start
+[02-24-2021-19-21-47][LOG]: #857954 Logged In
+[02-24-2021-19-21-47][LOG]: #872275 Start
+[02-24-2021-19-21-47][LOG]: #858383 Logged In
+[02-24-2021-19-21-47][LOG]: #872620 Start
+[02-24-2021-19-21-48][LOG]: #872952 Start
+[02-24-2021-19-21-48][LOG]: #857695 Logged In
+[02-24-2021-19-21-49][LOG]: #873291 Start
+[02-24-2021-19-21-49][LOG]: #873568 Start
+[02-24-2021-19-21-49][LOG]: #859021 Logged In
+[02-24-2021-19-21-50][LOG]: #873906 Start
+[02-24-2021-19-21-50][LOG]: #859788 Logged In
+[02-24-2021-19-21-50][LOG]: #859448 Logged In
+[02-24-2021-19-21-50][LOG]: #874307 Start
+[02-24-2021-19-21-50][LOG]: #858612 Logged In
+[02-24-2021-19-21-51][LOG]: #860703 Logged In
+[02-24-2021-19-21-51][LOG]: #874659 Start
+[02-24-2021-19-21-52][LOG]: #875024 Start
+[02-24-2021-19-21-52][LOG]: #875368 Start
+[02-24-2021-19-21-53][LOG]: #875607 Start
+[02-24-2021-19-21-53][LOG]: #860933 Logged In
+[02-24-2021-19-21-53][LOG]: #861960 Logged In
+[02-24-2021-19-21-53][LOG]: #875967 Start
+[02-24-2021-19-21-54][LOG]: #862246 Logged In
+[02-24-2021-19-21-54][LOG]: #876453 Start
+[02-24-2021-19-21-54][LOG]: #876754 Start
+[02-24-2021-19-21-55][LOG]: #876993 Start
+[02-24-2021-19-21-55][LOG]: #861157 Logged In
+[02-24-2021-19-21-55][LOG]: #861642 Logged In
+[02-24-2021-19-21-55][LOG]: #877237 Start
+[02-24-2021-19-21-55][LOG]: #863658 Logged In
+[02-24-2021-19-21-56][LOG]: #862586 Logged In
+[02-24-2021-19-21-56][LOG]: #877427 Start
+[02-24-2021-19-21-57][LOG]: #877781 Start
+[02-24-2021-19-21-57][LOG]: #863177 Logged In
+[02-24-2021-19-21-57][LOG]: #878028 Start
+[02-24-2021-19-21-58][LOG]: #878415 Start
+[02-24-2021-19-21-58][LOG]: #864607 Logged In
+[02-24-2021-19-21-58][LOG]: #864197 Logged In
+[02-24-2021-19-21-58][LOG]: #878655 Start
+[02-24-2021-19-21-58][LOG]: #864836 Logged In
+[02-24-2021-19-21-59][LOG]: #878993 Start
+[02-24-2021-19-22-00][LOG]: #879246 Start
+[02-24-2021-19-22-00][LOG]: #865491 Logged In
+[02-24-2021-19-22-00][LOG]: #879679 Start
+[02-24-2021-19-22-01][LOG]: #879902 Start
+[02-24-2021-19-22-02][LOG]: #880263 Start
+[02-24-2021-19-22-02][LOG]: #880516 Start
+[02-24-2021-19-22-03][LOG]: #880868 Start
+[02-24-2021-19-22-03][LOG]: #881225 Start
+[02-24-2021-19-22-04][LOG]: #881570 Start
+[02-24-2021-19-22-04][LOG]: #881984 Start
+[02-24-2021-19-22-05][LOG]: #866102 Logged In
+[02-24-2021-19-22-05][LOG]: #882406 Start
+[02-24-2021-19-22-06][LOG]: #882720 Start
+[02-24-2021-19-22-06][LOG]: #866625 Logged In
+[02-24-2021-19-22-06][LOG]: #883027 Start
+[02-24-2021-19-22-07][LOG]: #883344 Start
+[02-24-2021-19-22-08][LOG]: #866935 Logged In
+[02-24-2021-19-22-08][LOG]: #883904 Start
+[02-24-2021-19-22-09][LOG]: #884385 Start
+[02-24-2021-19-22-09][LOG]: #884692 Start
+[02-24-2021-19-22-10][LOG]: #885085 Start
+[02-24-2021-19-22-10][LOG]: #885455 Start
+[02-24-2021-19-22-11][LOG]: #885776 Start
+[02-24-2021-19-22-12][LOG]: #886149 Start
+[02-24-2021-19-22-12][LOG]: #886656 Start
+[02-24-2021-19-22-13][LOG]: #887054 Start
+[02-24-2021-19-22-14][LOG]: #867227 Logged In
+[02-24-2021-19-22-14][LOG]: #887365 Start
+[02-24-2021-19-22-15][LOG]: #887811 Start
+[02-24-2021-19-22-15][LOG]: #888036 Start
+[02-24-2021-19-22-16][LOG]: #867917 Logged In
+[02-24-2021-19-22-16][LOG]: #888293 Start
+[02-24-2021-19-22-17][LOG]: #867589 Logged In
+[02-24-2021-19-22-18][LOG]: #868689 Logged In
+[02-24-2021-19-22-20][LOG]: #890192 Start
+[02-24-2021-19-22-24][LOG]: #869151 Logged In
+[02-24-2021-19-22-27][LOG]: #870840 Logged In
+[02-24-2021-19-22-29][LOG]: #869463 Logged In
+[02-24-2021-19-22-29][LOG]: #870517 Logged In
+[02-24-2021-19-22-33][LOG]: #870254 Logged In
+[02-24-2021-19-22-34][LOG]: #895630 Start
+[02-24-2021-19-22-35][LOG]: #871672 Logged In
+[02-24-2021-19-22-36][LOG]: #872620 Logged In
+[02-24-2021-19-22-38][LOG]: #871230 Logged In
+[02-24-2021-19-22-40][LOG]: #873568 Logged In
+[02-24-2021-19-22-42][LOG]: #871936 Logged In
+[02-24-2021-19-22-43][LOG]: #872275 Logged In
+[02-24-2021-19-22-44][LOG]: #872952 Logged In
+[02-24-2021-19-22-45][LOG]: #873291 Logged In
+[02-24-2021-19-22-47][LOG]: #874307 Logged In
+[02-24-2021-19-22-48][LOG]: #874659 Logged In
+[02-24-2021-19-22-52][LOG]: #875368 Logged In
+[02-24-2021-19-22-56][LOG]: #875607 Logged In
+[02-24-2021-19-22-58][LOG]: #876754 Logged In
+[02-24-2021-19-22-59][LOG]: #877427 Logged In
+[02-24-2021-19-22-59][LOG]: #877781 Logged In
+[02-24-2021-19-23-00][LOG]: #875024 Logged In
+[02-24-2021-19-23-01][LOG]: #878993 Logged In
+[02-24-2021-19-23-02][LOG]: #876453 Logged In
+[02-24-2021-19-23-02][LOG]: #876993 Logged In
+[02-24-2021-19-23-03][LOG]: #878415 Logged In
+[02-24-2021-19-23-04][LOG]: #878655 Logged In
+[02-24-2021-19-23-05][LOG]: #881225 Logged In
+[02-24-2021-19-23-05][LOG]: #879679 Logged In
+[02-24-2021-19-23-06][LOG]: #903691 Start
+[02-24-2021-19-23-09][LOG]: #879246 Logged In
+[02-24-2021-19-23-09][LOG]: #904094 Start
+[02-24-2021-19-23-11][LOG]: #880516 Logged In
+[02-24-2021-19-23-11][LOG]: #879902 Logged In
+[02-24-2021-19-23-11][LOG]: #878028 Logged In
+[02-24-2021-19-23-13][LOG]: #881984 Logged In
+[02-24-2021-19-23-13][LOG]: #883904 Logged In
+[02-24-2021-19-23-14][LOG]: #882720 Logged In
+[02-24-2021-19-23-14][LOG]: #880868 Logged In
+[02-24-2021-19-23-15][LOG]: #885085 Logged In
+[02-24-2021-19-23-15][LOG]: #883344 Logged In
+[02-24-2021-19-23-15][LOG]: #904834 Start
+[02-24-2021-19-23-16][LOG]: #880263 Logged In
+[02-24-2021-19-23-17][LOG]: #883027 Logged In
+[02-24-2021-19-23-18][LOG]: #882406 Logged In
+[02-24-2021-19-23-21][LOG]: #884385 Logged In
+[02-24-2021-19-23-21][LOG]: #905388 Start
+[02-24-2021-19-23-22][LOG]: #885776 Logged In
+[02-24-2021-19-23-23][LOG]: #885455 Logged In
+[02-24-2021-19-23-25][LOG]: #887811 Logged In
+[02-24-2021-19-23-26][LOG]: #887054 Logged In
+[02-24-2021-19-23-27][LOG]: #886656 Logged In
+[02-24-2021-19-23-27][LOG]: #884692 Logged In
+[02-24-2021-19-23-28][LOG]: #890192 Logged In
+[02-24-2021-19-23-30][LOG]: #888036 Logged In
+[02-24-2021-19-23-31][LOG]: #853801 Played
+[02-24-2021-19-23-31][LOG]: #888293 Logged In
+[02-24-2021-19-23-34][LOG]: #906942 Start
+[02-24-2021-19-23-36][LOG]: #886149 Logged In
+[02-24-2021-19-23-43][LOG]: #853753 Played
+[02-24-2021-19-23-45][LOG]: #853903 Played
+[02-24-2021-19-23-46][LOG]: #908597 Start
+[02-24-2021-19-23-47][LOG]: #895630 Logged In
+[02-24-2021-19-23-49][LOG]: #908926 Start
+[02-24-2021-19-23-50][LOG]: #909166 Start
+[02-24-2021-19-23-52][LOG]: #853850 Played
+[02-24-2021-19-23-55][LOG]: #853956 Played
+[02-24-2021-19-23-56][LOG]: #855615 Played
+[02-24-2021-19-23-57][LOG]: #910029 Start
+[02-24-2021-19-23-58][LOG]: #910271 Start
+[02-24-2021-19-24-02][LOG]: #910849 Start
+[02-24-2021-19-24-04][LOG]: #855849 Played
+[02-24-2021-19-24-08][LOG]: #854546 Played
+[02-24-2021-19-24-08][LOG]: #911788 Start
+[02-24-2021-19-24-16][LOG]: #912674 Start
+[02-24-2021-19-24-17][LOG]: #855365 Played
+[02-24-2021-19-24-17][LOG]: #903691 Logged In
+[02-24-2021-19-24-18][LOG]: #904094 Logged In
+[02-24-2021-19-24-20][LOG]: #854763 Played
+[02-24-2021-19-24-22][LOG]: #913296 Start
+[02-24-2021-19-24-23][LOG]: #857954 Played
+[02-24-2021-19-24-23][LOG]: #857095 Played
+[02-24-2021-19-24-27][LOG]: #913924 Start
+[02-24-2021-19-24-27][LOG]: #914011 Start
+[02-24-2021-19-24-29][LOG]: #904834 Logged In
+[02-24-2021-19-24-29][LOG]: #914273 Start
+[02-24-2021-19-24-29][LOG]: #856867 Played
+[02-24-2021-19-24-30][LOG]: #859021 Played
+[02-24-2021-19-24-30][LOG]: #857315 Played
+[02-24-2021-19-24-32][LOG]: #858612 Played
+[02-24-2021-19-24-32][LOG]: #914797 Start
+[02-24-2021-19-24-33][LOG]: #858383 Played
+[02-24-2021-19-24-33][LOG]: #856256 Played
+[02-24-2021-19-24-34][LOG]: #915022 Start
+[02-24-2021-19-24-36][LOG]: #915303 Start
+[02-24-2021-19-24-37][LOG]: #905388 Logged In
+[02-24-2021-19-24-37][LOG]: #915569 Start
+[02-24-2021-19-24-38][LOG]: #915722 Start
+[02-24-2021-19-24-39][LOG]: #861960 Played
+[02-24-2021-19-24-39][LOG]: #856457 Played
+[02-24-2021-19-24-40][LOG]: #859448 Played
+[02-24-2021-19-24-40][LOG]: #916126 Start
+[02-24-2021-19-24-42][LOG]: #916439 Start
+[02-24-2021-19-24-44][LOG]: #916607 Start
+[02-24-2021-19-24-44][LOG]: #860933 Played
+[02-24-2021-19-24-44][LOG]: #916784 Start
+[02-24-2021-19-24-45][LOG]: #906942 Logged In
+[02-24-2021-19-24-47][LOG]: #857695 Played
+[02-24-2021-19-24-48][LOG]: #860703 Played
+[02-24-2021-19-24-49][LOG]: #917697 Start
+[02-24-2021-19-24-52][LOG]: #918448 Start
+[02-24-2021-19-24-54][LOG]: #859788 Played
+[02-24-2021-19-24-55][LOG]: #862586 Played
+[02-24-2021-19-24-58][LOG]: #864197 Played
+[02-24-2021-19-24-58][LOG]: #919539 Start
+[02-24-2021-19-24-59][LOG]: #865491 Played
+[02-24-2021-19-24-59][LOG]: #919682 Start
+[02-24-2021-19-25-00][LOG]: #919808 Start
+[02-24-2021-19-25-01][LOG]: #861642 Played
+[02-24-2021-19-25-02][LOG]: #861157 Played
+[02-24-2021-19-25-03][LOG]: #908926 Logged In
+[02-24-2021-19-25-03][LOG]: #909166 Logged In
+[02-24-2021-19-25-03][LOG]: #920403 Start
+[02-24-2021-19-25-03][LOG]: #863177 Played
+[02-24-2021-19-25-05][LOG]: #864607 Played
+[02-24-2021-19-25-05][LOG]: #863658 Played
+[02-24-2021-19-25-06][LOG]: #920973 Start
+[02-24-2021-19-25-08][LOG]: #921216 Start
+[02-24-2021-19-25-08][LOG]: #864836 Played
+[02-24-2021-19-25-08][LOG]: #862246 Played
+[02-24-2021-19-25-09][LOG]: #921414 Start
+[02-24-2021-19-25-10][LOG]: #921626 Start
+[02-24-2021-19-25-11][LOG]: #921819 Start
+[02-24-2021-19-25-12][LOG]: #922069 Start
+[02-24-2021-19-25-12][LOG]: #910271 Logged In
+[02-24-2021-19-25-12][LOG]: #922217 Start
+[02-24-2021-19-25-13][LOG]: #922415 Start
+[02-24-2021-19-25-15][LOG]: #922911 Start
+[02-24-2021-19-25-15][LOG]: #866625 Played
+[02-24-2021-19-25-17][LOG]: #866102 Played
+[02-24-2021-19-25-17][LOG]: #910849 Logged In
+[02-24-2021-19-25-19][LOG]: #866935 Played
+[02-24-2021-19-25-20][LOG]: #924038 Start
+[02-24-2021-19-25-23][LOG]: #911788 Logged In
+[02-24-2021-19-25-23][LOG]: #924926 Start
+[02-24-2021-19-25-27][LOG]: #867589 Played
+[02-24-2021-19-25-27][LOG]: #925826 Start
+[02-24-2021-19-25-28][LOG]: #869151 Played
+[02-24-2021-19-25-31][LOG]: #868689 Played
+[02-24-2021-19-25-31][LOG]: #926657 Start
+[02-24-2021-19-25-32][LOG]: #926799 Start
+[02-24-2021-19-25-32][LOG]: #913296 Logged In
+[02-24-2021-19-25-33][LOG]: #867227 Played
+[02-24-2021-19-25-35][LOG]: #870840 Played
+[02-24-2021-19-25-35][LOG]: #927524 Start
+[02-24-2021-19-25-37][LOG]: #912674 Logged In
+[02-24-2021-19-25-38][LOG]: #867917 Played
+[02-24-2021-19-25-38][LOG]: #870254 Played
+[02-24-2021-19-25-39][LOG]: #870517 Played
+[02-24-2021-19-25-39][LOG]: #928359 Start
+[02-24-2021-19-25-41][LOG]: #913924 Logged In
+[02-24-2021-19-25-41][LOG]: #914273 Logged In
+[02-24-2021-19-25-42][LOG]: #872275 Played
+[02-24-2021-19-25-42][LOG]: #929037 Start
+[02-24-2021-19-25-42][LOG]: #873568 Played
+[02-24-2021-19-25-44][LOG]: #929298 Start
+[02-24-2021-19-25-45][LOG]: #929612 Start
+[02-24-2021-19-25-46][LOG]: #914011 Logged In
+[02-24-2021-19-25-47][LOG]: #930214 Start
+[02-24-2021-19-25-47][LOG]: #871672 Played
+[02-24-2021-19-25-47][LOG]: #930519 Start
+[02-24-2021-19-25-48][LOG]: #869463 Played
+[02-24-2021-19-25-49][LOG]: #915022 Logged In
+[02-24-2021-19-25-50][LOG]: #914797 Logged In
+[02-24-2021-19-25-50][LOG]: #871230 Played
+[02-24-2021-19-25-51][LOG]: #931496 Start
+[02-24-2021-19-25-51][LOG]: #872620 Played
+[02-24-2021-19-25-51][LOG]: #873291 Played
+[02-24-2021-19-25-52][LOG]: #931739 Start
+[02-24-2021-19-25-53][LOG]: #932064 Start
+[02-24-2021-19-25-53][LOG]: #915722 Logged In
+[02-24-2021-19-25-53][LOG]: #874307 Played
+[02-24-2021-19-25-54][LOG]: #915569 Logged In
+[02-24-2021-19-25-54][LOG]: #932290 Start
+[02-24-2021-19-25-55][LOG]: #915303 Logged In
+[02-24-2021-19-25-55][LOG]: #932466 Start
+[02-24-2021-19-25-55][LOG]: #916439 Logged In
+[02-24-2021-19-25-55][LOG]: #874659 Played
+[02-24-2021-19-25-56][LOG]: #932745 Start
+[02-24-2021-19-25-57][LOG]: #916126 Logged In
+[02-24-2021-19-25-57][LOG]: #932923 Start
+[02-24-2021-19-25-57][LOG]: #875607 Played
+[02-24-2021-19-25-58][LOG]: #871936 Played
+[02-24-2021-19-25-58][LOG]: #876754 Played
+[02-24-2021-19-25-59][LOG]: #872952 Played
+[02-24-2021-19-25-59][LOG]: #933618 Start
+[02-24-2021-19-26-00][LOG]: #875368 Played
+[02-24-2021-19-26-00][LOG]: #916607 Logged In
+[02-24-2021-19-26-00][LOG]: #933760 Start
+[02-24-2021-19-26-01][LOG]: #933965 Start
+[02-24-2021-19-26-01][LOG]: #916784 Logged In
+[02-24-2021-19-26-02][LOG]: #934343 Start
+[02-24-2021-19-26-03][LOG]: #934533 Start
+[02-24-2021-19-26-03][LOG]: #917697 Logged In
+[02-24-2021-19-26-03][LOG]: #878415 Played
+[02-24-2021-19-26-04][LOG]: #934782 Start
+[02-24-2021-19-26-04][LOG]: #877781 Played
+[02-24-2021-19-26-05][LOG]: #935047 Start
+[02-24-2021-19-26-07][LOG]: #919682 Logged In
+[02-24-2021-19-26-07][LOG]: #935937 Start
+[02-24-2021-19-26-08][LOG]: #877427 Played
+[02-24-2021-19-26-08][LOG]: #936189 Start
+[02-24-2021-19-26-09][LOG]: #936674 Start
+[02-24-2021-19-26-10][LOG]: #880516 Played
+[02-24-2021-19-26-11][LOG]: #919539 Logged In
+[02-24-2021-19-26-12][LOG]: #878993 Played
+[02-24-2021-19-26-13][LOG]: #937975 Start
+[02-24-2021-19-26-14][LOG]: #876453 Played
+[02-24-2021-19-26-15][LOG]: #938563 Start
+[02-24-2021-19-26-15][LOG]: #881984 Played
+[02-24-2021-19-26-15][LOG]: #920973 Logged In
+[02-24-2021-19-26-16][LOG]: #879246 Played
+[02-24-2021-19-26-16][LOG]: #922069 Logged In
+[02-24-2021-19-26-17][LOG]: #878655 Played
+[02-24-2021-19-26-17][LOG]: #939167 Start
+[02-24-2021-19-26-18][LOG]: #879679 Played
+[02-24-2021-19-26-18][LOG]: #882720 Played
+[02-24-2021-19-26-19][LOG]: #939642 Start
+[02-24-2021-19-26-19][LOG]: #921216 Logged In
+[02-24-2021-19-26-19][LOG]: #875024 Played
+[02-24-2021-19-26-19][LOG]: #921414 Logged In
+[02-24-2021-19-26-19][LOG]: #921626 Logged In
+[02-24-2021-19-26-20][LOG]: #940063 Start
+[02-24-2021-19-26-21][LOG]: #940355 Start
+[02-24-2021-19-26-21][LOG]: #876993 Played
+[02-24-2021-19-26-21][LOG]: #922415 Logged In
+[02-24-2021-19-26-21][LOG]: #881225 Played
+[02-24-2021-19-26-22][LOG]: #940753 Start
+[02-24-2021-19-26-23][LOG]: #878028 Played
+[02-24-2021-19-26-23][LOG]: #941151 Start
+[02-24-2021-19-26-23][LOG]: #941379 Start
+[02-24-2021-19-26-24][LOG]: #941686 Start
+[02-24-2021-19-26-25][LOG]: #942011 Start
+[02-24-2021-19-26-25][LOG]: #920403 Logged In
+[02-24-2021-19-26-25][LOG]: #921819 Logged In
+[02-24-2021-19-26-26][LOG]: #942327 Start
+[02-24-2021-19-26-26][LOG]: #883904 Played
+[02-24-2021-19-26-26][LOG]: #924038 Logged In
+[02-24-2021-19-26-26][LOG]: #942703 Start
+[02-24-2021-19-26-27][LOG]: #883027 Played
+[02-24-2021-19-26-27][LOG]: #879902 Played
+[02-24-2021-19-26-28][LOG]: #922217 Logged In
+[02-24-2021-19-26-28][LOG]: #943278 Start
+[02-24-2021-19-26-28][LOG]: #884385 Played
+[02-24-2021-19-26-28][LOG]: #888293 Played
+[02-24-2021-19-26-29][LOG]: #885085 Played
+[02-24-2021-19-26-29][LOG]: #880263 Played
+[02-24-2021-19-26-30][LOG]: #943740 Start
+[02-24-2021-19-26-31][LOG]: #943959 Start
+[02-24-2021-19-26-32][LOG]: #885776 Played
+[02-24-2021-19-26-32][LOG]: #944753 Start
+[02-24-2021-19-26-33][LOG]: #888036 Played
+[02-24-2021-19-26-33][LOG]: #945129 Start
+[02-24-2021-19-26-34][LOG]: #882406 Played
+[02-24-2021-19-26-34][LOG]: #945432 Start
+[02-24-2021-19-26-35][LOG]: #887811 Played
+[02-24-2021-19-26-35][LOG]: #925826 Logged In
+[02-24-2021-19-26-35][LOG]: #945724 Start
+[02-24-2021-19-26-35][LOG]: #880868 Played
+[02-24-2021-19-26-35][LOG]: #945961 Start
+[02-24-2021-19-26-36][LOG]: #926657 Logged In
+[02-24-2021-19-26-36][LOG]: #946229 Start
+[02-24-2021-19-26-37][LOG]: #946491 Start
+[02-24-2021-19-26-37][LOG]: #886656 Played
+[02-24-2021-19-26-37][LOG]: #946836 Start
+[02-24-2021-19-26-37][LOG]: #927524 Logged In
+[02-24-2021-19-26-38][LOG]: #947134 Start
+[02-24-2021-19-26-38][LOG]: #926799 Logged In
+[02-24-2021-19-26-39][LOG]: #884692 Played
+[02-24-2021-19-26-39][LOG]: #885455 Played
+[02-24-2021-19-26-39][LOG]: #883344 Played
+[02-24-2021-19-26-39][LOG]: #947701 Start
+[02-24-2021-19-26-39][LOG]: #886149 Played
+[02-24-2021-19-26-40][LOG]: #948036 Start
+[02-24-2021-19-26-41][LOG]: #948579 Start
+[02-24-2021-19-26-43][LOG]: #949067 Start
+[02-24-2021-19-26-43][LOG]: #949304 Start
+[02-24-2021-19-26-44][LOG]: #890192 Played
+[02-24-2021-19-26-45][LOG]: #949864 Start
+[02-24-2021-19-26-45][LOG]: #928359 Logged In
+[02-24-2021-19-26-45][LOG]: #950123 Start
+[02-24-2021-19-26-47][LOG]: #950874 Start
+[02-24-2021-19-26-48][LOG]: #887054 Played
+[02-24-2021-19-26-49][LOG]: #929037 Logged In
+[02-24-2021-19-26-51][LOG]: #952596 Start
+[02-24-2021-19-26-52][LOG]: #953019 Start
+[02-24-2021-19-26-52][LOG]: #930519 Logged In
+[02-24-2021-19-26-53][LOG]: #929612 Logged In
+[02-24-2021-19-26-55][LOG]: #929298 Logged In
+[02-24-2021-19-26-56][LOG]: #930214 Logged In
+[02-24-2021-19-26-59][LOG]: #931496 Logged In
+[02-24-2021-19-27-01][LOG]: #932466 Logged In
+[02-24-2021-19-27-02][LOG]: #932745 Logged In
+[02-24-2021-19-27-02][LOG]: #932290 Logged In
+[02-24-2021-19-27-03][LOG]: #931739 Logged In
+[02-24-2021-19-27-04][LOG]: #932923 Logged In
+[02-24-2021-19-27-04][LOG]: #933760 Logged In
+[02-24-2021-19-27-06][LOG]: #895630 Played
+[02-24-2021-19-27-07][LOG]: #933618 Logged In
+[02-24-2021-19-27-09][LOG]: #934343 Logged In
+[02-24-2021-19-27-09][LOG]: #933965 Logged In
+[02-24-2021-19-27-09][LOG]: #932064 Logged In
+[02-24-2021-19-27-11][LOG]: #959325 Start
+[02-24-2021-19-27-12][LOG]: #934533 Logged In
+[02-24-2021-19-27-12][LOG]: #934782 Logged In
+[02-24-2021-19-27-13][LOG]: #936189 Logged In
+[02-24-2021-19-27-13][LOG]: #935937 Logged In
+[02-24-2021-19-27-18][LOG]: #935047 Logged In
+[02-24-2021-19-27-19][LOG]: #936674 Logged In
+[02-24-2021-19-27-23][LOG]: #938563 Logged In
+[02-24-2021-19-27-24][LOG]: #962209 Start
+[02-24-2021-19-27-24][LOG]: #904094 Played
