@@ -2,10 +2,10 @@ from .console import Console
 from time import sleep
 from random import randint
 from .driversadapter.chrome import ChromeDriverAdapter
-from multiprocessing import Event
+from multiprocessing import Event, synchronize
 
 class DriverManager:
-    def __init__(self, console: Console, shutdownEvent: Event, startService=False):
+    def __init__(self, console: Console, shutdownEvent: synchronize.Event, startService=False):
         self.chrome = ChromeDriverAdapter(console=console, startService=startService)
         self.console = console
         self.shutdownEvent = shutdownEvent

@@ -9,7 +9,7 @@ echo '################## Install python 3.9.1'
 wget https://www.python.org/ftp/python/3.9.1/Python-3.9.1.tgz
 tar zxvf Python-3.9.1.tgz
 cd Python-3.9.1
-./configure --enable-optimizations
+./configure --enable-optimizations --enable-shared
 make -j 12
 sudo make install
 #sudo update-alternatives --install /usr/bin/python python /usr/local/bin/python3.9 1

@@ -1,0 +1,113 @@
+#!/usr/bin/python3.8
+
+
+from src.services.stats import Stats
+from src.services.httpserver import HttpStatsServer
+from src.services.observer import Observer
+import sys, os
+from multiprocessing import Event
+from src.services.processes import ProcessManager
+from src.services.console import Console
+from src.services.config import Config
+import argparse
+from datetime import datetime
+from src.application.spotify.listener import ListenerProcessProvider as SpotifyListenerProcessProvider
+from configparser import ConfigParser
+from psutil import Process, cpu_count
+from getpass import getuser
+import signal
+
+
+
+if __name__ == '__main__':
+    if getattr(sys, 'frozen', False):
+    # If the application is run as a bundle, the PyInstaller bootloader
+    # extends the sys module by a flag frozen=True and sets the app 
+    # path into variable _MEIPASS'.
+        APP_PATH = sys._MEIPASS
+    else:
+        APP_PATH = os.path.dirname(os.path.abspath(__file__))
+
+
+    parser = argparse.ArgumentParser()
+    parser.add_argument('-i', '--info', help="Show info in the terminal", action="store_true", default=False)
+    parser.add_argument('-d', '--headless', help="Start webdriver in headless mode", action="store_true", default=False)
+    parser.add_argument('-n', '--vnc', help="Start VNC for each driver (not in headless mode)", action="store_true", default=False)
+    parser.add_argument('-v', '--verbose', help="Do not print out anything", action="store_true", default=False)
+    parser.add_argument('-s', '--screenshot', help="Create a screenshot when excetpion is thrown", action="store_true", default=False)
+    parser.add_argument('--debug', help="Set the log path to the app dir", action="store_true", default=False)
+    parser.add_argument('--nolog', help="Do not write anything on hard drive", action="store_true", default=False)
+    
+    
+    print('Start as user %s' % getuser())
+
+    args = parser.parse_args()
+    
+    if args.debug:
+        userDir = APP_PATH + '/temp'
+    else:
+        userDir = '/home/%s/.venom' % getuser()
+         
+    
+    logDir = userDir + '/listener/' + datetime.now().strftime("%m-%d-%Y-%H-%M-%S")
+    screenshotDir = logDir + '/screenshot'
+    
+    if args.nolog == False:
+        os.makedirs(logDir, exist_ok=True)
+        os.makedirs(userDir, exist_ok=True)
+        os.makedirs(screenshotDir, exist_ok=True)
+
+    config = ConfigParser()
+    config.read(userDir + '/config.ini')
+
+
+    SQS_ENDPOINT = None
+    MAX_PROCESS     = cpu_count()
+    SPAWN_INTERVAL  = 0.5
+    OVERRIDE_PLAYLIST = False
+
+    if 'LISTENER' in config.sections():
+        listenerConfig      = config['LISTENER']
+        SQS_ENDPOINT        = listenerConfig.get('sqs_endpoint').strip()
+        MAX_PROCESS         = listenerConfig.getint('max_process', MAX_PROCESS)
+        SPAWN_INTERVAL      = listenerConfig.getfloat('spawn_interval', SPAWN_INTERVAL)
+        OVERRIDE_PLAYLIST   = listenerConfig.get('override_playlist').strip()
+    
+    if SQS_ENDPOINT is None:
+        sys.exit('you need to set the sqs_endpoint in the config file.')
+    
+
+    if args.verbose:
+        verbose = 3
+    else:
+        verbose = 1
+
+    console = Console(verbose=verbose, ouput=args.verbose, logfile=logDir + '/session.log', logToFile=not args.nolog)
+    shuddownEvent = Event()
+
+    pp = SpotifyListenerProcessProvider(
+        SQS_ENDPOINT,
+        shutdownEvent=shuddownEvent,
+        console= console,
+        headless=args.headless,
+        vnc= args.vnc,
+        screenshotDir=screenshotDir,
+        overridePlaylist = OVERRIDE_PLAYLIST,
+        )
+
+    pm = ProcessManager(
+        console=console,
+        processProvider=pp,
+        maxProcess=MAX_PROCESS,
+        spawnInterval=SPAWN_INTERVAL,
+        showInfo=args.info,
+        shutdownEvent=shuddownEvent,
+    )
+
+    def signalHandler(signum, frame):
+        pm.stop()
+
+    signal.signal(signal.SIGINT, signalHandler)
+    signal.signal(signal.SIGTERM, signalHandler)
+
+    pm.start()

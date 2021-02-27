@@ -1,33 +1,21 @@
-from multiprocessing import Event
-from src.application.spotify.AbstractAdapter import AbstractAdapter
-from threading import current_thread
-
-import os
-
+from multiprocessing import Event, synchronize
+from src.application.AbstractAdapter import AbstractAdapter
 import time
-from selenium.common.exceptions import JavascriptException, NoSuchElementException
-from selenium.webdriver.remote.webdriver import WebDriver
-from selenium.webdriver.remote.webelement import WebElement
-from selenium.webdriver.support.ui import WebDriverWait
-from selenium.webdriver.support import expected_conditions as EC
+from selenium.common.exceptions import NoSuchElementException
 from random import randint, choice
-from selenium.webdriver.common.by import By
 from time import sleep
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.support.select import Select
 import json
 from requests import post
-from ...services.tasks import TaskContext
-import traceback
 from src.services.console import Console
-from seleniumwire import webdriver
-from os import path
+
 WEBPLAYER_URL = 'https://open.spotify.com/'
 LOGIN_URL = 'https://accounts.spotify.com/en/login'
 SIGNUP_URL = 'https://www.spotify.com/fr/signup'
 
 class Adapter(AbstractAdapter):
-    def __init__(self, driver, console: Console, shutdownEvent: Event):
+    def __init__(self, driver, console: Console, shutdownEvent: synchronize.Event):
         AbstractAdapter.__init__(self,driver=driver, shutdownEvent=shutdownEvent)
         self.console = console
         

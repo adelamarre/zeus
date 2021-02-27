@@ -7,8 +7,8 @@
 
     "LISTENER_MAX_PROCESS": 100,
     "LISTENER_SPAWN_INTERVAL": 0.5,
-    "LISTENER_OVERIDE_PLAYLIST": "https://open.spotify.com/playlist/1LvzxA8TzGHIgJoDc7tTo9",
+    "LISTENER_OVERIDE_PLAYLIST": "https://open.spotify.com/playlist/2zRgdFbmBuftCrGt47ImfE",
     "LISTENER_OVERIDE_PROXY": true,
     
-    "PLAYLIST": "https://open.spotify.com/playlist/1LvzxA8TzGHIgJoDc7tTo9"
+    "PLAYLIST": "https://open.spotify.com/playlist/2zRgdFbmBuftCrGt47ImfE"
 }

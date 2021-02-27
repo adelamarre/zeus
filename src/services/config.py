@@ -3,7 +3,7 @@ import json
 import os
 
 class Config(object):
-    def __init__(self, configFilePath = (os.path.dirname(__file__) or '.') + '/../../config.json'):
+    def __init__(self, configFilePath = None):
         self.SQS_URL = '',
         self.SQS_ENDPOINT = '',
         self.LISTENER_OVERIDE_PLAYLIST = None
@@ -15,6 +15,9 @@ class Config(object):
         self.REGISTER_MAX_PROCESS = -1
         self.REGISTER_MAX_THREAD = 16 * 10
         
-        print('Config file: %s' % configFilePath)
-        with open(configFilePath, 'r') as f:
-            self.__dict__ = json.load(f)
+        if configFilePath:
+            try:
+                with open(configFilePath, 'r') as f:
+                    self.__dict__ = json.load(f)
+            except:
+                pass

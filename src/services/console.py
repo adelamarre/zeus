@@ -51,8 +51,9 @@ class Console:
         self.output = ouput
         if logfile:
             self.logfile= logfile
-        else:
+        elif logfile is None:
             self.logfile= (os.path.dirname(__file__) or '.') + '/../../temp/' + datetime.now().strftime("%m-%d-%Y-%H-%M-%S")+ '.log'
+
         try:
             import termios
         except ImportError:
@@ -80,7 +81,7 @@ class Console:
         if self.lock:
             self.lock.acquire()
         
-        if self.logToFile:
+        if self.logToFile and self.logfile:
             try:
                 with open(self.logfile, 'a') as f:
                     f.write('%s%s\n' % (prefix, message))

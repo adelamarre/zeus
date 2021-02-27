@@ -1,99 +1,117 @@
 
-from gc import collect
+from multiprocessing import current_process, Array, Process, sharedctypes, synchronize
+from xml.etree.ElementTree import VERSION
+from src.services.httpserver import StatsProvider
+from src.services.observer import Observer
+from src.services.console import Console
+from xvfbwrapper import Xvfb
+from src.services.x11vncwrapper import X11vnc
+from src.services.drivers import DriverManager
+from src.application.spotify.Spotify import Adapter
+from src.services.aws import RemoteQueue
+from src.services.processes import ProcessManager, ProcessProvider
 from random import randint
 from shutil import rmtree
-from multiprocessing import Array, Lock, Process, Event
-from threading import Thread, current_thread
-from traceback import format_exc
-from src.services.config import Config
-from src.application.spotify import Spotify
-from xvfbwrapper import Xvfb
-from boto3 import client
-from src.services.drivers import DriverManager
-from src.services.console import Console
-from time import sleep
+from gc import collect
 from json import loads
-from src.services.proxies import ProxyManager, PROXY_FILE_LISTENER
-from src.services.x11vncwrapper import X11vnc
+from datetime import timedelta
+from time import time
+from colorama import Fore
+from src import VERSION
 
-class ListenerContext:
-    def __init__(self, console: Console, batchId: int,  user: dict, playlist: str, shutdownEvent: Event, proxy: dict = None, vnc: bool = False, headless = True):
-        self.console = console
-        self.batchId = batchId
-        self.user = user
-        self.playlist = playlist
-        self.proxy = proxy
-        self.vnc = vnc
-        self.headless = headless
-        self.shutdownEvent = shutdownEvent      
-    
-class Listener(Process):
-    def __init__(self, pcontext: ListenerContext):
-        Process.__init__(self)
-        self.p_context = pcontext
-        self.driverManager = DriverManager(pcontext.console, pcontext.shutdownEvent, startService=False)
-        self.client = client('sqs')
-        self.totalMessageReceived = 0
-        self.proxyManager = ProxyManager(proxyFile=PROXY_FILE_LISTENER)
-        self.lockClient = Lock()
-        self.lockDriver = Lock()
+class ListenerStat:
+    LOGGING_IN = 0
+    PLAYING = 1
+    PLAYED = 2
+    ERROR = 3
+    DRIVER_NONE = 4
 
-    def run(self):
-        tid = current_thread().native_id
-        self.p_context.console.log('#%d Start' % tid)
+def runner(
+    console: Console, 
+    shutdownEvent: synchronize.Event, 
+    headless: bool, 
+    user: dict,
+    proxy: dict,
+    playlist: str,
+    vnc: bool,
+    screenshotDir,
+    stats: Array
+    ):
+        STATE_LOGGING_IN = 'logging_in'
+        STATE_PLAYING = 'playing'
+
+        tid = current_process().pid
+        console.log('#%d Start' % tid)
+
         driver = None
+        userDataDir = None
+        x11vnc = None
+        vdisplay = None
         try:
-            if self.p_context.shutdownEvent.is_set():
+            if shutdownEvent.is_set():
                 return 
             vdisplay = None
             x11vnc = None
-            if t_context.headless == False:
+            if headless == False:
                 width = 1280
                 height = 1024
-                if 'windowSize' in t_context.user:
-                    [width,height] = t_context.user['windowSize'].split(',')
+                if 'windowSize' in user:
+                    [width,height] = user['windowSize'].split(',')
                 vdisplay = Xvfb(width=width, height=height, colordepth=24, tempdir=None, noreset='+render')
                 vdisplay.start()
-                if t_context.vnc:
+                if vnc:
                     x11vnc = X11vnc(vdisplay)
                     x11vnc.start()
 
-            with self.lockDriver:
-                driverData = self.driverManager.getDriver(
-                    type='chrome',
-                    uid=tid,
-                    user=t_context.user,
-                    proxy=t_context.proxy,
-                    headless= t_context.headless
-                )
+            driverManager = DriverManager(console, shutdownEvent)
+            driverData = driverManager.getDriver(
+                type='chrome',
+                uid=tid,
+                user=user,
+                proxy=proxy,
+                headless= headless
+            )
             if not driverData:
-                return
+                raise Exception('No driverData was returned from adapter')
             driver = driverData['driver']
             userDataDir = driverData['userDataDir']
             if not driver:
-                return
+                raise Exception('No driver was returned from adapter')
             
         except:
-            self.p_context.console.error('Unavailale webdriver: %s' % format_exc())
+            stats[ListenerStat.DRIVER_NONE] += 1
+            console.exception('Driver unavailable')
         else:
             try:
-                spotify = Spotify.Adapter(driver, self.p_context.console, self.p_context.shutdownEvent)
-                if spotify.login(t_context.user['email'], t_context.user['password']):
-                    self.p_context.console.log('#%d Logged In' % tid)
-                    if not self.p_context.shutdownEvent.is_set():
-                        self.p_context.console.log('#%d Start listening...' % tid)
-                        spotify.playPlaylist(t_context.playlist, self.p_context.shutdownEvent, 90, 110)
-                        self.p_context.console.log('#%d Played' % tid)
-                with self.lockClient:
-                    self.client.delete_message(
-                        QueueUrl=self.p_context.config.SQS_ENDPOINT,
-                        ReceiptHandle=t_context.receiptHandle
-                    )
-                    self.p_context.console.log('#%d Message deleted' % tid)
-            except:
-                self.p_context.console.exception()
-                spotify.saveScreenshot()
-                        
+                state = ''
+                spotify = Adapter(driver, console, shutdownEvent)
+                # __ LOGGING __
+                stats[ListenerStat.LOGGING_IN] += 1
+                state = STATE_LOGGING_IN
+                spotify.login(user['email'], user['password'])    
+                stats[ListenerStat.LOGGING_IN] -= 1
+
+                # __ PLAYING __
+                stats[ListenerStat.PLAYING] += 1
+                state = STATE_PLAYING
+                spotify.playPlaylist(playlist, shutdownEvent, 80, 100)
+                stats[ListenerStat.PLAYING] -= 1
+                stats[ListenerStat.PLAYED] += 1
+            except Exception as e:
+                if state == STATE_PLAYING:
+                    stats[ListenerStat.PLAYING] -= 1
+                elif state == STATE_LOGGING_IN:
+                    stats[ListenerStat.LOGGING_IN] -= 1
+                stats[ListenerStat.ERROR] += 1
+                try:
+                    if screenshotDir:
+                        id = randint(10000, 99999)
+                        with open(screenshotDir + ('/%d.log' % id), 'w') as f:
+                            f.write(str(e))
+                        driver.save_screenshot(screenshotDir  + ('/%d.png' % id))
+                except:
+                    console.exception()
+                            
         if driver:
             try:
                 driver.quit()
@@ -118,3 +136,90 @@ class Listener(Process):
             except:
                 pass
         collect()
+
+class ListenerProcessProvider(ProcessProvider, Observer, StatsProvider):
+    def __init__(self,
+        
+        queueEndPoint: str,
+        shutdownEvent: synchronize.Event,
+        console: Console = None,
+        headless: bool = False,
+        vnc: bool = False,
+        screenshotDir: str = None,
+        overridePlaylist: str = False
+    ):
+        ProcessProvider.__init__(self)
+        StatsProvider.__init__(self, 'runner')
+        self.remoteQueue = RemoteQueue(endPoint=queueEndPoint)
+        self.console = console
+        self.headless = headless
+        self.vnc = vnc
+        self.screenshotDir = screenshotDir
+        self.shutdownEvent = shutdownEvent
+        self.overridePlaylist = overridePlaylist
+        self.listenerStats = Array('i', 5)
+        self.listenerStats[ListenerStat.PLAYED] = 0
+        self.listenerStats[ListenerStat.ERROR] = 0
+        self.listenerStats[ListenerStat.DRIVER_NONE] = 0
+        self.listenerStats[ListenerStat.LOGGING_IN] = 0
+        self.listenerStats[ListenerStat.PLAYING] = 0
+
+    def getStats(self):
+        return {
+            'version': VERSION,
+            'error': self.listenerStats[ListenerStat.ERROR],
+            'driverNone': self.listenerStats[ListenerStat.DRIVER_NONE],
+            'played': self.listenerStats[ListenerStat.PLAYED],
+            'loggingIn': self.listenerStats[ListenerStat.LOGGING_IN],
+            'playing': self.listenerStats[ListenerStat.PLAYING],
+            'overriddePlaylist': bool(self.overridePlaylist),
+        }
+    
+    def getConsoleLines(self, width: int, height: int):
+        stats = self.listenerStats
+        lines = []
+        lines.append(Fore.WHITE + 'Logging in: %7d   Playing: %7d   Playedd: %7d   Error: %7d   Driver None: %7d' % 
+            (stats[ListenerStat.LOGGING_IN],
+            stats[ListenerStat.PLAYING], 
+            stats[ListenerStat.PLAYED],
+            stats[ListenerStat.ERROR],
+            stats[ListenerStat.DRIVER_NONE],
+            ) 
+        )
+        return lines
+        
+
+    def notify(self, eventName: str, target, data):
+        pass
+
+    def getNewProcess(self, freeSlot: int):
+        try:
+            self.remoteQueue.provision(freeSlot)
+            message = self.remoteQueue.pop()
+            
+            if message:
+                body = loads(message['Body'])
+                
+                if self.overridePlaylist:
+                    body['playlist'] = self.overridePlaylist
+
+                p = Process(target = runner, kwargs={
+                    'console': self.console, 
+                    'shutdownEvent': self.shutdownEvent, 
+                    'headless': self.headless, 
+                    'vnc': self.vnc,
+                    'user': body['user'],
+                    'proxy': None,
+                    'playlist': body['playlist'],
+                    'screenshotDir': self.screenshotDir,
+                    'stats': self.listenerStats,
+                })
+                self.remoteQueue.deleteMessage(message)
+                
+                return p
+        except Exception as e:
+            self.console.exception()
+            self.listenerStats[ListenerStat.ERROR] += 1
+
+
+    
