@@ -181,7 +181,7 @@ class Adapter(AbstractAdapter):
     def close(self):
         self.driver.quit()
 
-    def register(self, user, day_value = randint(1, 28), month_value = randint(1, 12), year_value = randint(1970, 2005), gender = choice(['male', 'female'])):
+    def fillingOutSubscriptionForm(self, user, day_value = randint(1, 28), month_value = randint(1, 12), year_value = randint(1970, 2005), gender = choice(['male', 'female'])):
         
         
         #Navigate to the signup page
@@ -266,17 +266,27 @@ class Adapter(AbstractAdapter):
         third_party = self.getElementById('onetrust-accept-btn-handler', maxTry = 10, raiseException = False)
         if third_party:
             third_party.click()
-    
+        
+    def submitSubscriptionForm(self):
         # submit
         if self.sleep(1): return
-        submit = self.driver.find_element_by_xpath('//button[@class="Button-oyfj48-0 fivrVz SignupButton___StyledButtonPrimary-cjcq5h-1 gzFCtx"]')
+        submit = self.getElementByXpath('//button[@class="Button-oyfj48-0 fivrVz SignupButton___StyledButtonPrimary-cjcq5h-1 gzFCtx"]',
+            maxTry=10, waitPerTry=2
+        )
         submit.click()
-        sleep(10)
         
-        # Error class = LinkContainer-sc-1t58wcv-0
-        # InputErrorMessage__Container-tliowl-0
-        # InputErrorMessage__Container-tliowl-0
-
+        maxTry = 40
+        while True:
+            if self.sleep(2): return
+            errorElements = self.getElementsByClass('InputErrorMessage__Container-tliowl-0', maxTry=1, raiseException=False)
+            if errorElements:
+                raise Exception('Account creation failed')
+            loggedInElements = self.getElementsByClass('mh-header-primary', maxTry=1, raiseException=False)
+            if loggedInElements:
+                break
+            maxTry -=1
+            if maxTry == 0:
+                raise Exception('Account creation timeout')
 
     def registerApi(self, user, day_value = randint(1, 28), month_value = randint(1, 12), year_value = randint(1970, 2005), gender = choice(['male', 'female'])):
 

@@ -1,0 +1,167 @@
+#!/usr/bin/python3.8
+from src.services.config import Config
+import sys, os
+from multiprocessing import Event
+from src.services.processes import ProcessManager
+from src.services.console import Console
+import argparse
+from datetime import datetime
+from src.application.spotify.register import RegisterProcessProvider as SpotifyRegisterProcessProvider
+
+from psutil import cpu_count
+from getpass import getuser
+import signal
+from src.services.cmdhelper import showHeader
+from src import VERSION
+from src.services.terminal import Terminal
+from colorama import Fore
+from pprint import pprint
+from src.services.questions import Question
+from PyInquirer import prompt
+
+if __name__ == '__main__':
+    if getattr(sys, 'frozen', False):
+    # If the application is run as a bundle, the PyInstaller bootloader
+    # extends the sys module by a flag frozen=True and sets the app 
+    # path into variable _MEIPASS'.
+        APP_PATH = sys._MEIPASS
+    else:
+        APP_PATH = os.path.dirname(os.path.abspath(__file__))
+
+
+    parser = argparse.ArgumentParser()
+    parser.add_argument('--noinfo', help="Show info in the terminal", action="store_true", default=False)
+    parser.add_argument('--headless', help="Start webdriver in headless mode", action="store_true", default=False)
+    parser.add_argument('--vnc', help="Start VNC for each driver (not in headless mode)", action="store_true", default=False)
+    parser.add_argument('--verbose', help="Do not print out anything", action="store_true", default=False)
+    parser.add_argument('--screenshot', help="Create a screenshot when excetpion is thrown", action="store_true", default=False)
+    parser.add_argument('--debug', help="Set the log path to the app dir", action="store_true", default=False)
+    parser.add_argument('--nolog', help="Do not write anything on hard drive", action="store_true", default=False)
+    
+    terminal = Terminal('-')
+    showHeader(VERSION, Fore.RED)
+
+    args = parser.parse_args()
+    
+    if args.debug:
+        userDir = APP_PATH + '/temp'
+    else:
+        userDir = '/home/%s/.venom' % getuser()
+         
+    
+    logDir = userDir + '/listener/' + datetime.now().strftime("%m-%d-%Y-%H-%M-%S")
+    screenshotDir = logDir + '/screenshot'
+    
+    if args.nolog == False:
+        os.makedirs(logDir, exist_ok=True)
+        os.makedirs(userDir, exist_ok=True)
+        os.makedirs(screenshotDir, exist_ok=True)
+    configFile = userDir + '/config.ini'
+    
+    #print('Configuration file: %s' % configFile)
+
+    defautlConfig = {
+        'sqsEndpoint': '',
+        'maxProcess': cpu_count(),
+        'spawnInterval': 0.5
+    }
+    
+    registerConfig = Config.getRegisterConfig(configFile, defautlConfig)
+
+    if not registerConfig:
+        sys.exit('I can not continue without configuraton')
+    
+    
+    
+    
+        
+    
+
+    #https://sqs.eu-west-3.amazonaws.com/884650520697/18e66ed8d655f1747c9afbc572955f46
+    
+    if args.verbose:
+        verbose = 3
+    else:
+        verbose = 1
+
+    console = Console(verbose=verbose, ouput=args.verbose, logfile=logDir + '/session.log', logToFile=not args.nolog)
+
+    if not registerConfig['sqsEndpoint']:
+        sys.exit('you need to set the sqs_endpoint in the config file.')
+
+    if not registerConfig['serverId']:
+        sys.exit('you need to set the server_id in the config file.')
+
+    questions = [
+        {
+            'type': 'input',
+            'name': 'playlist',
+            'message': 'Which playlist to listen ?',
+            'validate': Question.validateUrl
+
+        },
+        {
+            'type': 'input',
+            'name': 'account_count',
+            'message': 'How much account to create ?',
+            'validate': Question.validateInteger,
+            'filter': int
+        },
+        {
+            'type': 'input',
+            'name': 'max_process',
+            'message': 'How much process to start ?',
+            'default': str(registerConfig['maxProcess']),
+            'validate': Question.validateInteger,
+            'filter': int
+        },
+        {
+        'type': 'confirm',
+        'message': 'Ok, please type [enter] to start or [n] to abort',
+        'name': 'continue',
+        'default': True,
+        },
+    ]
+
+    answers = prompt(questions)
+    
+    if not 'continue' in answers or answers['continue'] == False:
+        sys.exit('Ok, see you soon :-)')
+    
+    playlist = answers['playlist']
+    accountCount = answers['account_count']
+    maxProcess = answers['max_process']
+    
+    
+    
+    shuddownEvent = Event()
+    pp = SpotifyRegisterProcessProvider(
+        accountCount=accountCount,
+        playlist=playlist,
+        queueEndPoint=registerConfig['sqsEndpoint'],
+        shutdownEvent=shuddownEvent,
+        console= console,
+        headless=args.headless,
+        vnc= args.vnc,
+        screenshotDir=screenshotDir
+        )
+
+    pm = ProcessManager(
+        statsServer=False,
+        serverId=registerConfig['serverId'],
+        userDir=userDir,
+        console=console,
+        processProvider=pp,
+        maxProcess=maxProcess,
+        spawnInterval=registerConfig['spawnInterval'],
+        showInfo=not args.noinfo,
+        shutdownEvent=shuddownEvent,
+    )
+
+    def signalHandler(signum, frame):
+        pm.stop()
+
+    signal.signal(signal.SIGINT, signalHandler)
+    signal.signal(signal.SIGTERM, signalHandler)
+
+    pm.start()

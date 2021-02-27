@@ -10,3 +10,4 @@ proxy.py
 mitmproxy
 pyinstaller
 psutil
+validators

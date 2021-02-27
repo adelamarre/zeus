@@ -1,5 +1,5 @@
 
-from src.services.httpserver import HttpStatsServer
+from src.services.httpserver import HttpStatsServer, StatsProvider
 from psutil import Process
 from time import sleep
 from src.services.console import Console
@@ -9,7 +9,7 @@ from src.services.stats import Stats
 from os import get_terminal_size
 from sys import stdout
 from time import time
-from datetime import timedelta
+from datetime import timedelta, datetime
 from colorama import Fore
 
 VENOM_VERSION = '1.0.7'
@@ -25,19 +25,24 @@ class ProcessProvider:
         pass
 
 
-class ProcessManager(Subject):
+class ProcessManager(Subject, StatsProvider):
     EVENT_TIC = 'tic'
-
     def __init__(self,
+        serverId: str,
+        userDir: str,
         console: Console, 
         processProvider: ProcessProvider,
         maxProcess: int,
         spawnInterval = 0.5,
         showInfo = False,
-        shutdownEvent: synchronize.Event = Event()
-
+        shutdownEvent: synchronize.Event = Event(),
+        statsServer: bool = True
     ) -> None:
         Subject.__init__(self)
+        StatsProvider.__init__(self, 'manager')
+        self.statsServer = statsServer
+        self.serverId = serverId
+        self.userDir = userDir
         self.console = console
         self.maxProcess = maxProcess
         self.spawnInterval = spawnInterval
@@ -70,14 +75,23 @@ class ProcessManager(Subject):
             index += 1
         stdout.write('\n')
         stdout.flush()  
-
+    def getStats(self):
+        return {
+            'serverId': self.serverId,
+            'maxProcess': self.maxProcess,
+            'processCount': len(self.processes),
+            'spawnInterval': self.spawnInterval,
+            'startTime': str(datetime.fromtimestamp(self.startTime)),
+            'elapsedTime': str(timedelta(seconds=round(time() - self.startTime)))
+        }
 
     def stop(self):
         self.shutdownEvent.set()
-        
+
     def start(self):
-        statsServer = HttpStatsServer(self.console, [self.systemStats, self.processProvider])
-        statsServer.start()
+        if self.statsServer:
+            statsServer = HttpStatsServer(self.console, self.userDir, [self.systemStats, self.processProvider, self])
+            statsServer.start()
         while True:
             try:
                 sleep(self.spawnInterval)
@@ -103,9 +117,11 @@ class ProcessManager(Subject):
                 self.processes = leftProcesses
                 if (len(self.processes) == 0) and self.shutdownEvent.is_set():
                     break
+                
                 self.trigger(ProcessManager.EVENT_TIC)
                 if self.terminalInfo:
                     self.showInfo()
             except:
                 self.console.exception()
-        statsServer.stop()
+        if self.statsServer:
+            statsServer.stop()

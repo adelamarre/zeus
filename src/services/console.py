@@ -133,5 +133,5 @@ class Console:
     def clearScreen(self):
         print('\u001b[2J', flush=False)
         
-    def printAt(self, x,y, message):
+    def printAt(self, x,y, message=''):
         print( "%s%s" % ('\u001b[%d;%df' % (y,x), message), end='', flush=False)

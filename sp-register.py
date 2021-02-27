@@ -10,7 +10,7 @@ from requests.api import head
 from xvfbwrapper import Xvfb
 from src.services.console import Console
 from src.services.drivers import DriverManager
-from src.application.spotify.register import Register, RegisterContext
+#from src.application.spotify.register import Register, RegisterContext
 import boto3
 from src.services.config import Config
 from time import sleep
@@ -70,7 +70,7 @@ def showStats(totalProcess, systemStats: Stats, listenerStats: Array):
     #lines.append(Fore.WHITE + 'Browser: ' + Fore.GREEN + data['browser'])
     #lines.append(Fore.WHITE + 'Driver : ' + Fore.GREEN + data['driver'])
     #lines.append('')
-    lines += systemStats.getConsoleLines(width)
+    lines += systemStats.getConsoleLines(width, height)
     #lines.append(Fore.CYAN + 'Queue: %s:' % queueUrl)
     lines.append(Fore.BLUE + separator)
     lines.append(Fore.WHITE + 'Elapsed time  : %s' % (Fore.GREEN + elapsedTime))
@@ -245,7 +245,7 @@ if __name__ == '__main__':
 
     #Util
     shutdownEvent = Event()
-    config = Config()
+    config = Config('config.json')
     console = Console(ouput= not noOutput, logfile=logfile)
     proxyRegisterManager = ProxyManager(proxyFile=PROXY_FILE_REGISTER)
     proxyListenerManager = ProxyManager(proxyFile=PROXY_FILE_LISTENER)
@@ -325,11 +325,11 @@ if __name__ == '__main__':
             if len(processes) == 0:
                 break
         except KeyboardInterrupt:
-            shutdown(processes)
+            shutdown(shutdownEvent, processes)
             break
         except:
             console.exception()
-            shutdown(processes)
+            shutdown(shutdownEvent, processes)
             break
     print('Stopped')
 

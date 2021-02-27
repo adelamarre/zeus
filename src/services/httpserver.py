@@ -1,11 +1,14 @@
 from multiprocessing import Process
 import http.server
+import traceback
 from typing import List
 from urllib.parse import urlparse
 from urllib.parse import parse_qs
 from json import dumps
 from src.services.console import Console
-
+from ssl import wrap_socket
+from requests import get
+from OpenSSL import crypto, SSL
 
 class StatsProvider:
     def __init__(self, name: str):
@@ -48,34 +51,82 @@ class MyHttpRequestHandler(http.server.SimpleHTTPRequestHandler):
 
         return
 
-def runner(console: Console, statsProviders: List[StatsProvider]):
+def runner(console: Console, ip: str, certificate: str, statsProviders: List[StatsProvider]):
 
-    # Create an object of the above class
+    #openssl req -new -x509 -keyout server.pem -out server.pem -days 365 -nodes
+
     handler_object = MyHttpRequestHandler
     handler_object.statsProviders = statsProviders
-    PORT = 5421
-    try:
+    PORT = 63443
+    
+    #try:
         #my_server = socketserver.TCPServer(("", PORT), handler_object)
-        server = http.server.ThreadingHTTPServer(("", PORT), handler_object)
-        
-        # Star the server
-        server.serve_forever()
-    except:
-        console.exception()
+    server = http.server.ThreadingHTTPServer((ip, PORT), handler_object)
+    server.socket = wrap_socket(server.socket, certfile=certificate, server_side=True)
+    server.serve_forever()
+    #except:
+        #print(traceback.format_exc())
+        #console.exception()
 
 
 
 class HttpStatsServer:
-    def __init__(self, console: Console, statsProviders: List[StatsProvider]):
+    def __init__(self, console: Console, userDir: str, statsProviders: List[StatsProvider]):
         self.console = console
         self.statsProviders = statsProviders
         self.process = None
+        self.ip = get('https://api.ipify.org').text
+        self.certificate = userDir + '/server.pem'
+        self.cert_gen(
+            commonName=self.ip,
+            PEM_FILE=self.certificate
+        )
+
 
     def start(self):
-        self.process = Process(target=runner, args=(self.console, self.statsProviders))
+        self.process = Process(target=runner, args=(self.console, self.ip, self.certificate, self.statsProviders, ))
         self.process.start()
     
     def stop(self):
         self.process.kill()
         self.process.join()
     
+    def cert_gen(self,
+        emailAddress="email@address.com",
+        commonName="commonName",
+        countryName="NT",
+        localityName="localityName",
+        stateOrProvinceName="stateOrProvinceName",
+        organizationName="organizationName",
+        organizationUnitName="organizationUnitName",
+        serialNumber=0,
+        validityStartInSeconds=0,
+        validityEndInSeconds=10*365*24*60*60,
+        #KEY_FILE = "private.key",
+        #CERT_FILE="selfsigned.crt"
+        PEM_FILE="server.pem"
+        ):
+        #can look at generated file using openssl:
+        #openssl x509 -inform pem -in selfsigned.crt -noout -text
+        # create a key pair
+        k = crypto.PKey()
+        k.generate_key(crypto.TYPE_RSA, 4096)
+        # create a self-signed cert
+        cert = crypto.X509()
+        cert.get_subject().C = countryName
+        cert.get_subject().ST = stateOrProvinceName
+        cert.get_subject().L = localityName
+        cert.get_subject().O = organizationName
+        cert.get_subject().OU = organizationUnitName
+        cert.get_subject().CN = commonName
+        cert.get_subject().emailAddress = emailAddress
+        cert.set_serial_number(serialNumber)
+        cert.gmtime_adj_notBefore(0)
+        cert.gmtime_adj_notAfter(validityEndInSeconds)
+        cert.set_issuer(cert.get_subject())
+        cert.set_pubkey(k)
+        cert.sign(k, 'sha512')
+        with open(PEM_FILE, "w") as f:
+            f.write(crypto.dump_certificate(crypto.FILETYPE_PEM, cert).decode("utf-8"))
+        with open(PEM_FILE, "a") as f:
+            f.write(crypto.dump_privatekey(crypto.FILETYPE_PEM, k).decode("utf-8"))

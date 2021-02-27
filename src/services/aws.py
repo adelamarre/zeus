@@ -1,6 +1,6 @@
 
 from boto3 import client
-
+from json import dumps
 class RemoteQueue:
     def __init__(self, endPoint: str) -> None:
         self.client = client('sqs')
@@ -29,6 +29,14 @@ class RemoteQueue:
                 QueueUrl=self.endPoint,
                 ReceiptHandle=message['ReceiptHandle']
             )
+
+    def sendMessage(self, messageBoddy: dict):
+        body = dumps(messageBoddy)
+        self.client.send_message(
+            QueueUrl=self.endPoint,
+            MessageBody=body,
+            DelaySeconds=10,
+        )
 
     def pop(self):
         if len(self.messages):

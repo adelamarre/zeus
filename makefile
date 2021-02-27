@@ -38,3 +38,10 @@ kill-listener:
 
 purgelog:
 	@rm -rf temp/*
+
+update-service:
+	rm -rf build && rm -rf dist && pyinstaller --onefile venom-listener &&\
+	sudo systemctl stop venom-listener &&\
+	sudo rm /usr/bin/venom-listener &&\
+	sudo cp dist/venom-listener /usr/bin &&\
+	sudo systemctl start venom-listener
