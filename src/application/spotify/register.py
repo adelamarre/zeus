@@ -339,6 +339,7 @@ class Scenario(AbstractScenario):
             spawnInterval=registerConfig['spawn_interval'],
             showInfo=not self.args.noinfo,
             shutdownEvent=self.shutdownEvent,
+            stopWhenNoProcess=True
         )
 
         pm.start()

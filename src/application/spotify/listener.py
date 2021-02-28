@@ -246,6 +246,7 @@ class Scenario(AbstractScenario):
 
         defautlConfig = {
             'sqs_endpoint': '',
+            'secret': '',
             'max_process': cpu_count(),
             'spawn_interval': 0.5
         }

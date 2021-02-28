@@ -1,6 +1,6 @@
 from PyInquirer import prompt, Separator
 from validators import url as urlValidator
-
+import hashlib 
 
 class Question():
     def yesNo(message, default: bool =True):
@@ -43,6 +43,11 @@ class Question():
                 return bool(data[key])
             return False
         return _when
+
+    def filterMd5(secret):
+        if len(secret):
+            return hashlib.md5(str.encode(secret)).hexdigest()
+        return None
 
     def validateInteger(number):
         try:

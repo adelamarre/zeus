@@ -27,6 +27,7 @@ class ProcessProvider:
 
 class ProcessManager(Subject, StatsProvider):
     EVENT_TIC = 'tic'
+    STAT_PROCESS_COUNT = 0
     def __init__(self,
         serverId: str,
         userDir: str,
@@ -36,7 +37,8 @@ class ProcessManager(Subject, StatsProvider):
         spawnInterval = 0.5,
         showInfo = False,
         shutdownEvent: synchronize.Event = Event(),
-        statsServer: bool = True
+        statsServer: bool = True,
+        stopWhenNoProcess: bool = False
     ) -> None:
         Subject.__init__(self)
         StatsProvider.__init__(self, 'manager')
@@ -52,6 +54,9 @@ class ProcessManager(Subject, StatsProvider):
         self.startTime = time()
         self.processes = []
         self.terminalInfo = showInfo 
+        self.stopWhenNoProcess = stopWhenNoProcess
+        self.stats = Array('i', 1)
+        self.stats[ProcessManager.STAT_PROCESS_COUNT] = 0
     
 
     def showInfo(self):
@@ -75,11 +80,12 @@ class ProcessManager(Subject, StatsProvider):
             index += 1
         stdout.write('\n')
         stdout.flush()  
+    
     def getStats(self):
         return {
             'serverId': self.serverId,
             'maxProcess': self.maxProcess,
-            'processCount': len(self.processes),
+            'processCount': self.stats[ProcessManager.STAT_PROCESS_COUNT],
             'spawnInterval': self.spawnInterval,
             'startTime': str(datetime.fromtimestamp(self.startTime)),
             'elapsedTime': str(timedelta(seconds=round(time() - self.startTime)))
@@ -118,13 +124,17 @@ class ProcessManager(Subject, StatsProvider):
                     else:
                         p.join()
                 self.processes = leftProcesses
-                if (len(self.processes) == 0) and self.shutdownEvent.is_set():
-                    break
-
+                self.stats[ProcessManager.STAT_PROCESS_COUNT] = len(self.processes)
+                if (len(self.processes) == 0):
+                    if self.shutdownEvent.is_set():
+                        break
+                    if self.stopWhenNoProcess:
+                        break        
                 self.trigger(ProcessManager.EVENT_TIC)
                 if self.terminalInfo:
                     self.showInfo()
             except:
                 self.console.exception()
+
         if self.statsServer:
             statsServer.stop()

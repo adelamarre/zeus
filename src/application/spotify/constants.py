@@ -6,7 +6,10 @@ SCENARY = {
         'displayName': 'Register free accounts'
     },
     'listener': {
-        'displayName': 'Start listener server'
+        'displayName': 'Listener server'
+    },
+    'monitor': {
+        'displayName': 'Monitor listener activity'
     }
 }
 

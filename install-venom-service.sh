@@ -24,6 +24,9 @@ echo 'Install Venom service'
 read -p 'SQS endpoint ?' SQSENDPOINT
 read -p 'Max process ?' MAXPROCESS
 read -p 'Spawn insterval ?' SPAWNINTERVAL
+read -p 'Stats server password ?' PASSWORD
+
+SECRET=$(echo -n $PASSWORD | md5sum | awk '{print $1}')
 
 mkdir -p /home/$INSTALLER/.venom
 tee -a /home/$INSTALLER/.venom/config.ini > /dev/null <<EOT
@@ -31,6 +34,7 @@ tee -a /home/$INSTALLER/.venom/config.ini > /dev/null <<EOT
 sqs_endpoint=${SQSENDPOINT}
 max_process=${MAXPROCESS}
 spawn_interval=${SPAWNINTERVAL}
+secret=${SECRET}
 EOT
 
 read -p 'AWS Region ?' AWSREGION
