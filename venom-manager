@@ -108,10 +108,10 @@ if __name__ == '__main__':
                 terminal.append()
                 terminal.append('  Runner:')
                 if remoteStats.runner['played']:
-                    remoteStats.runner['errorPercent'] = remoteStats.runner['error'] / remoteStats.runner['played']
+                    remoteStats.runner['errorPercent'] =  (remoteStats.runner['error'] / remoteStats.runner['played']) * 100
                 else:
                     remoteStats.runner['errorPercent'] = 0.0
-                terminal.appendTemplate('\tPlayed : {played:8d}   Playing: {playing:4d} Loging: {loggingIn:4d}   Errors: {errorPercent:.2f}%%', remoteStats.runner)
+                terminal.appendTemplate('\tLoging: {loggingIn:4d}   Playing: {playing:4d}   Played : {played:8d}   Errors: {errorPercent:.2f}%', remoteStats.runner)
                 terminal.append()
                 terminal.append('  System:')
                 terminal.appendTemplate('\tCpu : {cpuCountP:4d} / {cpuCountL:4d}   Load:       {cpuPercentAvg:.2f}%', remoteStats.system)

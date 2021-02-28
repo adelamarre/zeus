@@ -222,7 +222,7 @@ class RegisterProcessProvider(ProcessProvider, Observer, StatsProvider):
                 'remoteQueue': self.remoteQueue,
                 'console': self.console, 
                 'shutdownEvent': self.shutdownEvent, 
-                'headless': self.headless, 
+                'headless': True, #self.headless, 
                 'vnc': self.vnc,
                 'user': user,
                 'registerProxy': self.registerProxyManager.getRandomProxy(),
