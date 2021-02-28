@@ -22,7 +22,8 @@ class Question():
         for key in choices:
             c.append({
                 'name': choices[key][displayNameKey],
-                'value': key
+                'value': key,
+                'disabled': choices[key].get('disabled', None)
             })
         options = [{
             'type': 'list',
@@ -42,7 +43,7 @@ class Question():
                 return bool(data[key])
             return False
         return _when
-        
+
     def validateInteger(number):
         try:
             value = int(number)

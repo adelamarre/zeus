@@ -1,5 +1,6 @@
 
 from multiprocessing import current_process, Array, Process, sharedctypes, synchronize
+from src.application.scenario import AbstractScenario
 from xml.etree.ElementTree import VERSION
 from src.services.httpserver import StatsProvider
 from src.services.observer import Observer
@@ -234,14 +235,9 @@ class RegisterProcessProvider(ProcessProvider, Observer, StatsProvider):
             self.console.exception()
             self.registerStats[RegisterStat.ERROR] += 1
 
-class Scenario:
-    def __init__(self, args, userDir, shutdownEvent: synchronize.Event, configFile: str) -> None:
-        self.args = args
-        self.userDir = userDir
-        self.shutdownEvent = shutdownEvent
-        self.configFile = configFile
-
-        pass
+class Scenario(AbstractScenario):
+    def __init__(self, **kwargs) -> None:
+        super().__init__(**kwargs)
 
     def start(self):
         logDir = self.userDir + '/register/' + datetime.now().strftime("%m-%d-%Y-%H-%M-%S")

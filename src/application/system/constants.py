@@ -1,6 +1,6 @@
 
 SCENARY = {
-    'check_workers': {
-        'displayName': 'Test the worker system'
+    'config': {
+        'displayName': 'Edit the config file'
     },
 }

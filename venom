@@ -70,5 +70,8 @@ if __name__ == '__main__':
                 scenarioLib = importlib.import_module('src.application.%s.%s' % (app, scenario))
     
     if scenarioLib:
-        scenarioClass = scenarioLib.Scenario(args, userDir, shutdownEvent, configFile)
-        scenarioClass.start()
+        try:
+            scenarioClass = scenarioLib.Scenario(args=args, userDir=userDir, shutdownEvent=shutdownEvent, configFile=configFile)
+            scenarioClass.start()
+        except Exception as e:
+            print(str(e))
