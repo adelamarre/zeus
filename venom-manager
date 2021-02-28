@@ -61,7 +61,7 @@ if __name__ == '__main__':
     while True:
         sleep(1)
         terminal.newPage()
-        terminal.append('Venom Manager v%s' % VERSION)
+        terminal.append(Fore.RED + ('Venom Manager v%s' % VERSION) + Fore.RESET)
         terminal.appendSeparator()
         terminal.append('Servers:')
         terminal.appendSeparator()
@@ -103,7 +103,7 @@ if __name__ == '__main__':
                     }
                 }
                 """
-                terminal.appendTemplate('{id:s} ({ip:s})', {'ip': Fore.LIGHTBLACK_EX + ip, 'id': remoteStats.manager['serverId']}, Fore.YELLOW)
+                terminal.appendTemplate('{id:s} ({ip:s})', {'ip': Fore.WHITE + ip, 'id': remoteStats.manager['serverId']}, Fore.YELLOW)
                 terminal.append()
                 terminal.append('  Runner:')
                 if remoteStats.runner['played']:
@@ -111,7 +111,7 @@ if __name__ == '__main__':
                 else:
                     remoteStats.runner['errorPercent'] = 0.0
                 terminal.appendTemplate('\tLoging: {loggingIn:4d}   Playing: {playing:4d}   Played : {played:8d}   Errors: {errorPercent:.2f}%', remoteStats.runner, 
-                    valueColors={'errorPercent': Fore.RED})
+                    valueColors={'errorPercent': Fore.RED, 'played': Fore.LIGHTGREEN_EX})
                 terminal.append()
                 terminal.append('  System:')
                 terminal.appendTemplate('\tCpu : {cpuCountP:4d} / {cpuCountL:4d}   Load:       {cpuPercentAvg:.2f}%', remoteStats.system)
