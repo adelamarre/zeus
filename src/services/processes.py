@@ -89,6 +89,7 @@ class ProcessManager(Subject, StatsProvider):
         self.shutdownEvent.set()
 
     def start(self):
+        waitStartProcess = 0
         if self.statsServer:
             statsServer = HttpStatsServer(self.console, self.userDir, [self.systemStats, self.processProvider, self])
             statsServer.start()
@@ -96,15 +97,17 @@ class ProcessManager(Subject, StatsProvider):
             try:
                 sleep(self.spawnInterval)
                 freeslot = self.maxProcess - len(self.processes)
-                if freeslot and (not self.shutdownEvent.is_set()):
+
+                if freeslot and (not self.shutdownEvent.is_set()) and waitStartProcess < time():
+                    waitStartProcess = 0
                     try:
                         p = self.processProvider.getNewProcess(freeSlot=freeslot)
                         if p:
                             p.start()
                             self.processes.append(p)
                         else:
-                            #Here we wait 10 sec to not overcall the queue
-                            sleep(10)
+                            #Here we wait 10 sec before asking for a new process
+                            waitStartProcess = time() + 10
                     except:
                         self.console.exception()    
                 
@@ -117,7 +120,7 @@ class ProcessManager(Subject, StatsProvider):
                 self.processes = leftProcesses
                 if (len(self.processes) == 0) and self.shutdownEvent.is_set():
                     break
-                
+
                 self.trigger(ProcessManager.EVENT_TIC)
                 if self.terminalInfo:
                     self.showInfo()

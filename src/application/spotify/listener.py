@@ -1,4 +1,5 @@
 
+import os, sys
 from multiprocessing import current_process, Array, Process, sharedctypes, synchronize
 from xml.etree.ElementTree import VERSION
 from src.services.httpserver import StatsProvider
@@ -10,14 +11,18 @@ from src.services.drivers import DriverManager
 from src.application.spotify.Spotify import Adapter
 from src.services.aws import RemoteQueue
 from src.services.processes import ProcessManager, ProcessProvider
+from src.services.questions import Question
+from src.services.config import Config
 from random import randint
 from shutil import rmtree
 from gc import collect
 from json import loads
-from datetime import timedelta
-from time import time
+from datetime import datetime
 from colorama import Fore
 from src import VERSION
+from psutil import cpu_count
+
+
 
 class ListenerStat:
     LOGGING_IN = 0
@@ -139,7 +144,6 @@ def runner(
 
 class ListenerProcessProvider(ProcessProvider, Observer, StatsProvider):
     def __init__(self,
-        
         queueEndPoint: str,
         shutdownEvent: synchronize.Event,
         console: Console = None,
@@ -221,5 +225,119 @@ class ListenerProcessProvider(ProcessProvider, Observer, StatsProvider):
             self.console.exception()
             self.listenerStats[ListenerStat.ERROR] += 1
 
+class Scenario:
+    def __init__(self, args, userDir, shutdownEvent: synchronize.Event, configFile: str) -> None:
+        self.args = args
+        self.userDir = userDir
+        self.shutdownEvent = shutdownEvent
+        self.configFile = configFile
 
+        pass
+
+    def start(self):
+        logDir = self.userDir + '/listener/' + datetime.now().strftime("%m-%d-%Y-%H-%M-%S")
+        screenshotDir = logDir + '/screenshot'
+        
+        if self.args.nolog == False:
+            os.makedirs(logDir, exist_ok=True)
+        if self.args.screenshot:
+            os.makedirs(screenshotDir, exist_ok=True)
+        
+        
+        
+        #print('Configuration file: %s' % configFile)
+
+        defautlConfig = {
+            'sqs_endpoint': '',
+            'max_process': cpu_count(),
+            'spawn_interval': 0.5
+        }
+        
+        listenerConfig = Config.getListenerConfig(self.configFile, defautlConfig)
+
+        if not listenerConfig:
+            sys.exit('I can not continue without configuraton')
+        
+
+        #https://sqs.eu-west-3.amazonaws.com/884650520697/18e66ed8d655f1747c9afbc572955f46
+        
+        if self.args.verbose:
+            verbose = 3
+        else:
+            verbose = 1
+
+        console = Console(verbose=verbose, ouput=self.args.verbose, logfile=logDir + '/session.log', logToFile=not self.args.nolog)
+
+        if not listenerConfig['sqs_endpoint']:
+            sys.exit('you need to set the sqs_endpoint in the config file.')
+
+        if not listenerConfig['server_id']:
+            sys.exit('you need to set the server_id in the config file.')
+
+        questions = [
+            {
+                'type': 'input',
+                'name': 'max_process',
+                'message': 'How much process to start ?',
+                'default': str(listenerConfig['max_process']),
+                'validate': Question.validateInteger,
+                'filter': int
+            },
+            {
+                'type': 'confirm',
+                'name': 'override_playlist',
+                'message': 'Would you override the playlist to listen ?',
+                'default': False
+            },
+            {
+                'type': 'input',
+                'name': 'playlist',
+                'message': 'Playlist url ?',
+                'default': '',
+                'validate': Question.validateUrl,
+                'when': Question.when('override_playlist')
+            },
+            {
+                'type': 'confirm',
+                'name': 'stats_server',
+                'message': 'Would you start the statistics web server ?',
+                'default': True
+            },
+            {
+            'type': 'confirm',
+            'message': 'Ok, please type [enter] to start or [n] to abort',
+            'name': 'continue',
+            'default': True,
+            },
+        ]
+        answers = Question.list(questions)
+        if not answers or not 'continue' in answers or answers['continue'] == False:
+            sys.exit('ok, see you soon.')
+        
+        playlist = answers.get('playlist', None)
+        maxProcess = answers['max_process']
+        
+        pp = ListenerProcessProvider(
+            queueEndPoint=listenerConfig['sqs_endpoint'],
+            shutdownEvent=self.shutdownEvent,
+            console= console,
+            headless=self.args.headless,
+            vnc= self.args.vnc,
+            screenshotDir=screenshotDir,
+            overridePlaylist=playlist
+            )
+
+        pm = ProcessManager(
+            statsServer=answers['stats_server'],
+            serverId=listenerConfig['server_id'],
+            userDir=self.userDir,
+            console=console,
+            processProvider=pp,
+            maxProcess=maxProcess,
+            spawnInterval=listenerConfig['spawn_interval'],
+            showInfo=not self.args.noinfo,
+            shutdownEvent=self.shutdownEvent,
+        )
+
+        pm.start()
     

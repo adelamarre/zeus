@@ -36,6 +36,13 @@ class Question():
     def validateUrl(data):
         return True if urlValidator(data) else 'Sorry, bad url...'
 
+    def when(key):
+        def _when(data):
+            if key in data:
+                return bool(data[key])
+            return False
+        return _when
+        
     def validateInteger(number):
         try:
             value = int(number)

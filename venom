@@ -1,0 +1,74 @@
+#!/usr/bin/python3.8
+from re import T
+import sys, os, argparse, importlib, signal
+from src.services.config import Config
+from multiprocessing import Event
+from src.services.processes import ProcessManager
+from src.services.console import Console
+from datetime import datetime
+from src.application.spotify.register import RegisterProcessProvider as SpotifyRegisterProcessProvider
+from getpass import getuser
+from src.services.cmdhelper import showHeader
+from src import VERSION
+from src.services.terminal import Terminal
+from colorama import Fore
+from src.services.questions import Question
+from src.application.constants import APPLICATIONS
+
+if __name__ == '__main__':
+    if getattr(sys, 'frozen', False):
+    # If the application is run as a bundle, the PyInstaller bootloader
+    # extends the sys module by a flag frozen=True and sets the app 
+    # path into variable _MEIPASS'.
+        APP_PATH = sys._MEIPASS
+    else:
+        APP_PATH = os.path.dirname(os.path.abspath(__file__))
+
+
+    parser = argparse.ArgumentParser()
+    parser.add_argument('--noinfo', help="Do not show statistics info in the terminal", action="store_true", default=False)
+    parser.add_argument('--headless', help="Start webdriver in headless mode", action="store_true", default=False)
+    parser.add_argument('--vnc', help="Start VNC for each driver (not in headless mode)", action="store_true", default=False)
+    parser.add_argument('--verbose', help="Print out log messages", action="store_true", default=False)
+    parser.add_argument('--screenshot', help="Create a screenshot when excetpion is thrown", action="store_true", default=False)
+    parser.add_argument('--debug', help="Set the log path to the app dir", action="store_true", default=False)
+    parser.add_argument('--nolog', help="Do not write anything on hard drive", action="store_true", default=False)
+    
+    terminal = Terminal('-')
+    showHeader(VERSION, Fore.RED)
+
+    args = parser.parse_args()
+    
+    if args.debug:
+        userDir = APP_PATH + '/temp'
+        os.makedirs(userDir, exist_ok=True)
+    else:
+        userDir = '/home/%s/.venom' % getuser()
+
+    configFile = userDir + '/config.ini'  
+    shutdownEvent = Event()
+    
+    
+
+    def signalHandler(signum, frame):
+        shutdownEvent.set()
+
+    signal.signal(signal.SIGINT, signalHandler)
+    signal.signal(signal.SIGTERM, signalHandler)
+
+
+    ScenarioClass = None
+    scenarioLib = None
+    console = Console(verbose=3, logToFile=False)
+    app = Question().choice('Select the application :',APPLICATIONS)
+    if app:
+        if APPLICATIONS[app].get('disabled', False):
+            console.warning('Sorry this application is not yet implemented.')
+        else:    
+            scenario = Question().choice('Select the scenario    :', APPLICATIONS[app]['scenary'])
+            if scenario:
+                scenarioLib = importlib.import_module('src.application.%s.%s' % (app, scenario))
+    
+    if scenarioLib:
+        scenarioClass = scenarioLib.Scenario(args, userDir, shutdownEvent, configFile)
+        scenarioClass.start()

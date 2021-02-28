@@ -2,14 +2,11 @@
 
 
 SCENARY = {
-    'register_free_account': {
+    'register': {
         'displayName': 'Register free accounts'
     },
-    'listen_playlist': {
-        'displayName': 'Listen playlist'
-    },
-    'check_proxy': {
-        'displayName': 'Check proxy server'
+    'listener': {
+        'displayName': 'Start listener server'
     }
 }
 

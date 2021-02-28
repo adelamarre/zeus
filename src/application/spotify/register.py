@@ -13,13 +13,16 @@ from src.services.processes import ProcessManager, ProcessProvider
 from random import randint
 from shutil import rmtree
 from gc import collect
-from json import loads
-from datetime import timedelta
-from time import time
 from colorama import Fore
 from src import VERSION
 from src.services.users import UserManager
 from src.services.proxies import PROXY_FILE_LISTENER, ProxyManager, PROXY_FILE_REGISTER
+import os
+from datetime import datetime
+from src.services.config import Config
+from psutil import cpu_count
+import sys
+from src.services.questions import Question
 
 class RegisterStat:
     FILLING_OUT = 0
@@ -231,5 +234,115 @@ class RegisterProcessProvider(ProcessProvider, Observer, StatsProvider):
             self.console.exception()
             self.registerStats[RegisterStat.ERROR] += 1
 
+class Scenario:
+    def __init__(self, args, userDir, shutdownEvent: synchronize.Event, configFile: str) -> None:
+        self.args = args
+        self.userDir = userDir
+        self.shutdownEvent = shutdownEvent
+        self.configFile = configFile
 
-    
+        pass
+
+    def start(self):
+        logDir = self.userDir + '/register/' + datetime.now().strftime("%m-%d-%Y-%H-%M-%S")
+        screenshotDir = logDir + '/screenshot'
+        
+        if self.args.nolog == False:
+            os.makedirs(logDir, exist_ok=True)
+        if self.args.screenshot:
+            os.makedirs(screenshotDir, exist_ok=True)
+        
+        
+        
+        #print('Configuration file: %s' % configFile)
+
+        defautlConfig = {
+            'sqs_endpoint': '',
+            'max_process': cpu_count(),
+            'spawn_interval': 0.5
+        }
+        
+        registerConfig = Config.getRegisterConfig(self.configFile, defautlConfig)
+
+        if not registerConfig:
+            sys.exit('I can not continue without configuraton')
+        
+
+        #https://sqs.eu-west-3.amazonaws.com/884650520697/18e66ed8d655f1747c9afbc572955f46
+        
+        if self.args.verbose:
+            verbose = 3
+        else:
+            verbose = 1
+
+        console = Console(verbose=verbose, ouput=self.args.verbose, logfile=logDir + '/session.log', logToFile=not self.args.nolog)
+
+        if not registerConfig['sqs_endpoint']:
+            sys.exit('you need to set the sqs_endpoint in the config file.')
+
+        if not registerConfig['server_id']:
+            sys.exit('you need to set the server_id in the config file.')
+
+        questions = [
+            {
+                'type': 'input',
+                'name': 'playlist',
+                'message': 'Which playlist to listen ?',
+                'validate': Question.validateUrl
+            },
+            {
+                'type': 'input',
+                'name': 'account_count',
+                'message': 'How much account to create ?',
+                'validate': Question.validateInteger,
+                'filter': int
+            },
+            {
+                'type': 'input',
+                'name': 'max_process',
+                'message': 'How much process to start ?',
+                'default': str(registerConfig['max_process']),
+                'validate': Question.validateInteger,
+                'filter': int
+            },
+            {
+            'type': 'confirm',
+            'message': 'Ok, please type [enter] to start or [n] to abort',
+            'name': 'continue',
+            'default': True,
+            },
+        ]
+
+        answers = Question.list(questions)
+        
+        if not 'continue' in answers or answers['continue'] == False:
+            sys.exit('Ok, see you soon :-)')
+        
+        playlist = answers['playlist']
+        accountCount = answers['account_count']
+        maxProcess = answers['max_process']
+        
+        pp = RegisterProcessProvider(
+            accountCount=accountCount,
+            playlist=playlist,
+            queueEndPoint=registerConfig['sqs_endpoint'],
+            shutdownEvent=self.shutdownEvent,
+            console= console,
+            headless=self.args.headless,
+            vnc= self.args.vnc,
+            screenshotDir=screenshotDir
+            )
+
+        pm = ProcessManager(
+            statsServer=False,
+            serverId=registerConfig['server_id'],
+            userDir=self.userDir,
+            console=console,
+            processProvider=pp,
+            maxProcess=maxProcess,
+            spawnInterval=registerConfig['spawn_interval'],
+            showInfo=not self.args.noinfo,
+            shutdownEvent=self.shutdownEvent,
+        )
+
+        pm.start()
