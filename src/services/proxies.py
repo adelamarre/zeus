@@ -2,8 +2,8 @@ import os
 import random
 __DIR__ = (os.path.dirname(__file__) or '.')
 
-PROXY_FILE_LISTENER = __DIR__ + '/../../data/listener_proxies.txt'
-PROXY_FILE_REGISTER = __DIR__ + '/../../data/register_proxies.txt'
+PROXY_FILE_LISTENER = '/listener_proxies.txt'
+PROXY_FILE_REGISTER = '/register_proxies.txt'
 
 class Proxy():
     def getUrl(proxy, scheme = None) -> str:
@@ -52,9 +52,9 @@ class Proxy():
             print('Malformed proxy data : %s' % csv.strip())
 
 class ProxyManager:
-    def __init__(self, proxyFile=PROXY_FILE_LISTENER):
+    def __init__(self, basePath, proxyFile=PROXY_FILE_LISTENER):
         self.proxies = []
-        with open(proxyFile, 'r') as proxiesFile:
+        with open(basePath + proxyFile, 'r') as proxiesFile:
             for csv in proxiesFile:
                 p = Proxy.loads(csv)
                 if p:

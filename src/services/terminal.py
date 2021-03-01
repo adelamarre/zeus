@@ -2,8 +2,6 @@ from sys import stdout
 from os import get_terminal_size
 from colorama import Fore, Style
 import re 
-import urllib3
-urllib3.disable_warnings()
 
 class Terminal:
 

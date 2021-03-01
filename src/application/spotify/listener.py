@@ -352,6 +352,7 @@ class Scenario(AbstractScenario):
             statsServer = HttpStatsServer(listenerConfig['secret'], console, self.userDir, [systemStats, pp, pm])
             statsServer.start()
 
+        
         pm.start()
 
         if answers['stats_server']:

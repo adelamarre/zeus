@@ -1,6 +1,5 @@
 from multiprocessing import Process
 import http.server
-import traceback
 from typing import List
 from urllib.parse import urlparse
 from urllib.parse import parse_qs
@@ -8,7 +7,8 @@ from json import dumps
 from src.services.console import Console
 from ssl import wrap_socket
 from requests import get
-from OpenSSL import crypto, SSL
+from OpenSSL import crypto
+
 
 class StatsProvider:
     def __init__(self, name: str):
@@ -20,6 +20,11 @@ class StatsProvider:
 class MyHttpRequestHandler(http.server.SimpleHTTPRequestHandler):
     statsProviders: List[StatsProvider] = None
     apiKey = 'sdkfjhsagkfsjqgksqjgfqskjgbn'
+    
+
+    def log_message(self, format: str, *args) -> None:
+        pass
+
     def do_GET(self):
 
         # Extract query param
@@ -63,7 +68,7 @@ def runner(apiKey: str, ip: str, certificate: str, statsProviders: List[StatsPro
     
     #try:
         #my_server = socketserver.TCPServer(("", PORT), handler_object)
-    server = http.server.ThreadingHTTPServer((ip, PORT), handler_object)
+    server = http.server.ThreadingHTTPServer(("0.0.0.0", PORT), handler_object)
     server.socket = wrap_socket(server.socket, certfile=certificate, server_side=True)
     server.serve_forever()
     #except:

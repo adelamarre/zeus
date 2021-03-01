@@ -1,13 +1,12 @@
 import os
 import random
 
-USER_AGENT_FILE = (os.path.dirname(__file__) or '.') + '/../../data/user-agents.txt'
-
+USER_AGENT_FILE = '/user-agents.txt'
 
 class UserAgentManager:
-    def __init__(self):
+    def __init__(self, basePath):
         self.userAgents = []
-        with open(USER_AGENT_FILE, 'r') as userAgentsFile:
+        with open(basePath + USER_AGENT_FILE, 'r') as userAgentsFile:
             line = 1
             for userAgent in userAgentsFile:
                 p = userAgent.strip()

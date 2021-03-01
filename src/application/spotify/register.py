@@ -154,6 +154,7 @@ def runner(
 class RegisterProcessProvider(ProcessProvider, Observer, StatsProvider):
     APP_SPOTIFY = 'sp'
     def __init__(self,
+        basePath: str,
         accountCount: int,
         playlist: str,
         queueEndPoint: str,
@@ -162,12 +163,13 @@ class RegisterProcessProvider(ProcessProvider, Observer, StatsProvider):
         headless: bool = False,
         vnc: bool = False,
         screenshotDir: str = None
+        
     ):
         ProcessProvider.__init__(self)
         StatsProvider.__init__(self, 'runner')
-        self.userManager = UserManager()
-        self.registerProxyManager = ProxyManager(PROXY_FILE_REGISTER)
-        self.listenerProxyManager = ProxyManager(PROXY_FILE_LISTENER)
+        self.userManager = UserManager(basePath=basePath)
+        self.registerProxyManager = ProxyManager(basePath=basePath, proxyFile=PROXY_FILE_REGISTER)
+        self.listenerProxyManager = ProxyManager(basePath=basePath, proxyFile=PROXY_FILE_LISTENER)
         self.remoteQueue = RemoteQueue(endPoint=queueEndPoint)
         self.accountCount = accountCount
         self.playlist = playlist
@@ -315,6 +317,7 @@ class Scenario(AbstractScenario):
         maxProcess = answers['max_process']
         
         pp = RegisterProcessProvider(
+            basePath=self.userDir,
             accountCount=accountCount,
             playlist=playlist,
             queueEndPoint=registerConfig['sqs_endpoint'],

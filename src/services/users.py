@@ -11,50 +11,12 @@ import sys
 from src.services.userAgents import UserAgentManager
 
 
-__DIR__ = (os.path.dirname(__file__) or '.')
-
-USERS_FILE = __DIR__ + '/../../data/users.json'
-
-
 class UserManager:
-    def __init__(self, console: Console = None):
-        self.console = console
-        self.emailManager = EmailManager()
-        self.userAgentManager = UserAgentManager()
+    def __init__(self, basePath):
+        self.basePath = basePath
+        self.emailManager = EmailManager(basePath=basePath)
+        self.userAgentManager = UserAgentManager(basePath=basePath)
         self.users = []
-
-
-    def getRandomUser(self):
-        if len(self.users):
-            return choice(self.users)
-            
-    def getUserFilename(self):
-        import glob, os
-        
-        choice = {}
-        for file in glob.glob((os.path.dirname(__file__) or '.') + '/../../Spo*_*.json'):
-            head, tail = os.path.split(file)
-            choice[file] = {
-                'displayName': tail
-            }
-        if len(choice) > 0:
-            return Question().choice('Select the user file :', choice)
-        else:
-            return None
-
-    def getUsers(self) -> List:
-        userFile = self.getUserFilename()
-        if not userFile:
-            sys.exit(0)
-        try:
-            with open(userFile, 'r') as usersFile:
-                self.users = json.load(usersFile)
-        except:
-            if self.console:
-                self.console.warning('Could not find %s in /data folder !' % userFile)
-
-        #print('Found %d users' % len(self.users))
-        return self.users
 
     def createRandomUser(self, proxy, application):
         randomEmailData = self.emailManager.getRandomEmail()

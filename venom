@@ -14,6 +14,9 @@ from src.services.terminal import Terminal
 from colorama import Fore
 from src.services.questions import Question
 from src.application.constants import APPLICATIONS
+import urllib3
+urllib3.disable_warnings()
+
 
 if __name__ == '__main__':
     if getattr(sys, 'frozen', False):

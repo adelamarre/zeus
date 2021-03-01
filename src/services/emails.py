@@ -5,14 +5,14 @@ from .files import FileManager
 
 
 
-FIRSTNAME_DATA_FILE = '/../../data/firstname.txt'
-LASTNAME_DATA_FILE = '/../../data/lastname.txt'
-DOMAIN_DATA_FILE = '/../../data/domain.txt'
+FIRSTNAME_DATA_FILE = '/firstname.txt'
+LASTNAME_DATA_FILE = '/lastname.txt'
+DOMAIN_DATA_FILE = '/domain.txt'
 
 
 class EmailManager:
-    def __init__(self):
-        fileManager = FileManager((os.path.dirname(__file__) or '.'))
+    def __init__(self, basePath):
+        fileManager = FileManager(basePath=basePath)
         self.firstnames = fileManager.loadTextFile(FIRSTNAME_DATA_FILE)
         self.lastnames = fileManager.loadTextFile(LASTNAME_DATA_FILE)
         self.domains = fileManager.loadTextFile(DOMAIN_DATA_FILE)

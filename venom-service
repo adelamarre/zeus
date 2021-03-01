@@ -12,6 +12,8 @@ from getpass import getuser
 import signal
 from src.services.httpserver import HttpStatsServer
 from src.services.stats import Stats
+import urllib3
+urllib3.disable_warnings()
 
 
 if __name__ == '__main__':
