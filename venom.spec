@@ -4,10 +4,10 @@ block_cipher = None
 
 
 a = Analysis(['venom'],
-             pathex=['/home/spotify/projects/zeus'],
+             pathex=['/home/serveurspotify/zeus'],
              binaries=[],
              datas=[],
-             hiddenimports=[],
+             hiddenimports=['src.application.spotify.monitor','src.application.spotify.listener','src.application.spotify.register'],
              hookspath=[],
              runtime_hooks=[],
              excludes=[],
