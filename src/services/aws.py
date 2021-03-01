@@ -3,6 +3,13 @@ from boto3 import client
 from json import dumps
 from src.services.stats import StatsProvider
 import traceback
+
+
+class RemoteQueueStats:
+    MESSAGE_COUNT = 'messageCount'
+    USED_MESSAGE_COUNT = 'usedMessageCount'
+    ERROR_MESSAGE = 'errorMessage'
+
 class RemoteQueue(StatsProvider):
     def __init__(self, endPoint: str) -> None:
         StatsProvider.__init__(self, 'queue')
@@ -26,13 +33,13 @@ class RemoteQueue(StatsProvider):
             if 'Attributes' in response:
                 messageCount = int(response['Attributes'].get('ApproximateNumberOfMessages', 0))
                 usedMessageCount = int(response['Attributes'].get('ApproximateNumberOfMessagesNotVisible', 0))
-        except:
-            error = traceback.format_exc()
+        except Exception as e:
+            error = getattr(e, 'message', repr(e))
 
         return {
-            'error': error,
-            'messageCount': messageCount,
-            'usedMessageCount': usedMessageCount
+            RemoteQueueStats.ERROR_MESSAGE: error,
+            RemoteQueueStats.MESSAGE_COUNT: messageCount,
+            RemoteQueueStats.USED_MESSAGE_COUNT: usedMessageCount
         }
 
     def provision(self, count=1):

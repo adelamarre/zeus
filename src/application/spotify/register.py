@@ -1,5 +1,6 @@
 
 from multiprocessing import current_process, Array, Process, sharedctypes, synchronize
+from src.services.stats import Stats
 from src.application.scenario import AbstractScenario
 from xml.etree.ElementTree import VERSION
 from src.services.httpserver import StatsProvider
@@ -328,7 +329,8 @@ class Scenario(AbstractScenario):
             vnc= self.args.vnc,
             screenshotDir=screenshotDir
             )
-
+        showInfo = not self.args.noinfo
+        systemStats = Stats()
         pm = ProcessManager(
             serverId=registerConfig['server_id'],
             userDir=self.userDir,
@@ -336,9 +338,10 @@ class Scenario(AbstractScenario):
             processProvider=pp,
             maxProcess=maxProcess,
             spawnInterval=registerConfig['spawn_interval'],
-            showInfo=not self.args.noinfo,
             shutdownEvent=self.shutdownEvent,
-            stopWhenNoProcess=True
+            stopWhenNoProcess=True,
+            showInfo=showInfo,
+            systemStats=systemStats
         )
 
         pm.start()

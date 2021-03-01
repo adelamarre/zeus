@@ -1,5 +1,6 @@
 
 import os, sys
+from textwrap import shorten
 from src.application.scenario import AbstractScenario
 from multiprocessing import current_process, Array, Process, sharedctypes, synchronize
 from xml.etree.ElementTree import VERSION
@@ -31,6 +32,14 @@ class ListenerStat:
     PLAYED = 2
     ERROR = 3
     DRIVER_NONE = 4
+
+class ListenerRemoteStat:
+    LOGGING_IN = 'loggingIn'
+    PLAYING = 'playing'
+    PLAYED = 'played'
+    ERROR = 'error'
+    DRIVER_NONE = 'driverNone'
+
 
 def runner(
     console: Console, 
@@ -96,7 +105,7 @@ def runner(
                 state = STATE_LOGGING_IN
                 spotify.login(user['email'], user['password'])    
                 stats[ListenerStat.LOGGING_IN] -= 1
-
+            
                 # __ PLAYING __
                 stats[ListenerStat.PLAYING] += 1
                 state = STATE_PLAYING
@@ -328,6 +337,10 @@ class Scenario(AbstractScenario):
             overridePlaylist=playlist
             )
 
+        
+        showInfo = not self.args.noinfo
+        systemStats = Stats()
+
         pm = ProcessManager(
             serverId=listenerConfig['server_id'],
             userDir=self.userDir,
@@ -335,11 +348,12 @@ class Scenario(AbstractScenario):
             processProvider=pp,
             maxProcess=maxProcess,
             spawnInterval=listenerConfig['spawn_interval'],
-            showInfo=not self.args.noinfo,
+            showInfo=showInfo,
             shutdownEvent=self.shutdownEvent,
+            systemStats= systemStats
         )
         if answers['stats_server']:
-            systemStats = Stats()
+            
             statsServer = HttpStatsServer(listenerConfig['secret'], console, self.userDir, [systemStats, pp, pm])
             statsServer.start()
 

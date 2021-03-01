@@ -1,4 +1,5 @@
 
+from src.services.stats import Stats
 from src.services.httpserver import StatsProvider
 from psutil import Process
 from time import sleep
@@ -36,7 +37,8 @@ class ProcessManager(Subject, StatsProvider):
         spawnInterval = 0.5,
         showInfo = False,
         shutdownEvent: synchronize.Event = Event(),
-        stopWhenNoProcess: bool = False
+        stopWhenNoProcess: bool = False,
+        systemStats: Stats = None
     ) -> None:
         Subject.__init__(self)
         StatsProvider.__init__(self, 'manager')
@@ -53,6 +55,7 @@ class ProcessManager(Subject, StatsProvider):
         self.stopWhenNoProcess = stopWhenNoProcess
         self.stats = Array('i', 1)
         self.stats[ProcessManager.STAT_PROCESS_COUNT] = 0
+        self.systemStats = systemStats
     
 
     def showInfo(self):
@@ -65,8 +68,10 @@ class ProcessManager(Subject, StatsProvider):
         lines.append(Fore.WHITE + 'Elapsed time  : %s' % (Fore.GREEN + elapsedTime))
         lines.append(Fore.WHITE + 'Total process : %3d / %3d     spawn: %.1fs' % (len(self.processes), self.maxProcess, self.spawnInterval))
         lines.append(Fore.BLUE + separator)
-        lines += self.systemStats.getConsoleLines(width, height)
-        lines.append(Fore.BLUE + separator)
+        if self.systemStats:
+            lines += self.systemStats.getConsoleLines(width, height)
+            lines.append(Fore.BLUE + separator)
+            
         lines += self.processProvider.getConsoleLines(width, height)
         lines.append(Fore.BLUE + separator)
         self.console.clearScreen()
