@@ -115,10 +115,14 @@ class Scenario(AbstractScenario):
         
         
         try:
+            host = serverStat['host']
+            if 'exception' in serverStat:
+                terminal.append(Fore.RED + '%s %sConnection Error, check the ip/host address or password'  % (Fore.YELLOW + 'Server ' + host, Fore.RED))
+                return
             runnerStats = serverStat['runner']
             systemStats = serverStat['system']
             managerStats = serverStat['manager']
-            host = serverStat['host']
+            
             terminal.appendTemplate('{id:s} ({host:s})', {'host': Fore.LIGHTBLACK_EX + host, 'id': managerStats['serverId']}, Fore.YELLOW)
             terminal.append()
             terminal.append('  Runner:')

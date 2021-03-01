@@ -171,12 +171,7 @@ class ListenerProcessProvider(ProcessProvider, Observer, StatsProvider):
         self.screenshotDir = screenshotDir
         self.shutdownEvent = shutdownEvent
         self.overridePlaylist = overridePlaylist
-        self.listenerStats = Array('i', 5)
-        self.listenerStats[ListenerStat.PLAYED] = 0
-        self.listenerStats[ListenerStat.ERROR] = 0
-        self.listenerStats[ListenerStat.DRIVER_NONE] = 0
-        self.listenerStats[ListenerStat.LOGGING_IN] = 0
-        self.listenerStats[ListenerStat.PLAYING] = 0
+        self.listenerStats = Array('i', [0, 0, 0, 0, 0])
 
     def getStats(self):
         return {
@@ -192,7 +187,7 @@ class ListenerProcessProvider(ProcessProvider, Observer, StatsProvider):
     def getConsoleLines(self, width: int, height: int):
         stats = self.listenerStats
         lines = []
-        lines.append(Fore.WHITE + 'Logging in: %7d   Playing: %7d   Playedd: %7d   Error: %7d   Driver None: %7d' % 
+        lines.append(Fore.WHITE + 'Logging in: %7d   Playing: %7d   Played: %7d   Error: %7d   Driver None: %7d' % 
             (stats[ListenerStat.LOGGING_IN],
             stats[ListenerStat.PLAYING], 
             stats[ListenerStat.PLAYED],

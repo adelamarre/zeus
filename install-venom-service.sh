@@ -3,8 +3,8 @@
 INSTALLER=$USER
 echo "Install service for user $INSTALLER"
 
-sudo rm /usr/bin/venom-listener
-sudo rm /usr/bin/venom-service
+sudo rm -f /usr/bin/venom-listener
+sudo rm -f /usr/bin/venom-service
 sudo cp dist/venom-service /usr/bin/venom-service
 sudo chmod +x /usr/bin/venom-service
 
@@ -14,8 +14,6 @@ rm -rf /home/$INSTALLER/.venom
 rm -rf /home/$INSTALLER/.aws
 
 sudo systemctl daemon-reload
-
-
 
 echo 'Install Venom service'
 

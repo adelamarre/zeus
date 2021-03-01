@@ -176,12 +176,7 @@ class RegisterProcessProvider(ProcessProvider, Observer, StatsProvider):
         self.vnc = vnc
         self.screenshotDir = screenshotDir
         self.shutdownEvent = shutdownEvent
-        self.registerStats = Array('i', 5)
-        self.registerStats[RegisterStat.CREATED] = 0
-        self.registerStats[RegisterStat.ERROR] = 0
-        self.registerStats[RegisterStat.DRIVER_NONE] = 0
-        self.registerStats[RegisterStat.SUBMITTING] = 0
-        self.registerStats[RegisterStat.FILLING_OUT] = 0
+        self.registerStats = Array('i', [0, 0, 0, 0, 0])
 
     def getStats(self):
         return {
@@ -343,5 +338,6 @@ class Scenario(AbstractScenario):
             showInfo=showInfo,
             systemStats=systemStats
         )
-
+        devnull = open(os.devnull, "w") 
+        sys.stderr = devnull 
         pm.start()

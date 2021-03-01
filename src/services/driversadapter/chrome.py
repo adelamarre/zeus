@@ -110,7 +110,7 @@ class ChromeDriverAdapter:
             options.page_load_strategy = 'normal'
             #options.add_argument("--window-position=-32000,-32000");
             #options.add_argument("--log-path=" + (os.path.dirname(__file__) or '.') + "/../chrome.log")
-            options.add_argument("--log-level=3")
+            options.add_argument("--log-level=OFF")
             #options.add_argument("--disable-logging")
             #options.add_argument("--disable-in-process-stack-traces");
             #options.add_argument("--single-process")
@@ -119,12 +119,6 @@ class ChromeDriverAdapter:
             #options.add_argument("--disable-breakpad")
             #options.add_argument("--disable-component-extensions-with-background-pages")
             #options.add_argument("--disable-crash-reporter")
-            
-            
-
-            
-            
-            
             
             options.add_experimental_option("excludeSwitches", ["enable-automation"])
             options.add_experimental_option('useAutomationExtension', False)
@@ -158,7 +152,7 @@ class ChromeDriverAdapter:
                     #'mitm_add_upstream_certs_to_client_chain': True,
                     #'mitm_keep_host_header': True,
                     #'mitm_console_eventlog_verbosity': 'error',
-                    'suppress_connection_errors': True
+                    #'suppress_connection_errors': True
                 }
                 if proxy:
                     soptions['proxy'] = {
