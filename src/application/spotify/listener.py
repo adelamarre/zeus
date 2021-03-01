@@ -22,8 +22,8 @@ from datetime import datetime
 from colorama import Fore
 from src import VERSION
 from psutil import cpu_count
-
-
+from src.services.httpserver import HttpStatsServer
+from src.services.stats import Stats
 
 class ListenerStat:
     LOGGING_IN = 0
@@ -256,7 +256,6 @@ class Scenario(AbstractScenario):
         if not listenerConfig:
             sys.exit('I can not continue without configuraton')
         
-
         #https://sqs.eu-west-3.amazonaws.com/884650520697/18e66ed8d655f1747c9afbc572955f46
         
         if self.args.verbose:
@@ -271,6 +270,10 @@ class Scenario(AbstractScenario):
 
         if not listenerConfig['server_id']:
             sys.exit('you need to set the server_id in the config file.')
+
+        if not listenerConfig['secret']:
+            sys.exit('You need to provide the server stats password')
+
 
         questions = [
             {
@@ -326,7 +329,6 @@ class Scenario(AbstractScenario):
             )
 
         pm = ProcessManager(
-            statsServer=answers['stats_server'],
             serverId=listenerConfig['server_id'],
             userDir=self.userDir,
             console=console,
@@ -336,6 +338,12 @@ class Scenario(AbstractScenario):
             showInfo=not self.args.noinfo,
             shutdownEvent=self.shutdownEvent,
         )
+        if answers['stats_server']:
+            systemStats = Stats()
+            statsServer = HttpStatsServer(listenerConfig['secret'], console, self.userDir, [systemStats, pp, pm])
+            statsServer.start()
 
         pm.start()
-    
+
+        if answers['stats_server']:
+            statsServer.stop()

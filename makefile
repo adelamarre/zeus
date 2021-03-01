@@ -24,8 +24,8 @@ purgelog:
 	@rm -rf temp/*
 
 update-service:
-	rm -rf build && rm -rf dist && pyinstaller --onefile venom-listener &&\
-	sudo systemctl stop venom-listener &&\
-	sudo rm /usr/bin/venom-listener &&\
-	sudo cp dist/venom-listener /usr/bin &&\
-	sudo systemctl start venom-listener
+	rm -rf build && rm -rf dist && pyinstaller --onefile venom-service &&\
+	sudo systemctl stop venom-service &&\
+	sudo rm -f /usr/bin/venom-service &&\
+	sudo cp dist/venom-service /usr/bin &&\
+	sudo systemctl start venom-service

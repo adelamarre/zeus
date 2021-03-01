@@ -330,7 +330,6 @@ class Scenario(AbstractScenario):
             )
 
         pm = ProcessManager(
-            statsServer=False,
             serverId=registerConfig['server_id'],
             userDir=self.userDir,
             console=console,

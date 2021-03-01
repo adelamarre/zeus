@@ -1,11 +1,10 @@
 
-from src.services.httpserver import HttpStatsServer, StatsProvider
+from src.services.httpserver import StatsProvider
 from psutil import Process
 from time import sleep
 from src.services.console import Console
 from src.services.observer import Subject
 from multiprocessing import Array, Event, synchronize
-from src.services.stats import Stats
 from os import get_terminal_size
 from sys import stdout
 from time import time
@@ -37,12 +36,10 @@ class ProcessManager(Subject, StatsProvider):
         spawnInterval = 0.5,
         showInfo = False,
         shutdownEvent: synchronize.Event = Event(),
-        statsServer: bool = True,
         stopWhenNoProcess: bool = False
     ) -> None:
         Subject.__init__(self)
         StatsProvider.__init__(self, 'manager')
-        self.statsServer = statsServer
         self.serverId = serverId
         self.userDir = userDir
         self.console = console
@@ -50,7 +47,6 @@ class ProcessManager(Subject, StatsProvider):
         self.spawnInterval = spawnInterval
         self.processProvider: ProcessProvider = processProvider
         self.shutdownEvent = shutdownEvent
-        self.systemStats = Stats()
         self.startTime = time()
         self.processes = []
         self.terminalInfo = showInfo 
@@ -96,9 +92,7 @@ class ProcessManager(Subject, StatsProvider):
 
     def start(self):
         waitStartProcess = 0
-        if self.statsServer:
-            statsServer = HttpStatsServer(self.console, self.userDir, [self.systemStats, self.processProvider, self])
-            statsServer.start()
+        
         while True:
             try:
                 sleep(self.spawnInterval)
@@ -136,5 +130,4 @@ class ProcessManager(Subject, StatsProvider):
             except:
                 self.console.exception()
 
-        if self.statsServer:
-            statsServer.stop()
+        

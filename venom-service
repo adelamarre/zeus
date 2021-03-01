@@ -10,7 +10,8 @@ from configparser import ConfigParser
 from psutil import cpu_count
 from getpass import getuser
 import signal
-
+from src.services.httpserver import HttpStatsServer
+from src.services.stats import Stats
 
 
 if __name__ == '__main__':
@@ -52,7 +53,7 @@ if __name__ == '__main__':
         os.makedirs(screenshotDir, exist_ok=True)
 
     config = ConfigParser()
-    config.read(userDir + '/config.ini')
+    config.read(userDir + '/config.service.ini')
 
 
     SQS_ENDPOINT = None
@@ -66,11 +67,13 @@ if __name__ == '__main__':
         SQS_ENDPOINT        = listenerConfig.get('sqs_endpoint').strip()
         MAX_PROCESS         = listenerConfig.getint('max_process', MAX_PROCESS)
         SPAWN_INTERVAL      = listenerConfig.getfloat('spawn_interval', SPAWN_INTERVAL)
-        OVERRIDE_PLAYLIST   = listenerConfig.get('override_playlist').strip()
+        SECRET              = listenerConfig.get('secret').strip()
     
     if SQS_ENDPOINT is None:
         sys.exit('you need to set the sqs_endpoint in the config file.')
     
+    if SECRET is None:
+        sys.exit('you need to set the stats server password.')
 
     if args.verbose:
         verbose = 3
@@ -81,13 +84,12 @@ if __name__ == '__main__':
     shuddownEvent = Event()
 
     pp = SpotifyListenerProcessProvider(
-        SQS_ENDPOINT,
+        queueEndPoint=SQS_ENDPOINT,
         shutdownEvent=shuddownEvent,
-        console= console,
-        headless=args.headless,
-        vnc= args.vnc,
-        screenshotDir=screenshotDir,
-        overridePlaylist = OVERRIDE_PLAYLIST,
+        console=console,
+        #headless=args.headless,
+        #vnc= args.vnc,
+        screenshotDir=screenshotDir
         )
 
     pm = ProcessManager(
@@ -107,4 +109,11 @@ if __name__ == '__main__':
     signal.signal(signal.SIGINT, signalHandler)
     signal.signal(signal.SIGTERM, signalHandler)
 
+    
+    systemStats = Stats()
+    statsServer = HttpStatsServer(apiKey=SECRET, console=console, userDir=userDir, statsProviders=[systemStats, pp, pm])
+    statsServer.start()
+    
     pm.start()
+
+    statsServer.stop()

@@ -14,8 +14,9 @@ from time import time, sleep
 from requests import get
 
 class RemoteStats:
-        def __init__(self, jsonData) -> None:
-            self.__dict__ = loads(jsonData)
+    def __init__(self, jsonData) -> None:
+        self.__dict__ = loads(jsonData)
+
 
 
 class Scenario(AbstractScenario):
@@ -25,7 +26,7 @@ class Scenario(AbstractScenario):
     def refreshAll(self):
         terminal = self.terminal
         terminal.newPage()
-        terminal.append('Venom Manager v%s' % VERSION)
+        terminal.append(Fore.RED + 'Venom Monitor v%s' % VERSION)
         terminal.appendSeparator()
         terminal.append('Servers:')
         terminal.appendSeparator()
@@ -33,9 +34,9 @@ class Scenario(AbstractScenario):
         remoteQueueStats = self.remoteQueue.getStats()
         terminal.append('  Queue:')
         if remoteQueueStats['error']:
-            terminal.append('\tRemote queue error: %s' % (Fore.RED + remoteQueueStats['error']))
+            terminal.append('\tRemote queue error: %s' % (Fore.RED + remoteQueueStats.error))
         else:
-            terminal.append('\tMessages: %d   Used: %d' % (remoteQueueStats['messageCount'], remoteQueueStats['usedMessageCount']))
+            terminal.appendTemplate('\tMessages: {messageCount:d}   Used: {usedMessageCount:d}', remoteQueueStats)
         terminal.appendSeparator()
 
         for server in self.servers:
@@ -56,7 +57,7 @@ class Scenario(AbstractScenario):
             else:
                 remoteStats.runner['errorPercent'] = 0.0
             terminal.appendTemplate('\tLoging: {loggingIn:4d}   Playing: {playing:4d}   Played : {played:8d}   Errors: {errorPercent:.2f}%', remoteStats.runner, 
-                valueColors={'errorPercent': Fore.RED})
+                    valueColors={'errorPercent': Fore.RED, 'played': Fore.LIGHTGREEN_EX})
             terminal.append()
             terminal.append('  System:')
             terminal.appendTemplate('\tCpu : {cpuCountP:4d} / {cpuCountL:4d}   Load:       {cpuPercentAvg:.2f}%', remoteStats.system)
