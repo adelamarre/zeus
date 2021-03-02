@@ -1,30 +1,35 @@
 
-from multiprocessing import current_process, Array, Process, sharedctypes, synchronize
-from src.services.stats import Stats
-from src.application.scenario import AbstractScenario
-from xml.etree.ElementTree import VERSION
-from src.services.httpserver import StatsProvider
-from src.services.observer import Observer
-from src.services.console import Console
-from xvfbwrapper import Xvfb
-from src.services.x11vncwrapper import X11vnc
-from src.services.drivers import DriverManager
-from src.application.spotify.Spotify import Adapter
-from src.services.aws import RemoteQueue
-from src.services.processes import ProcessManager, ProcessProvider
+import os
+import sys
+from datetime import datetime
+from gc import collect
+from multiprocessing import (Array, Process, current_process, sharedctypes,
+                             synchronize)
 from random import randint
 from shutil import rmtree
-from gc import collect
+from time import sleep
+from xml.etree.ElementTree import VERSION
+
 from colorama import Fore
-from src import VERSION
-from src.services.users import UserManager
-from src.services.proxies import PROXY_FILE_LISTENER, ProxyManager, PROXY_FILE_REGISTER
-import os
-from datetime import datetime
-from src.services.config import Config
 from psutil import cpu_count
-import sys
+from src import VERSION
+from src.application.scenario import AbstractScenario
+from src.application.spotify.Spotify import Adapter
+from src.services.aws import RemoteQueue
+from src.services.config import Config
+from src.services.console import Console
+from src.services.drivers import DriverManager
+from src.services.httpserver import StatsProvider
+from src.services.observer import Observer
+from src.services.processes import ProcessManager, ProcessProvider
+from src.services.proxies import (PROXY_FILE_LISTENER, PROXY_FILE_REGISTER,
+                                  ProxyManager)
 from src.services.questions import Question
+from src.services.stats import Stats
+from src.services.users import UserManager
+from src.services.x11vncwrapper import X11vnc
+from xvfbwrapper import Xvfb
+
 
 class RegisterStat:
     FILLING_OUT = 0
@@ -154,6 +159,7 @@ def runner(
 class RegisterProcessProvider(ProcessProvider, Observer, StatsProvider):
     APP_SPOTIFY = 'sp'
     def __init__(self,
+        appArgs,
         basePath: str,
         accountCount: int,
         playlist: str,
@@ -165,7 +171,7 @@ class RegisterProcessProvider(ProcessProvider, Observer, StatsProvider):
         screenshotDir: str = None
         
     ):
-        ProcessProvider.__init__(self)
+        ProcessProvider.__init__(self, appArgs)
         StatsProvider.__init__(self, 'runner')
         self.userManager = UserManager(basePath=basePath)
         self.registerProxyManager = ProxyManager(basePath=basePath, proxyFile=PROXY_FILE_REGISTER)
@@ -236,6 +242,7 @@ class RegisterProcessProvider(ProcessProvider, Observer, StatsProvider):
 class Scenario(AbstractScenario):
     def __init__(self, **kwargs) -> None:
         super().__init__(**kwargs)
+        self.configFile = self.userDir + '/config.ini' 
 
     def start(self):
         logDir = self.userDir + '/register/' + datetime.now().strftime("%m-%d-%Y-%H-%M-%S")
@@ -317,6 +324,7 @@ class Scenario(AbstractScenario):
         maxProcess = answers['max_process']
         
         pp = RegisterProcessProvider(
+            appArgs=self.args,
             basePath=self.userDir,
             accountCount=accountCount,
             playlist=playlist,
@@ -342,5 +350,6 @@ class Scenario(AbstractScenario):
             systemStats=systemStats
         )
         devnull = open(os.devnull, "w") 
-        sys.stderr = devnull 
+        sys.stderr = devnull
         pm.start()
+        

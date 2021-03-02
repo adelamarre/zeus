@@ -28,6 +28,7 @@ class Scenario(AbstractScenario):
     def __init__(self, **kwargs) -> None:
         super().__init__(**kwargs)
         self.statistics = {}
+        self.configFile = self.userDir + '/config.ini' 
     
     def fetchStats(self):
         self.statistics = {

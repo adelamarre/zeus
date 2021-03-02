@@ -24,6 +24,7 @@ from src.application.scenario import AbstractScenario
 class Scenario(AbstractScenario):
     def __init__(self, **kwargs) -> None:
         super().__init__(**kwargs)
+        self.configFile = self.userDir + '/config.service.ini' 
     
     def start(self):
         print('Start as user %s' % getuser())
@@ -67,11 +68,12 @@ class Scenario(AbstractScenario):
         shuddownEvent = Event()
 
         pp = SpotifyListenerProcessProvider(
+            appArgs=self.args,
             queueEndPoint=SQS_ENDPOINT,
             shutdownEvent=shuddownEvent,
             console=console,
-            #headless=args.headless,
-            #vnc= args.vnc,
+            headless= False, #args.headless,
+            vnc= False, #args.vnc,
             screenshotDir=screenshotDir
             )
 
@@ -82,8 +84,9 @@ class Scenario(AbstractScenario):
             processProvider=pp,
             maxProcess=MAX_PROCESS,
             spawnInterval=SPAWN_INTERVAL,
-            showInfo=self.args.info,
+            showInfo=not self.args.noinfo,
             shutdownEvent=shuddownEvent,
+            stopWhenNoProcess=False
         )
 
         def signalHandler(signum, frame):
@@ -97,10 +100,7 @@ class Scenario(AbstractScenario):
         statsServer = HttpStatsServer(apiKey=SECRET, console=console, userDir=self.userDir, statsProviders=[systemStats, pp, pm])
         statsServer.start()
         
-        if self.args.drymode:
-            while not self.shutdownEvent.is_set():
-                sleep(1)
-        else:
-            pm.start()
+    
+        pm.start()
 
         statsServer.stop()

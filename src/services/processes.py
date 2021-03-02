@@ -15,6 +15,9 @@ from colorama import Fore
 VENOM_VERSION = '1.0.7'
 
 class ProcessProvider:
+    def __init__(self, appArgs) -> None:
+        self.args = appArgs
+
     def getStats(self) -> Array:
         pass
 

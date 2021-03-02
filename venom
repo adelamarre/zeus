@@ -33,14 +33,15 @@ if __name__ == '__main__':
 
     parser = argparse.ArgumentParser()
     parser.add_argument('--noinfo', help="Do not show statistics info in the terminal", action="store_true", default=False)
-    parser.add_argument('--headless', help="Start webdriver in headless mode", action="store_true", default=False)
-    parser.add_argument('--vnc', help="Start VNC for each driver (not in headless mode)", action="store_true", default=False)
     parser.add_argument('--verbose', help="Print out log messages", action="store_true", default=False)
     parser.add_argument('--screenshot', help="Create a screenshot when excetpion is thrown", action="store_true", default=False)
     parser.add_argument('--debug', help="Set the log path to the app dir", action="store_true", default=False)
     parser.add_argument('--nolog', help="Do not write anything on hard drive", action="store_true", default=False)
-    parser.add_argument('--scenario', help="Define a scenario to start (<app_name>.<scenario>)", default=None, type=str)
+    parser.add_argument('-s', '--scenario', help="Define a scenario to start (<app_name>.<scenario>)", default=None, type=str)
     parser.add_argument('--dryrun', help="If set, the scenario start in dry mode", action="store_true", default=False)
+    group = parser.add_mutually_exclusive_group()
+    group.add_argument('--headless', help="Start webdriver in headless mode", action="store_true", default=False)
+    group.add_argument('--vnc', help="Start VNC for each driver (not in headless mode)", action="store_true", default=False)
     
     
     args = parser.parse_args()
@@ -66,7 +67,7 @@ if __name__ == '__main__':
     else:
         userDir = '/home/%s/.venom' % getuser()
 
-    configFile = userDir + '/config.ini'  
+    
     shutdownEvent = Event()
     
     
@@ -102,7 +103,7 @@ if __name__ == '__main__':
     
     if scenarioLib:
         try:
-            scenarioClass: AbstractScenario = scenarioLib.Scenario(args=args, userDir=userDir, shutdownEvent=shutdownEvent, configFile=configFile)
+            scenarioClass: AbstractScenario = scenarioLib.Scenario(args=args, userDir=userDir, shutdownEvent=shutdownEvent)
             scenarioClass.start()
         except Exception as e:
             print(str(e))
