@@ -35,18 +35,20 @@ class Stats(StatsProvider):
         memstat = psutil.virtual_memory()
         memtotal = memstat.total/ self.bTog
         memavailable = memstat.available/self.bTog
-        load = [x / psutil.cpu_count() * 100 for x in psutil.getloadavg()]
+        load = psutil.cpu_percent(interval=None)
         memactive = memstat.percent
         def floatValue(value):
             return Fore.GREEN + '%3.2f' % value + Fore.RESET
         def intValue(value):
             return Fore.GREEN + '%3d' % value + Fore.RESET
         def loadValue(value):
-            if value > 100.0:
+            if value > 96.0:
                 return Fore.RED + '%3.2f' % value + Fore.RESET
+            elif value > 70.0:
+                return Fore.YELLOW + '%3.2f' % value + Fore.RESET
             else:
                 return Fore.GREEN + '%3.2f' % value + Fore.RESET
         
-        lines.append(Fore.WHITE + 'Cpu    : Count %s/%s, load %s%%' % (intValue(self.cpuCountP), intValue(self.cpuCountL), loadValue(load[0])))
+        lines.append(Fore.WHITE + 'Cpu    : Count %s/%s, load %s%%' % (intValue(self.cpuCountP), intValue(self.cpuCountL), loadValue(load)))
         lines.append(Fore.WHITE + 'Memory : Total    %s Go,  Available %s Go, Used %s%%' % (floatValue(memtotal), floatValue(memavailable), floatValue(memactive)))
         return lines

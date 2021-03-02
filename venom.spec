@@ -7,7 +7,11 @@ a = Analysis(['venom'],
              pathex=['/home/serveurspotify/zeus'],
              binaries=[],
              datas=[],
-             hiddenimports=['src.application.spotify.monitor','src.application.spotify.listener','src.application.spotify.register'],
+             hiddenimports=[
+                 'src.application.spotify.monitor',
+                 'src.application.spotify.listener',
+                 'src.application.spotify.register'
+            ],
              hookspath=['/home/serveurspotify/zeus/pihooks'],
              runtime_hooks=[],
              excludes=[],

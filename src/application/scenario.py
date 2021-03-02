@@ -10,6 +10,7 @@ class AbstractScenario:
         self.userDir = userDir
         self.shutdownEvent = shutdownEvent
         self.configFile = configFile
+        
 
     def start(self):
         pass

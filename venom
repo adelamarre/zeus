@@ -1,20 +1,23 @@
-#!/usr/bin/python3.8
-from re import T
-import sys, os, argparse, importlib, signal
-from src.services.config import Config
-from multiprocessing import Event
-from src.services.processes import ProcessManager
-from src.services.console import Console
-from datetime import datetime
-from src.application.spotify.register import RegisterProcessProvider as SpotifyRegisterProcessProvider
+#!/usr/bin/python3
+import argparse
+import importlib
+import os
+import signal
+from src.application.scenario import AbstractScenario
+import sys
 from getpass import getuser
-from src.services.cmdhelper import showHeader
-from src import VERSION
-from src.services.terminal import Terminal
-from colorama import Fore
-from src.services.questions import Question
-from src.application.constants import APPLICATIONS
+from multiprocessing import Event
+from re import T
+
 import urllib3
+from colorama import Fore
+
+from src import VERSION
+from src.application.constants import APPLICATIONS
+from src.services.console import Console
+from src.services.questions import Question
+from src.services.terminal import Terminal
+from colorama import Fore, Style
 urllib3.disable_warnings()
 
 
@@ -36,12 +39,27 @@ if __name__ == '__main__':
     parser.add_argument('--screenshot', help="Create a screenshot when excetpion is thrown", action="store_true", default=False)
     parser.add_argument('--debug', help="Set the log path to the app dir", action="store_true", default=False)
     parser.add_argument('--nolog', help="Do not write anything on hard drive", action="store_true", default=False)
+    parser.add_argument('--scenario', help="Define a scenario to start (<app_name>.<scenario>)", default=None, type=str)
+    parser.add_argument('--dryrun', help="If set, the scenario start in dry mode", action="store_true", default=False)
     
-    terminal = Terminal('-')
-    showHeader(VERSION, Fore.RED)
-
+    
     args = parser.parse_args()
     
+    if not args.scenario:
+        terminal = Terminal('-')
+        terminal.clear()
+        terminal.appendHeader(VERSION, Fore.RED)
+
+        if args.dryrun or args.debug:
+            terminal.appendSeparator()
+            terminal.append('%s %s' % (
+                ((Fore.WHITE + 'Debug: ' + Fore.BLUE + 'True    ' + Fore.RESET)  if args.debug else ''),
+                ((Fore.WHITE + 'Dry run: ' + Fore.BLUE + 'True    ' + Fore.RESET)  if args.dryrun else ''),
+            ))
+            terminal.appendSeparator()
+            terminal.append()
+        terminal.flush()
+
     if args.debug:
         userDir = APP_PATH + '/temp'
         os.makedirs(userDir, exist_ok=True)
@@ -59,22 +77,32 @@ if __name__ == '__main__':
     signal.signal(signal.SIGINT, signalHandler)
     signal.signal(signal.SIGTERM, signalHandler)
 
-
-    ScenarioClass = None
-    scenarioLib = None
-    console = Console(verbose=3, logToFile=False)
-    app = Question().choice('Select the application :',APPLICATIONS)
-    if app:
-        if APPLICATIONS[app].get('disabled', False):
-            console.warning('Sorry this application is not yet implemented.')
-        else:    
-            scenario = Question().choice('Select the scenario    :', APPLICATIONS[app]['scenary'])
-            if scenario:
-                scenarioLib = importlib.import_module('src.application.%s.%s' % (app, scenario))
+    if args.scenario:
+        try:
+            [app, scenario] = args.scenario.split('.')
+        except:
+            sys.exit('Bad screnario format <application>.<scenario>')
+        
+        try:
+            scenarioLib = scenarioLib = importlib.import_module('src.application.%s.%s' % (app, scenario))   
+        except:
+            sys.exit('Unknown application or scenario : %s' % args.scenario)
+    else:
+        ScenarioClass = None
+        scenarioLib = None
+        console = Console(verbose=3, logToFile=False)
+        app = Question().choice('Select the application :',APPLICATIONS)
+        if app:
+            if APPLICATIONS[app].get('disabled', False):
+                console.warning('Sorry this application is not yet implemented.')
+            else:    
+                scenario = Question().choice('Select the scenario    :', APPLICATIONS[app]['scenary'])
+                if scenario:
+                    scenarioLib = importlib.import_module('src.application.%s.%s' % (app, scenario))
     
     if scenarioLib:
         try:
-            scenarioClass = scenarioLib.Scenario(args=args, userDir=userDir, shutdownEvent=shutdownEvent, configFile=configFile)
+            scenarioClass: AbstractScenario = scenarioLib.Scenario(args=args, userDir=userDir, shutdownEvent=shutdownEvent, configFile=configFile)
             scenarioClass.start()
         except Exception as e:
             print(str(e))
