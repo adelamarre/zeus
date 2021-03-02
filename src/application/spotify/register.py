@@ -245,15 +245,17 @@ class Scenario(AbstractScenario):
         self.configFile = self.userDir + '/config.ini' 
 
     def start(self):
-        logDir = self.userDir + '/register/' + datetime.now().strftime("%m-%d-%Y-%H-%M-%S")
-        screenshotDir = logDir + '/screenshot'
+        logDir = None
+        screenshotDir = None
+        logfile = None
         
         if self.args.nolog == False:
+            logDir = self.userDir + '/register/' + datetime.now().strftime("%m-%d-%Y-%H-%M-%S")
+            logfile = logDir + '/session.log'
             os.makedirs(logDir, exist_ok=True)
-        if self.args.screenshot:
-            os.makedirs(screenshotDir, exist_ok=True)
-        
-        
+            if self.args.screenshot:
+                screenshotDir = logDir + '/screenshot'
+                os.makedirs(screenshotDir, exist_ok=True)
         
         #print('Configuration file: %s' % configFile)
 
@@ -276,7 +278,7 @@ class Scenario(AbstractScenario):
         else:
             verbose = 1
 
-        console = Console(verbose=verbose, ouput=self.args.verbose, logfile=logDir + '/session.log', logToFile=not self.args.nolog)
+        console = Console(verbose=verbose, ouput=self.args.verbose, logfile=logfile, logToFile=not self.args.nolog)
 
         if not registerConfig['sqs_endpoint']:
             sys.exit('you need to set the sqs_endpoint in the config file.')

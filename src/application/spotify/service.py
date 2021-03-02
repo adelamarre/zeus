@@ -29,12 +29,17 @@ class Scenario(AbstractScenario):
     def start(self):
         print('Start as user %s' % getuser())
 
-        logDir = self.userDir + '/listener/' + datetime.now().strftime("%m-%d-%Y-%H-%M-%S")
-        screenshotDir = logDir + '/screenshot'
+        logDir = None
+        screenshotDir = None
+        logfile = None
         
         if self.args.nolog == False:
+            logDir = self.userDir + '/service/' + datetime.now().strftime("%m-%d-%Y-%H-%M-%S")
+            logfile = logDir + '/session.log'
             os.makedirs(logDir, exist_ok=True)
-            os.makedirs(screenshotDir, exist_ok=True)
+            if self.args.screenshot:
+                screenshotDir = logDir + '/screenshot'
+                os.makedirs(screenshotDir, exist_ok=True)
 
         config = ConfigParser()
         config.read(self.userDir + '/config.service.ini')
@@ -64,7 +69,7 @@ class Scenario(AbstractScenario):
         else:
             verbose = 1
 
-        console = Console(verbose=verbose, ouput=self.args.verbose, logfile=logDir + '/session.log', logToFile=not self.args.nolog)
+        console = Console(verbose=verbose, ouput=self.args.verbose, logfile=logfile, logToFile=not self.args.nolog)
         shuddownEvent = Event()
 
         pp = SpotifyListenerProcessProvider(
