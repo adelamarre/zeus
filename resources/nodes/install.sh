@@ -4,6 +4,7 @@ mkdir -p ~/tmp && cd tmp
 sudo apt-get update
 sudo apt-get install -y software-properties-common
 sudo apt install -y build-essential checkinstall zlib1g-dev libncurses5-dev libgdbm-dev libnss3-dev libssl-dev libreadline-dev libffi-dev libsqlite3-dev wget libbz2-dev unzip
+sudo apt install -y python3-dev
 
 echo '################## Install Xvfb & x11vnc services'
 sudo apt-get -y install xvfb xserver-xorg-core xfonts-100dpi xfonts-75dpi xfonts-scalable xfonts-cyrillic

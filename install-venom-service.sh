@@ -10,9 +10,6 @@ sudo chmod +x /usr/bin/venom-service
 
 sudo systemctl disable venom-service.service
 sudo rm /etc/systemd/system/venom-service.service
-rm -rf /home/$INSTALLER/.venom
-rm -rf /home/$INSTALLER/.aws
-
 sudo systemctl daemon-reload
 
 echo 'Install Venom service'
@@ -24,10 +21,14 @@ read -p 'SQS endpoint ?' SQSENDPOINT
 read -p 'Max process ?' MAXPROCESS
 read -p 'Spawn insterval ?' SPAWNINTERVAL
 read -p 'Stats server password ?' PASSWORD
+read -p 'AWS Region ?' AWSREGION
+read -p 'AWS Access Key ?' AWSACCESSKEY
+read -p 'AWS Secret ?' AWSSECRET
 
 SECRET=$(echo -n $PASSWORD | md5sum | awk '{print $1}')
 
 mkdir -p /home/$INSTALLER/.venom
+rm -f /home/$INSTALLER/.venom/config.service.ini
 tee -a /home/$INSTALLER/.venom/config.service.ini > /dev/null <<EOT
 [LISTENER]
 server_id=${SERVERID}
@@ -37,18 +38,19 @@ spawn_interval=${SPAWNINTERVAL}
 secret=${SECRET}
 EOT
 
-read -p 'AWS Region ?' AWSREGION
-read -p 'AWS Access Key ?' AWSACCESSKEY
-read -p 'AWS Secret ?' AWSSECRET
 
 mkdir -p /home/$INSTALLER/.aws
+rm -f /home/$INSTALLER/.aws/config
 tee -a /home/$INSTALLER/.aws/config > /dev/null <<EOT
 [default]
 region = ${AWSREGION}
 aws_access_key_id=${AWSACCESSKEY}
 aws_secret_access_key=${AWSSECRET}
 EOT
-
+sudo systemctl stop venom-service
+sudo systemctl disable venom-service
+sudo systemctl daemon-reload
+sudo rm -f /etc/systemd/system/venom-service.service
 sudo tee -a /etc/systemd/system/venom-service.service > /dev/null <<EOT
 [Unit]
 Description=Venom service
