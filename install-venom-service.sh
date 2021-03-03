@@ -59,7 +59,7 @@ Type=simple
 User=${INSTALLER}
 Group=${INSTALLER}
 WorkingDirectory=/home/${INSTALLER}
-ExecStart=/usr/bin/venom-service --nolog 
+ExecStart=/usr/bin/venom --nolog --scenario spotify.service
 
 Restart=always
 
