@@ -8,5 +8,6 @@ class Scenario(AbstractScenario):
         super().__init__(**kwargs)
 
     def start(self):
+        os.makedirs(self.userDir, exist_ok=True)
         cmd = os.environ.get('EDITOR', 'vi') + ' ' + self.userDir + '/config.ini'
         subprocess.call(cmd, shell=True)

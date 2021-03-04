@@ -1,4 +1,4 @@
-
+#!/bin/bash -e
 echo '################## Prepare'
 mkdir -p ~/tmp && cd tmp
 sudo apt-get update
