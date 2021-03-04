@@ -3,8 +3,8 @@ import os
 import sys
 from datetime import datetime
 from gc import collect
-from multiprocessing import (Array, Process, current_process, sharedctypes,
-                             synchronize)
+from multiprocessing import (Array, Process, Queue, current_process,
+                             sharedctypes, synchronize)
 from random import randint
 from shutil import rmtree
 from time import sleep
@@ -29,7 +29,7 @@ from src.services.stats import Stats
 from src.services.users import UserManager
 from src.services.x11vncwrapper import X11vnc
 from xvfbwrapper import Xvfb
-
+from time import time,sleep
 
 class RegisterStat:
     FILLING_OUT = 0
@@ -37,6 +37,24 @@ class RegisterStat:
     CREATED = 2
     ERROR = 3
     DRIVER_NONE = 4
+
+class RegisterRemoteStat:
+    VERSION = 'version'
+    ERROR = 'error'
+    DRIVER_NONE = 'driverNone'
+    CREATED = 'created'
+    FILLING_OUT = 'fillingOut'
+    SUBMITTING = 'submitting'
+
+    def parse(stats: Array) -> dict:
+        return {
+            RegisterRemoteStat.VERSION: VERSION,
+            RegisterRemoteStat.ERROR: stats[RegisterStat.ERROR],
+            RegisterRemoteStat.DRIVER_NONE: stats[RegisterStat.DRIVER_NONE],
+            RegisterRemoteStat.CREATED: stats[RegisterStat.CREATED],
+            RegisterRemoteStat.FILLING_OUT: stats[RegisterStat.FILLING_OUT],
+            RegisterRemoteStat.SUBMITTING: stats[RegisterStat.SUBMITTING],
+        }
 
 def runner(
     remoteQueue: RemoteQueue,
@@ -48,11 +66,12 @@ def runner(
     playlist: str,
     vnc: bool,
     screenshotDir,
-    stats: Array
+    stats: Array,
+    statsQueue: Queue
 ):
         STATE_FILLING_OUT = 'filling_out'
         STATE_SUBMITTING = 'submitting'
-
+        STATE_STARTED = 'started'
         tid = current_process().pid
         console.log('#%d Start' % tid)
 
@@ -92,36 +111,36 @@ def runner(
                 raise Exception('No driver was returned from adapter')
             
         except:
-            stats[RegisterStat.DRIVER_NONE] += 1
+            statsQueue.put((RegisterStat.DRIVER_NONE, 1))
             console.exception('Driver unavailable')
         else:
             try:
-                state = ''
+                state = STATE_STARTED
                 spotify = Adapter(driver, console, shutdownEvent)
                 # __ COMPLETING __
-                stats[RegisterStat.FILLING_OUT] += 1
+                statsQueue.put((RegisterStat.FILLING_OUT, 1))
                 state = STATE_FILLING_OUT
                 spotify.fillingOutSubscriptionForm(user)    
-                stats[RegisterStat.FILLING_OUT] -= 1
+                statsQueue.put((RegisterStat.FILLING_OUT, -1))
 
                 # __ SUBMITTING __
-                stats[RegisterStat.SUBMITTING] += 1
+                statsQueue.put((RegisterStat.SUBMITTING, 1))
                 state = STATE_SUBMITTING
                 spotify.submitSubscriptionForm()
-                stats[RegisterStat.SUBMITTING] -= 1
+                statsQueue.put((RegisterStat.SUBMITTING, -1))
 
                 remoteQueue.sendMessage({
                     'user': user,
                     'playlist': playlist,
                     'type': 'sp'
                 })
-                stats[RegisterStat.CREATED] += 1
+                statsQueue.put((RegisterStat.CREATED, 1))
             except Exception as e:
                 if state == STATE_FILLING_OUT:
-                    stats[RegisterStat.FILLING_OUT] -= 1
+                    statsQueue.put((RegisterStat.FILLING_OUT, -1))
                 elif state == STATE_SUBMITTING:
-                    stats[RegisterStat.SUBMITTING] -= 1
-                stats[RegisterStat.ERROR] += 1
+                    statsQueue.put((RegisterStat.SUBMITTING, -1))
+                statsQueue.put((RegisterStat.ERROR, 1))
                 try:
                     if screenshotDir:
                         id = randint(10000, 99999)
@@ -156,6 +175,75 @@ def runner(
                 pass
         collect()
 
+def dryRunner(
+    remoteQueue: RemoteQueue,
+    console: Console, 
+    shutdownEvent: synchronize.Event, 
+    headless: bool, 
+    user: dict,
+    registerProxy: dict,
+    playlist: str,
+    vnc: bool,
+    screenshotDir,
+    stats: Array,
+    statsQueue: Queue
+):
+    STATE_FILLING_OUT = 'filling_out'
+    STATE_SUBMITTING = 'submitting'
+    STATE_STARTED = 'started'
+
+    def sleepOrNot(secondes: int) -> bool:
+        startSleep = time()
+        while True:
+            sleep(1)
+            if randint(0,1000) > 999: 
+                raise Exception('Dry exception')
+            if shutdownEvent.is_set():
+                return True
+            if (time() - startSleep) > secondes:
+                break
+        return False
+
+    tid = current_process().pid
+    console.log('#%d Start' % tid)
+
+    driver = None
+    userDataDir = None
+    x11vnc = None
+    vdisplay = None
+    
+    try:
+        state = STATE_STARTED
+        spotify = Adapter(driver, console, shutdownEvent)
+        # __ COMPLETING __
+        statsQueue.put((RegisterStat.FILLING_OUT, 1))
+        state = STATE_FILLING_OUT
+        sleepOrNot(45)
+        statsQueue.put((RegisterStat.FILLING_OUT, -1))
+
+        # __ SUBMITTING __
+        statsQueue.put((RegisterStat.SUBMITTING, 1))
+        state = STATE_SUBMITTING
+        sleepOrNot(randint(20, 40))
+        statsQueue.put((RegisterStat.SUBMITTING, -1))
+        statsQueue.put((RegisterStat.CREATED, 1))
+    except Exception as e:
+        if state == STATE_FILLING_OUT:
+            statsQueue.put((RegisterStat.FILLING_OUT, -1))
+        elif state == STATE_SUBMITTING:
+            statsQueue.put((RegisterStat.SUBMITTING, -1))
+        statsQueue.put((RegisterStat.ERROR, 1))
+        try:
+            if screenshotDir:
+                id = randint(10000, 99999)
+                with open(screenshotDir + ('/%d.log' % id), 'w') as f:
+                    f.write(str(e))
+                driver.save_screenshot(screenshotDir  + ('/%d.png' % id))
+        except:
+            console.exception()
+
+
+
 class RegisterProcessProvider(ProcessProvider, Observer, StatsProvider):
     APP_SPOTIFY = 'sp'
     def __init__(self,
@@ -185,55 +273,66 @@ class RegisterProcessProvider(ProcessProvider, Observer, StatsProvider):
         self.screenshotDir = screenshotDir
         self.shutdownEvent = shutdownEvent
         self.registerStats = Array('i', [0, 0, 0, 0, 0])
+        self.statsQueue = Queue()
 
     def getStats(self):
-        return {
-            'version': VERSION,
-            'error': self.registerStats[RegisterStat.ERROR],
-            'driverNone': self.registerStats[RegisterStat.DRIVER_NONE],
-            'created': self.registerStats[RegisterStat.CREATED],
-            'filling_out': self.registerStats[RegisterStat.FILLING_OUT],
-            'submitting': self.registerStats[RegisterStat.SUBMITTING],
-        }
+        return RegisterRemoteStat.parse(self.registerStats)
     
+    def updateStats(self):
+        while True:
+            try:
+                type, value = self.statsQueue.get_nowait()
+                self.registerStats[type] += value
+            except:
+                break
+
     def getConsoleLines(self, width: int, height: int):
-        stats = self.registerStats
+        stats = self.getStats()
+        if stats[RegisterRemoteStat.CREATED] > 0:
+            stats['errorPercent'] = (stats[RegisterRemoteStat.ERROR] / stats[RegisterRemoteStat.CREATED]) * 100
+        else:
+            stats['errorPercent'] = 0.0
+        
         lines = []
-        lines.append(Fore.WHITE + 'Created: %7d   Filling out form: %7d   Submitting: %7d   Error: %7d   Driver None: %7d' % 
-            (stats[RegisterStat.CREATED],
-            stats[RegisterStat.FILLING_OUT], 
-            stats[RegisterStat.SUBMITTING],
-            stats[RegisterStat.ERROR],
-            stats[RegisterStat.DRIVER_NONE],
-            ) 
-        )
+        dry = Fore.YELLOW + '(dry) ' + Fore.RESET if self.args.dryrun else ''
+        lines.append(Fore.WHITE + dry + 'Created: {created:7d}   Filling out form: {fillingOut:7d}   Submitting: {submitting:7d}   Error: {errorPercent:6.2f}   Driver None: {driverNone:7d}'.format(**stats))
         return lines
         
 
     def notify(self, eventName: str, target, data):
-        pass
+        if eventName == ProcessManager.EVENT_TIC:
+            self.updateStats()
+
+    def buildProcess(self, target, user={}, playlist=''):
+        return Process(target = target, kwargs={
+                    'remoteQueue': self.remoteQueue,
+                    'console': self.console, 
+                    'shutdownEvent': self.shutdownEvent, 
+                    'headless': True, #self.headless, 
+                    'vnc': self.vnc,
+                    'user': user,
+                    'registerProxy': self.registerProxyManager.getRandomProxy(),
+                    'playlist': playlist,
+                    'screenshotDir': self.screenshotDir,
+                    'stats': self.registerStats,
+                    'statsQueue': self.statsQueue
+                })
 
     def getNewProcess(self, freeSlot: int):
         try:
+            if self.args.dryrun:
+                if randint(0, 1000) == 34:
+                    self.statsQueue.put((RegisterStat.ERROR, 1))
+                    return
+                return self.buildProcess(target=dryRunner)
+
             if self.registerStats[RegisterStat.CREATED] >= self.accountCount:
                 return
             user = self.userManager.createRandomUser(
                 proxy = self.listenerProxyManager.getRandomProxy(),
                 application = RegisterProcessProvider.APP_SPOTIFY
             )
-
-            p = Process(target = runner, kwargs={
-                'remoteQueue': self.remoteQueue,
-                'console': self.console, 
-                'shutdownEvent': self.shutdownEvent, 
-                'headless': True, #self.headless, 
-                'vnc': self.vnc,
-                'user': user,
-                'registerProxy': self.registerProxyManager.getRandomProxy(),
-                'playlist': self.playlist,
-                'screenshotDir': self.screenshotDir,
-                'stats': self.registerStats,
-            })
+            p = self.buildProcess(target=runner, user=user, playlist=self.playlist)
             return p
         except Exception as e:
             self.console.exception()

@@ -15,10 +15,13 @@ help:
 
 
 kill-register:
-	@kill $$(ps aux | grep '[r]egister' | awk '{print $$2}')
+	@kill -9 $$(ps aux | grep '[r]egister' | awk '{print $$2}')
 
 kill-listener:
-	@kill $$(ps aux | grep '[l]istener' | awk '{print $$2}')
+	@kill -9 $$(ps aux | grep '[l]istener' | awk '{print $$2}')
+
+kill-python:
+	@kill -9 $$(ps aux | grep '[p]ython' | awk '{print $$2}')
 
 purgelog:
 	@rm -rf temp/*

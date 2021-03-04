@@ -59,14 +59,14 @@ class ProcessManager(Subject, StatsProvider):
         self.stats = Array('i', 1)
         self.stats[ProcessManager.STAT_PROCESS_COUNT] = 0
         self.systemStats = systemStats
-    
+        
 
     def showInfo(self):
         width, height = get_terminal_size()
         elapsedTime = str(timedelta(seconds=round(time() - self.startTime)))
         lines = []
         separator = '-' * width
-        lines.append(Fore.YELLOW + 'Venom v' + VENOM_VERSION)
+        lines.append(Fore.RED + 'Venom v' + VENOM_VERSION)
         lines.append(Fore.BLUE + separator)
         lines.append(Fore.WHITE + 'Elapsed time  : %s' % (Fore.GREEN + elapsedTime))
         lines.append(Fore.WHITE + 'Total process : %3d / %3d     spawn: %.1fs' % (len(self.processes), self.maxProcess, self.spawnInterval))
@@ -99,8 +99,9 @@ class ProcessManager(Subject, StatsProvider):
         self.shutdownEvent.set()
 
     def start(self):
+        self.attach([ProcessManager.EVENT_TIC], self.processProvider)
         waitStartProcess = 0
-        
+        lastTic = 0
         while True:
             try:
                 sleep(self.spawnInterval)
@@ -132,10 +133,16 @@ class ProcessManager(Subject, StatsProvider):
                         break
                     if self.stopWhenNoProcess:
                         break        
-                self.trigger(ProcessManager.EVENT_TIC)
-                if self.terminalInfo:
-                    self.showInfo()
+                if time() - lastTic > 1:
+                    self.trigger(ProcessManager.EVENT_TIC)
+                    if self.terminalInfo:
+                        self.showInfo()
+                    lastTic = time()
+                        
             except:
                 self.console.exception()
-
+        
+        self.trigger(ProcessManager.EVENT_TIC)
+        if self.terminalInfo:
+            self.showInfo()
         

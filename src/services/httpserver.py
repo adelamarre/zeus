@@ -1,5 +1,6 @@
 from multiprocessing import Process
 import http.server
+import os
 from typing import List
 from urllib.parse import urlparse
 from urllib.parse import parse_qs
@@ -14,7 +15,7 @@ class StatsProvider:
     def __init__(self, name: str):
         self.name = name
 
-    def getStats():
+    def getStats() -> dict:
         pass
 
 class MyHttpRequestHandler(http.server.SimpleHTTPRequestHandler):
@@ -85,10 +86,11 @@ class HttpStatsServer:
         self.process: Process = None
         self.ip = get('https://api.ipify.org').text
         self.certificate = userDir + '/server.pem'
-        self.cert_gen(
-            commonName=self.ip,
-            PEM_FILE=self.certificate
-        )
+        if not os.path.isfile(self.certificate):
+            self.cert_gen(
+                commonName=self.ip,
+                PEM_FILE=self.certificate
+            )
 
 
     def start(self):

@@ -1,8 +1,6 @@
-
 import os, sys
-from textwrap import shorten
 from src.application.scenario import AbstractScenario
-from multiprocessing import current_process, Array, Process, sharedctypes, synchronize
+from multiprocessing import current_process, Array, Queue, Process, synchronize
 from xml.etree.ElementTree import VERSION
 from src.services.httpserver import StatsProvider
 from src.services.observer import Observer
@@ -35,12 +33,22 @@ class ListenerStat:
     DRIVER_NONE = 4
 
 class ListenerRemoteStat:
+    VERSION = 'version'
     LOGGING_IN = 'loggingIn'
     PLAYING = 'playing'
     PLAYED = 'played'
     ERROR = 'error'
     DRIVER_NONE = 'driverNone'
 
+    def parse(stats: Array) -> dict:
+        return {
+            ListenerRemoteStat.VERSION: VERSION,
+            ListenerRemoteStat.ERROR: stats[ListenerStat.ERROR],
+            ListenerRemoteStat.DRIVER_NONE: stats[ListenerStat.DRIVER_NONE],
+            ListenerRemoteStat.PLAYED: stats[ListenerStat.PLAYED],
+            ListenerRemoteStat.LOGGING_IN: stats[ListenerStat.LOGGING_IN],
+            ListenerRemoteStat.PLAYING: stats[ListenerStat.PLAYING],
+        }
 
 def runner(
     console: Console, 
@@ -51,11 +59,12 @@ def runner(
     playlist: str,
     vnc: bool,
     screenshotDir,
-    stats: Array
+    stats: Array,
+    statsQueue: Queue()
     ):
         STATE_LOGGING_IN = 'logging_in'
         STATE_PLAYING = 'playing'
-        STATE_START = 'start'
+        STATE_STARTED = 'started'
         tid = current_process().pid
         console.log('#%d Start' % tid)
 
@@ -99,26 +108,26 @@ def runner(
             console.exception('Driver unavailable')
         else:
             try:
-                state = STATE_START
+                state = STATE_STARTED
                 spotify = Adapter(driver, console, shutdownEvent)
                 # __ LOGGING __
-                stats[ListenerStat.LOGGING_IN] += 1
+                statsQueue.put((ListenerStat.LOGGING_IN, +1))
                 state = STATE_LOGGING_IN
                 spotify.login(user['email'], user['password'])    
-                stats[ListenerStat.LOGGING_IN] -= 1
+                statsQueue.put((ListenerStat.LOGGING_IN, -1))
             
                 # __ PLAYING __
-                stats[ListenerStat.PLAYING] += 1
+                statsQueue.put((ListenerStat.PLAYING, +1))
                 state = STATE_PLAYING
                 spotify.playPlaylist(playlist, shutdownEvent, 80, 100)
-                stats[ListenerStat.PLAYING] -= 1
-                stats[ListenerStat.PLAYED] += 1
-            except Exception as e:
+                statsQueue.put((ListenerStat.PLAYING, -1))
+                statsQueue.put((ListenerStat.PLAYED, +1))
+            except BaseException as e:
                 if state == STATE_PLAYING:
-                    stats[ListenerStat.PLAYING] -= 1
+                    statsQueue.put((ListenerStat.PLAYING, -1))
                 elif state == STATE_LOGGING_IN:
-                    stats[ListenerStat.LOGGING_IN] -= 1
-                stats[ListenerStat.ERROR] += 1
+                    statsQueue.put((ListenerStat.LOGGING_IN, -1))
+                statsQueue.put((ListenerStat.ERROR, +1))
                 try:
                     if screenshotDir:
                         id = randint(10000, 99999)
@@ -162,13 +171,14 @@ def dryRunner(
     playlist: str,
     vnc: bool,
     screenshotDir,
-    stats: Array
+    stats: Array,
+    statsQueue: Queue
     ):
         def sleepOrNot(secondes: int) -> bool:
             startSleep = time()
             while True:
                 sleep(1)
-                if randint(0,100) > 90: 
+                if randint(0,1000) > 999: 
                     raise Exception('Dry exception')
                 if shutdownEvent.is_set():
                     return True
@@ -178,28 +188,29 @@ def dryRunner(
 
         STATE_LOGGING_IN = 'logging_in'
         STATE_PLAYING = 'playing'
+        STATE_STARTED = 'started'
         #getDriver
-        sleep(5)
+        #sleep(5)
         try:
-            state = ''
+            state = STATE_STARTED
             # __ LOGGING __
-            stats[ListenerStat.LOGGING_IN] += 1
+            statsQueue.put((ListenerStat.LOGGING_IN, +1))
             state = STATE_LOGGING_IN
-            sleepOrNot(5)
-            stats[ListenerStat.LOGGING_IN] -= 1
-        
+            sleepOrNot(10)
+            statsQueue.put((ListenerStat.LOGGING_IN, -1))
             # __ PLAYING __
-            stats[ListenerStat.PLAYING] += 1
+            statsQueue.put((ListenerStat.PLAYING, +1))
             state = STATE_PLAYING
-            sleepOrNot(randint(8, 10))
-            stats[ListenerStat.PLAYING] -= 1
-            stats[ListenerStat.PLAYED] += 1
-        except Exception as e:
+            sleepOrNot(randint(20, 25))
+            statsQueue.put((ListenerStat.PLAYING, -1))
+            statsQueue.put((ListenerStat.PLAYED, +1))
+        except BaseException as e:
+            print(str(e))
             if state == STATE_PLAYING:
-                stats[ListenerStat.PLAYING] -= 1
+                statsQueue.put((ListenerStat.PLAYING, -1))
             elif state == STATE_LOGGING_IN:
-                stats[ListenerStat.LOGGING_IN] -= 1
-            stats[ListenerStat.ERROR] += 1
+                statsQueue.put((ListenerStat.LOGGING_IN, -1))
+            statsQueue.put((ListenerStat.ERROR, +1))
 
 class ListenerProcessProvider(ProcessProvider, Observer, StatsProvider):
     def __init__(self,
@@ -221,35 +232,35 @@ class ListenerProcessProvider(ProcessProvider, Observer, StatsProvider):
         self.screenshotDir = screenshotDir
         self.shutdownEvent = shutdownEvent
         self.overridePlaylist = overridePlaylist
-        self.listenerStats = Array('i', [0, 0, 0, 0, 0])
+        self.listenerStats = Array('i', [0, 0, 0, 0, 0], lock=True)
+        self.statsQueue = Queue()
+        
+    def getStats(self) -> dict:
+        return ListenerRemoteStat.parse(self.listenerStats)
 
-    def getStats(self):
-        return {
-            'version': VERSION,
-            'error': self.listenerStats[ListenerStat.ERROR],
-            'driverNone': self.listenerStats[ListenerStat.DRIVER_NONE],
-            'played': self.listenerStats[ListenerStat.PLAYED],
-            'loggingIn': self.listenerStats[ListenerStat.LOGGING_IN],
-            'playing': self.listenerStats[ListenerStat.PLAYING],
-            'overriddePlaylist': bool(self.overridePlaylist),
-        }
-    
+    def updateStats(self):
+        while True:
+            try:
+                type, value = self.statsQueue.get_nowait()
+                self.listenerStats[type] += value
+            except:
+                break
+
     def getConsoleLines(self, width: int, height: int):
-        stats = self.listenerStats
+        stats = self.getStats()
         lines = []
-        lines.append(Fore.WHITE + 'Logging in: %7d   Playing: %7d   Played: %7d   Error: %7d   Driver None: %7d' % 
-            (stats[ListenerStat.LOGGING_IN],
-            stats[ListenerStat.PLAYING], 
-            stats[ListenerStat.PLAYED],
-            stats[ListenerStat.ERROR],
-            stats[ListenerStat.DRIVER_NONE],
-            ) 
-        )
+        if stats[ListenerRemoteStat.PLAYED] > 0:
+            stats['errorPercent'] = (stats[ListenerRemoteStat.ERROR] / stats[ListenerRemoteStat.PLAYED]) * 100
+        else:
+            stats['errorPercent'] = 0.0
+        
+        dry = dry = Fore.YELLOW + '(dry) ' + Fore.RESET  if self.args.dryrun else ''
+        lines.append(Fore.WHITE + dry + 'Logging in: {loggingIn:7d}   Playing: {playing:7d}   Played: {played:7d}   Error: {errorPercent:6.2f}%   Driver None: {driverNone:7d}'.format(**stats))
         return lines
         
-
     def notify(self, eventName: str, target, data):
-        pass
+        if eventName == ProcessManager.EVENT_TIC:
+            self.updateStats()
 
     def buildProcess(self, target, user={}, playlist=''):
         return Process(target = target, kwargs={
@@ -262,12 +273,13 @@ class ListenerProcessProvider(ProcessProvider, Observer, StatsProvider):
                     'playlist': playlist,
                     'screenshotDir': self.screenshotDir,
                     'stats': self.listenerStats,
+                    'statsQueue': self.statsQueue
                 })
 
     def getNewProcess(self, freeSlot: int):
 
         if self.args.dryrun:
-            if randint(0, 100) == 34:
+            if randint(0, 1000) == 34:
                 self.listenerStats[ListenerStat.ERROR] += 1
                 return
             return self.buildProcess(target=dryRunner)
