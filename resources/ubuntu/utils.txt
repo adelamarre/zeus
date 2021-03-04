@@ -1,0 +1,7 @@
+
+create SSH key
+$>ssh-keygen
+
+create sudoer (ubuntu 20.04)
+$>adduser username
+$>usermod -aG sudo username

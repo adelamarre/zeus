@@ -55,7 +55,7 @@ def runner(
     ):
         STATE_LOGGING_IN = 'logging_in'
         STATE_PLAYING = 'playing'
-
+        STATE_START = 'start'
         tid = current_process().pid
         console.log('#%d Start' % tid)
 
@@ -99,7 +99,7 @@ def runner(
             console.exception('Driver unavailable')
         else:
             try:
-                state = ''
+                state = STATE_START
                 spotify = Adapter(driver, console, shutdownEvent)
                 # __ LOGGING __
                 stats[ListenerStat.LOGGING_IN] += 1
