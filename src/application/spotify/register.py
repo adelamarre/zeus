@@ -73,8 +73,6 @@ def runner(
         STATE_SUBMITTING = 'submitting'
         STATE_STARTED = 'started'
         tid = current_process().pid
-        console.log('#%d Start' % tid)
-
         driver = None
         userDataDir = None
         x11vnc = None
@@ -141,6 +139,7 @@ def runner(
                 elif state == STATE_SUBMITTING:
                     statsQueue.put((RegisterStat.SUBMITTING, -1))
                 statsQueue.put((RegisterStat.ERROR, 1))
+                console.exception()
                 try:
                     if screenshotDir:
                         id = randint(10000, 99999)
@@ -287,16 +286,20 @@ class RegisterProcessProvider(ProcessProvider, Observer, StatsProvider):
                 break
 
     def getConsoleLines(self, width: int, height: int):
-        stats = self.getStats()
-        if stats[RegisterRemoteStat.CREATED] > 0:
-            stats['errorPercent'] = (stats[RegisterRemoteStat.ERROR] / stats[RegisterRemoteStat.CREATED]) * 100
-        else:
-            stats['errorPercent'] = 0.0
-        
-        lines = []
-        dry = Fore.YELLOW + '(dry) ' + Fore.RESET if self.args.dryrun else ''
-        lines.append(Fore.WHITE + dry + 'Created: {created:7d}   Filling out form: {fillingOut:7d}   Submitting: {submitting:7d}   Error: {errorPercent:6.2f}   Driver None: {driverNone:7d}'.format(**stats))
-        return lines
+        try:
+            stats = self.getStats()
+            if stats[RegisterRemoteStat.CREATED] > 0:
+                stats['errorPercent'] = (stats[RegisterRemoteStat.ERROR] / stats[RegisterRemoteStat.CREATED]) * 100
+            else:
+                stats['errorPercent'] = 0.0
+            
+            lines = []
+            dry = Fore.YELLOW + '(dry) ' + Fore.RESET if self.args.dryrun else ''
+            lines.append(Fore.WHITE + dry + 'Created: {created:7d}   Filling out form: {fillingOut:7d}   Submitting: {submitting:7d}   Error: {errorPercent:6.2f}   Driver None: {driverNone:7d}'.format(**stats))
+            return lines
+        except BaseException as e:
+            self.console.exception()
+            return [Fore.RED + str(e)]
         
 
     def notify(self, eventName: str, target, data):
