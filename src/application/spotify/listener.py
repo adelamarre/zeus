@@ -104,7 +104,7 @@ def runner(
                 raise Exception('No driver was returned from adapter')
             
         except:
-            stats[ListenerStat.DRIVER_NONE] += 1
+            statsQueue.put((ListenerStat.DRIVER_NONE, +1))
             console.exception('Driver unavailable')
         else:
             try:
