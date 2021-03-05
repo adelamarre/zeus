@@ -125,20 +125,20 @@ class Scenario(AbstractScenario):
             managerStats = serverStat['manager']
             
             terminal.appendTemplate('{id:s} ({host:s})', {'host': Fore.LIGHTBLACK_EX + host, 'id': managerStats['serverId']}, Fore.YELLOW)
-            terminal.append()
-            terminal.append('  Runner:')
+            #terminal.append()
+            #terminal.append('  Runner:')
             if runnerStats['played']:
                 runnerStats['errorPercent'] =  (runnerStats['error'] / runnerStats['played']) * 100
             else:
                 runnerStats['errorPercent'] = 0.0
             terminal.appendTemplate('\tLoging: {loggingIn:4d}   Playing: {playing:4d}   Played : {played:8d}   Errors: {errorPercent:.2f}%', runnerStats, 
                     valueColors={'errorPercent': Fore.RED, ListenerRemoteStat.PLAYED: Fore.LIGHTGREEN_EX})
-            terminal.append()
-            terminal.append('  System:')
+            #terminal.append()
+            #terminal.append('  System:')
             terminal.appendTemplate('\tCpu : {cpuCountP:4d} / {cpuCountL:4d}   Load:       {cpuPercentAvg:5.2f}%', systemStats)
             terminal.appendTemplate('\tMem Total: {memTotal:.2f}go  Available: {memAvailable:.2f}go   Used: {memActive:.2f}%%', systemStats, valueColor=Fore.CYAN)
-            terminal.append()
-            terminal.append('  Process Manager:')
+            #terminal.append()
+            #terminal.append('  Process Manager:')
             terminal.appendTemplate('\tStart at : {startTime:s}    Since : {elapsedTime:s}', managerStats)
             terminal.appendTemplate('\tProcess  : {processCount:3d} / {maxProcess:3d}   interval: {spawnInterval:.2f}s', managerStats)
             terminal.appendSeparator()
