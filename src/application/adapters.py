@@ -35,7 +35,24 @@ class AbstractAdapter:
                     raise e
             exit = sleep(waitPerTry)
 
-    def getElementsByClass(self, classname, maxTry=30, waitPerTry=1, raiseException: bool = True):
+    def getElementsByCssSelector(self, selector, maxTry=30, waitPerTry=1, raiseException: bool = True):
+        exit = False
+        while not exit: #not self.context.shutdownEvent.is_set():
+            try:
+                element = self.driver.find_elements_by_css_selector(selector)
+                return element
+            except Exception as e:
+                maxTry -= 1
+                if maxTry == 0:
+                    if raiseException:
+                        raise e
+                    else:
+                        break
+            exit = self.sleep(waitPerTry)
+        return None
+
+    
+    def getElementsByClass(self, classname, maxTry=30, waitPerTry=1, raiseException: bool = True) -> WebElement:
         exit = False
         while not exit: #not self.context.shutdownEvent.is_set():
             try:
@@ -78,6 +95,24 @@ class AbstractAdapter:
                     result = element.find_element_by_tag_name(tagname)
                 else:
                     result = self.driver.find_element_by_tag_name(tagname)
+                return result
+            except Exception as e:
+                maxTry -= 1
+                if maxTry == 0:
+                    if raiseException:
+                        raise e
+                    else:
+                        break
+            exit = self.sleep(waitPerTry)
+
+    def getElementsByTagName(self, tagname, element: WebElement=None, maxTry=30, waitPerTry=1, raiseException: bool = True):
+        exit = False
+        while not exit: #not self.context.shutdownEvent.is_set():
+            try:
+                if element:
+                    result = element.find_elements_by_tag_name(tagname)
+                else:
+                    result = self.driver.find_elements_by_tag_name(tagname)
                 return result
             except Exception as e:
                 maxTry -= 1

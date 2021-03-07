@@ -85,8 +85,9 @@ if __name__ == '__main__':
             sys.exit('Bad screnario format <application>.<scenario>')
         
         try:
-            scenarioLib = scenarioLib = importlib.import_module('src.application.%s.%s' % (app, scenario))   
-        except:
+            scenarioLib = scenarioLib = importlib.import_module('src.application.%s.scenario.%s' % (app, scenario))   
+        except Exception as e:
+            print(e)
             sys.exit('Unknown application or scenario : %s' % args.scenario)
     else:
         ScenarioClass = None
@@ -99,11 +100,11 @@ if __name__ == '__main__':
             else:    
                 scenario = Question().choice('Select the scenario    :', APPLICATIONS[app]['scenary'])
                 if scenario:
-                    scenarioLib = importlib.import_module('src.application.%s.%s' % (app, scenario))
+                    scenarioLib = importlib.import_module('src.application.%s.scenario.%s' % (app, scenario))
     
     if scenarioLib:
         try:
             scenarioClass: AbstractScenario = scenarioLib.Scenario(args=args, userDir=userDir, shutdownEvent=shutdownEvent)
             scenarioClass.start()
         except Exception as e:
-            print(str(e))
+            print(e)

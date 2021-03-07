@@ -1,13 +1,13 @@
-from multiprocessing import Event, synchronize
-from src.application.AbstractAdapter import AbstractAdapter
-import time
-from selenium.common.exceptions import NoSuchElementException
-from random import randint, choice
-from time import sleep
+import json
+from multiprocessing import Queue, synchronize
+from random import choice, randint
+
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.support.select import Select
-import json
-from requests import post
+from src.application.adapters import AbstractAdapter
+from src.application.spotify.parser.playlist import TrackList, TrackSelector
+from src.application.spotify.stats import ListenerStat
+from src.application.statscollector import StatsCollector
 from src.services.console import Console
 
 WEBPLAYER_URL = 'https://open.spotify.com/'
@@ -19,26 +19,6 @@ class Adapter(AbstractAdapter):
         AbstractAdapter.__init__(self,driver=driver, shutdownEvent=shutdownEvent)
         self.console = console
         
-    def getMyIp(self):
-        #self.driver.get('https://api.myip.com/')
-        #self.driver.get('https://ipapi.co/json/')
-        self.driver.get('https://ip.lafibre.info/')
-        try:
-            #json_str = self.driver.execute_script("return document.body.outerText")
-            
-            ip_v4 = self.driver.find_element_by_xpath('/html/body/ul[1]/li[1]/span/strong[2]').text
-            ip_v6 =  self.driver.find_element_by_xpath('/html/body/ul[1]/li[3]/span/strong[2]').text
-            return 'ip v4: %s, ip v6: %s' % (ip_v4, ip_v6)
-            #self.console.log(json_str)
-            #result = json.loads(json_str)
-            #if 'ip' in result:
-            #    return result['ip']
-            #else:
-            #    return 'unknown'
-        except Exception as e:
-            self.saveScreenshot(str(e))
-            self.console.exception()
-        
     def getClientInfo(self, mirrorServerUrl):
         self.driver.get(mirrorServerUrl)
         result = {}
@@ -49,21 +29,6 @@ class Adapter(AbstractAdapter):
             return {'raw': json_str}
         return result
     
-    def navigate(self, url):
-        self.driver.get(url)
-        ''' for request in self.driver.requests:
-            if request.url == url:
-                if request.response:
-                    statusCode = int(request.response.response_status_code)
-                    if statusCode > 399:
-                        self.console.error('Response status code : %d' %  statusCode)
-                        return False
-                else:
-                    self.console.error('Empty response from : %s' %  url)
-                    return False '''
-        return True
-    
-    # returns the status of the account's login
     def login(self, email, password):
         self.driver.get(LOGIN_URL)
         
@@ -96,91 +61,57 @@ class Adapter(AbstractAdapter):
             maxTry -=1
             if maxTry == 0:
                 raise Exception('Login timeout')
-            
-        #
-        ##account-settings-link
-        #
-        #
-        #<p class="alert alert-warning" role="status" aria-live="polite">
-        #  <!-- ngIf: !response.error -->
-        #  <!-- ngIf: response.error --><span ng-if="response.error" ng-bind-html="response.error | localize:responseArguments" class="ng-binding ng-scope">Nom d'utilisateur ou mot de passe incorrect.</span><!-- end ngIf: response.error -->
-        #</p>
-        # check whether or not the login was successful
-        #self.getElementById('mh-usericon-title')
         
+    def play(self, user: dict, playlistUrl: str, playConfig: str, statsCollector: StatsCollector, statsQueue: Queue = None, contractId:str=None):
+        
+        playlist = TrackList(self, playlistUrl)
+        playlist.load()
+        playlistName = playlist.getName()
+        songs = playlist.getTracks()
+        totalSongs = len(songs)
 
-    def logout(self):
-        self.driver.get('https://www.spotify.com/logout')
-        time.sleep(5)
-
-    def playPlaylist(self, playlist_url, shutDownEvent: Event, min_listening_time = 70, max_listening_time = 110):
-        
-        #Navigate to the play list
-        self.driver.get(playlist_url)
-        
-        # Cookie banner
-        if self.sleep(5): return
-        cookieBannerButton = self.getElementById('onetrust-accept-btn-handler', 5, 1, element= None, raiseException = False)
-        if cookieBannerButton:
-            try:
-                cookieBannerButton.click()
-            except:
-                pass
-
-        #Press Play button
-        if self.sleep(3): return
-        self.clickElementByXpath('//*[@id="main"]/div/div[2]/div[3]/main/div[2]/div[2]/div/div/div[2]/section/div[2]/div[2]/div/button[1]')
-        
-        #Wait music play
-        listenTime = randint(min_listening_time, max_listening_time)
-        if self.sleep(listenTime): return
-        
-        # Cookie banner
-        if self.sleep(5): return
-        cookieBannerButton = self.getElementById('onetrust-accept-btn-handler', 5, 1, element= None, raiseException = False)
-        if cookieBannerButton:
-            try:
-                cookieBannerButton.click()
-            except:
-                pass
-
-        #Press next button
-        bnextContainer = self.getElementByXpath('//*[@class="player-controls__buttons"]', 1, 2)
-        bnext = self.getElementByXpath('//button[@aria-label="Next"]', 1, 2, bnextContainer)
-        bnext.click()
-        
-        #Wait after next button pressed before quit
-        self.sleep(randint(5, 8))
-        
-         
-
+        if totalSongs == 0:
+            raise Exception('No song were found in playlist %s' % playlistName)
     
-    def savePlaylist(self):
-        # click the like button
-        try:
-            like_button = self.driver.find_element_by_xpath(
-                '//div[@class="spoticon-heart-32"]/..')
-            like_button.click()
-            time.sleep(self.wait_increment)
-        except NoSuchElementException:
-            pass
+        selector = TrackSelector()
+        selector.parse(config=playConfig, totalTracks=totalSongs)
+        selection = selector.getSelection()
+        self.console.log(f'Play config: {playConfig:s}')
+        self.console.log(selection)
 
-    def follow(self, url):
-        self.driver.get(url)
-        time.sleep(self.wait_increment)
+        for index in selection:
+            song = songs[index]
+            artistName = song.getArtist()
+            songName = song.getName()
+            self.console.log(f'Start Playing {songName} from {artistName}')
+            playDuration = song.play(80, 100)
+            self.console.log(f'Played {songName} {playDuration:d} seconds' )
+            if statsQueue:
+                statsQueue.put((ListenerStat.PLAYED, +1))
+            if statsCollector:
+                self.console.log(f'Send statistics to collector')
+                
+                statsCollector.songPlayed(
+                    user=user,
+                    playlistUrl=playlistUrl,
+                    playlistName=playlistName,
+                    songName=songName,
+                    artistName=artistName,
+                    playDuration=playDuration,
+                    contractId=contractId
+                )
+        self.console.log(f'Click next...' )
+        playlist.next()
+        self.sleep(randint(3, 4))
 
-        # click the follow button
-        try:
-            follow_btn = self.driver.find_element_by_xpath(
-                '//button[@class="ff6a86a966a265b5a51cf8e30c6c52f4-scss"]')
-            follow_btn.click()
-            time.sleep(self.wait_increment)
-        except NoSuchElementException:
-            print(f"Already following artist at {url}")
-
-    def close(self):
-        self.driver.quit()
-
+    def clickCookieBanner(self):
+        cookieBannerButton = self.getElementById('onetrust-accept-btn-handler', 30, 1, element= None, raiseException = False)
+        if cookieBannerButton:
+            try:
+                cookieBannerButton.click()
+            except:
+                pass
+    
     def fillingOutSubscriptionForm(self, user, day_value = randint(1, 28), month_value = randint(1, 12), year_value = randint(1970, 2005), gender = choice(['male', 'female'])):
         
         
@@ -288,29 +219,4 @@ class Adapter(AbstractAdapter):
             if maxTry == 0:
                 raise Exception('Account creation timeout')
 
-    def registerApi(self, user, day_value = randint(1, 28), month_value = randint(1, 12), year_value = randint(1970, 2005), gender = choice(['male', 'female'])):
-
-        headers = {'User-agent': 'S4A/2.0.15 (com.spotify.s4a; build:201500080; iOS 13.4.0) Alamofire/4.9.0', 'Content-Type': 'application/x-www-form-urlencoded; charset=utf-8', 'Accept': 'application/json, text/plain;q=0.2, */*;q=0.1', 'App-Platform': 'IOS', 'Spotify-App': 'S4A', 'Accept-Language': 'en-TZ;q=1.0', 'Accept-Encoding': 'gzip;q=1.0, compress;q=0.5', 'Spotify-App-Version': '2.0.15'}
-        data = 'creation_point=lite_7e7cf598605d47caba394c628e2735a2&password_repeat=%s&platform=Android-ARM&iagree=true&password=%s&gender=%s&key=a2d4b979dc624757b4fb47de483f3505&birth_day=%s&birth_month=%s&email=%s&birth_year=%s' % (user['password'], user['password'], gender, day_value, month_value, user['email'], year_value)
-        
-        proxy = user['proxy']
-        if proxy:
-            if 'password' in proxy:
-                proxies = { 'https' : 'http://%s:%s@%s:%s' % (proxy['username'], proxy['password'], proxy['host'], proxy['port']) } 
-            else:
-                proxies = { 'https' : 'http://%s:%s' % (proxy['host'], proxy['port']) } 
-        else:
-            proxies = {}
-
-        try:
-            create = post('https://spclient.wg.spotify.com/signup/public/v1/account', data = data, headers = headers, proxies = proxies, timeout = 5)
-            result = create.json()
-            if result['status'] == 1:
-                username = result['username']
-                if username != '':
-                    self.console.log( "Account created for %s" % user['email'] )
-                    return True
-        except:
-            self.console.exception()
-
-        return False
+    

@@ -5,31 +5,25 @@ from os import cpu_count, path
 from src.services.questions import Question
 
 class Config:
-    
-    """def __init__(self, configFilePath = None):
-        self.SQS_URL = '',
-        self.SQS_ENDPOINT = '',
-        self.LISTENER_OVERIDE_PLAYLIST = None
-        self.LISTENER_OVERIDE_PROXY = False
-        self.LISTENER_MAX_PROCESS = -1
-        self.LISTENER_MAX_THREAD = 100
-        self.LISTENER_SPAWN_INTERVAL = 1
-        self.REGISTER_BATCH_COUNT = 1000
-        self.REGISTER_MAX_PROCESS = -1
-        self.REGISTER_MAX_THREAD = 16 * 10
-        
-        if configFilePath:
-            try:
-                with open(configFilePath, 'r') as f:
-                    self.__dict__ = json.load(f)
-            except:
-                pass
-    """
-     
+    # Config Section
+    SECTION_MONITOR = 'MONITOR'
+    SECTION_REGISTER = 'REGISTER'
+    SECTION_LISTENER = 'LISTENER'
+    SECTION_SERVICE = 'SERVICE'
+
+    # Config key
+    ACCOUNT_SQS_ENDPOINT = 'account_sqs_endpoint'
+    COLLECTOR_SQS_ENDPOINT = 'collector_sqs_endpoint'
+    MAX_PROCESS= 'max_process'
+    SERVER_ID = 'server_id'
+    SPAWN_INTERVAL = 'spawn_interval'
+    POLL_INTERVAL = 'poll_interval'
+    SERVERS = 'servers'
+    SECRET = 'secret'
 
     def getRegisterConfig(configFile, default: dict = {
-        'max_process': cpu_count(),
-        'spawn_interval': 0.5
+        MAX_PROCESS: cpu_count(),
+        SPAWN_INTERVAL: 0.5
     }):
         if not path.exists(configFile):
             if not Config.createRegisterConfiguration(configFile, default):
@@ -37,22 +31,23 @@ class Config:
         parser = ConfigParser()
         parser.read(configFile)
         try:
-            configData = parser['REGISTER']
+            configData = parser[Config.SECTION_REGISTER]
             return {
-                'server_id':     configData['server_id'].strip(),
-                'sqs_endpoint':  configData['sqs_endpoint'].strip(),
-                'max_process':   int(configData['max_process']),
-                'spawn_interval':float(configData['spawn_interval'])
+                Config.SERVER_ID:               configData[Config.SERVER_ID].strip(),
+                Config.ACCOUNT_SQS_ENDPOINT:    configData[Config.ACCOUNT_SQS_ENDPOINT].strip(),
+                Config.COLLECTOR_SQS_ENDPOINT:  configData[Config.COLLECTOR_SQS_ENDPOINT].strip(),
+                Config.MAX_PROCESS:             int(configData[Config.MAX_PROCESS]),
+                Config.SPAWN_INTERVAL:          float(configData[Config.SPAWN_INTERVAL])
             }
         except:
-            if 'REGISTER' in parser.sections():
-                default = {**default, **parser['REGISTER']}
+            if Config.SECTION_REGISTER in parser.sections():
+                default = {**default, **parser[Config.SECTION_REGISTER]}
             if Config.createRegisterConfiguration(configFile, default):
                 return Config.getRegisterConfig(configFile, default)
   
     def getListenerConfig(configFile, default: dict = {
-        'max_process': cpu_count(),
-        'spawn_interval': 0.5
+        MAX_PROCESS: cpu_count(),
+        SPAWN_INTERVAL: 0.5
     }):
         if not path.exists(configFile):
             if not Config.createListenerConfiguration(configFile, default):
@@ -62,11 +57,12 @@ class Config:
         try:
             configData = parser['LISTENER']
             return {
-                'server_id':     configData['server_id'].strip(),
-                'sqs_endpoint':  configData['sqs_endpoint'].strip(),
-                'max_process':   int(configData['max_process']),
-                'spawn_interval':float(configData['spawn_interval']),
-                'secret':        configData['secret'],
+                Config.SERVER_ID:               configData[Config.SERVER_ID].strip(),
+                Config.ACCOUNT_SQS_ENDPOINT:    configData[Config.ACCOUNT_SQS_ENDPOINT].strip(),
+                Config.COLLECTOR_SQS_ENDPOINT:  configData[Config.COLLECTOR_SQS_ENDPOINT].strip(),
+                Config.MAX_PROCESS:             int(configData[Config.MAX_PROCESS]),
+                Config.SPAWN_INTERVAL:          float(configData[Config.SPAWN_INTERVAL]),
+                Config.SECRET:                  configData[Config.SECRET],
             }
         except:
             if 'LISTENER' in parser.sections():
@@ -75,7 +71,7 @@ class Config:
                 return Config.getListenerConfig(configFile, default)
     
     def getMonitorConfig(configFile, default: dict = {
-        'poll_interval': 2.0
+        POLL_INTERVAL: 2.0
     }):
         if not path.exists(configFile):
             if not Config.createMonitorConfiguration(configFile, default):
@@ -83,19 +79,20 @@ class Config:
         parser = ConfigParser()
         parser.read(configFile)
         try:
-            configData = parser['MONITOR']
-            if not configData['secret']:
+            configData = parser[Config.SECTION_MONITOR]
+            if not configData[Config.SECRET]:
                 raise Exception('Missing secret')
             return {
-                'sqs_endpoint': configData['sqs_endpoint'].strip(),
-                'servers':      configData['servers'],
-                'secret':       configData['secret'],
-                'poll_interval':float(configData['poll_interval'])
+                Config.ACCOUNT_SQS_ENDPOINT:    configData[Config.ACCOUNT_SQS_ENDPOINT].strip(),
+                Config.COLLECTOR_SQS_ENDPOINT:  configData[Config.COLLECTOR_SQS_ENDPOINT].strip(),
+                Config.SERVERS:                 configData[Config.SERVERS],
+                Config.SECRET:                  configData[Config.SECRET],
+                Config.POLL_INTERVAL:           float(configData[Config.POLL_INTERVAL])
             }
             
         except:
-            if 'MONITOR' in parser.sections():
-                default = {**default, **parser['MONITOR']}
+            if Config.SECTION_MONITOR in parser.sections():
+                default = {**default, **parser[Config.SECTION_MONITOR]}
             if Config.createMonitorConfiguration(configFile, default):
                 return Config.getMonitorConfig(configFile, default)
     
@@ -104,31 +101,31 @@ class Config:
             answer = Question.list([
                 {
                     'type': 'input',
-                    'name': 'server_id',
+                    'name': Config.SERVER_ID,
                     'message': 'What is the name of this server ?',
-                    'default': default.get('server_id', ''),
+                    'default': default.get(Config.SERVER_ID, ''),
                     'validate': Question.validateString
                 },
                 {
                     'type': 'input',
-                    'name': 'sqs_endpoint',
-                    'message': 'Queue url ?',
-                    'default': default.get('sqs_endpoint', ''),
+                    'name': Config.ACCOUNT_SQS_ENDPOINT,
+                    'message': 'Accounts Queue url ?',
+                    'default': default.get(Config.ACCOUNT_SQS_ENDPOINT, ''),
                     'validate': Question.validateUrl
                 },
                 {
                     'type': 'input',
-                    'name': 'max_process',
+                    'name': Config.MAX_PROCESS,
                     'message': 'Default process count ?',
-                    'default': str(default.get('max_process', cpu_count())),
+                    'default': str(default.get(Config.MAX_PROCESS, cpu_count())),
                     'filter': int,
                     'validate': Question.validateInteger
                 },
                 {
                     'type': 'input',
-                    'name': 'spawn_interval',
+                    'name': Config.SPAWN_INTERVAL,
                     'message': 'Default spawn interval ?',
-                    'default': str(default.get('spawn_interval', 0.5)),
+                    'default': str(default.get(Config.SPAWN_INTERVAL, 0.5)),
                     'filter': float,
                     'validate': Question.validateFloat
                 },
@@ -136,9 +133,7 @@ class Config:
             if not answer:
                 return False
 
-            Config.writeConfiguration(configFile, {'REGISTER': answer})
-            #cmd = os.environ.get('EDITOR', 'vi') + ' ' + configFile
-            #subprocess.call(cmd, shell=True)
+            Config.writeConfiguration(configFile, {Config.SECTION_REGISTER: answer})
             return True
 
         return False
@@ -148,37 +143,44 @@ class Config:
             answer = Question.list([
                 {
                     'type': 'input',
-                    'name': 'server_id',
+                    'name': Config.SERVER_ID,
                     'message': 'What is the name of this server ?',
-                    'default': default.get('server_id', ''),
+                    'default': default.get(Config.SERVER_ID, ''),
                     'validate': Question.validateString
                 },
                 {
                     'type': 'input',
-                    'name': 'sqs_endpoint',
-                    'message': 'Queue url ?',
-                    'default': default.get('sqs_endpoint', ''),
+                    'name': Config.ACCOUNT_SQS_ENDPOINT,
+                    'message': 'Accounts Queue url ?',
+                    'default': default.get(Config.ACCOUNT_SQS_ENDPOINT, ''),
                     'validate': Question.validateUrl
                 },
                 {
                     'type': 'input',
-                    'name': 'max_process',
+                    'name': Config.COLLECTOR_SQS_ENDPOINT,
+                    'message': 'Statistics Queue url ?',
+                    'default': default.get(Config.COLLECTOR_SQS_ENDPOINT, ''),
+                    'validate': Question.validateUrl
+                },
+                {
+                    'type': 'input',
+                    'name': Config.MAX_PROCESS,
                     'message': 'Default process count ?',
-                    'default': str(default.get('max_process', cpu_count())),
+                    'default': str(default.get(Config.MAX_PROCESS, cpu_count())),
                     'filter': int,
                     'validate': Question.validateInteger
                 },
                 {
                     'type': 'input',
-                    'name': 'spawn_interval',
+                    'name': Config.SPAWN_INTERVAL,
                     'message': 'Default spawn interval ?',
-                    'default': str(default.get('spawn_interval', 0.5)),
+                    'default': str(default.get(Config.SPAWN_INTERVAL, 0.5)),
                     'filter': float,
                     'validate': Question.validateFloat
                 },
                 {
                     'type': 'password',
-                    'name': 'secret',
+                    'name': Config.SECRET,
                     'message': 'Set the password for stats server',
                     'filter': Question.filterMd5,
                 },
@@ -186,12 +188,10 @@ class Config:
             ])
             if not answer:
                 return False
-            if answer['secret'] is None or len(answer['secret']) == 0:
-                answer['secret'] = default.get('secret', '')
+            if answer[Config.SECRET] is None or len(answer[Config.SECRET]) == 0:
+                answer[Config.SECRET] = default.get(Config.SECRET, '')
             
-            Config.writeConfiguration(configFile, {'LISTENER': answer})
-            #cmd = os.environ.get('EDITOR', 'vi') + ' ' + configFile
-            #subprocess.call(cmd, shell=True)
+            Config.writeConfiguration(configFile, {Config.SECTION_LISTENER: answer})
             return True
 
         return False
@@ -201,39 +201,46 @@ class Config:
             answer = Question.list([
                 {
                     'type': 'input',
-                    'name': 'sqs_endpoint',
-                    'message': 'Queue url ?',
-                    'default': default.get('sqs_endpoint', ''),
+                    'name': Config.ACCOUNT_SQS_ENDPOINT,
+                    'message': 'Account queue url ?',
+                    'default': default.get(Config.ACCOUNT_SQS_ENDPOINT, ''),
                     'validate': Question.validateUrl
                 },
                 {
                     'type': 'input',
-                    'name': 'poll_interval',
+                    'name': Config.COLLECTOR_SQS_ENDPOINT,
+                    'message': 'Collector queue url ?',
+                    'default': default.get(Config.COLLECTOR_SQS_ENDPOINT, ''),
+                    'validate': Question.validateUrl
+                },
+                {
+                    'type': 'input',
+                    'name': Config.POLL_INTERVAL,
                     'message': 'Polling interval ?',
-                    'default': str(default.get('poll_interval', 2.0)),
+                    'default': str(default.get(Config.POLL_INTERVAL, 2.0)),
                     'filter': float,
                     'validate': Question.validateFloat
                 },
                 {
                     'type': 'password',
-                    'name': 'secret',
+                    'name': Config.SECRET,
                     'message': 'Set the password for stats server',
                     'filter': Question.filterMd5,
                 },
                 {
                     'type': 'input',
-                    'name': 'servers',
+                    'name': Config.SERVERS,
                     'message': 'Set servers (coma separated list)',
-                    'default': default.get('servers', '')
+                    'default': default.get(Config.SERVERS, '')
                 },
             ])
             if not answer:
                 return False
 
-            if answer['secret'] is None or len(answer['secret']) == 0:
-                answer['secret'] = default.get('secret', '')
+            if answer[Config.SECRET] is None or len(answer[Config.SECRET]) == 0:
+                answer[Config.SECRET] = default.get(Config.SECRET, '')
             
-            Config.writeConfiguration(configFile, {'MONITOR': answer})
+            Config.writeConfiguration(configFile, {Config.SECTION_MONITOR: answer})
             return True
         return False
     

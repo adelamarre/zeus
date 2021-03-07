@@ -89,15 +89,15 @@ class Console:
             self._print('WARNING', message, bright, bold)
 
     def success(self, message, bright=False, bold=False):
-        if self.verbose > 1:
+        if self.verbose > 2:
             self._print('SUCCESS', message, bright, bold)
 
     def notice(self, message, bright=False, bold=False):
-        if self.verbose > 0:
+        if self.verbose > 1:
             self._print('NOTICE', message, bright, bold)
 
     def log(self, message, bright=False, bold=False):
-        if self.verbose > 1:
+        if self.verbose > 2:
             self._print('LOG', message, bright, bold)
     def exception(self, reason=None):
         if self.verbose > 0:

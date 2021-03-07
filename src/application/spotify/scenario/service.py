@@ -1,6 +1,9 @@
 #!/usr/bin/python3.8
 import os
 import signal
+from src.services.config import Config
+from src.application.statscollector import StatsCollector
+from src.services.aws import RemoteQueue
 import sys
 from configparser import ConfigParser
 from datetime import datetime
@@ -10,7 +13,7 @@ from time import sleep
 
 import urllib3
 from psutil import cpu_count
-from src.application.spotify.listener import \
+from src.application.spotify.scenario.listener import \
     ListenerProcessProvider as SpotifyListenerProcessProvider
 from src.services.console import Console
 from src.services.httpserver import HttpStatsServer
@@ -40,47 +43,53 @@ class Scenario(AbstractScenario):
             if self.args.screenshot:
                 screenshotDir = logDir + '/screenshot'
                 os.makedirs(screenshotDir, exist_ok=True)
+        
+        verbose = 3 if self.args.verbose else 1
+        console = Console(verbose=verbose, ouput=self.args.verbose, logfile=logfile, logToFile=not self.args.nolog)
 
         config = ConfigParser()
         config.read(self.userDir + '/config.service.ini')
 
-
-        SQS_ENDPOINT = None
+        ACCOUNT_SQS_ENDPOINT = None
+        COLLECTOR_SQS_ENDPOINT = None
         MAX_PROCESS     = cpu_count()
         SPAWN_INTERVAL  = 0.5
-        #OVERRIDE_PLAYLIST = False
+        SERVER_ID = None
+        SECRET = None
 
         if 'LISTENER' in config.sections():
-            listenerConfig      = config['LISTENER']
-            SERVER_ID           = listenerConfig.get('server_id', 'undefined').strip()
-            SQS_ENDPOINT        = listenerConfig.get('sqs_endpoint').strip()
-            MAX_PROCESS         = listenerConfig.getint('max_process', MAX_PROCESS)
-            SPAWN_INTERVAL      = listenerConfig.getfloat('spawn_interval', SPAWN_INTERVAL)
-            SECRET              = listenerConfig.get('secret').strip()
+            listenerConfig          = config['LISTENER']
+            SERVER_ID               = listenerConfig.get(Config.SERVER_ID, None)
+            ACCOUNT_SQS_ENDPOINT    = listenerConfig.get(Config.ACCOUNT_SQS_ENDPOINT, None)
+            COLLECTOR_SQS_ENDPOINT  = listenerConfig.get(Config.COLLECTOR_SQS_ENDPOINT, None)
+            MAX_PROCESS             = listenerConfig.getint(Config.MAX_PROCESS, MAX_PROCESS)
+            SPAWN_INTERVAL          = listenerConfig.getfloat(Config.SPAWN_INTERVAL, SPAWN_INTERVAL)
+            SECRET                  = listenerConfig.get(Config.SECRET).strip()
         
-        if SQS_ENDPOINT is None:
-            sys.exit('you need to set the sqs_endpoint in the config file.')
+        if ACCOUNT_SQS_ENDPOINT is None:
+            sys.exit('you need to set the account_sqs_endpoint in the config file.')
+        
+        if COLLECTOR_SQS_ENDPOINT is None:
+            sys.exit('you need to set the collector_sqs_endpoint in the config file.')
+        
+        if SERVER_ID is None:
+            sys.exit('you need to set the server_id in the config file.')
         
         if SECRET is None:
             sys.exit('you need to set the stats server password.')
 
-        if self.args.verbose:
-            verbose = 3
-        else:
-            verbose = 1
-
-        console = Console(verbose=verbose, ouput=self.args.verbose, logfile=logfile, logToFile=not self.args.nolog)
-        shuddownEvent = Event()
-
+        
+    
         pp = SpotifyListenerProcessProvider(
             appArgs=self.args,
-            queueEndPoint=SQS_ENDPOINT,
-            shutdownEvent=shuddownEvent,
+            accountRemoteQueue=RemoteQueue(ACCOUNT_SQS_ENDPOINT),
+            statsCollector=StatsCollector(COLLECTOR_SQS_ENDPOINT, 'spotify', SERVER_ID),
+            shutdownEvent=self.shutdownEvent,
             console=console,
-            headless= False, #args.headless,
-            vnc= False, #args.vnc,
+            headless= False,
+            vnc= self.args.vnc,
             screenshotDir=screenshotDir
-            )
+        )
 
         pm = ProcessManager(
             serverId=SERVER_ID,
@@ -90,22 +99,17 @@ class Scenario(AbstractScenario):
             maxProcess=MAX_PROCESS,
             spawnInterval=SPAWN_INTERVAL,
             showInfo=not self.args.noinfo,
-            shutdownEvent=shuddownEvent,
+            shutdownEvent=self.shutdownEvent,
             stopWhenNoProcess=False
         )
 
-        def signalHandler(signum, frame):
-            pm.stop()
-
-        signal.signal(signal.SIGINT, signalHandler)
-        signal.signal(signal.SIGTERM, signalHandler)
-
-        
+        #Start Statistics HTTP server
         systemStats = Stats()
         statsServer = HttpStatsServer(apiKey=SECRET, console=console, userDir=self.userDir, statsProviders=[systemStats, pp, pm])
         statsServer.start()
         
-    
+        #Start Process manager
         pm.start()
-
+        
+        # Stop Statistics HTTP server
         statsServer.stop()

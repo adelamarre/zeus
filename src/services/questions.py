@@ -1,8 +1,22 @@
 from PyInquirer import prompt, Separator
 from validators import url as urlValidator
-import hashlib 
+import hashlib, os
+from configparser import ConfigParser
 
 class Question():
+
+    def loadLastResponse(userDir: str):
+        dataFile = userDir + '/questions.tmp'
+        parser = ConfigParser()
+        if os.path.exists(dataFile):
+            parser.read(dataFile)
+        return parser
+    
+    def saveLastResponse(userDir: str, parser: ConfigParser):
+        dataFile = userDir + '/questions.tmp'
+        with open(dataFile, 'w') as f:    # save
+            parser.write(f,space_around_delimiters=False)
+
     def yesNo(message, default: bool =True):
         answer = prompt([{
             'type': 'confirm',
@@ -11,6 +25,32 @@ class Question():
             'default': default
 
         }])
+        return answer.get('result', None)
+
+    def checkbox(message: str, choices: dict, notEmpty=False, displayNameKey: str = 'displayName'):
+        c = []
+        for key in choices:
+            c.append({
+                'name': choices[key][displayNameKey],
+                'value': key,
+                'disabled': choices[key].get('disabled', None)
+            })
+
+        
+        options = [{
+            'type': 'checkbox',
+            'name': 'result',
+            'message': message,
+            'choices': c,
+        }]
+        def validate(data):
+                #if not data:
+                return 'You must select at least one item...'
+                return True
+        if notEmpty:
+            options[0]['validate'] = validate
+
+        answer = prompt(options)
         return answer.get('result', None)
 
     def list(questions):

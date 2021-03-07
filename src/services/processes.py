@@ -11,8 +11,7 @@ from sys import stdout
 from time import time
 from datetime import timedelta, datetime
 from colorama import Fore
-
-VENOM_VERSION = '1.0.7'
+from src import VERSION
 
 class ProcessProvider:
     def __init__(self, appArgs) -> None:
@@ -26,7 +25,6 @@ class ProcessProvider:
     
     def getConsoleLines(self, width:int, height:int):
         pass
-
 
 class ProcessManager(Subject, StatsProvider):
     EVENT_TIC = 'tic'
@@ -59,14 +57,13 @@ class ProcessManager(Subject, StatsProvider):
         self.stats = Array('i', 1)
         self.stats[ProcessManager.STAT_PROCESS_COUNT] = 0
         self.systemStats = systemStats
-        
 
     def showInfo(self):
         width, height = get_terminal_size()
         elapsedTime = str(timedelta(seconds=round(time() - self.startTime)))
         lines = []
         separator = '-' * width
-        lines.append(Fore.RED + 'Venom v' + VENOM_VERSION)
+        lines.append(Fore.RED + 'Venom v' + VERSION)
         lines.append(Fore.BLUE + separator)
         lines.append(Fore.WHITE + 'Elapsed time  : %s' % (Fore.GREEN + elapsedTime))
         lines.append(Fore.WHITE + 'Total process : %3d / %3d     spawn: %.1fs' % (len(self.processes), self.maxProcess, self.spawnInterval))
@@ -145,4 +142,3 @@ class ProcessManager(Subject, StatsProvider):
         self.trigger(ProcessManager.EVENT_TIC)
         if self.terminalInfo:
             self.showInfo()
-        

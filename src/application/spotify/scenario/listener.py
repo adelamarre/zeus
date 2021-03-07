@@ -1,7 +1,9 @@
 import os, sys
+from typing import List
+from src.application.spotify.parser.playlist import TrackList, Track
+from src.application.statscollector import StatsCollector
 from src.application.scenario import AbstractScenario
 from multiprocessing import current_process, Array, Queue, Process, synchronize
-from xml.etree.ElementTree import VERSION
 from src.services.httpserver import StatsProvider
 from src.services.observer import Observer
 from src.services.console import Console
@@ -24,43 +26,20 @@ from psutil import cpu_count
 from src.services.httpserver import HttpStatsServer
 from src.services.stats import Stats
 from time import sleep, time
-
-class ListenerStat:
-    LOGGING_IN = 0
-    PLAYING = 1
-    PLAYED = 2
-    ERROR = 3
-    DRIVER_NONE = 4
-
-class ListenerRemoteStat:
-    VERSION = 'version'
-    LOGGING_IN = 'loggingIn'
-    PLAYING = 'playing'
-    PLAYED = 'played'
-    ERROR = 'error'
-    DRIVER_NONE = 'driverNone'
-
-    def parse(stats: Array) -> dict:
-        return {
-            ListenerRemoteStat.VERSION: VERSION,
-            ListenerRemoteStat.ERROR: stats[ListenerStat.ERROR],
-            ListenerRemoteStat.DRIVER_NONE: stats[ListenerStat.DRIVER_NONE],
-            ListenerRemoteStat.PLAYED: stats[ListenerStat.PLAYED],
-            ListenerRemoteStat.LOGGING_IN: stats[ListenerStat.LOGGING_IN],
-            ListenerRemoteStat.PLAYING: stats[ListenerStat.PLAYING],
-        }
+from src.application.spotify.stats import ListenerRemoteStat, ListenerStat
 
 def runner(
     console: Console, 
     shutdownEvent: synchronize.Event, 
     headless: bool, 
     user: dict,
-    proxy: dict,
-    playlist: str,
+    playlistUrl: str,
+    playConfig: str,
     vnc: bool,
     screenshotDir,
-    stats: Array,
-    statsQueue: Queue()
+    statsQueue: Queue,
+    statsCollector: StatsCollector,
+    contractId: str
     ):
         STATE_LOGGING_IN = 'logging_in'
         STATE_PLAYING = 'playing'
@@ -93,7 +72,6 @@ def runner(
                 type='chrome',
                 uid=tid,
                 user=user,
-                proxy=proxy,
                 headless= headless
             )
             if not driverData:
@@ -119,15 +97,25 @@ def runner(
                 # __ PLAYING __
                 statsQueue.put((ListenerStat.PLAYING, +1))
                 state = STATE_PLAYING
-                spotify.playPlaylist(playlist, shutdownEvent, 80, 100)
+                
+                spotify.play(
+                    user=user,
+                    playlistUrl=playlistUrl,
+                    playConfig=playConfig,
+                    statsCollector=statsCollector,
+                    statsQueue=statsQueue,
+                    contractId=contractId
+                )
+
                 statsQueue.put((ListenerStat.PLAYING, -1))
-                statsQueue.put((ListenerStat.PLAYED, +1))
+
             except BaseException as e:
                 if state == STATE_PLAYING:
                     statsQueue.put((ListenerStat.PLAYING, -1))
                 elif state == STATE_LOGGING_IN:
                     statsQueue.put((ListenerStat.LOGGING_IN, -1))
                 statsQueue.put((ListenerStat.ERROR, +1))
+                console.exception()
                 try:
                     if screenshotDir:
                         id = randint(10000, 99999)
@@ -167,12 +155,12 @@ def dryRunner(
     shutdownEvent: synchronize.Event, 
     headless: bool, 
     user: dict,
-    proxy: dict,
-    playlist: str,
+    playlistUrl: str,
     vnc: bool,
     screenshotDir,
-    stats: Array,
-    statsQueue: Queue
+    statsQueue: Queue,
+    statsCollector: StatsCollector,
+    playConfig: str
     ):
         def sleepOrNot(secondes: int) -> bool:
             startSleep = time()
@@ -215,17 +203,20 @@ def dryRunner(
 class ListenerProcessProvider(ProcessProvider, Observer, StatsProvider):
     def __init__(self,
         appArgs,
-        queueEndPoint: str,
+        accountRemoteQueue: RemoteQueue,
         shutdownEvent: synchronize.Event,
+        statsCollector: StatsCollector = None,
         console: Console = None,
         headless: bool = False,
         vnc: bool = False,
         screenshotDir: str = None,
-        overridePlaylist: str = False
+        overridePlaylist: str = False,
+        overridePlayConfig: str = False
     ):
         ProcessProvider.__init__(self, appArgs)
         StatsProvider.__init__(self, 'runner')
-        self.remoteQueue = RemoteQueue(endPoint=queueEndPoint)
+        self.accountRemoteQueue = accountRemoteQueue
+        self.statsCollector = statsCollector
         self.console = console
         self.headless = headless
         self.vnc = vnc
@@ -234,6 +225,7 @@ class ListenerProcessProvider(ProcessProvider, Observer, StatsProvider):
         self.overridePlaylist = overridePlaylist
         self.listenerStats = Array('i', [0, 0, 0, 0, 0], lock=True)
         self.statsQueue = Queue()
+        self.overridePlayConfig = overridePlayConfig
         
     def getStats(self) -> dict:
         return ListenerRemoteStat.parse(self.listenerStats)
@@ -262,18 +254,19 @@ class ListenerProcessProvider(ProcessProvider, Observer, StatsProvider):
         if eventName == ProcessManager.EVENT_TIC:
             self.updateStats()
 
-    def buildProcess(self, target, user={}, playlist=''):
+    def buildProcess(self, target, contractId:str, user={}, playlist='', playConfig='1:1'):
         return Process(target = target, kwargs={
                     'console': self.console, 
                     'shutdownEvent': self.shutdownEvent, 
                     'headless': self.headless, 
                     'vnc': self.vnc,
                     'user': user,
-                    'proxy': None,
-                    'playlist': playlist,
+                    'playlistUrl': playlist,
+                    'playConfig': playConfig,
                     'screenshotDir': self.screenshotDir,
-                    'stats': self.listenerStats,
-                    'statsQueue': self.statsQueue
+                    'statsQueue': self.statsQueue,
+                    'statsCollector': self.statsCollector,
+                    'contractId': contractId
                 })
 
     def getNewProcess(self, freeSlot: int):
@@ -285,18 +278,22 @@ class ListenerProcessProvider(ProcessProvider, Observer, StatsProvider):
             return self.buildProcess(target=dryRunner)
 
         try:
-            self.remoteQueue.provision(freeSlot)
-            message = self.remoteQueue.pop()
+            self.accountRemoteQueue.provision(freeSlot)
+            message = self.accountRemoteQueue.pop()
             
             if message:
                 body = loads(message['Body'])
                 
                 if self.overridePlaylist:
                     body['playlist'] = self.overridePlaylist
-
-                p = self.buildProcess(target=runner, user=body['user'], playlist=body['playlist'])
+                if self.overridePlayConfig:
+                    body['playConfig'] = self.overridePlayConfig
                 
-                self.remoteQueue.deleteMessage(message)
+                contractId = body.get('contractId', 'undefined')
+                playConfig = body.get('playConfig', '1:1')
+                
+                p = self.buildProcess(target=runner, user=body['user'], contractId=contractId, playlist=body['playlist'], playConfig=playConfig)
+                self.accountRemoteQueue.deleteMessage(message)
                 
                 return p
         except Exception as e:
@@ -320,46 +317,42 @@ class Scenario(AbstractScenario):
             if self.args.screenshot:
                 screenshotDir = logDir + '/screenshot'
                 os.makedirs(screenshotDir, exist_ok=True)
-        
-        #print('Configuration file: %s' % configFile)
 
-        defautlConfig = {
-            'sqs_endpoint': '',
+        verbose = 3 if self.args.verbose else 1
+        console = Console(verbose=verbose, ouput=self.args.verbose, logfile=logfile, logToFile=not self.args.nolog)
+        console.log('Start scenario Spotify listener')
+
+        listenerConfig = Config.getListenerConfig(self.configFile, {
+            'account_sqs_endpoint': '',
+            'collector_sqs_endpoint': '',
             'secret': '',
             'max_process': cpu_count(),
             'spawn_interval': 0.5
-        }
-        
-        listenerConfig = Config.getListenerConfig(self.configFile, defautlConfig)
+        })
 
         if not listenerConfig:
             sys.exit('I can not continue without configuraton')
         
         #https://sqs.eu-west-3.amazonaws.com/884650520697/18e66ed8d655f1747c9afbc572955f46
         
-        if self.args.verbose:
-            verbose = 3
-        else:
-            verbose = 1
+        if not listenerConfig[Config.ACCOUNT_SQS_ENDPOINT]:
+            sys.exit('you need to set the account_sqs_endpoint in the config file.')
 
-        console = Console(verbose=verbose, ouput=self.args.verbose, logfile=logfile, logToFile=not self.args.nolog)
+        if not listenerConfig[Config.COLLECTOR_SQS_ENDPOINT]:
+            sys.exit('you need to set the collector_sqs_endpoint in the config file.')
 
-        if not listenerConfig['sqs_endpoint']:
-            sys.exit('you need to set the sqs_endpoint in the config file.')
-
-        if not listenerConfig['server_id']:
+        if not listenerConfig[Config.SERVER_ID]:
             sys.exit('you need to set the server_id in the config file.')
 
-        if not listenerConfig['secret']:
+        if not listenerConfig[Config.SECRET]:
             sys.exit('You need to provide the server stats password')
-
 
         questions = [
             {
                 'type': 'input',
-                'name': 'max_process',
+                'name': Config.MAX_PROCESS,
                 'message': 'How much process to start ?',
-                'default': str(listenerConfig['max_process']),
+                'default': str(listenerConfig[Config.MAX_PROCESS]),
                 'validate': Question.validateInteger,
                 'filter': int
             },
@@ -394,38 +387,41 @@ class Scenario(AbstractScenario):
         if not answers or not 'continue' in answers or answers['continue'] == False:
             sys.exit('ok, see you soon.')
         
+        proivideStatsServer = answers['stats_server']
         playlist = answers.get('playlist', None)
         maxProcess = answers['max_process']
+        accountRemoteQueue = RemoteQueue(listenerConfig['account_sqs_endpoint'])
+        statCollector = StatsCollector(listenerConfig['collector_sqs_endpoint'], 'spotify', listenerConfig['server_id'])
         
         pp = ListenerProcessProvider(
             appArgs=self.args,
-            queueEndPoint=listenerConfig['sqs_endpoint'],
+            accountRemoteQueue=accountRemoteQueue,
+            statsCollector=statCollector,
             shutdownEvent=self.shutdownEvent,
             console= console,
             headless=self.args.headless,
             vnc= self.args.vnc,
             screenshotDir=screenshotDir,
             overridePlaylist=playlist,
-            )
+        )
 
         
         showInfo = not self.args.noinfo
         systemStats = Stats()
 
         pm = ProcessManager(
-            serverId=listenerConfig['server_id'],
+            serverId=listenerConfig[Config.SERVER_ID],
             userDir=self.userDir,
             console=console,
             processProvider=pp,
             maxProcess=maxProcess,
-            spawnInterval=listenerConfig['spawn_interval'],
+            spawnInterval=listenerConfig[Config.SPAWN_INTERVAL],
             showInfo=showInfo,
             shutdownEvent=self.shutdownEvent,
             systemStats= systemStats,
             stopWhenNoProcess=False
         )
-        if answers['stats_server']:
-            
+        if proivideStatsServer:
             statsServer = HttpStatsServer(listenerConfig['secret'], console, self.userDir, [systemStats, pp, pm])
             statsServer.start()
 
@@ -435,5 +431,5 @@ class Scenario(AbstractScenario):
         else:
             pm.start()
 
-        if answers['stats_server']:
+        if proivideStatsServer:
             statsServer.stop()

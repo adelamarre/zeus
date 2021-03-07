@@ -1,5 +1,5 @@
 
-from src.application.spotify.listener import ListenerRemoteStat, ListenerStat
+from src.application.spotify.scenario.listener import ListenerRemoteStat, ListenerStat
 import sys
 from src.application.scenario import AbstractScenario
 from src import VERSION
@@ -68,9 +68,6 @@ class Scenario(AbstractScenario):
                     'exception': e
                 })
 
-
-            
-        
     def refreshAll(self):
         terminal = self.terminal
         self.fetchStats()
@@ -113,25 +110,28 @@ class Scenario(AbstractScenario):
 
     def refreshServer(self, serverStat: dict):
         terminal = self.terminal
-        
-        
         try:
             host = serverStat['host']
+            
             if 'exception' in serverStat:
-                terminal.append(Fore.RED + '%s %sConnection Error, check the ip/host address or password'  % (Fore.YELLOW + 'Server ' + host, Fore.RED))
+                terminal.append(Fore.RED + '%s %s Connection Error, check the ip/host address or password'  % (Fore.YELLOW + 'Server ' + host, Fore.RED))
                 return
             runnerStats = serverStat['runner']
             systemStats = serverStat['system']
             managerStats = serverStat['manager']
-            
-            terminal.appendTemplate('{id:s} ({host:s})', {'host': Fore.LIGHTBLACK_EX + host, 'id': managerStats['serverId']}, Fore.YELLOW)
+            version = runnerStats.get('version', 'unknown')
+            terminal.appendTemplate('{id:s} {version:s} ({host:s})', {
+                'version': Fore.LIGHTGREEN_EX + version,
+                'host': Fore.LIGHTBLACK_EX + host, 
+                'id': managerStats['serverId']
+            })
             #terminal.append()
             #terminal.append('  Runner:')
             if runnerStats['played']:
                 runnerStats['errorPercent'] =  (runnerStats['error'] / runnerStats['played']) * 100
             else:
                 runnerStats['errorPercent'] = 0.0
-            terminal.appendTemplate('\tLoging: {loggingIn:4d}   Playing: {playing:4d}   Played : {played:8d}   Errors: {errorPercent:.2f}%', runnerStats, 
+            terminal.appendTemplate('\tPrepare: {prepare:4d}   Loging: {loggingIn:4d}   Playing: {playing:4d}   Played : {played:8d}   Errors: {errorPercent:.2f}%', runnerStats, 
                     valueColors={'errorPercent': Fore.RED, ListenerRemoteStat.PLAYED: Fore.LIGHTGREEN_EX})
             #terminal.append()
             #terminal.append('  System:')
@@ -159,8 +159,8 @@ class Scenario(AbstractScenario):
 
         #https://sqs.eu-west-3.amazonaws.com/884650520697/18e66ed8d655f1747c9afbc572955f46
 
-        if not monitorConfig['sqs_endpoint']:
-            sys.exit('you need to set the sqs_endpoint in the config file.')
+        if not monitorConfig['account_sqs_endpoint']:
+            sys.exit('you need to set the account_sqs_endpoint in the config file.')
 
         if not monitorConfig['servers']:
             sys.exit('you need to set the servers list in the config file.')
@@ -171,7 +171,7 @@ class Scenario(AbstractScenario):
         self.monitorConfig = monitorConfig
         self.terminal = Terminal('-')
         self.servers = monitorConfig['servers'].split(',')
-        self.remoteQueue = RemoteQueue(monitorConfig['sqs_endpoint'])
+        self.remoteQueue = RemoteQueue(monitorConfig['account_sqs_endpoint'])
         
         lastRefreshTime = 0
         while True:

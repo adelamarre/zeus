@@ -9,5 +9,7 @@ psutil
 proxy.py
 mitmproxy
 pyinstaller
+pyinstaller[encryption]
 psutil
 validators
+sqlite3
