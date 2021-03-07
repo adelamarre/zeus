@@ -223,7 +223,7 @@ class ListenerProcessProvider(ProcessProvider, Observer, StatsProvider):
         self.screenshotDir = screenshotDir
         self.shutdownEvent = shutdownEvent
         self.overridePlaylist = overridePlaylist
-        self.listenerStats = Array('i', [0, 0, 0, 0, 0], lock=True)
+        self.listenerStats = Array('i', [0, 0, 0, 0, 0, 0], lock=True)
         self.statsQueue = Queue()
         self.overridePlayConfig = overridePlayConfig
         

@@ -87,7 +87,7 @@ class Scenario(AbstractScenario):
             shutdownEvent=self.shutdownEvent,
             console=console,
             headless= False,
-            vnc= self.args.vnc,
+            vnc= self.args.vnc or (MAX_PROCESS == 1),
             screenshotDir=screenshotDir
         )
 
