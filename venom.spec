@@ -11,6 +11,7 @@ a = Analysis(['venom'],
                  'src.application.spotify.scenario.monitor',
                  'src.application.spotify.scenario.listener',
                  'src.application.spotify.scenario.register',
+                 'src.application.spotify.scenario.service',
                  'src.application.system.scenario.config',
                  'src.application.system.scenario.service-config'
             ],
