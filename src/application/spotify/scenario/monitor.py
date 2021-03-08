@@ -1,4 +1,5 @@
 
+from src.application.spotify.scenario.config.monitor import MonitorConfig
 from src.application.spotify.scenario.listener import ListenerRemoteStat, ListenerStat
 import sys
 from src.application.scenario import AbstractScenario
@@ -55,7 +56,7 @@ class Scenario(AbstractScenario):
             
             try:
                 host = server.strip()
-                serverStat = loads(get('https://%s:63443/?k=%s' % (host, self.monitorConfig['secret']), verify=False).text)
+                serverStat = loads(get('https://%s:63443/?k=%s' % (host, self.config['secret']), verify=False).text)
                 serverStat['host'] = host
                 for key in globalStats:
                     globalStats[key] += serverStat['runner'][key]
@@ -149,66 +150,19 @@ class Scenario(AbstractScenario):
     
     def start(self):
         defautlConfig = {
-            'poll_interval': 2.0
+            MonitorConfig.POLL_INTERVAL: 2.0
         }
-        monitorConfig = Config.getMonitorConfig(self.configFile, defautlConfig)
-
-        if not monitorConfig:
-            sys.exit('I can not continue without configuraton')
-        
-
-        #https://sqs.eu-west-3.amazonaws.com/884650520697/18e66ed8d655f1747c9afbc572955f46
-
-        if not monitorConfig['account_sqs_endpoint']:
-            sys.exit('you need to set the account_sqs_endpoint in the config file.')
-
-        if not monitorConfig['servers']:
-            sys.exit('you need to set the servers list in the config file.')
-
-        if not monitorConfig['secret']:
-            sys.exit('you need to set the password to access servers stats.')
-
-        self.monitorConfig = monitorConfig
+        configData = MonitorConfig(self.configFile).getConfig(defautlConfig)
+        self.config = configData
         self.terminal = Terminal('-')
-        self.servers = monitorConfig['servers'].split(',')
-        self.remoteQueue = RemoteQueue(monitorConfig['account_sqs_endpoint'])
+        self.servers = configData[MonitorConfig.SERVERS].split(',')
+        self.remoteQueue = RemoteQueue(configData[MonitorConfig.ACCOUNT_SQS_ENDPOINT])
         
         lastRefreshTime = 0
         while True:
             if self.shutdownEvent.is_set():
                 break
-            if (time() - lastRefreshTime) > monitorConfig['poll_interval']:
+            if (time() - lastRefreshTime) > configData[MonitorConfig.POLL_INTERVAL]:
                 self.refreshAll()
                 lastRefreshTime = time()
             sleep(1)
-             
-            
-
-"""
-{
-    "system": {
-        "memTotal": 62.81103515625,
-        "memAvailable": 60.04899978637695,
-        "memActive": 4.4,
-        "cpuCountP": 8,
-        "cpuCountL": 16,
-        "cpuPercentAvg": 0.4
-    },
-    "runner": {
-        "version": "1.0.7",
-        "error": 0,
-        "driverNone": 0,
-        "played": 0,
-        "loggingIn": 0,
-        "playing": 0,
-        "overriddePlaylist": true
-    },
-    "manager": {
-        "maxProcess": 100,
-        "processCount": 0,
-        "spawnInterval": 0.3,
-        "startTime": "2021-02-27 13:18:58.417318",
-        "elapsedTime": "0:03:23"
-    }
-}
-"""

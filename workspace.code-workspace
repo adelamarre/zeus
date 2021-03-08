@@ -6,5 +6,15 @@
         {
             "path": "../../.venom"
         }
-    ]
+    ],
+    "settings": {
+        "sqltools.connections": [
+            {
+                "previewLimit": 50,
+                "driver": "SQLite",
+                "name": "venom",
+                "database": "../../.venom/venom.db"
+            }
+        ]
+    }
 }

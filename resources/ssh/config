@@ -25,7 +25,13 @@ Host spotify
   IdentityFile ~/.ssh/spotify_rsa
   User spotify
 
-Host hetzner
+Host hetzner #1
   HostName 88.99.192.224
   IdentityFile ~/.ssh/id_vladimir
   User ubuntu
+
+Host hetzner #2
+  HostName 168.119.145.194
+  IdentityFile ~/.ssh/id_vladimir
+  User ubuntu
+  #x2PweA5rDNeExb

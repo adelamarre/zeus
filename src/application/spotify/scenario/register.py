@@ -1,10 +1,13 @@
 
 import os
-from src.application.spotify.parser.playlist import TrackSelector
+from re import A
+from src.application.spotify.scenario.inputs.register import RegisterInputs
+from src.application.spotify.scenario.config.register import RegisterConfig
+from src.services.db import Db
 import sys
 from datetime import datetime
 from gc import collect
-from multiprocessing import (Array, Event, Process, Queue, current_process, synchronize)
+from multiprocessing import (Array, Process, Queue, current_process, synchronize)
 from random import randint
 from shutil import rmtree
 from time import sleep
@@ -30,7 +33,6 @@ from src.services.users import UserManager
 from src.services.x11vncwrapper import X11vnc
 from xvfbwrapper import Xvfb
 from time import time,sleep
-from src.application.spotify.utils import getPlaylistSongChoices
 from src.application.spotify.stats import RegisterStat, RegisterRemoteStat
 
 def runner(
@@ -42,6 +44,7 @@ def runner(
     registerProxy: dict,
     playlist: str,
     playConfig: str,
+    contractId: str,
     vnc: bool,
     screenshotDir,
     statsQueue: Queue
@@ -111,8 +114,10 @@ def runner(
                     'user': user,
                     'playlist': playlist,
                     'playConfig': playConfig,
-                    'type': 'sp'
+                    'contractId': contractId,
+                    'type': 'account'
                 })
+
                 statsQueue.put((RegisterStat.CREATED, 1))
             except Exception as e:
                 if state == STATE_FILLING_OUT:
@@ -222,8 +227,6 @@ def dryRunner(
         except:
             console.exception()
 
-
-
 class RegisterProcessProvider(ProcessProvider, Observer, StatsProvider):
     APP_SPOTIFY = 'sp'
     def __init__(self,
@@ -326,16 +329,9 @@ class RegisterProcessProvider(ProcessProvider, Observer, StatsProvider):
             self.console.exception()
             self.registerStats[RegisterStat.ERROR] += 1
 
-
-
-
 class Scenario(AbstractScenario):
     def __init__(self, **kwargs) -> None:
         super().__init__(**kwargs)
-        self.configFile = self.userDir + '/config.ini' 
-
-    
-
 
     def start(self):
         logDir = None
@@ -352,138 +348,35 @@ class Scenario(AbstractScenario):
         
         #print('Configuration file: %s' % configFile)
 
-        defautlConfig = {
+        configData = RegisterConfig(self.userDir + '/config.ini').getConfig({
             'account_sqs_endpoint': '',
             'stats_sqs_endpoint': '',
             'max_process': cpu_count(),
             'spawn_interval': 0.5
-        }
+        })
         
-        registerConfig = Config.getRegisterConfig(self.configFile, defautlConfig)
-
-        if not registerConfig:
-            sys.exit('I can not continue without configuraton')
-        
-
-        #https://sqs.eu-west-3.amazonaws.com/884650520697/18e66ed8d655f1747c9afbc572955f46
-        
+        verbose = 1
         if self.args.verbose:
             verbose = 3
-        else:
-            verbose = 1
 
         console = Console(verbose=verbose, ouput=self.args.verbose, logfile=logfile, logToFile=not self.args.nolog)
-
-        if not registerConfig['account_sqs_endpoint']:
-            sys.exit('you need to set the sqs_endpoint in the config file.')
-
-        if not registerConfig['server_id']:
-            sys.exit('you need to set the server_id in the config file.')
-
-       
-
-        questions = [
-            {
-                'type': 'input',
-                'name': 'playlist',
-                'message': 'Which playlist to listen ?',
-                'validate': Question.validateUrl
-            },
-            {
-                'type': 'confirm',
-                'message': 'Would you play all songs of this playlist ?',
-                'name': 'play_all_songs',
-                'default': True,
-            },
-            {
-                'when': lambda answer : not answer['play_all_songs'],
-                'type': 'checkbox',
-                'message': 'Select the songs you want to play',
-                'name': 'play_songs',
-                'choices': lambda answer : getPlaylistSongChoices(
-                    playlistUrl=answer['playlist'], 
-                    console=console,
-                    userDir=self.userDir,
-                    shutdownEvent=self.shutdownEvent
-                ) if not answer['play_all_songs'] else {},
-                #'validate': lambda data : 'You must select at least one song' if len(data) < 1 else True
-                'filter': lambda items: list(map(lambda x: str(x+1), items))
-            },
-            {
-                'type': 'input',
-                'name': 'play_count',
-                'message': 'How much songs you want to play per session ?',
-                'default': lambda answer : str(len(answer['play_songs'])) if 'play_songs' in answer else '1',
-                'validate': lambda answer : TrackSelector.validateCounterConfig(answer),
-                
-            },
-            {
-                'type': 'input',
-                'name': 'account_count',
-                'message': 'How much account to create ?',
-                'validate': Question.validateInteger,
-                'filter': int
-            },
-            {
-                'type': 'input',
-                'name': 'max_process',
-                'message': 'How much process to start ?',
-                'default': str(registerConfig['max_process']),
-                'validate': Question.validateInteger,
-                'filter': int
-            },
-            {
-                'type': 'input',
-                'name': 'contractId',
-                'message': 'How much process to start ?',
-                'default': str(registerConfig['max_process']),
-                'validate': Question.validateInteger,
-                'filter': int
-            },
-            {
-                'type': 'confirm',
-                'message': 'Ok, please type [enter] to start or [n] to abort',
-                'name': 'continue',
-                'default': True,
-            },
-        ]
-
-        answers = Question.list(questions)
         
-        if not 'continue' in answers or answers['continue'] == False:
+        answers = RegisterInputs(console, self.shutdownEvent, configData, self.userDir).getInputs()
+        
+        if answers is None:
             sys.exit('Ok, see you soon :-)')
-        
-        print(answers['play_songs'])
-        playlist = answers['playlist']
-        accountCount = answers['account_count']
-        maxProcess = answers['max_process']
-        
-        playSong = '*'
-        if not answers['play_all_songs']:
-            if len(answers['play_songs']) < 1:
-                sys.exit('You do not select any song to play...')
-            playSong = ','.join(answers['play_songs'])
-        
-        playConfig = playSong + ':' + answers['play_count']
-        
+            
+        print(answers)
+        sys.exit()
 
-        try:
-            selector = TrackSelector()
-            selector.parse(playConfig, 10000)
-            testPlayConfig = selector.getSelection()
-        except Exception as e:
-            print(str(e))
-            raise Exception('Bad play configuration format: %s' % playConfig)
-        print ('Play config: ' + playConfig)
-        print(testPlayConfig)
-       
         pp = RegisterProcessProvider(
             appArgs=self.args,
             basePath=self.userDir,
-            accountCount=accountCount,
-            playlist=playlist,
-            playConfig=playConfig,
-            queueEndPoint=registerConfig['account_sqs_endpoint'],
+            accountCount=answers[RegisterInputs.ACCOUNT_COUNT],
+            playlist=answers[RegisterInputs.PLAYLIST],
+            playConfig=answers[RegisterInputs.PLAY_CONFIG],
+            contractId=answers[RegisterInputs.CONTRACT_ID],
+            queueEndPoint=configData[RegisterConfig.ACCOUNT_SQS_ENDPOINT],
             shutdownEvent=self.shutdownEvent,
             console= console,
             headless=self.args.headless,
@@ -491,20 +384,17 @@ class Scenario(AbstractScenario):
             screenshotDir=screenshotDir
         )
         
-        showInfo = not self.args.noinfo
-        systemStats = Stats()
-        
         pm = ProcessManager(
-            serverId=registerConfig['server_id'],
+            serverId=configData[RegisterConfig.SERVER_ID],
             userDir=self.userDir,
             console=console,
             processProvider=pp,
-            maxProcess=maxProcess,
-            spawnInterval=registerConfig['spawn_interval'],
+            maxProcess=answers[RegisterInputs.MAX_PROCESS],
+            spawnInterval=configData[RegisterConfig.SPAWN_INTERVAL],
             shutdownEvent=self.shutdownEvent,
             stopWhenNoProcess=True,
-            showInfo=showInfo,
-            systemStats=systemStats
+            showInfo=not self.args.noinfo,
+            systemStats=Stats() if not self.sys.args.noinfo else None
         )
         devnull = open(os.devnull, "w") 
         sys.stderr = devnull

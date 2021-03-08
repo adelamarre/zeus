@@ -1,4 +1,6 @@
 import os, sys
+from src.application.spotify.scenario.inputs.listener import ListenerInputs
+from src.application.spotify.scenario.config.listener import ListenerConfig
 from typing import List
 from src.application.spotify.parser.playlist import TrackList, Track
 from src.application.statscollector import StatsCollector
@@ -322,76 +324,27 @@ class Scenario(AbstractScenario):
         console = Console(verbose=verbose, ouput=self.args.verbose, logfile=logfile, logToFile=not self.args.nolog)
         console.log('Start scenario Spotify listener')
 
-        listenerConfig = Config.getListenerConfig(self.configFile, {
+        config = ListenerConfig(self.configFile)
+        configData = config.getConfig({
             'account_sqs_endpoint': '',
             'collector_sqs_endpoint': '',
             'secret': '',
             'max_process': cpu_count(),
             'spawn_interval': 0.5
         })
-
-        if not listenerConfig:
-            sys.exit('I can not continue without configuraton')
         
-        #https://sqs.eu-west-3.amazonaws.com/884650520697/18e66ed8d655f1747c9afbc572955f46
+
         
-        if not listenerConfig[Config.ACCOUNT_SQS_ENDPOINT]:
-            sys.exit('you need to set the account_sqs_endpoint in the config file.')
 
-        if not listenerConfig[Config.COLLECTOR_SQS_ENDPOINT]:
-            sys.exit('you need to set the collector_sqs_endpoint in the config file.')
-
-        if not listenerConfig[Config.SERVER_ID]:
-            sys.exit('you need to set the server_id in the config file.')
-
-        if not listenerConfig[Config.SECRET]:
-            sys.exit('You need to provide the server stats password')
-
-        questions = [
-            {
-                'type': 'input',
-                'name': Config.MAX_PROCESS,
-                'message': 'How much process to start ?',
-                'default': str(listenerConfig[Config.MAX_PROCESS]),
-                'validate': Question.validateInteger,
-                'filter': int
-            },
-            {
-                'type': 'confirm',
-                'name': 'override_playlist',
-                'message': 'Would you override the playlist to listen ?',
-                'default': False
-            },
-            {
-                'type': 'input',
-                'name': 'playlist',
-                'message': 'Playlist url ?',
-                'default': '',
-                'validate': Question.validateUrl,
-                'when': Question.when('override_playlist')
-            },
-            {
-                'type': 'confirm',
-                'name': 'stats_server',
-                'message': 'Would you start the statistics web server ?',
-                'default': True
-            },
-            {
-            'type': 'confirm',
-            'message': 'Ok, please type [enter] to start or [n] to abort',
-            'name': 'continue',
-            'default': True,
-            },
-        ]
-        answers = Question.list(questions)
-        if not answers or not 'continue' in answers or answers['continue'] == False:
+        answers = ListenerInputs(console, self.shutdownEvent, configData, self.userDir).getInputs()
+        if answers is None:
             sys.exit('ok, see you soon.')
         
-        proivideStatsServer = answers['stats_server']
-        playlist = answers.get('playlist', None)
-        maxProcess = answers['max_process']
-        accountRemoteQueue = RemoteQueue(listenerConfig['account_sqs_endpoint'])
-        statCollector = StatsCollector(listenerConfig['collector_sqs_endpoint'], 'spotify', listenerConfig['server_id'])
+        proivideStatsServer = answers[ListenerInputs.STATS_SERVER]
+        playlist            = answers[ListenerInputs.PLAYLIST]
+        maxProcess          = answers[ListenerInputs.MAX_PROCESS]
+        accountRemoteQueue  = RemoteQueue(configData[ListenerConfig.ACCOUNT_SQS_ENDPOINT])
+        statCollector       = StatsCollector(configData[ListenerConfig.COLLECTOR_SQS_ENDPOINT], 'spotify', configData[ListenerConfig.SERVER_ID])
         
         pp = ListenerProcessProvider(
             appArgs=self.args,
@@ -405,24 +358,23 @@ class Scenario(AbstractScenario):
             overridePlaylist=playlist,
         )
 
-        
-        showInfo = not self.args.noinfo
         systemStats = Stats()
 
         pm = ProcessManager(
-            serverId=listenerConfig[Config.SERVER_ID],
+            serverId=configData[ListenerConfig.SERVER_ID],
             userDir=self.userDir,
             console=console,
             processProvider=pp,
             maxProcess=maxProcess,
-            spawnInterval=listenerConfig[Config.SPAWN_INTERVAL],
-            showInfo=showInfo,
+            spawnInterval=configData[ListenerConfig.SPAWN_INTERVAL],
+            showInfo=not self.args.noinfo,
             shutdownEvent=self.shutdownEvent,
             systemStats= systemStats,
             stopWhenNoProcess=False
         )
+
         if proivideStatsServer:
-            statsServer = HttpStatsServer(listenerConfig['secret'], console, self.userDir, [systemStats, pp, pm])
+            statsServer = HttpStatsServer(configData[ListenerConfig.SECRET], console, self.userDir, [systemStats, pp, pm])
             statsServer.start()
 
         if self.args.dryrun:

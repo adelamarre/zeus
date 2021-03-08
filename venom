@@ -3,6 +3,7 @@ import argparse
 import importlib
 import os
 import signal
+from src.services.db import Db
 from src.application.scenario import AbstractScenario
 import sys
 from getpass import getuser
@@ -70,8 +71,6 @@ if __name__ == '__main__':
     
     shutdownEvent = Event()
     
-    
-
     def signalHandler(signum, frame):
         shutdownEvent.set()
 
