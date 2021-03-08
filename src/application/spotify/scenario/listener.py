@@ -56,6 +56,7 @@ def runner(
         try:
             if shutdownEvent.is_set():
                 return 
+            statsQueue.put((ListenerStat.PREPARE, +1))
             vdisplay = None
             x11vnc = None
             if headless == False:
@@ -84,10 +85,12 @@ def runner(
                 raise Exception('No driver was returned from adapter')
             
         except:
+            statsQueue.put((ListenerStat.PREPARE, -1))
             statsQueue.put((ListenerStat.DRIVER_NONE, +1))
             console.exception('Driver unavailable')
         else:
             try:
+                statsQueue.put((ListenerStat.PREPARE, -1))
                 state = STATE_STARTED
                 spotify = Adapter(driver, console, shutdownEvent)
                 # __ LOGGING __
