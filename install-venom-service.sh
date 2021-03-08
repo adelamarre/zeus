@@ -17,7 +17,8 @@ echo 'Install Venom service'
 
 #https://sqs.eu-west-3.amazonaws.com/884650520697/18e66ed8d655f1747c9afbc572955f46
 read -p 'Serner name ?' SERVERID
-read -p 'SQS endpoint ?' SQSENDPOINT
+read -p 'Account SQS endpoint ?' ACCOUNTSQSENDPOINT
+read -p 'Collector SQS endpoint ?' COLLECTORSQSENDPOINT
 read -p 'Max process ?' MAXPROCESS
 read -p 'Spawn insterval ?' SPAWNINTERVAL
 read -p 'Stats server password ?' PASSWORD
@@ -32,7 +33,8 @@ rm -f /home/$INSTALLER/.venom/config.service.ini
 tee -a /home/$INSTALLER/.venom/config.service.ini > /dev/null <<EOT
 [LISTENER]
 server_id=${SERVERID}
-sqs_endpoint=${SQSENDPOINT}
+account_sqs_endpoint=${ACCOUNTSQSENDPOINT}
+collector_sqs_endpoint=${COLLECTORSQSENDPOINT}
 max_process=${MAXPROCESS}
 spawn_interval=${SPAWNINTERVAL}
 secret=${SECRET}
