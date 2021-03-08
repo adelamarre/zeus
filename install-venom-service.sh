@@ -3,7 +3,7 @@
 INSTALLER=$USER
 echo "Install service for user $INSTALLER"
 
-sudo rm -f /usr/bin/venom-listener
+
 sudo rm -f /usr/bin/venom-service
 sudo cp dist/venom-service /usr/bin/venom-service
 sudo chmod +x /usr/bin/venom-service

@@ -4,7 +4,7 @@ INSTALLER=$USER
 echo "Install venom"
 
 sudo rm -f /usr/bin/venom
-#/home/serveurspotify/.local/bin/pyinstaller --onefile venom
+~/.local/bin/pyinstaller --onefile venom.spec
 sudo cp dist/venom /usr/bin/venom
 sudo chmod +x /usr/bin/venom
 mkdir -p /home/$INSTALLER/.venom
