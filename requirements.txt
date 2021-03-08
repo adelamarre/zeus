@@ -12,4 +12,3 @@ pyinstaller
 pyinstaller[encryption]
 psutil
 validators
-sqlite3
