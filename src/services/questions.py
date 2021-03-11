@@ -1,21 +1,11 @@
 from PyInquirer import prompt, Separator
 from validators import url as urlValidator
 import hashlib, os
-from configparser import ConfigParser
+
 
 class Question():
 
-    def loadLastResponse(userDir: str):
-        dataFile = userDir + '/questions.tmp'
-        parser = ConfigParser()
-        if os.path.exists(dataFile):
-            parser.read(dataFile)
-        return parser
     
-    def saveLastResponse(userDir: str, parser: ConfigParser):
-        dataFile = userDir + '/questions.tmp'
-        with open(dataFile, 'w') as f:    # save
-            parser.write(f,space_around_delimiters=False)
 
     def yesNo(message, default: bool =True):
         answer = prompt([{

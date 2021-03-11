@@ -1,0 +1,97 @@
+{% autoescape None %}
+<!-- 
+{'system': 
+    {
+        'memTotal': 62.81103515625,
+        'memAvailable': 41.588905334472656,
+        'memActive': 33.8,
+        'cpuCountP': 8,
+        'cpuCountL': 16,
+        'cpuPercentAvg': 100.0
+    }, 
+ 'runner': 
+    {
+        'version': '1.0.9', 
+        'error': 1036,
+        'driverNone': 0,
+        'played': 18145,
+        'loggingIn': 25,
+        'playing': 51,
+        'prepare': 14
+    },
+ 'manager': {
+     'serverId': 'Hetzner #01',
+     'maxProcess': 100,
+     'processCount': 99,
+     'spawnInterval': 0.3,
+     'startTime': '2021-03-11 00:19:38.289383',
+     'elapsedTime': '18:22:25'
+    }, 
+    'host': '88.99.192.224'}
+-->
+{% if 'exception' in stat %}
+    <div class="card exception" style="width: 18rem;">
+        <div class="card-body p-1">
+            <div class="card-title d-flex w-100">
+                <div>{{stat['host']}}</div>
+                <span class="align-self-end ms-auto badge rounded-pill bg-danger">?</span>
+            </div>
+            <p class="card-text flex "><small>Error: Check the ip/password or the server is down.</small></p>
+            <!-- <p class="card-text flex "><small>\{\{stat['exception']}}</small></p> -->
+        </div>
+    </div>
+{% else %}
+<div class="card server" style="width: 18rem;">
+  <div class="card-body p-1">
+    <div class="card-title d-flex w-100">
+        <div>{{stat['manager']['serverId']}}</div>
+        <span class="align-self-end ms-auto badge rounded-pill bg-success">v {{stat['runner']['version']}}</span>
+    </div>
+    <p class="card-text flex"><small></small></p>
+  </div>
+  <div class="container-fluid p-1"> 
+    <div class="row">
+        <div class="col-6 p-1">
+            <ul class="list-group list-group-flush">
+                <li class="list-group-item">
+                    <div class="lgi-label fw-light" style="font-size: 0.8rem!important;">Prepare</div>
+                    <div class= "lgi-value align-self-end ms-auto">{{stat['runner']['prepare']}}
+                </li>
+                <li class="list-group-item">
+                    <div class="lgi-label">Logging in</div>
+                    <div class= "lgi-value align-self-end ms-auto">{{stat['runner']['loggingIn']}}
+                </li>
+                <li class="list-group-item ">
+                    <div class="lgi-label">Playing</div>
+                    <div class= "lgi-value align-self-end ms-auto">{{stat['runner']['playing']}}
+                </li>
+                <li class="list-group-item ">
+                    <div class="lgi-label">Played</div>
+                    <div class= "lgi-value align-self-end ms-auto">{{stat['runner']['played']}}
+                </li>
+            </ul>
+        </div>
+        <div class="col-6 p-1">
+            <ul class="list-group list-group-flush">
+                <li class="list-group-item ">
+                    <div class="lgi-label">Process</div>
+                    <div class= "lgi-value align-self-end ms-auto">{{stat['manager']['processCount']}}/{{stat['manager']['maxProcess']}}
+                </li>
+                <li class="list-group-item ">
+                    <div class="lgi-label">Cpu</div>
+                    <div class= "lgi-value align-self-end ms-auto">{{stat['system']['cpuPercentAvg']}}% ({{stat['system']['cpuCountP']}}/{{stat['system']['cpuCountL']}})
+                </li>
+                <li class="list-group-item ">
+                    <div class="lgi-label">Mem.</div>
+                    <div class= "lgi-value align-self-end ms-auto">{{'%.1f' % stat['system']['memTotal']}}/{{'%.1f' % stat['system']['memAvailable']}}
+                </li>
+                <li class="list-group-item  ">
+                    <div class="lgi-label">Errors</div>
+                    <div class= "lgi-value align-self-end ms-auto">{{stat['runner']['percentError']}}
+                </li>
+            </ul>
+        </div>
+    </div>
+  </div>
+</div>
+{% end %}

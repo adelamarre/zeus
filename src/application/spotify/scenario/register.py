@@ -115,7 +115,7 @@ def runner(
                     'playlist': playlist,
                     'playConfig': playConfig,
                     'contractId': contractId,
-                    'type': 'account'
+                    'type': 'listener'
                 })
 
                 statsQueue.put((RegisterStat.CREATED, 1))

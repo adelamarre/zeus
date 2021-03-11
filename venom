@@ -22,6 +22,7 @@ from colorama import Fore, Style
 urllib3.disable_warnings()
 
 
+
 if __name__ == '__main__':
     if getattr(sys, 'frozen', False):
     # If the application is run as a bundle, the PyInstaller bootloader
@@ -105,5 +106,6 @@ if __name__ == '__main__':
         try:
             scenarioClass: AbstractScenario = scenarioLib.Scenario(args=args, userDir=userDir, shutdownEvent=shutdownEvent)
             scenarioClass.start()
+            
         except Exception as e:
             print(e)

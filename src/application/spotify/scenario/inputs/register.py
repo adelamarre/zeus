@@ -24,13 +24,14 @@ class RegisterInputs(Inputs):
     def __init__(self, console: Console, shutdownEvent: synchronize.Event, config: dict, userDir: str) -> None:
         self.console = console
         self.shutdownEvent = shutdownEvent
+        self.lastResponse = self.loadLastResponse(userDir, 'REGISTER')
         self.config = config
         self.userDir: str = userDir
         super().__init__()
 
     def getInputs(self):
 
-        db = Db(userDir=self.userDir, updaterNamespace='src.application.dbupdaters', console=self.console)
+        db = Db(userDir=self.userDir, revisionModule='src.application.db.revision', console=self.console)
         clientManager = ClientManager(db)
         clientChoices = clientManager.getclientsChoices()
         clientNames = list(map(lambda x: x['name'], clientChoices))
@@ -38,8 +39,9 @@ class RegisterInputs(Inputs):
         self.questions = [
             {
                 'type': 'input',
-                'name': 'playlist',
+                'name': RegisterInputs.PLAYLIST,
                 'message': 'Which playlist to listen ?',
+                'default': str(self._getDefault(RegisterInputs.PLAYLIST, '')),
                 'validate': Question.validateUrl
             },
             {
@@ -126,6 +128,14 @@ class RegisterInputs(Inputs):
             {
                 'when': lambda answers: answers['contractId'] == 0,
                 'type': 'input',
+                'name': 'newContractCount',
+                'message': 'New contract listener count ?',
+                'validate': lambda answer: True if int(answer) > 0  else 'The count must greater than 0',
+                'filter': int
+            },
+            {
+                'when': lambda answers: answers['contractId'] == 0,
+                'type': 'input',
                 'name': 'newContractDescription',
                 'message': 'New contract description ?',
                 'validate': lambda answer: True if len(answer) > 0 else 'Invalid contract description',
@@ -145,7 +155,11 @@ class RegisterInputs(Inputs):
 
         contractId = answers['contractId']
         if answers['contractId'] == 0:
-            contractId = contractManager.addContract(clientId, answers['newContractCode'], answers['newContractDescription'])
+            contractId = contractManager.addContract(
+                clientId, answers['newContractCode'],
+                answers['newContractDescription'],
+                answers['newContractCount']
+            )
         
         playlist = answers['playlist']
         accountCount = answers['account_count']

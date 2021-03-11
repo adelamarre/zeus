@@ -7,7 +7,7 @@ from src.services.console import Console
 from src.services.questions import Question
 from src.application.scenario import AbstractScenario
 from src.application.spotify.scenario.listener import ListenerProcessProvider
-from src.application.spotify.utils import getPlaylistSongChoices
+from src.application.spotify.scenario.config.testlistener import TestListenerConfig
 from src.application.spotify.parser.playlist import TrackSelector
 from requests import get
 
@@ -30,7 +30,7 @@ class Scenario(AbstractScenario):
                 os.makedirs(screenshotDir, exist_ok=True)
         
         #print('Configuration file: %s' % configFile)
-
+        
         defautlConfig = {
             'account_sqs_endpoint': '',
             'stats_sqs_endpoint': '',
@@ -39,7 +39,7 @@ class Scenario(AbstractScenario):
             'spawn_interval': 0.5
         }
         
-        listenerConfig = Config.getListenerConfig(self.configFile, defautlConfig)
+        listenerConfig = TestListenerConfig(self.configFile).getConfig(defautlConfig)
 
         if not listenerConfig:
             sys.exit('I can not continue without configuraton')
@@ -54,22 +54,10 @@ class Scenario(AbstractScenario):
         console = Console(verbose=verbose, ouput=self.args.verbose, logfile=logfile, logToFile=not self.args.nolog)
         console.log('Start scenario Spotify listener')
 
-        if not listenerConfig['account_sqs_endpoint']:
-            sys.exit('you need to set the account_sqs_endpoint in the config file.')
+        
 
-        if not listenerConfig['collector_sqs_endpoint']:
-            sys.exit('you need to set the stats_sqs_endpoint in the config file.')
-
-        if not listenerConfig['server_id']:
-            sys.exit('you need to set the server_id in the config file.')
-
-        if not listenerConfig['secret']:
-            sys.exit('You need to provide the server stats password')
-
-
-        lastResponse = Question.loadLastResponse(self.userDir)
-        default = lastResponse['TEST-LISTENER'] if 'TEST-LISTENER' in lastResponse else {}
-
+        
+        
         questions = [
             {
                 'type': 'input',
@@ -116,13 +104,7 @@ class Scenario(AbstractScenario):
         answers = Question.list(questions)
         if not answers.get('continue', False): sys.exit('ok, see you soon.')
 
-        lastResponse.update({
-            'TEST-LISTENER':
-            {
-                'playlist': answers.get('playlist',default.get('playlist',''))
-            }
-        })
-        Question.saveLastResponse(self.userDir, lastResponse)
+        Question.saveLastResponse(self.userDir, 'TEST-LISTENER', answers)
 
         playlist = answers.get('playlist', None)
         if playlist is None:

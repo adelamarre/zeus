@@ -23,6 +23,12 @@ kill-listener:
 kill-python:
 	@kill -9 $$(ps aux | grep '[p]ython' | awk '{print $$2}')
 
+kill-xvfb:
+	@kill -9 $$(ps aux | grep '[X]vfb' | awk '{print $$2}') 
+
+kill-chrome:
+	@kill -9 $$(ps aux | grep '[c]hromedriver' | awk '{print $$2}')
+
 purgelog:
 	@rm -rf temp/*
 

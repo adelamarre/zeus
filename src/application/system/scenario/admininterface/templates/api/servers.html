@@ -1,0 +1,39 @@
+{% autoescape None %}
+<div class="servers-stats container">
+    
+    <div class="row justify-content-between">
+        {% for stat in statistics['servers'] %}
+            {% module ServerCard(stat) %}
+        {% end %}
+    </div>
+    <div class="cumulative-stats row border rounded p-2 mt-2">
+            <div class="d-flex">
+                <div class="title">All</div>
+                <div class="container">
+                    <div class="row justify-content-between flex-column flex-sm-row">
+                        <div class="item d-flex col-12 col-sm-2 align-items-center">
+                            <div class="label">Prepare</div>
+                            <div class="value align-self-end ms-auto">{{ statistics['global']['prepare']}}</div>
+                        </div>
+                        <div class="item d-flex col-12 col-sm-2 align-items-center">
+                            <div class="label">Logging in</div>
+                            <div class="value align-self-end ms-auto">{{ statistics['global']['loggingIn']}}</div>
+                        </div>
+                        <div class="item d-flex col-12 col-sm-2 align-items-center">
+                            <div class="label">Playing</div>
+                            <div class="value align-self-end ms-auto">{{ statistics['global']['playing']}}</div>
+                        </div>
+                        <div class="item d-flex col-12 col-sm-2 align-items-center">
+                            <div class="label">Errors</div>
+                            <div class="value align-self-end ms-auto">{{ statistics['global']['percentError']}}</div>
+                        </div>
+                        <div class="item d-flex col-12 col-sm-2 align-items-center">
+                            <div class="label">Played</div>
+                            <div class="value align-self-end ms-auto">{{ statistics['global']['played']}}</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        
+    </div>
+</div>

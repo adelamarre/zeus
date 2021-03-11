@@ -74,7 +74,7 @@ def runner(apiKey: str, ip: str, certificate: str, statsProviders: List[StatsPro
     
     #try:
         #my_server = socketserver.TCPServer(("", PORT), handler_object)
-    server = http.server.ThreadingHTTPServer(("0.0.0.0", PORT), handler_object)
+    server = http.server.ThreadingHTTPServer((ip, PORT), handler_object)
     server.socket = wrap_socket(server.socket, certfile=certificate, server_side=True)
     server.serve_forever()
     #except:
@@ -89,17 +89,16 @@ class HttpStatsServer:
         self.console = console
         self.statsProviders = statsProviders
         self.process: Process = None
-        self.ip = get('https://api.ipify.org').text
         self.certificate = userDir + '/server.pem'
         if not os.path.isfile(self.certificate):
             self.cert_gen(
-                commonName=self.ip,
+                commonName=get('https://api.ipify.org').text,
                 PEM_FILE=self.certificate
             )
 
 
     def start(self):
-        self.process = Process(target=runner, args=(self.apiKey, self.ip, self.certificate, self.statsProviders, ))
+        self.process = Process(target=runner, args=(self.apiKey, '0.0.0.0', self.certificate, self.statsProviders, ))
         self.process.start()
     
     def stop(self):

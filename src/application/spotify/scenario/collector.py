@@ -22,24 +22,25 @@ class Scenario(AbstractScenario):
             os.makedirs(logDir, exist_ok=True)
 
         verbose = 3 if self.args.verbose else 1
-        console = Console(verbose=verbose, ouput=self.args.verbose, logfile=logfile, logToFile=not self.args.nolog)
+        console = Console(verbose=verbose, ouput=True, logfile=logfile, logToFile=not self.args.nolog)
         console.log('Start scenario Spotify Collector')
         
         config = CollectorConfig(self.userDir + '/config.ini').getConfig()
 
         remoteQueue = RemoteQueue(config[CollectorConfig.COLLECTOR_SQS_ENDPOINT])
-        statsCollector = StatsCollector()
+        statsCollector = StatsCollector(userDir=self.userDir, console=console)
 
         while True:
             try:
                 remoteQueue.provision(10)
-                if remoteQueue.hasMessage():
+                while remoteQueue.hasMessage():
                     message = remoteQueue.pop()
                     statsCollector.collect(message)
                     remoteQueue.deleteMessage(message)
-
-
+                if self.shutdownEvent.is_set():
+                    break
             except:
+                console.exception()
                 pass
 
         

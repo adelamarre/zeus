@@ -95,7 +95,7 @@ class Adapter(AbstractAdapter):
                     user=user,
                     playlistUrl=playlistUrl,
                     playlistName=playlistName,
-                    songName=songName,
+                    trackName=songName,
                     artistName=artistName,
                     playDuration=playDuration,
                     contractId=contractId
@@ -209,11 +209,27 @@ class Adapter(AbstractAdapter):
         maxTry = 40
         while True:
             if self.sleep(2): return
+            ############################
+            # ACCOUNT ERROR ELEMENTS
+            ###########################
             errorElements = self.getElementsByClass('InputErrorMessage__Container-tliowl-0', maxTry=1, raiseException=False)
             if errorElements:
                 raise Exception('Account creation failed')
+            ############################
+            # ACCOUNT VALID ELEMENTS
+            ###########################
+            # Welcome page
             loggedInElements = self.getElementsByClass('mh-header-primary', maxTry=1, raiseException=False)
             if loggedInElements:
+                break
+            # User menu button
+            loggedInElements = self.getElementsByCssSelector('button[data-testid="user-widget-link"', maxTry=1, raiseException=False)
+            if loggedInElements:
+                break
+            # Drm error page
+            loggedInElements = self.getElementsByClass('ErrorPage', maxTry=1, raiseException=False)
+            if loggedInElements:
+                #Drm error page show up but we considere the account valid anyway
                 break
             maxTry -=1
             if maxTry == 0:

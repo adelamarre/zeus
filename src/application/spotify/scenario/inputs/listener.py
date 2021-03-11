@@ -23,8 +23,10 @@ class ListenerInputs(Inputs):
         self.console = console
         self.shutdownEvent = shutdownEvent
         self.config = config
+        self.lastResponse = self.loadLastResponse(userDir, 'LISTENER')
         self.userDir: str = userDir
         super().__init__()
+
 
     def getInputs(self):
         
@@ -33,7 +35,7 @@ class ListenerInputs(Inputs):
                 'type': 'input',
                 'name': ListenerInputs.MAX_PROCESS,
                 'message': 'How much process to start ?',
-                'default': str(self.config[ListenerConfig.MAX_PROCESS]),
+                'default': str(self._getDefault(ListenerInputs.MAX_PROCESS, 100)),
                 'validate': Question.validateInteger,
                 'filter': int
             },
@@ -47,7 +49,7 @@ class ListenerInputs(Inputs):
                 'type': 'input',
                 'name': ListenerInputs.PLAYLIST,
                 'message': 'Playlist url ?',
-                'default': '',
+                'default': str(self._getDefault(ListenerInputs.PLAYLIST, '')),
                 'validate': Question.validateUrl,
                 'when': lambda answers : answers['override_playlist']
             },
@@ -55,7 +57,7 @@ class ListenerInputs(Inputs):
                 'type': 'confirm',
                 'name': ListenerInputs.STATS_SERVER,
                 'message': 'Would you start the statistics web server ?',
-                'default': True
+                'default': bool(self._getDefault(ListenerInputs.STATS_SERVER, True))
             },
             {
                 'type': 'confirm',
@@ -65,12 +67,16 @@ class ListenerInputs(Inputs):
             },
         ]
         answers = super().getInputs()
-
+        
         if not 'continue' in answers or answers['continue'] == False:
             return None
 
-        return {
+        
+        
+        result = {
             ListenerInputs.MAX_PROCESS: answers[ListenerInputs.MAX_PROCESS],
             ListenerInputs.PLAYLIST: answers.get(ListenerInputs.MAX_PROCESS, None),
             ListenerInputs.STATS_SERVER: answers[ListenerInputs.STATS_SERVER], 
         }
+        self.saveLastResponse('LISTENER', result)
+        return result

@@ -53,7 +53,6 @@ class Scenario(AbstractScenario):
         globalStats = self.statistics[Scenario.GLOBAL]
 
         for server in self.servers:
-            
             try:
                 host = server.strip()
                 serverStat = loads(get('https://%s:63443/?k=%s' % (host, self.config['secret']), verify=False).text)

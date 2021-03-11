@@ -1,4 +1,6 @@
 
+from src.application.collectors import CollectorMessage
+from typing import Collection
 from src.services.aws import RemoteQueue
 from boto3 import client
 from src import VERSION
@@ -13,18 +15,17 @@ class StatsCollector:
         self.application = application
         self.serverId = serverId
 
-    def songPlayed(self, user, playlistUrl: str, playlistName: str, songName: str, artistName: str, playDuration: int, contractId:str):
+    def songPlayed(self, user, playlistUrl: str, playlistName: str, trackName: str, artistName: str, playDuration: int, contractId:str):
         self.remoteQueue.sendMessage({
-            'serverId': self.serverId,
-            'application': self.application,
-            'user': user['email'],
-            'playlistUrl': playlistUrl,
-            'playlistName': playlistName,
-            'songName': songName,
-            'artistName': artistName,
-            'playDuration': playDuration,
-            'contractId': contractId,
-            'time': time(),
-            'ymd': datetime.now().strftime("%Y%m%d")
+            CollectorMessage.SERVER_ID      : self.serverId,
+            CollectorMessage.APPLICATION    : self.application,
+            CollectorMessage.USER           : user['email'],
+            CollectorMessage.PLAYLIST_URL   : playlistUrl,
+            CollectorMessage.PLAYLIST_NAME  : playlistName,
+            CollectorMessage.TRACK_NAME     : trackName,
+            CollectorMessage.ARTIST_NAME    : artistName,
+            CollectorMessage.PLAY_DURATION  : playDuration,
+            CollectorMessage.CONTRACT_ID    : contractId,
+            CollectorMessage.TIME           : time(),
         })
     

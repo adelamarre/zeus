@@ -1,0 +1,71 @@
+{% extends "layout.html" %}
+{% block content %}
+
+<div class="container">
+    <H2>Dashboard</H2>
+    <br/>
+    
+    <div class="form-check form-switch">
+        <input class="form-check-input" type="checkbox" id="auto-update" checked>
+        <label class="form-check-label" for="auto-update">Auto update</label>
+    </div>
+    <h4>Servers</h4>
+    <div id="servers">Loading...</div>
+    <br/>
+    <h4>Open Contracts</h4>
+    <div id="open-contracts">Loading...</div>
+    <br/>
+    <h4>Open Tracks</h4>
+    <div id="tracks">Loading...</div>
+</div> 
+{% end %}
+
+{% block script %}
+    <script>
+        tasks = [
+            {
+                id: 'open-contracts',
+                url: '/api/contracts-table'
+            },
+            {
+                id: 'tracks',
+                url: '/api/tracks-table'
+            },
+            {
+                id: 'servers',
+                url: '/api/servers'
+            }
+        ];
+
+        updateElement = (task) => {
+            fetch(task['url']).then(
+                function(response) {
+                if (response.status !== 200) {
+                    console.log('Looks like there was a problem. Status Code: ' +
+                    response.status);
+                    return;
+                }
+
+                // Examine the text in the response
+                response.text().then(function(data) {
+                    el = document.getElementById(task['id']);
+                    el.innerHTML = data;
+                });
+                }
+            ).catch(function(err) {
+                console.log('Fetch Error :-S', err);
+            });
+        }
+
+        const update = () => {
+            if (document.getElementById('auto-update').checked) {
+                Object.keys(tasks).forEach(function(key) {
+                    updateElement(tasks[key]);
+                });
+            }
+            setTimeout(update, 5000);
+        }
+        
+        update()
+    </script>
+{% end %}

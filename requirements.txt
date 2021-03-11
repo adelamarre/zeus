@@ -12,3 +12,4 @@ pyinstaller
 pyinstaller[encryption]
 psutil
 validators
+tornado
