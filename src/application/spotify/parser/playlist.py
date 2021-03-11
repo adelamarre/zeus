@@ -166,25 +166,17 @@ class Track:
             raise Exception('Could not find button in gridcell 0 in playlist row')
         label = playButton.get_attribute("aria-label")
 
-        playTime = randint(min, max)
-
-        currentPosition = 0
-        if label == 'Pause':
-            playerPosition = self.player.getPosition()
-            if playerPosition != -1:
-                currentPosition = playerPosition
-        else:
+        if label != 'Pause':
             hover = ActionChains(self.player.adapter.driver).move_to_element(self.rowElement)
             hover.perform()
             if self.player.adapter.sleep(1): return -1
             playButton.click()
             if self.player.adapter.sleep(1): return -1
 
+        playTime = randint(min, max)
         startTime = time()
         while not self.player.adapter.sleep(2):
-            currentPosition = self.player.getPosition()
-            if currentPosition == -1:
-                currentPosition = int(time() - startTime)
+            currentPosition = int(time() - startTime)
             if currentPosition >= playTime:
                 return currentPosition
         
