@@ -44,9 +44,14 @@ class Db:
 
     def backup(self):
         os.makedirs(self.backupDir, exist_ok=True)
-        tmpbackupFile = self.backupDir + '/db.bkp.tmp'
-        if os.path.exists(tmpbackupFile):
-            os.remove(tmpbackupFile)
+        index = 1
+        tmpbackupFile = self.backupDir + ('/db.%03d.bkp' % index)
+        while os.path.exists(tmpbackupFile):
+            index += 1
+            if index == 1000:
+                raise Exception('You have more than 999 backup files, please delete some before backup.')
+            tmpbackupFile = self.backupDir + ('/db.%3d.bkp' % index)
+
         self.close()
         shutil.copyfile(self.dbfile, tmpbackupFile)
         return tmpbackupFile
@@ -124,14 +129,24 @@ class DbTable:
         return self.db.select(f'select rowid, * from {self.name:s} where rowid={rowid:d}')
         
     
-    def findBy(self, where: dict):
+    def findBy(self, where: dict={}, orderby: dict={}, limit:int=None):
         constraints = self._constraintsToSql(where)
-        return self.db.select(f'select rowid, * from {self.name:s}{constraints:s};').fetchone()
+        order = self._buildOrderBy(orderby)
+        limit = ' LIMIT %d' % limit if limit is not None else ''
+        return self.db.select(f'select rowid, * from {self.name:s}{constraints:s}{order:s}{limit:s};').fetchone()
 
     def findAllBy(self, where: dict):
         constraints = self._constraintsToSql(where)
         return self.db.select(f'select rowid, * from {self.name:s}{constraints:s};').fetchall()
 
+    def _buildOrderBy(self, orderby: dict) -> str:
+        if len(orderby.keys()):
+            o = []
+            for key in orderby:
+                value = str(orderby[key])
+                o.append('%s %s' % (key, value))
+            return ' order by ' + ', '.join(o)
+        return ''
 
     def _constraintsToSql(self, constraints: dict) -> str:
         if len(constraints.keys()):

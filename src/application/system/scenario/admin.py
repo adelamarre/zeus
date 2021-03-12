@@ -31,9 +31,7 @@ class Scenario(AbstractScenario):
         #    'console': console,
         #    'config': configData
         #}
-        remoteQueue = RemoteQueue(configData[MonitorConfig.COLLECTOR_SQS_ENDPOINT])
-        statsCollector = StatsCollector(userDir=self.userDir, console=console)
-
+        
         app = makeAdminApp(userDir=self.userDir, console=console, config=configData)
         app.listen(5000)
         #tornado.ioloop.IOLoop.current().start()
@@ -47,21 +45,9 @@ class Scenario(AbstractScenario):
                 p = Process(target=tornado.ioloop.IOLoop.current().start)
                 p.start()
                 break
-            
-            try:
-                remoteQueue.provision(10)
-                while remoteQueue.hasMessage():
-                    message = remoteQueue.pop()
-                    statsCollector.collect(message)
-                    remoteQueue.deleteMessage(message)
-                    if self.shutdownEvent.is_set():
-                        break
-            except:
-                console.exception()
-                pass
 
             if self.shutdownEvent.is_set():
-                p.kill()
+                p.terminate()
                 p.join()
                 break
 

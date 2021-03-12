@@ -32,11 +32,16 @@ kill-chrome:
 purgelog:
 	@rm -rf temp/*
 
-update-service:
+update-venom:
 	rm -rf build && rm -rf dist && pyinstaller --onefile venom.spec &&\
 	sudo systemctl stop venom-service &&\
+	sudo systemctl stop venom-collector &&\
 	sudo rm -f /usr/bin/venom &&\
 	sudo cp dist/venom /usr/bin &&\
 	sudo systemctl start venom-service
+	sudo systemctl start venom-collector
+
+build-venom:
+	rm -rf build && rm -rf dist && pyinstaller --onefile venom.spec
 
 
